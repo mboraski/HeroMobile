@@ -1,0 +1,423 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeroList renders correctly 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <Unknown
+    contentContainerStyle={Object {}}
+>
+    <View>
+        <HeroDetail
+            hero={
+                Object {
+                    "delivery_time": 4,
+                    "id": 0,
+                    "image": "https://facebook.github.io/react/img/logo_og.png",
+                    "name": "Jessica Morgan",
+                    "type": "Driver",
+                  }
+            }
+        />
+        <HeroDetail
+            hero={
+                Object {
+                    "delivery_time": 4,
+                    "id": 1,
+                    "image": "https://facebook.github.io/react/img/logo_og.png",
+                    "name": "Jessica Morgan",
+                    "type": "Instant",
+                  }
+            }
+        />
+        <HeroDetail
+            hero={
+                Object {
+                    "delivery_time": 4,
+                    "id": 2,
+                    "image": "https://facebook.github.io/react/img/logo_og.png",
+                    "name": "Jessica Morgan",
+                    "type": "Driver",
+                  }
+            }
+        />
+        <HeroDetail
+            hero={
+                Object {
+                    "delivery_time": 4,
+                    "id": 3,
+                    "image": "https://facebook.github.io/react/img/logo_og.png",
+                    "name": "Jessica Morgan",
+                    "type": "Instant",
+                  }
+            }
+        />
+    </View>
+</Unknown>,
+  "nodes": Array [
+    <Unknown
+      contentContainerStyle={Object {}}
+>
+      <View>
+            <HeroDetail
+                  hero={
+                        Object {
+                              "delivery_time": 4,
+                              "id": 0,
+                              "image": "https://facebook.github.io/react/img/logo_og.png",
+                              "name": "Jessica Morgan",
+                              "type": "Driver",
+                            }
+                  }
+            />
+            <HeroDetail
+                  hero={
+                        Object {
+                              "delivery_time": 4,
+                              "id": 1,
+                              "image": "https://facebook.github.io/react/img/logo_og.png",
+                              "name": "Jessica Morgan",
+                              "type": "Instant",
+                            }
+                  }
+            />
+            <HeroDetail
+                  hero={
+                        Object {
+                              "delivery_time": 4,
+                              "id": 2,
+                              "image": "https://facebook.github.io/react/img/logo_og.png",
+                              "name": "Jessica Morgan",
+                              "type": "Driver",
+                            }
+                  }
+            />
+            <HeroDetail
+                  hero={
+                        Object {
+                              "delivery_time": 4,
+                              "id": 3,
+                              "image": "https://facebook.github.io/react/img/logo_og.png",
+                              "name": "Jessica Morgan",
+                              "type": "Instant",
+                            }
+                  }
+            />
+      </View>
+</Unknown>,
+  ],
+  "options": Object {
+    "context": Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+    },
+  },
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+      },
+      "_currentElement": <ScrollViewMock
+        contentContainerStyle={Object {}}
+>
+        <HeroDetail
+                hero={
+                        Object {
+                                "delivery_time": 4,
+                                "id": 0,
+                                "image": "https://facebook.github.io/react/img/logo_og.png",
+                                "name": "Jessica Morgan",
+                                "type": "Driver",
+                              }
+                }
+        />
+        <HeroDetail
+                hero={
+                        Object {
+                                "delivery_time": 4,
+                                "id": 1,
+                                "image": "https://facebook.github.io/react/img/logo_og.png",
+                                "name": "Jessica Morgan",
+                                "type": "Instant",
+                              }
+                }
+        />
+        <HeroDetail
+                hero={
+                        Object {
+                                "delivery_time": 4,
+                                "id": 2,
+                                "image": "https://facebook.github.io/react/img/logo_og.png",
+                                "name": "Jessica Morgan",
+                                "type": "Driver",
+                              }
+                }
+        />
+        <HeroDetail
+                hero={
+                        Object {
+                                "delivery_time": 4,
+                                "id": 3,
+                                "image": "https://facebook.github.io/react/img/logo_og.png",
+                                "name": "Jessica Morgan",
+                                "type": "Instant",
+                              }
+                }
+        />
+</ScrollViewMock>,
+      "_debugID": 3,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": ScrollViewMock {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "children": Array [
+            <HeroDetail
+              hero={
+                            Object {
+                                          "delivery_time": 4,
+                                          "id": 0,
+                                          "image": "https://facebook.github.io/react/img/logo_og.png",
+                                          "name": "Jessica Morgan",
+                                          "type": "Driver",
+                                        }
+              }
+/>,
+            <HeroDetail
+              hero={
+                            Object {
+                                          "delivery_time": 4,
+                                          "id": 1,
+                                          "image": "https://facebook.github.io/react/img/logo_og.png",
+                                          "name": "Jessica Morgan",
+                                          "type": "Instant",
+                                        }
+              }
+/>,
+            <HeroDetail
+              hero={
+                            Object {
+                                          "delivery_time": 4,
+                                          "id": 2,
+                                          "image": "https://facebook.github.io/react/img/logo_og.png",
+                                          "name": "Jessica Morgan",
+                                          "type": "Driver",
+                                        }
+              }
+/>,
+            <HeroDetail
+              hero={
+                            Object {
+                                          "delivery_time": 4,
+                                          "id": 3,
+                                          "image": "https://facebook.github.io/react/img/logo_og.png",
+                                          "name": "Jessica Morgan",
+                                          "type": "Instant",
+                                        }
+              }
+/>,
+          ],
+          "contentContainerStyle": Object {},
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 2,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <Unknown
+          contentContainerStyle={Object {}}
+>
+          <View>
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 0,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Driver",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 1,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Instant",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 2,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Driver",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 3,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Instant",
+                                                }
+                              }
+                    />
+          </View>
+</Unknown>,
+        "_debugID": 4,
+        "_renderedOutput": <Unknown
+          contentContainerStyle={Object {}}
+>
+          <View>
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 0,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Driver",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 1,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Instant",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 2,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Driver",
+                                                }
+                              }
+                    />
+                    <HeroDetail
+                              hero={
+                                        Object {
+                                                  "delivery_time": 4,
+                                                  "id": 3,
+                                                  "image": "https://facebook.github.io/react/img/logo_og.png",
+                                                  "name": "Jessica Morgan",
+                                                  "type": "Instant",
+                                                }
+                              }
+                    />
+          </View>
+</Unknown>,
+      },
+      "_renderedNodeType": 1,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <ScrollViewMock
+    contentContainerStyle={Object {}}
+>
+    <HeroDetail
+        hero={
+            Object {
+                "delivery_time": 4,
+                "id": 0,
+                "image": "https://facebook.github.io/react/img/logo_og.png",
+                "name": "Jessica Morgan",
+                "type": "Driver",
+              }
+        }
+    />
+    <HeroDetail
+        hero={
+            Object {
+                "delivery_time": 4,
+                "id": 1,
+                "image": "https://facebook.github.io/react/img/logo_og.png",
+                "name": "Jessica Morgan",
+                "type": "Instant",
+              }
+        }
+    />
+    <HeroDetail
+        hero={
+            Object {
+                "delivery_time": 4,
+                "id": 2,
+                "image": "https://facebook.github.io/react/img/logo_og.png",
+                "name": "Jessica Morgan",
+                "type": "Driver",
+              }
+        }
+    />
+    <HeroDetail
+        hero={
+            Object {
+                "delivery_time": 4,
+                "id": 3,
+                "image": "https://facebook.github.io/react/img/logo_og.png",
+                "name": "Jessica Morgan",
+                "type": "Instant",
+              }
+        }
+    />
+</ScrollViewMock>,
+}
+`;

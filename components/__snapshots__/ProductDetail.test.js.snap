@@ -1,0 +1,925 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductDetail renders correctly 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <View
+    style={
+        Array [
+            Object {
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 7,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 6,
+            },
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 11,
+              "paddingHorizontal": 15,
+              "paddingVertical": 15,
+            },
+            undefined,
+          ]
+    }
+>
+    <View
+        style={
+            Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+                "marginBottom": 18,
+              }
+        }
+    >
+        <Icon
+            color="black"
+            iconStyle={
+                Array [
+                    Object {
+                      "color": "#E4E4E4",
+                    },
+                    undefined,
+                  ]
+            }
+            name="plus"
+            onPress={undefined}
+            raised={false}
+            reverse={false}
+            reverseColor="white"
+            size={35}
+            type="foundation"
+            underlayColor="white"
+        />
+    </View>
+    <View
+        style={
+            Object {
+                "marginBottom": 35,
+              }
+        }
+    >
+        <Image
+            source={
+                Object {
+                    "uri": "https://facebook.github.io/react/img/logo_og.png",
+                  }
+            }
+            style={
+                Object {
+                    "minHeight": 100,
+                  }
+            }
+        />
+    </View>
+    <View
+        style={
+            Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "justifyContent": "space-between",
+              }
+        }
+    >
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Array [
+                    Object {
+                      "fontSize": 16,
+                      "marginBottom": 6,
+                      "marginRight": 12,
+                    },
+                    Object {},
+                  ]
+            }
+        >
+            Redbull
+        </Text>
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Array [
+                    Object {
+                      "fontSize": 16,
+                      "marginBottom": 6,
+                      "marginRight": 12,
+                    },
+                    Object {
+                      "color": "#3aa2fc",
+                      "fontWeight": "bold",
+                    },
+                  ]
+            }
+        >
+            $3.49
+        </Text>
+    </View>
+</View>,
+  "nodes": Array [
+    <View
+      style={
+            Array [
+                  Object {
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 7,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.15,
+                    "shadowRadius": 6,
+                  },
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 11,
+                    "paddingHorizontal": 15,
+                    "paddingVertical": 15,
+                  },
+                  undefined,
+                ]
+      }
+>
+      <View
+            style={
+                  Object {
+                        "flexDirection": "row",
+                        "justifyContent": "flex-end",
+                        "marginBottom": 18,
+                      }
+            }
+      >
+            <Icon
+                  color="black"
+                  iconStyle={
+                        Array [
+                              Object {
+                                "color": "#E4E4E4",
+                              },
+                              undefined,
+                            ]
+                  }
+                  name="plus"
+                  onPress={undefined}
+                  raised={false}
+                  reverse={false}
+                  reverseColor="white"
+                  size={35}
+                  type="foundation"
+                  underlayColor="white"
+            />
+      </View>
+      <View
+            style={
+                  Object {
+                        "marginBottom": 35,
+                      }
+            }
+      >
+            <Image
+                  source={
+                        Object {
+                              "uri": "https://facebook.github.io/react/img/logo_og.png",
+                            }
+                  }
+                  style={
+                        Object {
+                              "minHeight": 100,
+                            }
+                  }
+            />
+      </View>
+      <View
+            style={
+                  Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "justifyContent": "space-between",
+                      }
+            }
+      >
+            <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                        Array [
+                              Object {
+                                "fontSize": 16,
+                                "marginBottom": 6,
+                                "marginRight": 12,
+                              },
+                              Object {},
+                            ]
+                  }
+            >
+                  Redbull
+            </Text>
+            <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                        Array [
+                              Object {
+                                "fontSize": 16,
+                                "marginBottom": 6,
+                                "marginRight": 12,
+                              },
+                              Object {
+                                "color": "#3aa2fc",
+                                "fontWeight": "bold",
+                              },
+                            ]
+                  }
+            >
+                  $3.49
+            </Text>
+      </View>
+</View>,
+  ],
+  "options": Object {
+    "context": Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+    },
+  },
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+      },
+      "_currentElement": <View
+        style={
+                Array [
+                        Object {
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 7,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0.15,
+                          "shadowRadius": 6,
+                        },
+                        Object {
+                          "backgroundColor": "#fff",
+                          "borderRadius": 11,
+                          "paddingHorizontal": 15,
+                          "paddingVertical": 15,
+                        },
+                        undefined,
+                      ]
+        }
+>
+        <View
+                style={
+                        Object {
+                                "flexDirection": "row",
+                                "justifyContent": "flex-end",
+                                "marginBottom": 18,
+                              }
+                }
+        >
+                <Icon
+                        color="black"
+                        iconStyle={
+                                Array [
+                                        Object {
+                                          "color": "#E4E4E4",
+                                        },
+                                        undefined,
+                                      ]
+                        }
+                        name="plus"
+                        onPress={undefined}
+                        raised={false}
+                        reverse={false}
+                        reverseColor="white"
+                        size={35}
+                        type="foundation"
+                        underlayColor="white"
+                />
+        </View>
+        <View
+                style={
+                        Object {
+                                "marginBottom": 35,
+                              }
+                }
+        >
+                <Image
+                        source={
+                                Object {
+                                        "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                      }
+                        }
+                        style={
+                                Object {
+                                        "minHeight": 100,
+                                      }
+                        }
+                />
+        </View>
+        <View
+                style={
+                        Object {
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "flexWrap": "wrap",
+                                "justifyContent": "space-between",
+                              }
+                }
+        >
+                <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="tail"
+                        style={
+                                Array [
+                                        Object {
+                                          "fontSize": 16,
+                                          "marginBottom": 6,
+                                          "marginRight": 12,
+                                        },
+                                        Object {},
+                                      ]
+                        }
+                >
+                        Redbull
+                </Text>
+                <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="tail"
+                        style={
+                                Array [
+                                        Object {
+                                          "fontSize": 16,
+                                          "marginBottom": 6,
+                                          "marginRight": 12,
+                                        },
+                                        Object {
+                                          "color": "#3aa2fc",
+                                          "fontWeight": "bold",
+                                        },
+                                      ]
+                        }
+                >
+                        $3.49
+                </Text>
+        </View>
+</View>,
+      "_debugID": 3,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": Component {
+        "_reactInternalInstance": [Circular],
+        "blur": [Function],
+        "context": Object {
+          "isInAParentText": undefined,
+        },
+        "focus": [Function],
+        "measure": [Function],
+        "measureInWindow": [Function],
+        "measureLayout": [Function],
+        "props": Object {
+          "children": Array [
+            <View
+              style={
+                            Object {
+                                          "flexDirection": "row",
+                                          "justifyContent": "flex-end",
+                                          "marginBottom": 18,
+                                        }
+              }
+>
+              <Icon
+                            color="black"
+                            iconStyle={
+                                          Array [
+                                                        Object {
+                                                          "color": "#E4E4E4",
+                                                        },
+                                                        undefined,
+                                                      ]
+                            }
+                            name="plus"
+                            onPress={undefined}
+                            raised={false}
+                            reverse={false}
+                            reverseColor="white"
+                            size={35}
+                            type="foundation"
+                            underlayColor="white"
+              />
+</View>,
+            <View
+              style={
+                            Object {
+                                          "marginBottom": 35,
+                                        }
+              }
+>
+              <Image
+                            source={
+                                          Object {
+                                                        "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                                      }
+                            }
+                            style={
+                                          Object {
+                                                        "minHeight": 100,
+                                                      }
+                            }
+              />
+</View>,
+            <View
+              style={
+                            Object {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "flexWrap": "wrap",
+                                          "justifyContent": "space-between",
+                                        }
+              }
+>
+              <Text
+                            accessible={true}
+                            allowFontScaling={true}
+                            ellipsizeMode="tail"
+                            style={
+                                          Array [
+                                                        Object {
+                                                          "fontSize": 16,
+                                                          "marginBottom": 6,
+                                                          "marginRight": 12,
+                                                        },
+                                                        Object {},
+                                                      ]
+                            }
+              >
+                            Redbull
+              </Text>
+              <Text
+                            accessible={true}
+                            allowFontScaling={true}
+                            ellipsizeMode="tail"
+                            style={
+                                          Array [
+                                                        Object {
+                                                          "fontSize": 16,
+                                                          "marginBottom": 6,
+                                                          "marginRight": 12,
+                                                        },
+                                                        Object {
+                                                          "color": "#3aa2fc",
+                                                          "fontWeight": "bold",
+                                                        },
+                                                      ]
+                            }
+              >
+                            $3.49
+              </Text>
+</View>,
+          ],
+          "style": Array [
+            Object {
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 7,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 6,
+            },
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 11,
+              "paddingHorizontal": 15,
+              "paddingVertical": 15,
+            },
+            undefined,
+          ],
+        },
+        "refs": Object {},
+        "setNativeProps": [Function],
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 2,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <View
+          style={
+                    Array [
+                              Object {
+                                "shadowColor": "#000",
+                                "shadowOffset": Object {
+                                  "height": 7,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.15,
+                                "shadowRadius": 6,
+                              },
+                              Object {
+                                "backgroundColor": "#fff",
+                                "borderRadius": 11,
+                                "paddingHorizontal": 15,
+                                "paddingVertical": 15,
+                              },
+                              undefined,
+                            ]
+          }
+>
+          <View
+                    style={
+                              Object {
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginBottom": 18,
+                                      }
+                    }
+          >
+                    <Icon
+                              color="black"
+                              iconStyle={
+                                        Array [
+                                                  Object {
+                                                    "color": "#E4E4E4",
+                                                  },
+                                                  undefined,
+                                                ]
+                              }
+                              name="plus"
+                              onPress={undefined}
+                              raised={false}
+                              reverse={false}
+                              reverseColor="white"
+                              size={35}
+                              type="foundation"
+                              underlayColor="white"
+                    />
+          </View>
+          <View
+                    style={
+                              Object {
+                                        "marginBottom": 35,
+                                      }
+                    }
+          >
+                    <Image
+                              source={
+                                        Object {
+                                                  "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                                }
+                              }
+                              style={
+                                        Object {
+                                                  "minHeight": 100,
+                                                }
+                              }
+                    />
+          </View>
+          <View
+                    style={
+                              Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "flexWrap": "wrap",
+                                        "justifyContent": "space-between",
+                                      }
+                    }
+          >
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                    "marginBottom": 6,
+                                                    "marginRight": 12,
+                                                  },
+                                                  Object {},
+                                                ]
+                              }
+                    >
+                              Redbull
+                    </Text>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                    "marginBottom": 6,
+                                                    "marginRight": 12,
+                                                  },
+                                                  Object {
+                                                    "color": "#3aa2fc",
+                                                    "fontWeight": "bold",
+                                                  },
+                                                ]
+                              }
+                    >
+                              $3.49
+                    </Text>
+          </View>
+</View>,
+        "_debugID": 4,
+        "_renderedOutput": <View
+          style={
+                    Array [
+                              Object {
+                                "shadowColor": "#000",
+                                "shadowOffset": Object {
+                                  "height": 7,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.15,
+                                "shadowRadius": 6,
+                              },
+                              Object {
+                                "backgroundColor": "#fff",
+                                "borderRadius": 11,
+                                "paddingHorizontal": 15,
+                                "paddingVertical": 15,
+                              },
+                              undefined,
+                            ]
+          }
+>
+          <View
+                    style={
+                              Object {
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginBottom": 18,
+                                      }
+                    }
+          >
+                    <Icon
+                              color="black"
+                              iconStyle={
+                                        Array [
+                                                  Object {
+                                                    "color": "#E4E4E4",
+                                                  },
+                                                  undefined,
+                                                ]
+                              }
+                              name="plus"
+                              onPress={undefined}
+                              raised={false}
+                              reverse={false}
+                              reverseColor="white"
+                              size={35}
+                              type="foundation"
+                              underlayColor="white"
+                    />
+          </View>
+          <View
+                    style={
+                              Object {
+                                        "marginBottom": 35,
+                                      }
+                    }
+          >
+                    <Image
+                              source={
+                                        Object {
+                                                  "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                                }
+                              }
+                              style={
+                                        Object {
+                                                  "minHeight": 100,
+                                                }
+                              }
+                    />
+          </View>
+          <View
+                    style={
+                              Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "flexWrap": "wrap",
+                                        "justifyContent": "space-between",
+                                      }
+                    }
+          >
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                    "marginBottom": 6,
+                                                    "marginRight": 12,
+                                                  },
+                                                  Object {},
+                                                ]
+                              }
+                    >
+                              Redbull
+                    </Text>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                    "marginBottom": 6,
+                                                    "marginRight": 12,
+                                                  },
+                                                  Object {
+                                                    "color": "#3aa2fc",
+                                                    "fontWeight": "bold",
+                                                  },
+                                                ]
+                              }
+                    >
+                              $3.49
+                    </Text>
+          </View>
+</View>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <View
+    style={
+        Array [
+            Object {
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 7,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 6,
+            },
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 11,
+              "paddingHorizontal": 15,
+              "paddingVertical": 15,
+            },
+            undefined,
+          ]
+    }
+>
+    <View
+        style={
+            Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+                "marginBottom": 18,
+              }
+        }
+    >
+        <Icon
+            color="black"
+            iconStyle={
+                Array [
+                    Object {
+                      "color": "#E4E4E4",
+                    },
+                    undefined,
+                  ]
+            }
+            name="plus"
+            onPress={undefined}
+            raised={false}
+            reverse={false}
+            reverseColor="white"
+            size={35}
+            type="foundation"
+            underlayColor="white"
+        />
+    </View>
+    <View
+        style={
+            Object {
+                "marginBottom": 35,
+              }
+        }
+    >
+        <Image
+            source={
+                Object {
+                    "uri": "https://facebook.github.io/react/img/logo_og.png",
+                  }
+            }
+            style={
+                Object {
+                    "minHeight": 100,
+                  }
+            }
+        />
+    </View>
+    <View
+        style={
+            Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "justifyContent": "space-between",
+              }
+        }
+    >
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Array [
+                    Object {
+                      "fontSize": 16,
+                      "marginBottom": 6,
+                      "marginRight": 12,
+                    },
+                    Object {},
+                  ]
+            }
+        >
+            Redbull
+        </Text>
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Array [
+                    Object {
+                      "fontSize": 16,
+                      "marginBottom": 6,
+                      "marginRight": 12,
+                    },
+                    Object {
+                      "color": "#3aa2fc",
+                      "fontWeight": "bold",
+                    },
+                  ]
+            }
+        >
+            $3.49
+        </Text>
+    </View>
+</View>,
+}
+`;
