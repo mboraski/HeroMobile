@@ -33,4 +33,4 @@ HistoryScreen.navigationOptions = {
     headerRight: <MenuButton />
 };
 
-export default connect(() => {}, null)(HistoryScreen);
+export default connect(() => ({}), null)(HistoryScreen);

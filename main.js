@@ -15,10 +15,10 @@ import store from './store';
 class App extends Component {
   render() {
     const MainNavigator = TabNavigator({
-      heroMain: { screen: HeroMainScreen }
-      manageInventory: { screen: ManageInventoryScreen }
-      history: { screen: HistoryScreen }
-      contactUs: { screen: ContactUsScreen }
+      heroMain: { screen: HeroMainScreen },
+      manageInventory: { screen: ManageInventoryScreen },
+      history: { screen: HistoryScreen },
+      contactUs: { screen: ContactUsScreen },
       paymentInfo: { screen: PaymentInfoScreen }
     }, {
       tabBarPosition: 'bottom'

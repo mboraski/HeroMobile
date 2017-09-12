@@ -33,4 +33,4 @@ ManageInventoryScreen.navigationOptions = {
     headerRight: <MenuButton />
 };
 
-export default connect(() => {}, null)(ManageInventoryScreen);
+export default connect(() => ({}), null)(ManageInventoryScreen);

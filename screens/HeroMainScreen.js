@@ -33,4 +33,4 @@ HeroMainScreen.navigationOptions = {
     headerRight: <MenuButton />
 };
 
-export default connect(() => {}, null)(HeroMainScreen);
+export default connect(() => ({}), null)(HeroMainScreen);

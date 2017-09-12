@@ -33,4 +33,4 @@ ContactUsScreen.navigationOptions = {
     headerRight: <MenuButton />
 };
 
-export default connect(() => {}, null)(ContactUsScreen);
+export default connect(() => ({}), null)(ContactUsScreen);

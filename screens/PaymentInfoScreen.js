@@ -33,4 +33,4 @@ PaymentInfoScreen.navigationOptions = {
     headerRight: <MenuButton />
 };
 
-export default connect(() => {}, null)(PaymentInfoScreen);
+export default connect(() => ({}), null)(PaymentInfoScreen);
