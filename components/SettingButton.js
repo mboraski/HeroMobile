@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../utils/em';
-import mapIcon from '../assets/icons/menu-2.png';
+import settingIcon from '../assets/icons/setting.png';
 
-const SIZE = emY(1.25);
+const SIZE = emY(1.456);
 
-class MenuButton2 extends Component {
+class SettingButton extends Component {
     onPress = () => {};
 
     render() {
         return (
             <TouchableOpacity onPress={this.onPress} style={styles.container}>
-                <Image source={mapIcon} style={styles.image} resizeMode="contain" />
+                <Image source={settingIcon} style={styles.image} />
             </TouchableOpacity>
         );
     }
@@ -23,7 +23,7 @@ class MenuButton2 extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginRight: 20
+        marginLeft: 20
     },
     image: {
         width: SIZE,
@@ -35,4 +35,4 @@ const mapDispatchToProps = function (dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(MenuButton2);
+export default connect(null, mapDispatchToProps)(SettingButton);
