@@ -9,5 +9,6 @@ export default {
     GREY_700: '#4c4c4c',
     GREY_800: '#323232',
     YELLOW_500: '#fcc937',
-    BLACK:    '#000000'
+    BLACK:    '#000000',
+    WHITE:    '#ffffff'
 };

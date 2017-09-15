@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
 import Drawer from 'react-native-drawer'
+import { connect } from 'react-redux'
+
 import TabNavigation from '../navigations/TabNavigation'
-import SideContent from './SideContent'
+import MenuContent from './MenuContent'
 
 class RootContainer extends Component {
 
-    state={
+    state = {
         drawerOpen: false,
         drawerDisabled: false,
     }
-      
+
     componentDidMount () {
 
     }
@@ -23,13 +25,18 @@ class RootContainer extends Component {
         this._drawer.open()
     }
 
+    componentWillReceiveProps (nextProps) {
+        console.log(nextProps)
+    }
+
     render () {
         return (
             <Drawer
                 ref={(ref) => this._drawer = ref}
                 type="overlay"
+                open = {this.props.isOpened}
                 content={
-                <SideContent closeDrawer={this.closeDrawer} />
+                    <MenuContent closeDrawer={this.closeDrawer} />
                 }
                 acceptDoubleTap
                 styles={{main: {shadowColor: '#000000', shadowOpacity: 0.3, shadowRadius: 15}}}
@@ -57,4 +64,16 @@ class RootContainer extends Component {
     }
 }
 
-export default RootContainer
+const mapStateToProps = state => {
+    console.log('======', state)
+    return ({
+    isOpened: state.isOpened
+})
+}
+
+const mapDispatchToProps = dispatch => ({
+    
+})
+  
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
+

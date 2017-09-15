@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: emY(0.831),
-        color: Color.GREY_300,
+        color: Color.GREY_500,
         textAlign: 'center',
         marginBottom: emY(0.2)
     },

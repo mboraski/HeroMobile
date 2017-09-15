@@ -44,10 +44,6 @@ class HeroMainScreen extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.headerContainer}>
-                        <SettingButton/>
-                        <MenuButtonRight/>
-                    </View>
                     <View style={styles.loader}>
                         <View style={styles.imageContainer}>
                             <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.image} />
@@ -72,6 +68,10 @@ class HeroMainScreen extends Component {
                             <MainItem image={history} title="History"/>
                             <MainItem image={payment} title="Payment Info"/>
                         </View>
+                    </View>
+                    <View style={styles.headerContainer}>
+                        <SettingButton/>
+                        <MenuButtonRight/>
                     </View>
                 </View>
             </ScrollView>
