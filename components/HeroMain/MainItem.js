@@ -1,5 +1,5 @@
 // Third Party Imports
-import React, { Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import { 
     StyleSheet,
     View,
@@ -18,21 +18,25 @@ const WIDTH = emY(2.31)
 const HEIGHT = emY(3.18)
 const SIZE = emY(7)
 
+type Props = {
+    image: any,
+    title: string
+}
+
 class MainItem extends Component {
 
-    static propTypes = {
-        image: PropTypes.any.isRequired,
-        title: PropTypes.string.isRequired,
-    }
+    props: Props
 
     render() {
+        const { image, title } = this.props
+        
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={styles.touchableOpacity}>
                     <Image source={oval} style={styles.oval} />
-                    <Image source={this.props.image} style={styles.image} />
+                    <Image source={image} style={styles.image} />
                 </TouchableOpacity>
-                <Text style={styles.title}>{this.props.title}</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
         )
     }

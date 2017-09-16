@@ -41,6 +41,8 @@ class HeroMainScreen extends Component {
     }
 
     render() {
+        const name = this.state.name
+        
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -51,7 +53,7 @@ class HeroMainScreen extends Component {
                         <Image source={loaderGradient} style={styles.gradient} />
                         <Image source={loaderTicks} style={styles.ticks} />
                     </View>
-                    <Text style={styles.name}>{this.state.name}</Text>
+                    <Text style={styles.name}>{name}</Text>
                     <Text style={styles.viewProfile}>View Profile</Text>
                     <ProfileSwitch/>
                     <View style={styles.statusContainer}>

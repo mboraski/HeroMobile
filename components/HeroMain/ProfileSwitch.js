@@ -40,6 +40,8 @@ class ProfileSwitch extends Component {
     }
 
     render() {
+        const { left, text } = this.state
+        
         return (
             <View style={styles.container}>
                 <View style={styles.labelContainer}>
@@ -49,8 +51,8 @@ class ProfileSwitch extends Component {
                     <TouchableOpacity style={styles.leftContainer} onPress={this.onDriver} >
                         <Text style={styles.label}>Driver</Text>
                     </TouchableOpacity>
-                    <View style={[styles.switcher, {left: this.state.left}]}>
-                        <Text style={styles.switcherLabel}>{this.state.text}</Text>
+                    <View style={[styles.switcher, {left: left}]}>
+                        <Text style={styles.switcherLabel}>{text}</Text>
                     </View>
                 </View>
             </View>

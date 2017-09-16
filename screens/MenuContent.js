@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
     ScrollView,
     StyleSheet,
@@ -35,14 +35,16 @@ export default class MenuContent extends Component {
 	}
 	
     render() {
+		const { name, avatar, age, rate, address } = this.state
+
 		return (
 			<ScrollView style={styles.container}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer}>
 						<View style={styles.imageContainer}>
-							<Image source={{ uri: this.state.avatar}} style={styles.image}/>
+							<Image source={{ uri: avatar}} style={styles.image}/>
 						</View>
-						<Text style={styles.name}>{this.state.name}</Text>
+						<Text style={styles.name}>{name}</Text>
 						<View style={styles.ratingContainer}>
 							<Rating
 								imageSize={emY(0.8)}
@@ -51,13 +53,13 @@ export default class MenuContent extends Component {
 								ratingColor={Color.WHITE}
 								ratingBackgroundColor={Color.WHITE}
 								readonly
-								ratingCount={this.state.rate}
-								startingValue={this.state.rate}
+								ratingCount={rate}
+								startingValue={rate}
 								style={ styles.rating }
 							/>
 							<Text style={styles.title}>(27)</Text>
 						</View>
-						<Location address={this.state.address}/>
+						<Location address={address}/>
 					</View>
 					<View style={styles.switchContainer}>
 						<Text style={styles.title}>OFFLINE</Text>

@@ -16,27 +16,31 @@ import profile from '../../assets/icons/profile.png'
 const SIZE = emY(1.44)
 const BADGE_SIZE = emY(1.69)
 
+type Props = {
+    image: any,
+    title: string,
+    badge: string
+}
+
 class MenuItem extends Component {
 
-    static propTypes = {
-        image: PropTypes.any.isRequired,
-        title: PropTypes.string.isRequired,
-        badge: PropTypes.string
-    }
+    props: Props
 
     render() {
-        let badgeElement = null;
-        if (this.props.badge) {
+        const { image, title, badge } = this.props
+        let badgeElement = null
+
+        if (badge) {
             badgeElement = (
                 <View style={styles.badgeContainer}>
-                    <Text style={styles.badge}>{this.props.badge}</Text>   
+                    <Text style={styles.badge}>{badge}</Text>   
                 </View>
             )
         }
         return (
             <View style={styles.container}>
-                <Image style={styles.image} source={this.props.image} />  
-                <Text style={styles.title}>{this.props.title}</Text> 
+                <Image style={styles.image} source={image} />  
+                <Text style={styles.title}>{title}</Text> 
                 { badgeElement }
             </View>
         )

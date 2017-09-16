@@ -1,5 +1,5 @@
 // Third Party Imports
-import React, { Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import { 
     StyleSheet,
     View,
@@ -14,20 +14,24 @@ import Color from '../../constants/Color'
 
 const SIZE = emY(1.75)
 
+type Props = {
+    image: any,
+    title: string,
+    description: string
+}
+
 class Status extends Component {
 
-    static propTypes = {
-        image: PropTypes.any.isRequired,
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired
-    }
+    props: Props
 
     render() {
+        const { image, title, description } = this.props
+
         return (
             <View style={styles.container}>
-                <Image style={styles.image} source={this.props.image} />
-                <Text style={styles.title}>{this.props.title}</Text>
-                <Text style={styles.description}>{this.props.description}</Text>
+                <Image style={styles.image} source={image} />
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.description}>{description}</Text>
             </View>
         )
     }

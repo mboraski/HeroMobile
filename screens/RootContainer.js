@@ -30,6 +30,8 @@ class RootContainer extends Component {
     }
 
     render () {
+        const { drawerOpen, drawerDisabled } = this.state
+
         return (
             <Drawer
                 ref={(ref) => this._drawer = ref}
@@ -65,10 +67,9 @@ class RootContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('======', state)
     return ({
-    isOpened: state.isOpened
-})
+        isOpened: state.isOpened
+    })
 }
 
 const mapDispatchToProps = dispatch => ({

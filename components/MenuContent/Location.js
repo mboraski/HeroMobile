@@ -1,5 +1,5 @@
 // Third Party Imports
-import React, { Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import { 
     StyleSheet,
     View,
@@ -14,18 +14,19 @@ import location from '../../assets/icons/location.png'
 
 const SIZE = emY(0.656)
 
+type Props = { address: string }
 
 class Location extends Component {
 
-    static propTypes = {
-        address: PropTypes.string.isRequired
-    }
+    props: Props
 
     render() {
+        const address = this.props
+
         return (
             <View style={styles.container}>
                 <Image style={styles.image} source={location} />  
-                <Text style={styles.title}>{this.props.address}</Text>          
+                <Text style={styles.title}>{address}</Text>          
             </View>
         )
     }
