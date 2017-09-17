@@ -7,6 +7,7 @@ import {
 	View,
 	Switch
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Rating } from 'react-native-elements';
 
 // Relative Imports
@@ -23,7 +24,7 @@ import about from '../assets/icons/about.png';
 
 const IMAGE_CONTAINER_SIZE = emY(6.25);
   
-export default class MenuContent extends Component {
+class MenuContent extends Component {
 	state = {
 		name: 'Hanna Morgan',
 		avatar: 'https://facebook.github.io/react/img/logo_og.png',
@@ -143,3 +144,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
 	}
 });
+
+const mapDispatchToProps = function (dispatch) {
+    return {};
+};
+
+export default connect(null, mapDispatchToProps)(MenuContent); 
