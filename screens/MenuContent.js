@@ -1,48 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet,
 	Text,
 	Image,
-    TouchableOpacity,
 	View,
 	Switch
-} from 'react-native'
+} from 'react-native';
 import { Rating } from 'react-native-elements';
 
 // Relative Imports
-import { emY } from '../utils/em'
-import Color from '../constants/Color'
-import Location from '../components/MenuContent/Location'
-import MenuItem from '../components/MenuContent/MenuItem'
+import { emY } from '../utils/em';
+import Color from '../constants/Color';
+import Location from '../components/MenuContent/Location';
+import MenuItem from '../components/MenuContent/MenuItem';
 
-import star from '../assets/icons/star.png'
-import profile from '../assets/icons/profile.png'
-import chat from '../assets/icons/chat2.png'
-import settings from '../assets/icons/settings.png'
-import about from '../assets/icons/about.png'
+import star from '../assets/icons/star.png';
+import profile from '../assets/icons/profile.png';
+import chat from '../assets/icons/chat2.png';
+import settings from '../assets/icons/settings.png';
+import about from '../assets/icons/about.png';
 
-const IMAGE_CONTAINER_SIZE = emY(6.25)
+const IMAGE_CONTAINER_SIZE = emY(6.25);
   
 export default class MenuContent extends Component {
-  
 	state = {
 		name: 'Hanna Morgan',
 		avatar: 'https://facebook.github.io/react/img/logo_og.png',
 		age: '27',
 		rate: 4,
 		address: 'Boston, MA',
-	}
+	};
 	
     render() {
-		const { name, avatar, age, rate, address } = this.state
+		const { name, avatar, age, rate, address } = this.state;
 
 		return (
 			<ScrollView style={styles.container}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer}>
 						<View style={styles.imageContainer}>
-							<Image source={{ uri: avatar}} style={styles.image}/>
+							<Image source={{ uri: avatar }} style={styles.image} />
 						</View>
 						<Text style={styles.name}>{name}</Text>
 						<View style={styles.ratingContainer}>
@@ -55,28 +53,28 @@ export default class MenuContent extends Component {
 								readonly
 								ratingCount={rate}
 								startingValue={rate}
-								style={ styles.rating }
+								style={styles.rating}
 							/>
-							<Text style={styles.title}>(27)</Text>
+							<Text style={styles.title}>({age})</Text>
 						</View>
-						<Location address={address}/>
+						<Location address={address} />
 					</View>
 					<View style={styles.switchContainer}>
 						<Text style={styles.title}>OFFLINE</Text>
-						<Switch onTintColor={Color.GREY_700} style=	{styles.switch} value={true}/>
+						<Switch onTintColor={Color.GREY_700} style={styles.switch} value={Boolean(true)} />
 						<Text style={styles.title}>ONLINE</Text>
 					</View>
 					<View style={styles.listContainer}>
-						<MenuItem image={profile} title="View Profile"/>
-						<MenuItem image={chat} title="Chat" badge="3"/>
-						<MenuItem image={settings} title="Settings"/>
-						<MenuItem image={about} title="About Us"/>
+						<MenuItem image={profile} title="View Profile" />
+						<MenuItem image={chat} title="Chat" badge="3" />
+						<MenuItem image={settings} title="Settings" />
+						<MenuItem image={about} title="About Us" />
 					</View>
 					
 				</View>
 				<Text style={styles.copyright}>@2016 APP</Text>		
 			</ScrollView>
-		)
+		);
     }
 }
   
@@ -144,4 +142,4 @@ const styles = StyleSheet.create({
         color: Color.GREY_700,
         textAlign: 'center',
 	}
-})
+});

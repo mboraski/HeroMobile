@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
 import MenuItem from './MenuItem';
-import profile from '../../assets/icons/profile.png'
+import profile from '../../assets/icons/profile.png';
 const initialState = {};
 
 describe('MenuItem', () => {

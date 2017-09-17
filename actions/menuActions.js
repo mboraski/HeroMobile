@@ -1,10 +1,14 @@
+const ACTIONS = {
+  MENU_TOGGLE: 'menu_toggle'
+};
 
+const toggleMenu = isOpened => ({
+  type: ACTIONS.MENU_TOGGLE,
+  isOpened
+});
 
-import * as ActionTypes from '../constants/ActionTypes'
+const ACTION_CREATORS = {
+  toggleMenu
+};
 
-export default function toggleMenu(isOpened) {
-  return {
-    type: ActionTypes.MENU_TOGGLE,
-    isOpened
-  }
-}
+export default { ...ACTIONS, ...ACTION_CREATORS };

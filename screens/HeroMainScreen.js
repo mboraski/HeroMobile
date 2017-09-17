@@ -1,47 +1,44 @@
 // Third Party Imports
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     StyleSheet,
     ScrollView,
     Text,
     View,
-    Image,
-    Platform
-} from 'react-native'
-import { Button } from 'react-native-elements'
-import { connect } from 'react-redux'
+    Image
+} from 'react-native';
+import { connect } from 'react-redux';
 
 // Relative Imports
-import loaderGradient from '../assets/loader-gradient.png'
-import loaderTicks from '../assets/loader-ticks.png'
-import races from '../assets/icons/races.png'
-import distance from '../assets/icons/distance.png'
-import earned from '../assets/icons/earned.png'
-import inventory from '../assets/icons/inventory.png'
-import history from '../assets/icons/history.png'
-import contact from '../assets/icons/contact.png'
-import payment from '../assets/icons/payment.png'
+import loaderGradient from '../assets/loader-gradient.png';
+import loaderTicks from '../assets/loader-ticks.png';
+import races from '../assets/icons/races.png';
+import distance from '../assets/icons/distance.png';
+import earned from '../assets/icons/earned.png';
+import inventory from '../assets/icons/inventory.png';
+import history from '../assets/icons/history.png';
+import contact from '../assets/icons/contact.png';
+import payment from '../assets/icons/payment.png';
 
-import SettingButton from '../components/SettingButton'
-import MenuButtonRight from '../components/MenuButtonRight'
-import ProfileSwitch from '../components/HeroMain/ProfileSwitch'
-import Status from '../components/HeroMain/Status'
-import MainItem from '../components/HeroMain/MainItem'
-import Color from '../constants/Color'
-import Style from '../constants/Style'
-import { emY } from '../utils/em'
+import SettingButton from '../components/SettingButton';
+import MenuButtonRight from '../components/MenuButtonRight';
+import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
+import Status from '../components/HeroMain/Status';
+import MainItem from '../components/HeroMain/MainItem';
+import Color from '../constants/Color';
+import Style from '../constants/Style';
+import { emY } from '../utils/em';
 
-const SIZE = emY(7)
-const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25)
+const SIZE = emY(7);
+const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
 class HeroMainScreen extends Component {
-    
     state = {
         name: 'Hanna Morgan'
-    }
+    };
 
     render() {
-        const name = this.state.name
+        const { name } = this.state.name;
         
         return (
             <ScrollView>
@@ -55,29 +52,44 @@ class HeroMainScreen extends Component {
                     </View>
                     <Text style={styles.name}>{name}</Text>
                     <Text style={styles.viewProfile}>View Profile</Text>
-                    <ProfileSwitch/>
+                    <ProfileSwitch />
                     <View style={styles.statusContainer}>
-                        <Status style={styles.status} image={races} title="Races" description="213"/>
-                        <Status style={styles.status} image={distance} title="Distance" description="438km"/>
-                        <Status style={styles.status} image={earned} title="Earned" description="$3123.00"/>
+                        <Status 
+                            style={styles.status}
+                            image={races} 
+                            title="Races" 
+                            description="213" 
+                        />
+                        <Status 
+                            style={styles.status}
+                            image={distance} 
+                            title="Distance" 
+                            description="438km" 
+                        />
+                        <Status 
+                            style={styles.status} 
+                            image={earned} 
+                            title="Earned" 
+                            description="$3123.00" 
+                        />
                     </View>
                     <View style={styles.mainItemContainer}>
                         <View>
-                            <MainItem image={inventory} title="Manage Inventory"/>
-                            <MainItem image={contact} title="Contact Us"/>
+                            <MainItem image={inventory} title="Manage Inventory" />
+                            <MainItem image={contact} title="Contact Us" />
                         </View>
                         <View>
-                            <MainItem image={history} title="History"/>
-                            <MainItem image={payment} title="Payment Info"/>
+                            <MainItem image={history} title="History" />
+                            <MainItem image={payment} title="Payment Info" />
                         </View>
                     </View>
                     <View style={styles.headerContainer}>
-                        <SettingButton/>
-                        <MenuButtonRight/>
+                        <SettingButton />
+                        <MenuButtonRight />
                     </View>
                 </View>
             </ScrollView>
-        )
+        );
     }
 }
 
@@ -168,12 +180,12 @@ const styles = StyleSheet.create({
         marginTop: emY(1.25),
         marginBottom: emY(1)
     }
-})
+});
 
 HeroMainScreen.navigationOptions = {
     title: 'MainScreen',
     headerStyle: Style.headerBorderless,
     headerTitleStyle: Style.headerTitle
-}
+};
 
-export default connect(() => ({}), null)(HeroMainScreen)
+export default connect(() => ({}), null)(HeroMainScreen);

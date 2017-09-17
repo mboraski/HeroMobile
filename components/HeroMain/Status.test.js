@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
 import Status from './Status';
-import races from '../../assets/icons/races.png'
+import races from '../../assets/icons/races.png';
 
 const initialState = {};
 

@@ -1,46 +1,45 @@
 // Third Party Imports
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { 
     StyleSheet, 
     LayoutAnimation,
     TouchableOpacity, 
     Text, 
     View 
-} from 'react-native'
-import { connect } from 'react-redux'
+} from 'react-native';
+import { connect } from 'react-redux';
 
 // Relative Imports
-import { emY } from '../../utils/em'
-import Color from '../../constants/Color'
+import { emY } from '../../utils/em';
+import Color from '../../constants/Color';
 
 const WIDTH = emY(16.625);
 const HEIGHT = emY(2.169);
 
 class ProfileSwitch extends Component {
-
     state = {
-        left: 0,
+        leftVal: 0,
         text: 'Runner'
-    }
+    };
 
     onRunner = () => {
-        LayoutAnimation.spring()
+        LayoutAnimation.spring();
         this.setState({
             left: 0,
             text: 'Runner'
-        })
+        });
     }
 
     onDriver = () => {
-        LayoutAnimation.spring()
+        LayoutAnimation.spring();
         this.setState({
             left: WIDTH / 2,
             text: 'Driver'
-        })
+        });
     }
 
     render() {
-        const { left, text } = this.state
+        const { leftVal, text } = this.state;
         
         return (
             <View style={styles.container}>
@@ -51,25 +50,25 @@ class ProfileSwitch extends Component {
                     <TouchableOpacity style={styles.leftContainer} onPress={this.onDriver} >
                         <Text style={styles.label}>Driver</Text>
                     </TouchableOpacity>
-                    <View style={[styles.switcher, {left: left}]}>
+                    <View style={[styles.switcher, { left: leftVal }]}>
                         <Text style={styles.switcherLabel}>{text}</Text>
                     </View>
                 </View>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         height: HEIGHT,
-        alignItems:'center',
+        alignItems: 'center',
     },
     labelContainer: {
         flex: 1,
         flexDirection: 'row',
         width: WIDTH,
-        alignItems:'center',
+        alignItems: 'center',
         backgroundColor: Color.GREY_200,
         borderRadius: HEIGHT / 2
     },

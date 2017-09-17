@@ -1,18 +1,17 @@
-import * as types from '../constants/ActionTypes'
+import MenuActions from '../actions/menuActions';
 
 const initialState = {
     isOpened: false
-}
+};
 
-export default function menu(state = initialState, action){
+export default function (state = initialState, action) {
   switch (action.type) {
-    case types.MENU_TOGGLE: 
-      console.log('reducer-MENU_TOGGLE: ',action)
+    case MenuActions.MENU_TOGGLE: 
       return Object.assign({}, state, { 
         isOpened: action.isOpened 
       });
     default: 
-      return state
+      return state;
   }
 }
 

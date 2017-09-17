@@ -1,41 +1,38 @@
 // Third Party Imports
-import React, { Component, PropTypes} from 'react'
+import React, { Component } from 'react';
 import { 
     StyleSheet,
     View,
     Image,
     Text
-} from 'react-native'
-import { Badge } from 'react-native-elements'
+} from 'react-native';
 
 // Relative Imports
-import { emY } from '../../utils/em'
-import Color from '../../constants/Color'
-import profile from '../../assets/icons/profile.png'
+import { emY } from '../../utils/em';
+import Color from '../../constants/Color';
 
-const SIZE = emY(1.44)
-const BADGE_SIZE = emY(1.69)
+const SIZE = emY(1.44);
+const BADGE_SIZE = emY(1.69);
 
 type Props = {
     image: any,
     title: string,
     badge: string
-}
+};
 
 class MenuItem extends Component {
-
-    props: Props
+    props: Props;
 
     render() {
-        const { image, title, badge } = this.props
-        let badgeElement = null
+        const { image, title, badge } = this.props;
+        let badgeElement = null;
 
         if (badge) {
             badgeElement = (
                 <View style={styles.badgeContainer}>
                     <Text style={styles.badge}>{badge}</Text>   
                 </View>
-            )
+            );
         }
         return (
             <View style={styles.container}>
@@ -43,13 +40,13 @@ class MenuItem extends Component {
                 <Text style={styles.title}>{title}</Text> 
                 { badgeElement }
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems:'center',
+        alignItems: 'center',
         flexDirection: 'row',
         height: emY(3.92),
         borderBottomWidth: 1,
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     },
     badgeContainer: {
         position: 'absolute',
-        alignItems:'center',
+        alignItems: 'center',
         justifyContent: 'center',
         right: emY(1.2),
         width: BADGE_SIZE,
@@ -81,6 +78,6 @@ const styles = StyleSheet.create({
         color: Color.WHITE,
         fontSize: emY(1)
     }
-})
+});
 
-export default MenuItem
+export default MenuItem;

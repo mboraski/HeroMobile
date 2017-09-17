@@ -1,31 +1,30 @@
 // Third Party Imports
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { 
     StyleSheet,
     View,
     Text,
     Image
-} from 'react-native'
-import { connect } from 'react-redux'
+} from 'react-native';
+import { connect } from 'react-redux';
 
 // Relative Imports
-import { emY } from '../../utils/em'
-import Color from '../../constants/Color'
+import { emY } from '../../utils/em';
+import Color from '../../constants/Color';
 
-const SIZE = emY(1.75)
+const SIZE = emY(1.75);
 
 type Props = {
     image: any,
     title: string,
     description: string
-}
+};
 
 class Status extends Component {
-
-    props: Props
+    props: Props;
 
     render() {
-        const { image, title, description } = this.props
+        const { image, title, description } = this.props;
 
         return (
             <View style={styles.container}>
@@ -33,13 +32,13 @@ class Status extends Component {
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems:'center',
+        alignItems: 'center',
         width: emY(7.25)
     },
     image: {
@@ -58,10 +57,10 @@ const styles = StyleSheet.create({
         color: Color.GREY_800,
         textAlign: 'center'
     }
-})
+});
 
 const mapDispatchToProps = function (dispatch) {
     return {};
-}
+};
 
-export default connect(null, mapDispatchToProps)(Status)
+export default connect(null, mapDispatchToProps)(Status);
