@@ -21,6 +21,7 @@ import profile from '../assets/icons/profile.png';
 import chat from '../assets/icons/chat2.png';
 import settings from '../assets/icons/settings.png';
 import about from '../assets/icons/about.png';
+import avatarIcon from '../assets/icons/user.png';
 
 const IMAGE_CONTAINER_SIZE = emY(6.25);
   
@@ -34,14 +35,14 @@ class MenuContent extends Component {
 	};
 	
     render() {
-		const { name, avatar, age, rate, address } = this.state;
+		const { name, age, rate, address } = this.state;
 
 		return (
 			<ScrollView style={styles.container}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer}>
 						<View style={styles.imageContainer}>
-							<Image source={{ uri: avatar }} style={styles.image} />
+							<Image source={avatarIcon} style={styles.image} />
 						</View>
 						<Text style={styles.name}>{name}</Text>
 						<View style={styles.ratingContainer}>

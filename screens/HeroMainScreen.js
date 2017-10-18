@@ -19,9 +19,9 @@ import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history.png';
 import contact from '../assets/icons/contact.png';
 import payment from '../assets/icons/payment.png';
+import avatarIcon from '../assets/icons/user.png';
 
-import SettingButton from '../components/SettingButton';
-import MenuButtonRight from '../components/MenuButtonRight';
+import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
@@ -33,19 +33,37 @@ const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
 class HeroMainScreen extends Component {
+    static navigationOptions = {
+        title: '',
+        headerLeft: <MenuButton />,
+        headerRight: null,
+        headerStyle: Style.headerBorderless,
+        headerTitleStyle: Style.headerTitle
+    };
+
     state = {
         name: 'Hanna Morgan'
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.header.toggleState !== nextProps.header.toggleState) {
+            if (nextProps.header.isMenuOpen) {
+                this.props.navigation.navigate('DrawerOpen');
+            } else {
+                this.props.navigation.navigate('DrawerClose');
+            }
+        }
+    }
+
     render() {
-        const { name } = this.state.name;
+        const { name } = this.state;
         
         return (
-            <ScrollView>
+            <ScrollView style={styles.scrollContainer}>
                 <View style={styles.container}>
                     <View style={styles.loader}>
                         <View style={styles.imageContainer}>
-                            <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.image} />
+                            <Image source={avatarIcon} style={styles.image} />
                         </View>
                         <Image source={loaderGradient} style={styles.gradient} />
                         <Image source={loaderTicks} style={styles.ticks} />
@@ -83,10 +101,6 @@ class HeroMainScreen extends Component {
                             <MainItem image={payment} title="Payment Info" />
                         </View>
                     </View>
-                    <View style={styles.headerContainer}>
-                        <SettingButton />
-                        <MenuButtonRight />
-                    </View>
                 </View>
             </ScrollView>
         );
@@ -94,20 +108,16 @@ class HeroMainScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff'
     },
-    headerContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 42,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
     loader: {
-        marginTop: 32,
+        marginTop: 0,
         height: emY(11),
         alignItems: 'center',
         justifyContent: 'center',
@@ -182,10 +192,11 @@ const styles = StyleSheet.create({
     }
 });
 
-HeroMainScreen.navigationOptions = {
-    title: 'MainScreen',
-    headerStyle: Style.headerBorderless,
-    headerTitleStyle: Style.headerTitle
-};
+const mapStateToProps = state => ({
+    header: state.header
+});
 
-export default connect(() => ({}), null)(HeroMainScreen);
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
+

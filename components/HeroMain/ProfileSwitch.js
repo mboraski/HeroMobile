@@ -25,7 +25,7 @@ class ProfileSwitch extends Component {
     onRunner = () => {
         LayoutAnimation.spring();
         this.setState({
-            left: 0,
+            leftVal: 0,
             text: 'Runner'
         });
     }
@@ -33,7 +33,7 @@ class ProfileSwitch extends Component {
     onDriver = () => {
         LayoutAnimation.spring();
         this.setState({
-            left: WIDTH / 2,
+            leftVal: WIDTH / 2,
             text: 'Driver'
         });
     }

@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addNavigationHelpers } from 'react-navigation';
 
 // Relative Imports
-import DrawerNavigation from '../navigations/DrawerNavigation';
+import MenuNavigator from '../navigations/MenuNavigator';
 
 class RootContainer extends Component {
     state = {
         drawerOpen: false,
-        drawerDisabled: false,
-    }
+        drawerDisabled: false
+    };
 
     render() {
-        return (
-            <DrawerNavigation />
-        );
+        const navigation = addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.nav
+        });
+        return <MenuNavigator navigation={navigation} />;
     }
 }
 
-const mapStateToProps = state => ({ isOpened: state.isOpened });
+const mapStateToProps = state => ({ isOpened: state.isOpened, nav: state.nav });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
-  
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
-
+export default connect(mapStateToProps)(RootContainer);

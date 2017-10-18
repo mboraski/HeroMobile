@@ -1,13 +1,12 @@
 // Third Party Imports
 import React, { Component } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../utils/em';
 import mapIcon from '../assets/icons/menu-2.png';
-import MenuActions from '../actions/menuActions';
+import { openToggle } from '../actions/navigationActions';
 
 const SIZE = emY(1.25);
 
@@ -39,11 +38,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({ isOpened: state.isOpened });
 
 
-const mapDispatchToProps = (dispatch) => {
-    const menuActions = bindActionCreators(MenuActions, dispatch);
-    return {
-        toggleMenu: menuActions.toggleMenu
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    openToggle: () => dispatch(openToggle())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuButton2);

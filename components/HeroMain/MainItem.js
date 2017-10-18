@@ -32,8 +32,8 @@ class MainItem extends Component {
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={styles.touchableOpacity}>
-                    <Image source={oval} style={styles.oval} />
-                    <Image source={image} style={styles.image} />
+                    <Image source={oval} style={styles.oval} resizeMode="contain" />
+                    <Image source={image} style={styles.image} resizeMode="contain" />
                 </TouchableOpacity>
                 <Text style={styles.title}>{title}</Text>
             </View>

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './authReducer';
-import menu from './menuReducer'
+import header from './navigationReducer';
+import nav from './navReducer';
 
 export default combineReducers({
   auth,
-  menu
+  header,
+  nav,
 });
