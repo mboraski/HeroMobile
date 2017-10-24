@@ -1,0 +1,927 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeroMainScreen renders correctly 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <ScrollViewMock>
+    <View
+        style={
+            Object {
+                "backgroundColor": "#fff",
+                "flex": 1,
+              }
+        }
+    >
+        <View
+            style={
+                Object {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 42,
+                  }
+            }
+        >
+            <Connect(SettingButton) />
+            <Connect(MenuButton2) />
+        </View>
+        <View
+            style={
+                Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 176,
+                    "justifyContent": "center",
+                    "marginBottom": 16,
+                    "marginTop": 32,
+                  }
+            }
+        >
+            <View
+                style={
+                    Object {
+                        "alignItems": "center",
+                        "borderColor": "#cccccc",
+                        "borderRadius": 66,
+                        "borderWidth": 5,
+                        "flexDirection": "row",
+                        "height": 132,
+                        "justifyContent": "center",
+                        "width": 132,
+                      }
+                }
+            >
+                <Image
+                    source={
+                        Object {
+                            "uri": "https://facebook.github.io/react/img/logo_og.png",
+                          }
+                    }
+                    style={
+                        Object {
+                            "borderRadius": 56,
+                            "height": 112,
+                            "width": 112,
+                          }
+                    }
+                />
+            </View>
+            <Image
+                source={1}
+                style={
+                    Object {
+                        "height": 112,
+                        "left": "50%",
+                        "position": "absolute",
+                        "top": "50%",
+                        "transform": Array [
+                          Object {
+                            "translate": Array [
+                              0,
+                              -112,
+                            ],
+                          },
+                          Object {
+                            "scale": 1,
+                          },
+                        ],
+                        "width": 112,
+                      }
+                }
+            />
+            <Image
+                source={1}
+                style={
+                    Object {
+                        "height": 112,
+                        "left": "50%",
+                        "position": "absolute",
+                        "top": "50%",
+                        "transform": Array [
+                          Object {
+                            "translate": Array [
+                              -56,
+                              -56,
+                            ],
+                          },
+                          Object {
+                            "scale": 1.4,
+                          },
+                        ],
+                        "width": 112,
+                      }
+                }
+            />
+        </View>
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Object {
+                    "color": "#000000",
+                    "fontSize": 20,
+                    "marginBottom": 9.696,
+                    "textAlign": "center",
+                  }
+            }
+        >
+            Hanna Morgan
+        </Text>
+        <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+                Object {
+                    "color": "#000000",
+                    "fontSize": 13.296,
+                    "marginBottom": 24,
+                    "textAlign": "center",
+                  }
+            }
+        >
+            Hanna Morgan
+        </Text>
+        <Connect(ProfileSwitch) />
+        <View
+            style={
+                Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "marginLeft": 28,
+                    "marginRight": 28,
+                    "marginTop": 31.04,
+                  }
+            }
+        >
+            <Connect(Status)
+                description="213"
+                image={1}
+                style={undefined}
+                title="Races"
+            />
+            <Connect(Status)
+                description="438km"
+                image={1}
+                style={undefined}
+                title="Distance"
+            />
+            <Connect(Status)
+                description="$3123.00"
+                image={1}
+                style={undefined}
+                title="Earned"
+            />
+        </View>
+        <View
+            style={
+                Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "marginBottom": 16,
+                    "marginLeft": 56,
+                    "marginRight": 56,
+                    "marginTop": 20,
+                  }
+            }
+        >
+            <View>
+                <Connect(MainItem)
+                    image={1}
+                    title="Manage Inventory"
+                />
+                <Connect(MainItem)
+                    image={1}
+                    title="Contact Us"
+                />
+            </View>
+            <View>
+                <Connect(MainItem)
+                    image={1}
+                    title="History"
+                />
+                <Connect(MainItem)
+                    image={1}
+                    title="Payment Info"
+                />
+            </View>
+        </View>
+    </View>
+</ScrollViewMock>,
+  "nodes": Array [
+    <ScrollViewMock>
+      <View
+            style={
+                  Object {
+                        "backgroundColor": "#fff",
+                        "flex": 1,
+                      }
+            }
+      >
+            <View
+                  style={
+                        Object {
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 42,
+                            }
+                  }
+            >
+                  <Connect(SettingButton) />
+                  <Connect(MenuButton2) />
+            </View>
+            <View
+                  style={
+                        Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "height": 176,
+                              "justifyContent": "center",
+                              "marginBottom": 16,
+                              "marginTop": 32,
+                            }
+                  }
+            >
+                  <View
+                        style={
+                              Object {
+                                    "alignItems": "center",
+                                    "borderColor": "#cccccc",
+                                    "borderRadius": 66,
+                                    "borderWidth": 5,
+                                    "flexDirection": "row",
+                                    "height": 132,
+                                    "justifyContent": "center",
+                                    "width": 132,
+                                  }
+                        }
+                  >
+                        <Image
+                              source={
+                                    Object {
+                                          "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                        }
+                              }
+                              style={
+                                    Object {
+                                          "borderRadius": 56,
+                                          "height": 112,
+                                          "width": 112,
+                                        }
+                              }
+                        />
+                  </View>
+                  <Image
+                        source={1}
+                        style={
+                              Object {
+                                    "height": 112,
+                                    "left": "50%",
+                                    "position": "absolute",
+                                    "top": "50%",
+                                    "transform": Array [
+                                      Object {
+                                        "translate": Array [
+                                          0,
+                                          -112,
+                                        ],
+                                      },
+                                      Object {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                    "width": 112,
+                                  }
+                        }
+                  />
+                  <Image
+                        source={1}
+                        style={
+                              Object {
+                                    "height": 112,
+                                    "left": "50%",
+                                    "position": "absolute",
+                                    "top": "50%",
+                                    "transform": Array [
+                                      Object {
+                                        "translate": Array [
+                                          -56,
+                                          -56,
+                                        ],
+                                      },
+                                      Object {
+                                        "scale": 1.4,
+                                      },
+                                    ],
+                                    "width": 112,
+                                  }
+                        }
+                  />
+            </View>
+            <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                        Object {
+                              "color": "#000000",
+                              "fontSize": 20,
+                              "marginBottom": 9.696,
+                              "textAlign": "center",
+                            }
+                  }
+            >
+                  Hanna Morgan
+            </Text>
+            <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                        Object {
+                              "color": "#000000",
+                              "fontSize": 13.296,
+                              "marginBottom": 24,
+                              "textAlign": "center",
+                            }
+                  }
+            >
+                  Hanna Morgan
+            </Text>
+            <Connect(ProfileSwitch) />
+            <View
+                  style={
+                        Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "marginLeft": 28,
+                              "marginRight": 28,
+                              "marginTop": 31.04,
+                            }
+                  }
+            >
+                  <Connect(Status)
+                        description="213"
+                        image={1}
+                        style={undefined}
+                        title="Races"
+                  />
+                  <Connect(Status)
+                        description="438km"
+                        image={1}
+                        style={undefined}
+                        title="Distance"
+                  />
+                  <Connect(Status)
+                        description="$3123.00"
+                        image={1}
+                        style={undefined}
+                        title="Earned"
+                  />
+            </View>
+            <View
+                  style={
+                        Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "marginBottom": 16,
+                              "marginLeft": 56,
+                              "marginRight": 56,
+                              "marginTop": 20,
+                            }
+                  }
+            >
+                  <View>
+                        <Connect(MainItem)
+                              image={1}
+                              title="Manage Inventory"
+                        />
+                        <Connect(MainItem)
+                              image={1}
+                              title="Contact Us"
+                        />
+                  </View>
+                  <View>
+                        <Connect(MainItem)
+                              image={1}
+                              title="History"
+                        />
+                        <Connect(MainItem)
+                              image={1}
+                              title="Payment Info"
+                        />
+                  </View>
+            </View>
+      </View>
+</ScrollViewMock>,
+  ],
+  "options": Object {
+    "context": Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+    },
+  },
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+      },
+      "_currentElement": <HeroMainScreen
+        dispatch={[Function]}
+/>,
+      "_debugID": 3,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": HeroMainScreen {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "dispatch": [Function],
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 2,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <ScrollViewMock>
+          <View
+                    style={
+                              Object {
+                                        "backgroundColor": "#fff",
+                                        "flex": 1,
+                                      }
+                    }
+          >
+                    <View
+                              style={
+                                        Object {
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "left": 0,
+                                                  "position": "absolute",
+                                                  "right": 0,
+                                                  "top": 42,
+                                                }
+                              }
+                    >
+                              <Connect(SettingButton) />
+                              <Connect(MenuButton2) />
+                    </View>
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "height": 176,
+                                                  "justifyContent": "center",
+                                                  "marginBottom": 16,
+                                                  "marginTop": 32,
+                                                }
+                              }
+                    >
+                              <View
+                                        style={
+                                                  Object {
+                                                            "alignItems": "center",
+                                                            "borderColor": "#cccccc",
+                                                            "borderRadius": 66,
+                                                            "borderWidth": 5,
+                                                            "flexDirection": "row",
+                                                            "height": 132,
+                                                            "justifyContent": "center",
+                                                            "width": 132,
+                                                          }
+                                        }
+                              >
+                                        <Image
+                                                  source={
+                                                            Object {
+                                                                      "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                                                    }
+                                                  }
+                                                  style={
+                                                            Object {
+                                                                      "borderRadius": 56,
+                                                                      "height": 112,
+                                                                      "width": 112,
+                                                                    }
+                                                  }
+                                        />
+                              </View>
+                              <Image
+                                        source={1}
+                                        style={
+                                                  Object {
+                                                            "height": 112,
+                                                            "left": "50%",
+                                                            "position": "absolute",
+                                                            "top": "50%",
+                                                            "transform": Array [
+                                                              Object {
+                                                                "translate": Array [
+                                                                  0,
+                                                                  -112,
+                                                                ],
+                                                              },
+                                                              Object {
+                                                                "scale": 1,
+                                                              },
+                                                            ],
+                                                            "width": 112,
+                                                          }
+                                        }
+                              />
+                              <Image
+                                        source={1}
+                                        style={
+                                                  Object {
+                                                            "height": 112,
+                                                            "left": "50%",
+                                                            "position": "absolute",
+                                                            "top": "50%",
+                                                            "transform": Array [
+                                                              Object {
+                                                                "translate": Array [
+                                                                  -56,
+                                                                  -56,
+                                                                ],
+                                                              },
+                                                              Object {
+                                                                "scale": 1.4,
+                                                              },
+                                                            ],
+                                                            "width": 112,
+                                                          }
+                                        }
+                              />
+                    </View>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Object {
+                                                  "color": "#000000",
+                                                  "fontSize": 20,
+                                                  "marginBottom": 9.696,
+                                                  "textAlign": "center",
+                                                }
+                              }
+                    >
+                              Hanna Morgan
+                    </Text>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Object {
+                                                  "color": "#000000",
+                                                  "fontSize": 13.296,
+                                                  "marginBottom": 24,
+                                                  "textAlign": "center",
+                                                }
+                              }
+                    >
+                              Hanna Morgan
+                    </Text>
+                    <Connect(ProfileSwitch) />
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "marginLeft": 28,
+                                                  "marginRight": 28,
+                                                  "marginTop": 31.04,
+                                                }
+                              }
+                    >
+                              <Connect(Status)
+                                        description="213"
+                                        image={1}
+                                        style={undefined}
+                                        title="Races"
+                              />
+                              <Connect(Status)
+                                        description="438km"
+                                        image={1}
+                                        style={undefined}
+                                        title="Distance"
+                              />
+                              <Connect(Status)
+                                        description="$3123.00"
+                                        image={1}
+                                        style={undefined}
+                                        title="Earned"
+                              />
+                    </View>
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": 16,
+                                                  "marginLeft": 56,
+                                                  "marginRight": 56,
+                                                  "marginTop": 20,
+                                                }
+                              }
+                    >
+                              <View>
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Manage Inventory"
+                                        />
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Contact Us"
+                                        />
+                              </View>
+                              <View>
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="History"
+                                        />
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Payment Info"
+                                        />
+                              </View>
+                    </View>
+          </View>
+</ScrollViewMock>,
+        "_debugID": 4,
+        "_renderedOutput": <ScrollViewMock>
+          <View
+                    style={
+                              Object {
+                                        "backgroundColor": "#fff",
+                                        "flex": 1,
+                                      }
+                    }
+          >
+                    <View
+                              style={
+                                        Object {
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "left": 0,
+                                                  "position": "absolute",
+                                                  "right": 0,
+                                                  "top": 42,
+                                                }
+                              }
+                    >
+                              <Connect(SettingButton) />
+                              <Connect(MenuButton2) />
+                    </View>
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "height": 176,
+                                                  "justifyContent": "center",
+                                                  "marginBottom": 16,
+                                                  "marginTop": 32,
+                                                }
+                              }
+                    >
+                              <View
+                                        style={
+                                                  Object {
+                                                            "alignItems": "center",
+                                                            "borderColor": "#cccccc",
+                                                            "borderRadius": 66,
+                                                            "borderWidth": 5,
+                                                            "flexDirection": "row",
+                                                            "height": 132,
+                                                            "justifyContent": "center",
+                                                            "width": 132,
+                                                          }
+                                        }
+                              >
+                                        <Image
+                                                  source={
+                                                            Object {
+                                                                      "uri": "https://facebook.github.io/react/img/logo_og.png",
+                                                                    }
+                                                  }
+                                                  style={
+                                                            Object {
+                                                                      "borderRadius": 56,
+                                                                      "height": 112,
+                                                                      "width": 112,
+                                                                    }
+                                                  }
+                                        />
+                              </View>
+                              <Image
+                                        source={1}
+                                        style={
+                                                  Object {
+                                                            "height": 112,
+                                                            "left": "50%",
+                                                            "position": "absolute",
+                                                            "top": "50%",
+                                                            "transform": Array [
+                                                              Object {
+                                                                "translate": Array [
+                                                                  0,
+                                                                  -112,
+                                                                ],
+                                                              },
+                                                              Object {
+                                                                "scale": 1,
+                                                              },
+                                                            ],
+                                                            "width": 112,
+                                                          }
+                                        }
+                              />
+                              <Image
+                                        source={1}
+                                        style={
+                                                  Object {
+                                                            "height": 112,
+                                                            "left": "50%",
+                                                            "position": "absolute",
+                                                            "top": "50%",
+                                                            "transform": Array [
+                                                              Object {
+                                                                "translate": Array [
+                                                                  -56,
+                                                                  -56,
+                                                                ],
+                                                              },
+                                                              Object {
+                                                                "scale": 1.4,
+                                                              },
+                                                            ],
+                                                            "width": 112,
+                                                          }
+                                        }
+                              />
+                    </View>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Object {
+                                                  "color": "#000000",
+                                                  "fontSize": 20,
+                                                  "marginBottom": 9.696,
+                                                  "textAlign": "center",
+                                                }
+                              }
+                    >
+                              Hanna Morgan
+                    </Text>
+                    <Text
+                              accessible={true}
+                              allowFontScaling={true}
+                              ellipsizeMode="tail"
+                              style={
+                                        Object {
+                                                  "color": "#000000",
+                                                  "fontSize": 13.296,
+                                                  "marginBottom": 24,
+                                                  "textAlign": "center",
+                                                }
+                              }
+                    >
+                              Hanna Morgan
+                    </Text>
+                    <Connect(ProfileSwitch) />
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "marginLeft": 28,
+                                                  "marginRight": 28,
+                                                  "marginTop": 31.04,
+                                                }
+                              }
+                    >
+                              <Connect(Status)
+                                        description="213"
+                                        image={1}
+                                        style={undefined}
+                                        title="Races"
+                              />
+                              <Connect(Status)
+                                        description="438km"
+                                        image={1}
+                                        style={undefined}
+                                        title="Distance"
+                              />
+                              <Connect(Status)
+                                        description="$3123.00"
+                                        image={1}
+                                        style={undefined}
+                                        title="Earned"
+                              />
+                    </View>
+                    <View
+                              style={
+                                        Object {
+                                                  "alignItems": "center",
+                                                  "flexDirection": "row",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": 16,
+                                                  "marginLeft": 56,
+                                                  "marginRight": 56,
+                                                  "marginTop": 20,
+                                                }
+                              }
+                    >
+                              <View>
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Manage Inventory"
+                                        />
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Contact Us"
+                                        />
+                              </View>
+                              <View>
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="History"
+                                        />
+                                        <Connect(MainItem)
+                                                  image={1}
+                                                  title="Payment Info"
+                                        />
+                              </View>
+                    </View>
+          </View>
+</ScrollViewMock>,
+      },
+      "_renderedNodeType": 1,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <HeroMainScreen
+    dispatch={[Function]}
+/>,
+}
+`;

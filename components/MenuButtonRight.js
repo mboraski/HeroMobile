@@ -6,15 +6,19 @@ import { connect } from 'react-redux';
 // Relative Imports
 import { emY } from '../utils/em';
 import mapIcon from '../assets/icons/menu-2.png';
+import { openToggle } from '../actions/navigationActions';
 
-const SIZE = emY(1.4375);
+const SIZE = emY(1.25);
 
 class MenuButton2 extends Component {
-    onPress = () => {};
-
     render() {
+        const { isOpened, toggleMenu } = this.props;
+        
         return (
-            <TouchableOpacity onPress={this.onPress} style={styles.container}>
+            <TouchableOpacity 
+                style={styles.container} 
+                onPress={() => toggleMenu(!isOpened)} 
+            >
                 <Image source={mapIcon} style={styles.image} resizeMode="contain" />
             </TouchableOpacity>
         );
@@ -31,8 +35,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
+const mapStateToProps = state => ({ isOpened: state.isOpened });
 
-export default connect(null, mapDispatchToProps)(MenuButton2);
+
+const mapDispatchToProps = dispatch => ({
+    openToggle: () => dispatch(openToggle())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuButton2);
