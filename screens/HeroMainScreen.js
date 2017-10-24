@@ -1,12 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    ScrollView,
-    Text,
-    View,
-    Image
-} from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
@@ -55,9 +49,13 @@ class HeroMainScreen extends Component {
         }
     }
 
+    goToPaymentInfo = () => {
+        this.props.navigation.navigate('paymentInfo');
+    };
+
     render() {
         const { name } = this.state;
-        
+
         return (
             <ScrollView style={styles.scrollContainer}>
                 <View style={styles.container}>
@@ -72,23 +70,23 @@ class HeroMainScreen extends Component {
                     <Text style={styles.viewProfile}>View Profile</Text>
                     <ProfileSwitch />
                     <View style={styles.statusContainer}>
-                        <Status 
+                        <Status
                             style={styles.status}
-                            image={races} 
-                            title="Races" 
-                            description="213" 
+                            image={races}
+                            title="Races"
+                            description="213"
                         />
-                        <Status 
+                        <Status
                             style={styles.status}
-                            image={distance} 
-                            title="Distance" 
-                            description="438km" 
+                            image={distance}
+                            title="Distance"
+                            description="438km"
                         />
-                        <Status 
-                            style={styles.status} 
-                            image={earned} 
-                            title="Earned" 
-                            description="$3123.00" 
+                        <Status
+                            style={styles.status}
+                            image={earned}
+                            title="Earned"
+                            description="$3123.00"
                         />
                     </View>
                     <View style={styles.mainItemContainer}>
@@ -98,7 +96,11 @@ class HeroMainScreen extends Component {
                         </View>
                         <View>
                             <MainItem image={history} title="History" />
-                            <MainItem image={payment} title="Payment Info" />
+                            <MainItem
+                                image={payment}
+                                title="Payment Info"
+                                onPress={this.goToPaymentInfo}
+                            />
                         </View>
                     </View>
                 </View>
@@ -130,14 +132,14 @@ const styles = StyleSheet.create({
         borderColor: Color.GREY_300,
         height: IMAGE_CONTAINER_SIZE,
         width: IMAGE_CONTAINER_SIZE,
-        borderRadius: (IMAGE_CONTAINER_SIZE) / 2,
+        borderRadius: IMAGE_CONTAINER_SIZE / 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     image: {
         width: SIZE,
         height: SIZE,
-        borderRadius: SIZE / 2,
+        borderRadius: SIZE / 2
     },
     gradient: {
         position: 'absolute',
@@ -145,10 +147,7 @@ const styles = StyleSheet.create({
         left: '50%',
         width: SIZE,
         height: SIZE,
-        transform: [
-            { translate: [0, -SIZE * 1] },
-            { scale: 1 }
-        ],
+        transform: [{ translate: [0, -SIZE * 1] }, { scale: 1 }]
     },
     ticks: {
         position: 'absolute',
@@ -156,10 +155,7 @@ const styles = StyleSheet.create({
         left: '50%',
         width: SIZE,
         height: SIZE,
-        transform: [
-            { translate: [-SIZE / 2, -SIZE / 2] }, 
-            { scale: 1.4 }
-        ],
+        transform: [{ translate: [-SIZE / 2, -SIZE / 2] }, { scale: 1.4 }]
     },
     name: {
         color: Color.BLACK,
@@ -199,4 +195,3 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
-

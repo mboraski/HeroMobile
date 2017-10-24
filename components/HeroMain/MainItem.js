@@ -27,11 +27,11 @@ class MainItem extends Component {
     props: Props;
 
     render() {
-        const { image, title } = this.props;
+        const { image, title, onPress } = this.props;
         
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.touchableOpacity}>
+                <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
                     <Image source={oval} style={styles.oval} resizeMode="contain" />
                     <Image source={image} style={styles.image} resizeMode="contain" />
                 </TouchableOpacity>

@@ -10,16 +10,19 @@ import leftArrowIcon from '../assets/icons/left-arrow.png';
 const SIZE = emY(1.25);
 
 class BackButton extends Component {
-    onPress = () => {};
+    onBackPress = () => {
+        this.props.onPress();
+    };
 
     render() {
+        const { style, ...props } = this.props;
         return (
-            <TouchableOpacity onPress={this.onPress} style={styles.container}>
-                <Image
-                    source={leftArrowIcon}
-                    style={styles.image}
-                    resizeMode="contain"
-                />
+            <TouchableOpacity
+                {...props}
+                style={[styles.container, style]}
+                onPress={this.onBackPress}
+            >
+                <Image source={leftArrowIcon} style={styles.image} resizeMode="contain" />
             </TouchableOpacity>
         );
     }
@@ -35,8 +38,10 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
+const mapStateToProps = state => ({
+    isMenuOpen: state.header.isMenuOpen
+});
 
-export default connect(null, mapDispatchToProps)(BackButton);
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BackButton);
