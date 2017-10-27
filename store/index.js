@@ -13,6 +13,6 @@ const store = createStore(
   )
 );
 
-persistStore(store, { storage: AsyncStorage, example: ['example'] });
+persistStore(store, { storage: AsyncStorage, blacklist: ['nav'] });
 
 export default store;
