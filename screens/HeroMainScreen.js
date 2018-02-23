@@ -1,12 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    ScrollView,
-    Text,
-    View,
-    Image
-} from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
@@ -21,6 +15,7 @@ import contact from '../assets/icons/contact.png';
 import payment from '../assets/icons/payment.png';
 import avatarIcon from '../assets/icons/user.png';
 
+import CustomerPopup from '../components/CustomerPopup';
 import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 import Status from '../components/HeroMain/Status';
@@ -32,7 +27,7 @@ import { emY } from '../utils/em';
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
-class HeroMainScreen extends Component {
+export class HeroMainScreen extends Component {
     static navigationOptions = {
         title: '',
         headerLeft: <MenuButton />,
@@ -42,7 +37,8 @@ class HeroMainScreen extends Component {
     };
 
     state = {
-        name: 'Hanna Morgan'
+        name: 'Hanna Morgan',
+        contactPopupVisible: false
     };
 
     componentWillReceiveProps(nextProps) {
@@ -55,9 +51,17 @@ class HeroMainScreen extends Component {
         }
     }
 
+    openContactPopup = () => {
+        this.setState({ contactPopupVisible: true });
+    };
+
+    contactConfirmed = () => {
+        this.setState({ contactPopupVisible: false });
+    };
+
     render() {
-        const { name } = this.state;
-        
+        const { name, contactPopupVisible } = this.state;
+
         return (
             <ScrollView style={styles.scrollContainer}>
                 <View style={styles.container}>
@@ -72,29 +76,33 @@ class HeroMainScreen extends Component {
                     <Text style={styles.viewProfile}>View Profile</Text>
                     <ProfileSwitch />
                     <View style={styles.statusContainer}>
-                        <Status 
+                        <Status
                             style={styles.status}
-                            image={races} 
-                            title="Races" 
-                            description="213" 
+                            image={races}
+                            title="Races"
+                            description="213"
                         />
-                        <Status 
+                        <Status
                             style={styles.status}
-                            image={distance} 
-                            title="Distance" 
-                            description="438km" 
+                            image={distance}
+                            title="Distance"
+                            description="438km"
                         />
-                        <Status 
-                            style={styles.status} 
-                            image={earned} 
-                            title="Earned" 
-                            description="$3123.00" 
+                        <Status
+                            style={styles.status}
+                            image={earned}
+                            title="Earned"
+                            description="$3123.00"
                         />
                     </View>
                     <View style={styles.mainItemContainer}>
                         <View>
                             <MainItem image={inventory} title="Manage Inventory" />
-                            <MainItem image={contact} title="Contact Us" />
+                            <MainItem
+                                image={contact}
+                                title="Contact Us"
+                                onPress={this.openContactPopup}
+                            />
                         </View>
                         <View>
                             <MainItem image={history} title="History" />
@@ -102,6 +110,7 @@ class HeroMainScreen extends Component {
                         </View>
                     </View>
                 </View>
+                <CustomerPopup openModal={contactPopupVisible} closeModal={this.contactConfirmed} />
             </ScrollView>
         );
     }
@@ -130,14 +139,14 @@ const styles = StyleSheet.create({
         borderColor: Color.GREY_300,
         height: IMAGE_CONTAINER_SIZE,
         width: IMAGE_CONTAINER_SIZE,
-        borderRadius: (IMAGE_CONTAINER_SIZE) / 2,
+        borderRadius: IMAGE_CONTAINER_SIZE / 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     image: {
         width: SIZE,
         height: SIZE,
-        borderRadius: SIZE / 2,
+        borderRadius: SIZE / 2
     },
     gradient: {
         position: 'absolute',
@@ -145,10 +154,7 @@ const styles = StyleSheet.create({
         left: '50%',
         width: SIZE,
         height: SIZE,
-        transform: [
-            { translate: [0, -SIZE * 1] },
-            { scale: 1 }
-        ],
+        transform: [{ translate: [0, -SIZE * 1] }, { scale: 1 }]
     },
     ticks: {
         position: 'absolute',
@@ -156,10 +162,7 @@ const styles = StyleSheet.create({
         left: '50%',
         width: SIZE,
         height: SIZE,
-        transform: [
-            { translate: [-SIZE / 2, -SIZE / 2] }, 
-            { scale: 1.4 }
-        ],
+        transform: [{ translate: [-SIZE / 2, -SIZE / 2] }, { scale: 1.4 }]
     },
     name: {
         color: Color.BLACK,
@@ -199,4 +202,3 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
-
