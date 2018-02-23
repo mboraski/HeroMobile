@@ -1,12 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { 
-    StyleSheet,
-    View,
-    Text,
-    Image, 
-    TouchableOpacity 
-} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
@@ -28,7 +22,7 @@ class MainItem extends Component {
 
     render() {
         const { image, title, onPress } = this.props;
-        
+
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
@@ -65,7 +59,7 @@ const styles = StyleSheet.create({
         fontSize: emY(0.875),
         color: Color.GREY_800,
         textAlign: 'center'
-    },
+    }
 });
 
 const mapDispatchToProps = function (dispatch) {

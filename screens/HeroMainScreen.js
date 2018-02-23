@@ -15,6 +15,7 @@ import contact from '../assets/icons/contact.png';
 import payment from '../assets/icons/payment.png';
 import avatarIcon from '../assets/icons/user.png';
 
+import CustomerPopup from '../components/CustomerPopup';
 import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 import Status from '../components/HeroMain/Status';
@@ -26,7 +27,7 @@ import { emY } from '../utils/em';
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
-class HeroMainScreen extends Component {
+export class HeroMainScreen extends Component {
     static navigationOptions = {
         title: '',
         headerLeft: <MenuButton />,
@@ -36,7 +37,8 @@ class HeroMainScreen extends Component {
     };
 
     state = {
-        name: 'Hanna Morgan'
+        name: 'Hanna Morgan',
+        contactPopupVisible: false
     };
 
     componentWillReceiveProps(nextProps) {
@@ -53,8 +55,16 @@ class HeroMainScreen extends Component {
         this.props.navigation.navigate('paymentInfo');
     };
 
+    openContactPopup = () => {
+        this.setState({ contactPopupVisible: true });
+    };
+
+    contactConfirmed = () => {
+        this.setState({ contactPopupVisible: false });
+    };
+
     render() {
-        const { name } = this.state;
+        const { name, contactPopupVisible } = this.state;
 
         return (
             <ScrollView style={styles.scrollContainer}>
@@ -92,7 +102,11 @@ class HeroMainScreen extends Component {
                     <View style={styles.mainItemContainer}>
                         <View>
                             <MainItem image={inventory} title="Manage Inventory" />
-                            <MainItem image={contact} title="Contact Us" />
+                            <MainItem
+                                image={contact}
+                                title="Contact Us"
+                                onPress={this.openContactPopup}
+                            />
                         </View>
                         <View>
                             <MainItem image={history} title="History" />
@@ -104,6 +118,7 @@ class HeroMainScreen extends Component {
                         </View>
                     </View>
                 </View>
+                <CustomerPopup openModal={contactPopupVisible} closeModal={this.contactConfirmed} />
             </ScrollView>
         );
     }

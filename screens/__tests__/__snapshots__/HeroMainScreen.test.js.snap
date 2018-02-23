@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`HeroMainScreen openContactPopup & contactConfirmed 1`] = `
+Object {
+  "contactPopupVisible": true,
+  "name": "Hanna Morgan",
+}
+`;
+
+exports[`HeroMainScreen openContactPopup & contactConfirmed 2`] = `
+Object {
+  "contactPopupVisible": false,
+  "name": "Hanna Morgan",
+}
+`;
+
 exports[`HeroMainScreen renders correctly 1`] = `
 ShallowWrapper {
   "complexSelector": ComplexSelector {
@@ -8,7 +22,14 @@ ShallowWrapper {
     "findWhereUnwrapped": [Function],
   },
   "length": 1,
-  "node": <ScrollViewMock>
+  "node": <ScrollViewMock
+    style={
+        Object {
+            "backgroundColor": "#fff",
+            "flex": 1,
+          }
+    }
+>
     <View
         style={
             Object {
@@ -20,27 +41,12 @@ ShallowWrapper {
         <View
             style={
                 Object {
-                    "flexDirection": "row",
-                    "justifyContent": "space-between",
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 42,
-                  }
-            }
-        >
-            <Connect(SettingButton) />
-            <Connect(MenuButton2) />
-        </View>
-        <View
-            style={
-                Object {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "height": 176,
                     "justifyContent": "center",
                     "marginBottom": 16,
-                    "marginTop": 32,
+                    "marginTop": 0,
                   }
             }
         >
@@ -59,11 +65,7 @@ ShallowWrapper {
                 }
             >
                 <Image
-                    source={
-                        Object {
-                            "uri": "https://facebook.github.io/react/img/logo_og.png",
-                          }
-                    }
+                    source={1}
                     style={
                         Object {
                             "borderRadius": 56,
@@ -148,7 +150,7 @@ ShallowWrapper {
                   }
             }
         >
-            Hanna Morgan
+            View Profile
         </Text>
         <Connect(ProfileSwitch) />
         <View
@@ -202,6 +204,7 @@ ShallowWrapper {
                 />
                 <Connect(MainItem)
                     image={1}
+                    onPress={[Function]}
                     title="Contact Us"
                 />
             </View>
@@ -217,9 +220,20 @@ ShallowWrapper {
             </View>
         </View>
     </View>
+    <Connect(CustomerServicePopup)
+        closeModal={[Function]}
+        openModal={false}
+    />
 </ScrollViewMock>,
   "nodes": Array [
-    <ScrollViewMock>
+    <ScrollViewMock
+      style={
+            Object {
+                  "backgroundColor": "#fff",
+                  "flex": 1,
+                }
+      }
+>
       <View
             style={
                   Object {
@@ -231,27 +245,12 @@ ShallowWrapper {
             <View
                   style={
                         Object {
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 42,
-                            }
-                  }
-            >
-                  <Connect(SettingButton) />
-                  <Connect(MenuButton2) />
-            </View>
-            <View
-                  style={
-                        Object {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "height": 176,
                               "justifyContent": "center",
                               "marginBottom": 16,
-                              "marginTop": 32,
+                              "marginTop": 0,
                             }
                   }
             >
@@ -270,11 +269,7 @@ ShallowWrapper {
                         }
                   >
                         <Image
-                              source={
-                                    Object {
-                                          "uri": "https://facebook.github.io/react/img/logo_og.png",
-                                        }
-                              }
+                              source={1}
                               style={
                                     Object {
                                           "borderRadius": 56,
@@ -359,7 +354,7 @@ ShallowWrapper {
                             }
                   }
             >
-                  Hanna Morgan
+                  View Profile
             </Text>
             <Connect(ProfileSwitch) />
             <View
@@ -413,6 +408,7 @@ ShallowWrapper {
                         />
                         <Connect(MainItem)
                               image={1}
+                              onPress={[Function]}
                               title="Contact Us"
                         />
                   </View>
@@ -428,48 +424,37 @@ ShallowWrapper {
                   </View>
             </View>
       </View>
+      <Connect(CustomerServicePopup)
+            closeModal={[Function]}
+            openModal={false}
+      />
 </ScrollViewMock>,
   ],
-  "options": Object {
-    "context": Object {
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-    },
-  },
+  "options": Object {},
   "renderer": ReactShallowRenderer {
     "_instance": ShallowComponentWrapper {
       "_calledComponentWillUnmount": false,
       "_compositeType": 0,
-      "_context": Object {
-        "store": Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-        },
-      },
+      "_context": Object {},
       "_currentElement": <HeroMainScreen
-        dispatch={[Function]}
+        header={Object {}}
 />,
-      "_debugID": 3,
+      "_debugID": 1,
       "_hostContainerInfo": null,
       "_hostParent": null,
       "_instance": HeroMainScreen {
         "_reactInternalInstance": [Circular],
+        "contactConfirmed": [Function],
         "context": Object {},
+        "openContactPopup": [Function],
         "props": Object {
-          "dispatch": [Function],
+          "header": Object {},
         },
         "refs": Object {},
-        "state": null,
+        "state": Object {
+          "contactPopupVisible": false,
+          "name": "Hanna Morgan",
+        },
         "updater": Object {
           "enqueueCallback": [Function],
           "enqueueCallbackInternal": [Function],
@@ -481,14 +466,21 @@ ShallowWrapper {
           "validateCallback": [Function],
         },
       },
-      "_mountOrder": 2,
+      "_mountOrder": 1,
       "_pendingCallbacks": null,
       "_pendingElement": null,
       "_pendingForceUpdate": false,
       "_pendingReplaceState": false,
       "_pendingStateQueue": null,
       "_renderedComponent": NoopInternalComponent {
-        "_currentElement": <ScrollViewMock>
+        "_currentElement": <ScrollViewMock
+          style={
+                    Object {
+                              "backgroundColor": "#fff",
+                              "flex": 1,
+                            }
+          }
+>
           <View
                     style={
                               Object {
@@ -500,27 +492,12 @@ ShallowWrapper {
                     <View
                               style={
                                         Object {
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "space-between",
-                                                  "left": 0,
-                                                  "position": "absolute",
-                                                  "right": 0,
-                                                  "top": 42,
-                                                }
-                              }
-                    >
-                              <Connect(SettingButton) />
-                              <Connect(MenuButton2) />
-                    </View>
-                    <View
-                              style={
-                                        Object {
                                                   "alignItems": "center",
                                                   "flexDirection": "row",
                                                   "height": 176,
                                                   "justifyContent": "center",
                                                   "marginBottom": 16,
-                                                  "marginTop": 32,
+                                                  "marginTop": 0,
                                                 }
                               }
                     >
@@ -539,11 +516,7 @@ ShallowWrapper {
                                         }
                               >
                                         <Image
-                                                  source={
-                                                            Object {
-                                                                      "uri": "https://facebook.github.io/react/img/logo_og.png",
-                                                                    }
-                                                  }
+                                                  source={1}
                                                   style={
                                                             Object {
                                                                       "borderRadius": 56,
@@ -628,7 +601,7 @@ ShallowWrapper {
                                                 }
                               }
                     >
-                              Hanna Morgan
+                              View Profile
                     </Text>
                     <Connect(ProfileSwitch) />
                     <View
@@ -682,6 +655,7 @@ ShallowWrapper {
                                         />
                                         <Connect(MainItem)
                                                   image={1}
+                                                  onPress={[Function]}
                                                   title="Contact Us"
                                         />
                               </View>
@@ -697,9 +671,20 @@ ShallowWrapper {
                               </View>
                     </View>
           </View>
+          <Connect(CustomerServicePopup)
+                    closeModal={[Function]}
+                    openModal={false}
+          />
 </ScrollViewMock>,
-        "_debugID": 4,
-        "_renderedOutput": <ScrollViewMock>
+        "_debugID": 2,
+        "_renderedOutput": <ScrollViewMock
+          style={
+                    Object {
+                              "backgroundColor": "#fff",
+                              "flex": 1,
+                            }
+          }
+>
           <View
                     style={
                               Object {
@@ -711,27 +696,12 @@ ShallowWrapper {
                     <View
                               style={
                                         Object {
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "space-between",
-                                                  "left": 0,
-                                                  "position": "absolute",
-                                                  "right": 0,
-                                                  "top": 42,
-                                                }
-                              }
-                    >
-                              <Connect(SettingButton) />
-                              <Connect(MenuButton2) />
-                    </View>
-                    <View
-                              style={
-                                        Object {
                                                   "alignItems": "center",
                                                   "flexDirection": "row",
                                                   "height": 176,
                                                   "justifyContent": "center",
                                                   "marginBottom": 16,
-                                                  "marginTop": 32,
+                                                  "marginTop": 0,
                                                 }
                               }
                     >
@@ -750,11 +720,7 @@ ShallowWrapper {
                                         }
                               >
                                         <Image
-                                                  source={
-                                                            Object {
-                                                                      "uri": "https://facebook.github.io/react/img/logo_og.png",
-                                                                    }
-                                                  }
+                                                  source={1}
                                                   style={
                                                             Object {
                                                                       "borderRadius": 56,
@@ -839,7 +805,7 @@ ShallowWrapper {
                                                 }
                               }
                     >
-                              Hanna Morgan
+                              View Profile
                     </Text>
                     <Connect(ProfileSwitch) />
                     <View
@@ -893,6 +859,7 @@ ShallowWrapper {
                                         />
                                         <Connect(MainItem)
                                                   image={1}
+                                                  onPress={[Function]}
                                                   title="Contact Us"
                                         />
                               </View>
@@ -908,6 +875,10 @@ ShallowWrapper {
                               </View>
                     </View>
           </View>
+          <Connect(CustomerServicePopup)
+                    closeModal={[Function]}
+                    openModal={false}
+          />
 </ScrollViewMock>,
       },
       "_renderedNodeType": 1,
@@ -921,7 +892,7 @@ ShallowWrapper {
   },
   "root": [Circular],
   "unrendered": <HeroMainScreen
-    dispatch={[Function]}
+    header={Object {}}
 />,
 }
 `;

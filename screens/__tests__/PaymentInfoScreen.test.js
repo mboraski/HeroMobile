@@ -3,15 +3,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
-import HeroMainScreen from './HeroMainScreen';
+import PaymentInfoScreen from './PaymentInfoScreen';
 
 const initialState = {};
 
-describe('HeroMainScreen', () => {
+describe('PaymentInfoScreen', () => {
     const middlewares = [];
     const mockStore = configureStore(middlewares);
     it('renders correctly', () => {
-        const wrapper = shallow(<HeroMainScreen />, {
+        const wrapper = shallow(<PaymentInfoScreen />, {
             context: { store: mockStore(initialState) }
         });
         const render = wrapper.dive();
