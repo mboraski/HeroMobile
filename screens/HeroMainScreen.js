@@ -51,6 +51,10 @@ export class HeroMainScreen extends Component {
         }
     }
 
+    goToPaymentInfo = () => {
+        this.props.navigation.navigate('paymentInfo');
+    };
+
     openContactPopup = () => {
         this.setState({ contactPopupVisible: true });
     };
@@ -106,7 +110,11 @@ export class HeroMainScreen extends Component {
                         </View>
                         <View>
                             <MainItem image={history} title="History" />
-                            <MainItem image={payment} title="Payment Info" />
+                            <MainItem
+                                image={payment}
+                                title="Payment Info"
+                                onPress={this.goToPaymentInfo}
+                            />
                         </View>
                     </View>
                 </View>
