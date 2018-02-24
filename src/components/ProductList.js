@@ -1,62 +1,29 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Dimensions } from 'react-native';
-import _ from 'lodash';
+import { ScrollView, StyleSheet } from 'react-native';
 
 // Relative Imports
 import ProductDetail from './ProductDetail';
+import Dimensions from '../constants/Dimensions';
 import { emY } from '../utils/em';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 class ProductList extends Component {
-    state = {
-        products: []
-    };
-
-    componentWillMount() {
-        // TODO: fetch available products once endpoint complete
-        this.setState({
-            products: [
-                {
-                    title: 'Redbull',
-                    thumbnail_image: 'https://facebook.github.io/react/img/logo_og.png',
-                    price: '$3.49'
-                },
-                {
-                    title: 'Monster',
-                    thumbnail_image: 'https://facebook.github.io/react/img/logo_og.png',
-                    price: '$3.49',
-                    added: true
-                },
-                {
-                    title: 'Gatorade',
-                    thumbnail_image: 'https://facebook.github.io/react/img/logo_og.png',
-                    price: '$2.49'
-                },
-                {
-                    title: 'Water',
-                    thumbnail_image: 'https://facebook.github.io/react/img/logo_og.png',
-                    price: '$0.99'
-                }
-            ]
-        });
-    }
-
     renderProducts() {
-        // TODO: change key to some other id
-        return _.map(this.state.products, product =>
-            <ProductDetail
-                key={product.title}
-                product={product}
-                callAddToCart={this.props.callAddToCart}
-                style={{
-                    width: SCREEN_WIDTH / 2 - 21,
-                    marginRight: 8,
-                    marginBottom: emY(0.625)
-                }}
-            />
-        );
+        return this.props.products.map(product => {
+            const onPress = () => this.props.callAddToCart(product);
+            const type = this.props.cart.products[product.deliveryType];
+            const quantity =
+                type && type[product.productCode] && type[product.productCode].quantity;
+            return (
+                <ProductDetail
+                    key={product.productCode}
+                    product={product}
+                    onPress={onPress}
+                    quantity={quantity}
+                    style={styles.product}
+                />
+            );
+        });
     }
 
     render() {
@@ -75,6 +42,11 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingLeft: 20,
         paddingRight: 5
+    },
+    product: {
+        width: Dimensions.window.width / 2 - 21,
+        marginRight: 8,
+        marginBottom: emY(0.625)
     }
 });
 

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CartButton renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+  style={
+    Object {
+      "marginRight": 20,
+    }
+  }
+>
+  <Image
+    resizeMode="contain"
+    source={1}
+    style={
+      Object {
+        "height": 35,
+        "width": 35,
+      }
+    }
+  />
+</TouchableOpacity>
+`;

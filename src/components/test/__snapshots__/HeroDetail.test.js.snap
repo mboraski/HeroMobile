@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeroDetail renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderBottomWidth": 1.5,
+      "borderColor": "#cccccc",
+      "flexDirection": "row",
+      "marginLeft": 27,
+      "marginRight": 27,
+      "paddingBottom": 14,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "https://facebook.github.io/react/img/logo_og.png",
+      }
+    }
+    style={
+      Object {
+        "borderRadius": 34,
+        "height": 68,
+        "marginRight": 17,
+        "marginTop": 16,
+        "width": 68,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "marginTop": 16,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "marginBottom": 7,
+              },
+              Object {},
+            ]
+          }
+        >
+          JESSICA MORGAN
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "marginBottom": 7,
+              },
+              Object {},
+            ]
+          }
+        >
+          <Icon
+            allowFontScaling={false}
+            name="check"
+            size={16}
+            style={Object {}}
+          />
+           Confirmed
+           
+          Instant
+        </Text>
+      </View>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#b2b2b2",
+            "borderRadius": 27,
+            "height": 54,
+            "justifyContent": "center",
+            "marginTop": 10,
+            "width": 54,
+          }
+        }
+      >
+        <Image
+          source={1}
+          style={
+            Object {
+              "height": 21,
+              "width": 21,
+            }
+          }
+        />
+      </TouchableOpacity>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "marginBottom": 7,
+          },
+          Object {
+            "marginBottom": 0,
+          },
+          Object {},
+        ]
+      }
+    >
+      Estimated Delivery Time: 
+      4
+       min
+    </Text>
+  </View>
+</View>
+`;

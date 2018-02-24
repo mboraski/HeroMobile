@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import Dimensions from '../constants/Dimensions';
 
 class Slides extends Component {
   renderLastSlide(index) {
@@ -48,7 +48,7 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: SCREEN_WIDTH
+    width: Dimensions.window.width
   },
   textStyle: {
     fontSize: 30,
@@ -56,7 +56,7 @@ const styles = {
     textAlign: 'center'
   },
   buttonStyle: {
-    backgroundColor: '#0288D1',
+    backgroundColor: '#8AD835',
     marginTop: 15
   }
 };

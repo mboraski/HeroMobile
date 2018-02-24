@@ -9,7 +9,7 @@ import MainNavigator from './MainNavigator';
 const MenuNavgiator = DrawerNavigator({
     mainNavigator: { screen: MainNavigator }
 }, {
-    drawerWidth: 320,
+    drawerWidth: 320, // TODO: change to a percentation of the screen width
     drawerPosition: 'left',
     contentComponent: props => <MenuContent {...props} />
 });

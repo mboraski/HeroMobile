@@ -7,7 +7,7 @@ import { emY } from '../utils/em';
 
 const SIZE = emY(1.25);
 
-const BackButton = () => <View style={styles.container} />;
+const TransparentButton = () => <View style={styles.container} />;
 
 const styles = StyleSheet.create({
     container: {
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BackButton;
+export default TransparentButton;

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../utils/em';
-import brandIcon from '../assets/icons/brand.png';
+import brandIcon from '../assets/icons/logo-orange.png';
 
 const SIZE = emY(2);
 
@@ -27,12 +27,7 @@ class BrandButton extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...Platform.select({
-            ios: {
-                top: -10
-            }
-        }),
-        marginLeft: 20
+        marginRight: 20
     },
     image: {
         width: SIZE,

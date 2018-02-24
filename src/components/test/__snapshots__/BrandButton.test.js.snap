@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BrandButton renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+  style={
+    Object {
+      "marginLeft": 20,
+      "top": -10,
+    }
+  }
+>
+  <Image
+    resizeMode="contain"
+    source={1}
+    style={
+      Object {
+        "height": 32,
+        "width": 32,
+      }
+    }
+  />
+</TouchableOpacity>
+`;

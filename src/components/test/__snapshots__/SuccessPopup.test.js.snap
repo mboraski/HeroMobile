@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SuccessPopup renders correctly 1`] = `
+<Popup
+  closeModal={[Function]}
+  openModal={true}
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 17.28,
+        "lineHeight": 24,
+        "marginHorizontal": 30,
+        "marginVertical": 16,
+        "textAlign": "center",
+      }
+    }
+  />
+  <Image
+    resizeMode="contain"
+    source={1}
+    style={
+      Object {
+        "alignSelf": "center",
+        "height": 55.04,
+        "marginVertical": 16,
+        "width": 55.04,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 17.28,
+        "lineHeight": 24,
+        "marginHorizontal": 30,
+        "marginVertical": 16,
+        "textAlign": "center",
+      }
+    }
+  />
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "height": 40,
+          "justifyContent": "center",
+          "marginHorizontal": 33,
+          "marginVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#000000",
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 15.36,
+          },
+          Object {
+            "color": "#ffffff",
+          },
+        ]
+      }
+    >
+      Apply
+    </Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "height": 40,
+          "justifyContent": "center",
+          "marginHorizontal": 33,
+          "marginVertical": 12,
+        },
+        Object {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 15.36,
+          },
+          Object {
+            "color": "#000000",
+          },
+        ]
+      }
+    >
+      Cancel
+    </Text>
+  </TouchableOpacity>
+</Popup>
+`;

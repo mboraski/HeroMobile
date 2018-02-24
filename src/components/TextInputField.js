@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Platform } from 'react-native';
 import { Field } from 'redux-form';
 
 import Color from '../constants/Color';
@@ -11,7 +11,9 @@ export const TextInputComponent = ({
     label,
     containerStyle,
     labelStyle,
+    errorStyle,
     style,
+    editable = true,
     ...props
 }) => (
     <View style={[styles.formInputGroup, containerStyle]}>
@@ -21,12 +23,19 @@ export const TextInputComponent = ({
             </Text>
         ) : null}
         <TextInput
-            style={[styles.textInput, style, touched && invalid && styles.textInputInvalid]}
+            style={[
+                styles.textInput,
+                style,
+                !editable && styles.textInputNotEditable,
+                touched && invalid && styles.textInputInvalid
+            ]}
+            editable={editable}
             onChangeText={onChange}
+            underlineColorAndroid="transparent"
             {...restInput}
             {...props}
         />
-        {touched && error ? <Text style={styles.error}>{error}</Text> : null}
+        {touched && error ? <Text style={[styles.error, errorStyle]}>{error}</Text> : null}
     </View>
 );
 
@@ -51,19 +60,26 @@ export const styles = StyleSheet.create({
         marginHorizontal: 15,
         fontSize: emY(1),
         height: emY(3.125),
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        ...Platform.select({
+            android: {
+                paddingVertical: emY(0.5)
+            }
+        })
     },
     textInputInvalid: {
         color: Color.RED_500,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: Color.RED_500
     },
+    textInputNotEditable: {
+        color: Color.GREY_400
+    },
     error: {
-        marginTop: -1 * emY(0.5),
         paddingHorizontal: 25,
         fontSize: emY(0.8),
         color: Color.RED_500,
-        marginBottom: emY(0.5)
+        marginTop: emY(0.5)
     }
 });
 

@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DropDown renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "overflow": "hidden",
+    }
+  }
+>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "overflow": "hidden",
+        },
+        Object {
+          "height": 0,
+        },
+      ]
+    }
+  >
+    <View
+      onLayout={[Function]}
+    >
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+      >
+        <Connect(PaymentDropDownItem)
+          isHeaderItem={true}
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "position": "absolute",
+              "right": 16,
+              "top": 0,
+            }
+          }
+        >
+          <AnimatedComponent
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 14.4,
+                  "width": 14.4,
+                },
+                Object {
+                  "transform": Array [
+                    Object {
+                      "rotate": "-90deg",
+                    },
+                  ],
+                },
+              ]
+            }
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+    <View
+      onLayout={[Function]}
+    >
+      <Connect(PaymentDropDownItem)
+        isHeaderItem={false}
+      />
+      <Connect(PaymentDropDownItem)
+        isHeaderItem={false}
+      />
+    </View>
+  </AnimatedComponent>
+</View>
+`;

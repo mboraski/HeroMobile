@@ -8,9 +8,9 @@ import { openToggle } from '../actions/navigationActions';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 // eslint-disable-next-line import/no-unresolved
-import menuIcon from '../assets/icons/menu-2.png';
+import mapIcon from '../assets/icons/menu.png';
 
-const SIZE = emY(1.25);
+const SIZE = emY(1.875);
 
 class MenuButton extends Component {
     render() {
@@ -21,16 +21,14 @@ class MenuButton extends Component {
                 style={[Style.headerLeft, styles.container, style]}
                 onPress={() => this.props.openToggle()}
             >
-                <Image source={menuIcon} style={styles.image} resizeMode="contain" />
+                <Image source={mapIcon} style={styles.image} />
             </TouchableOpacity>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginLeft: 20
-    },
+    container: {},
     image: {
         width: SIZE,
         height: SIZE
@@ -42,4 +40,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(MenuButton);
-

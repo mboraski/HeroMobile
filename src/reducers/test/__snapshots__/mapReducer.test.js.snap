@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapReducer handles GET_CURRENT_LOCATION_ERROR action 1`] = `
+Object {
+  "address": null,
+  "error": "error",
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles GET_CURRENT_LOCATION_REQUEST action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": true,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles GET_CURRENT_LOCATION_SUCCESS action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_GEOCODE_FAIL action 1`] = `
+Object {
+  "address": null,
+  "error": "error",
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_GEOCODE_REQUEST action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": true,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_GEOCODE_SUCCESS action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": Object {
+    "latitude": 0,
+    "longitude": 1,
+  },
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_PLACES_AUTOCOMPLETE_FAIL action 1`] = `
+Object {
+  "address": null,
+  "error": undefined,
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_PLACES_AUTOCOMPLETE_REQUEST action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": true,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_PLACES_AUTOCOMPLETE_SUCCESS action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": false,
+  "predictions": "predictions",
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_REVERSE_GEOCODE_FAIL action 1`] = `
+Object {
+  "address": "",
+  "error": "error",
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_REVERSE_GEOCODE_REQUEST action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": true,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles MAPS_REVERSE_GEOCODE_SUCCESS action 1`] = `
+Object {
+  "address": "formatted_address",
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles SAVE_ADDRESS action 1`] = `
+Object {
+  "address": "address",
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [
+    "address",
+  ],
+}
+`;
+
+exports[`mapReducer handles SAVE_ADDRESS action 2`] = `
+Object {
+  "address": "address",
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": null,
+  "saved": Array [
+    "address",
+  ],
+}
+`;
+
+exports[`mapReducer handles SET_REGION action 1`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": Object {
+    "latitude": 0,
+    "latitudeDelta": 2,
+    "longitude": 1,
+    "longitudeDelta": 3,
+  },
+  "saved": Array [],
+}
+`;
+
+exports[`mapReducer handles SET_REGION action 2`] = `
+Object {
+  "address": null,
+  "error": null,
+  "pending": false,
+  "predictions": Array [],
+  "region": Object {
+    "latitude": 5,
+    "latitudeDelta": 2,
+    "longitude": 6,
+    "longitudeDelta": 3,
+  },
+  "saved": Array [],
+}
+`;

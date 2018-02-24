@@ -34,7 +34,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <View style={[Style.headerTitle, styles.container]}>
+            <View style={[styles.container]}>
                 <TextInput
                     ref={c => (this.input = c)}
                     style={styles.input}

@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RatingPopup renders correctly 1`] = `
+<Component
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0)",
+          }
+        }
+      >
+        .
+      </Text>
+    </TouchableOpacity>
+    <View
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 4,
+          "justifyContent": "center",
+          "marginHorizontal": 22,
+          "paddingHorizontal": 17,
+          "paddingVertical": 18.08,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginVertical": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        How would you like to rate us?
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 12.8,
+          }
+        }
+      >
+        <TouchableOpacity
+          activeOpacity={0.2}
+          key="0"
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 26.4,
+              "height": 52.8,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "width": 52.8,
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 25.28,
+                  "width": 25.28,
+                },
+                null,
+              ]
+            }
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          key="1"
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 26.4,
+              "height": 52.8,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "width": 52.8,
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 25.28,
+                  "width": 25.28,
+                },
+                null,
+              ]
+            }
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          key="2"
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 26.4,
+              "height": 52.8,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "width": 52.8,
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 25.28,
+                  "width": 25.28,
+                },
+                null,
+              ]
+            }
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          key="3"
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 26.4,
+              "height": 52.8,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "width": 52.8,
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 25.28,
+                  "width": 25.28,
+                },
+                null,
+              ]
+            }
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          key="4"
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 26.4,
+              "height": 52.8,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "width": 52.8,
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 25.28,
+                  "width": 25.28,
+                },
+                null,
+              ]
+            }
+          />
+        </TouchableOpacity>
+      </View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginVertical": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        Tap the number of stars you would give us on scale from 1-5
+      </Text>
+    </View>
+  </View>
+</Component>
+`;

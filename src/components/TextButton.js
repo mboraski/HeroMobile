@@ -1,19 +1,11 @@
-// Third Party Imports
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
 
-class TextButton extends Component {
-    onPress = () => {};
-
-    render() {
-        return (
-            <TouchableOpacity onPress={this.onPress} style={styles.container}>
-                <Text style={styles.text}>{this.props.title}</Text>
-            </TouchableOpacity>
-        );
-    }
-}
+const TextButton = ({ title, style, ...rest }) => (
+    <TouchableOpacity {...rest} style={[styles.container, style]}>
+        <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
     container: {
@@ -24,8 +16,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
-
-export default connect(null, mapDispatchToProps)(TextButton);
+export default TextButton;

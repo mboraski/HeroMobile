@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
 import Color from '../constants/Color';
@@ -9,16 +8,15 @@ import { emY } from '../utils/em';
 const SIZE = emY(1.5625);
 
 class LocationButton extends Component {
-    onPress = () => {};
-
     render() {
+        const { style, ...props } = this.props;
         return (
             <Icon
+                {...props}
                 name="navigation"
                 size={SIZE}
-                containerStyle={styles.iconContainer}
+                containerStyle={[styles.iconContainer, style]}
                 iconStyle={styles.icon}
-                onPress={this.onPress}
                 raised
             />
         );
@@ -51,8 +49,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
-
-export default connect(null, mapDispatchToProps)(LocationButton);
+export default LocationButton;

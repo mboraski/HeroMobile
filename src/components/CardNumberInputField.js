@@ -7,29 +7,55 @@ import { styles as baseStyles } from './TextInputField';
 import CardImage from './CardImage';
 import formatCardNumber from '../formatting/formatCardNumber';
 
-const renderInput = ({ input: { onChange, ...restInput }, style, ...props }) => {
+const renderInput = ({
+    input: { onChange, ...restInput },
+    meta: { touched, invalid, error },
+    label,
+    containerStyle,
+    labelStyle,
+    errorStyle,
+    style,
+    editable = true,
+    ...props
+}) => {
     const { card } = valid.number(restInput.value);
     return (
-        <View style={[baseStyles.textInputContainer, styles.textInputContainer]}>
-            {card ? <CardImage type={card.type} style={styles.card} /> : null}
-            <TextInput
-                style={[baseStyles.textInput, styles.textInput, style]}
-                onChangeText={onChange}
-                normalize={formatCardNumber}
-                keyboardType="number-pad"
-                {...restInput}
-                {...props}
-            />
+        <View style={[baseStyles.formInputGroup, containerStyle]}>
+            {label ? (
+                <Text
+                    style={[
+                        baseStyles.label,
+                        labelStyle,
+                        touched && invalid && baseStyles.labelInvalid
+                    ]}
+                >
+                    {label}
+                </Text>
+            ) : null}
+            <View style={[baseStyles.textInputContainer, styles.textInputContainer]}>
+                {card ? <CardImage type={card.type} style={styles.card} /> : null}
+                <TextInput
+                    style={[
+                        baseStyles.textInput,
+                        styles.textInput,
+                        !editable && baseStyles.textInputNotEditable,
+                        touched && invalid && baseStyles.textInputInvalid,
+                        style
+                    ]}
+                    editable={editable}
+                    onChangeText={onChange}
+                    normalize={formatCardNumber}
+                    keyboardType="number-pad"
+                    {...restInput}
+                    {...props}
+                />
+            </View>
+            {touched && error ? <Text style={[baseStyles.error, errorStyle]}>{error}</Text> : null}
         </View>
     );
 };
 
-const CardNumberInputField = ({ label, containerStyle, labelStyle, ...props }) => (
-    <View style={[baseStyles.formInputGroup, containerStyle]}>
-        <Text style={[baseStyles.label, labelStyle]}>{label}</Text>
-        <Field component={renderInput} {...props} />
-    </View>
-);
+const CardNumberInputField = ({ ...props }) => <Field component={renderInput} {...props} />;
 
 const styles = StyleSheet.create({
     textInputContainer: {

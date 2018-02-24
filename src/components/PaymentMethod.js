@@ -5,13 +5,14 @@ import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 // Relative Imports
 import CardImage from '../components/CardImage';
 import Color from '../constants/Color';
+import Style from '../constants/Style';
 import { emY } from '../utils/em';
 import icon from '../assets/icons/keyboard-arrow-right.png';
 
 export default function PaymentMethod({ type, text, style, ...props }) {
     return (
         <TouchableOpacity {...props} style={[styles.container, style]}>
-            {type ? <CardImage type={type} style={styles.card} /> : null}
+            {type ? <CardImage type={type.toLowerCase()} style={styles.card} /> : null}
             <Text style={styles.text}>{text}</Text>
             <Image source={icon} style={styles.icon} />
         </TouchableOpacity>

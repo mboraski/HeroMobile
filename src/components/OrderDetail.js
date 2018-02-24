@@ -7,20 +7,33 @@ import { Icon } from 'react-native-elements';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
+import productImage0 from '../assets/product-0.png';
+import productImage1 from '../assets/product-1.png';
+import productImage2 from '../assets/product-2.png';
+import productImage3 from '../assets/product-3.png';
+
+const images = [
+    productImage0,
+    productImage1,
+    productImage2,
+    productImage3
+];
+
 const ICON_CONTAINER_SIZE = emY(2.1875);
 const ICON_SIZE = emY(0.75);
 
 const OrderDetail = props => {
     const { onAddOrder, onRemoveOrder } = props;
-    const { name, price, delivery_type, image, quantity } = props.order;
+    const { title, price, deliveryType, thumbnail_image, quantity } = props.order;
+    const temp_thumbnail_image = images[props.order.productCode % 4];
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: image }} />
+            <Image style={styles.image} source={temp_thumbnail_image} resizeMode="contain" />
             <View style={styles.content}>
-                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.title}>{title}</Text>
                 <View style={styles.deliveryType}>
                     <Text style={styles.deliveryTypeLabel}>Delivery Type:</Text>
-                    <Text style={styles.deliveryTypeValue}>{delivery_type}</Text>
+                    <Text style={styles.deliveryTypeValue}>{deliveryType}</Text>
                 </View>
                 <TouchableOpacity>
                     <Text style={styles.changeDeliveryTypeText}>Change delivery type</Text>
@@ -67,7 +80,7 @@ const styles = StyleSheet.create({
         marginRight: 15,
         alignSelf: 'center'
     },
-    name: {
+    title: {
         fontSize: emY(1.25),
         flex: 1,
         marginBottom: emY(0.5)

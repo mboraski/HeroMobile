@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuItem renders correctly 1`] = `
+<AnimatedComponent
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomColor": "#E4E4E4",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 56,
+      },
+      Object {
+        "opacity": 1,
+      },
+    ]
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "marginRight": 22.4,
+        "maxHeight": 23.04,
+        "maxWidth": 23.04,
+        "resizeMode": "contain",
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#4c4c4c",
+        "fontSize": 13.296,
+        "textAlign": "center",
+      }
+    }
+  >
+    Notifications
+  </Text>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#cccccc",
+        "borderRadius": 13.52,
+        "height": 27.04,
+        "justifyContent": "center",
+        "position": "absolute",
+        "right": 19.2,
+        "width": 27.04,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "color": "#ffffff",
+          "fontSize": 13.28,
+        }
+      }
+    >
+      3
+    </Text>
+  </TouchableOpacity>
+</AnimatedComponent>
+`;

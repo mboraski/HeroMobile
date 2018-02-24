@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductList renders correctly 1`] = `
+<ScrollViewMock
+  contentContainerStyle={
+    Object {
+      "alignItems": "flex-start",
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingLeft": 20,
+      "paddingRight": 5,
+    }
+  }
+>
+  <ProductDetail
+    key="1"
+    onPress={[Function]}
+    product={
+      Object {
+        "price": "$3.49",
+        "productCode": "1",
+        "quantity": 1,
+        "thumbnail_image": "image",
+        "title": "Type 1 code 1",
+      }
+    }
+    style={
+      Object {
+        "marginBottom": 10,
+        "marginRight": 8,
+        "width": 139,
+      }
+    }
+  />
+</ScrollViewMock>
+`;
+
+exports[`ProductList renders correctly with selected item 1`] = `
+<ScrollViewMock
+  contentContainerStyle={
+    Object {
+      "alignItems": "flex-start",
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingLeft": 20,
+      "paddingRight": 5,
+    }
+  }
+>
+  <ProductDetail
+    key="1"
+    onPress={[Function]}
+    product={
+      Object {
+        "price": "$3.49",
+        "productCode": "1",
+        "quantity": 1,
+        "thumbnail_image": "image",
+        "title": "Type 1 code 1",
+      }
+    }
+    style={
+      Object {
+        "marginBottom": 10,
+        "marginRight": 8,
+        "width": 139,
+      }
+    }
+  />
+</ScrollViewMock>
+`;
