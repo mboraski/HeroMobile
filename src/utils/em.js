@@ -1,16 +1,16 @@
 /**
- * on iphone 6 plus em should be: 
+ * on iphone 6 plus em should be:
  * em(0.0625) = 1
  * em(0.125) = 2
  * em(0.25) = 4
  * em(1) = 16
  */
 
-import { Dimensions } from 'react-native';
+import Dimensions from '../constants/Dimensions';
 
 // Precalculate Device Dimensions for better performance
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.window.width;
+const height = Dimensions.window.height;
 
 // Calculating ratio
 let ratioX = 1;

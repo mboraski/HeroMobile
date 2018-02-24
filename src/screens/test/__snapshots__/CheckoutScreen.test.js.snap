@@ -1,0 +1,1019 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckoutScreen changeLocation & changeLocationConfirmed 1`] = `
+Object {
+  "changeLocationPopupVisible": true,
+  "mapLoaded": false,
+  "opacity": 1,
+  "removeOrderPopupVisible": false,
+  "translateY": 0,
+}
+`;
+
+exports[`CheckoutScreen changeLocation & changeLocationConfirmed 2`] = `
+Object {
+  "changeLocationPopupVisible": false,
+  "mapLoaded": false,
+  "opacity": 1,
+  "removeOrderPopupVisible": false,
+  "translateY": 0,
+}
+`;
+
+exports[`CheckoutScreen changeLocation & changeLocationConfirmed 3`] = `
+Object {
+  "changeLocationPopupVisible": false,
+  "mapLoaded": false,
+  "opacity": 1,
+  "removeOrderPopupVisible": false,
+  "translateY": 0,
+}
+`;
+
+exports[`CheckoutScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <ScrollViewMock
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+        "paddingBottom": 220.96,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "flex": 1,
+        }
+      }
+    >
+      <MapView
+        region={
+          Object {
+            "latitude": 0,
+            "latitudeDelta": 0.1,
+            "longitude": 1,
+            "longitudeDelta": 0.1,
+          }
+        }
+        style={
+          Object {
+            "height": 148,
+            "shadowColor": "transparent",
+          }
+        }
+      >
+        <MapMarker
+          anchor={
+            Object {
+              "x": 0.2,
+              "y": 1,
+            }
+          }
+          centerOffset={
+            Object {
+              "x": 10,
+              "y": -25,
+            }
+          }
+          coordinate={
+            Object {
+              "latitude": 0,
+              "latitudeDelta": 0.1,
+              "longitude": 1,
+              "longitudeDelta": 0.1,
+            }
+          }
+          description="Your Delivery Location"
+          image={1}
+          onPress={[Function]}
+          title="You"
+        />
+      </MapView>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          DELIVERY LOCATION
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F4F4F4",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#323232",
+              "fontSize": 17.28,
+              "width": 160,
+            }
+          }
+        />
+        <TouchableOpacity
+          activeOpacity={0.2}
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 24,
+              "width": 80,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#3aa2fc",
+                "fontSize": 17.28,
+              }
+            }
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          DELIVERY NOTES
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F4F4F4",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#323232",
+              "fontSize": 17.28,
+              "width": 160,
+            }
+          }
+        >
+          notes
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 24,
+              "width": 80,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#3aa2fc",
+                "fontSize": 17.28,
+              }
+            }
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          PRODUCT SUMMARY
+        </Text>
+      </View>
+      <OrderList
+        onRemoveOrder={[Function]}
+        orders={Array []}
+      />
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          PAYMENT METHOD
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginBottom": 307.04,
+          }
+        }
+      >
+        <DropDown
+          header={
+            <Connect(PaymentDropDownItem)
+              isHeaderItem={true}
+            />
+          }
+        >
+          <Connect(PaymentDropDownItem)
+            isHeaderItem={false}
+          />
+          <Connect(PaymentDropDownItem)
+            isHeaderItem={false}
+          />
+        </DropDown>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "bottom": 0,
+          "left": 0,
+          "paddingBottom": 21.12,
+          "paddingHorizontal": 23,
+          "paddingTop": 20,
+          "position": "absolute",
+          "right": 0,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Delivery Fee:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Tax:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $14.78
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Order Total:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $
+          0
+        </Text>
+      </View>
+      <Button
+        buttonStyle={
+          Object {
+            "backgroundColor": "#000",
+            "height": 60,
+          }
+        }
+        containerViewStyle={
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+            "marginTop": 16,
+          }
+        }
+        onPress={[Function]}
+        textStyle={
+          Object {
+            "fontSize": 13,
+          }
+        }
+        title="LIGHT A BEACON!"
+      />
+    </View>
+  </ScrollViewMock>
+  <Connect(OopsPopup)
+    closeModal={[Function]}
+    message="Are you sure you want to remove this product from your cart?"
+    openModal={false}
+    showIcon={false}
+  />
+  <SuccessPopup
+    cancelText="Cancel"
+    closeModal={[Function]}
+    confirmText="Apply"
+    message="The available products/services at your new location may be different."
+    openModal={false}
+    showIcon={false}
+    title="Are you sure you want to change your delivery location?"
+  />
+</View>
+`;
+
+exports[`CheckoutScreen renders correctly with products 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <ScrollViewMock
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+        "paddingBottom": 220.96,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "flex": 1,
+        }
+      }
+    >
+      <MapView
+        region={
+          Object {
+            "latitude": 0,
+            "latitudeDelta": 0.1,
+            "longitude": 1,
+            "longitudeDelta": 0.1,
+          }
+        }
+        style={
+          Object {
+            "height": 148,
+            "shadowColor": "transparent",
+          }
+        }
+      >
+        <MapMarker
+          anchor={
+            Object {
+              "x": 0.2,
+              "y": 1,
+            }
+          }
+          centerOffset={
+            Object {
+              "x": 10,
+              "y": -25,
+            }
+          }
+          coordinate={
+            Object {
+              "latitude": 0,
+              "latitudeDelta": 0.1,
+              "longitude": 1,
+              "longitudeDelta": 0.1,
+            }
+          }
+          description="Your Delivery Location"
+          image={1}
+          onPress={[Function]}
+          title="You"
+        />
+      </MapView>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          DELIVERY LOCATION
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F4F4F4",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#323232",
+              "fontSize": 17.28,
+              "width": 160,
+            }
+          }
+        />
+        <TouchableOpacity
+          activeOpacity={0.2}
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 24,
+              "width": 80,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#3aa2fc",
+                "fontSize": 17.28,
+              }
+            }
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          DELIVERY NOTES
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F4F4F4",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#323232",
+              "fontSize": 17.28,
+              "width": 160,
+            }
+          }
+        >
+          notes
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.2}
+          onPress={[Function]}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 24,
+              "width": 80,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#3aa2fc",
+                "fontSize": 17.28,
+              }
+            }
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          PRODUCT SUMMARY
+        </Text>
+      </View>
+      <OrderList
+        onRemoveOrder={[Function]}
+        orders={
+          Array [
+            Object {
+              "deliveryType": "1",
+              "price": 3.49,
+              "productCode": "1",
+              "quantity": 1,
+              "thumbnail_image": "image",
+              "title": "Type 1 code 1",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 12.8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          stye={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 13.28,
+            }
+          }
+        >
+          PAYMENT METHOD
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginBottom": 307.04,
+          }
+        }
+      >
+        <DropDown
+          header={
+            <Connect(PaymentDropDownItem)
+              isHeaderItem={true}
+            />
+          }
+        >
+          <Connect(PaymentDropDownItem)
+            isHeaderItem={false}
+          />
+          <Connect(PaymentDropDownItem)
+            isHeaderItem={false}
+          />
+        </DropDown>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "bottom": 0,
+          "left": 0,
+          "paddingBottom": 21.12,
+          "paddingHorizontal": 23,
+          "paddingTop": 20,
+          "position": "absolute",
+          "right": 0,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Delivery Fee:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $
+          3.49
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Tax:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $14.78
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#7f7f7f",
+              "fontSize": 16,
+              "marginRight": 11,
+            }
+          }
+        >
+          Order Total:
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          $
+          3.49
+        </Text>
+      </View>
+      <Button
+        buttonStyle={
+          Object {
+            "backgroundColor": "#000",
+            "height": 60,
+          }
+        }
+        containerViewStyle={
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+            "marginTop": 16,
+          }
+        }
+        onPress={[Function]}
+        textStyle={
+          Object {
+            "fontSize": 13,
+          }
+        }
+        title="LIGHT A BEACON!"
+      />
+    </View>
+  </ScrollViewMock>
+  <Connect(OopsPopup)
+    closeModal={[Function]}
+    message="Are you sure you want to remove this product from your cart?"
+    openModal={false}
+    showIcon={false}
+  />
+  <SuccessPopup
+    cancelText="Cancel"
+    closeModal={[Function]}
+    confirmText="Apply"
+    message="The available products/services at your new location may be different."
+    openModal={false}
+    showIcon={false}
+    title="Are you sure you want to change your delivery location?"
+  />
+</View>
+`;
+
+exports[`CheckoutScreen shows remove order popup for order quantity === 1 1`] = `
+Object {
+  "changeLocationPopupVisible": false,
+  "mapLoaded": false,
+  "opacity": 1,
+  "orderToRemove": Object {
+    "deliveryType": "1",
+    "price": 3.49,
+    "productCode": "1",
+    "quantity": 1,
+    "thumbnail_image": "image",
+    "title": "Type 1 code 1",
+  },
+  "removeOrderPopupVisible": true,
+  "translateY": 0,
+}
+`;
+
+exports[`CheckoutScreen shows remove order popup for order quantity === 1 2`] = `
+Object {
+  "changeLocationPopupVisible": false,
+  "mapLoaded": false,
+  "opacity": 1,
+  "orderToRemove": null,
+  "removeOrderPopupVisible": false,
+  "translateY": 0,
+}
+`;

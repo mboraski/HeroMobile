@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackScreen renders correctly 1`] = `
+<KeyboardAvoidingView
+  behavior="padding"
+  keyboardVerticalOffset={16}
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+    }
+  }
+>
+  <ReduxForm
+    onSubmitSucceeded={[Function]}
+  />
+</KeyboardAvoidingView>
+`;

@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuContent renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderRightColor": "#fcc937",
+      "borderRightWidth": 2,
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "marginTop": 42.88,
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Object {
+          "borderRadius": 50,
+          "height": 100,
+          "marginBottom": 16,
+          "width": 100,
+        }
+      }
+    />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#4c4c4c",
+          "fontSize": 20,
+          "marginBottom": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      Hanna Morgan
+    </Text>
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#4c4c4c",
+            "fontSize": 13.296,
+            "marginBottom": 16,
+            "textAlign": "center",
+          }
+        }
+      >
+        View Profile
+      </Text>
+    </TouchableOpacity>
+  </View>
+  <ScrollViewMock
+    style={
+      Object {
+        "marginLeft": 19.2,
+      }
+    }
+  >
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="Heroes Needed!"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="History"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="Favorites & Recommended"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      badge="3"
+      image={1}
+      onPress={[Function]}
+      title="Notifications"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      route={
+        Object {
+          "key": "cart",
+        }
+      }
+      title="Cart"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="Payment Info"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="Promotions"
+    />
+    <MenuItem
+      activeItemKey="activeItemKey"
+      image={1}
+      onPress={[Function]}
+      title="Help"
+    />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#4c4c4c",
+          "fontSize": 13.296,
+          "height": 16,
+          "marginBottom": 14.4,
+          "marginTop": 72.96,
+          "textAlign": "center",
+        }
+      }
+    >
+      @2017 Hasty
+    </Text>
+  </ScrollViewMock>
+  <Connect(ToggleBackButton)
+    style={
+      Object {
+        "left": 0,
+        "position": "absolute",
+        "top": 33.6,
+      }
+    }
+  />
+</View>
+`;

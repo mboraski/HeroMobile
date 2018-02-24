@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "https://source.unsplash.com/random/800x600",
+      }
+    }
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 192,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          },
+        ]
+      }
+    />
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "white",
+            "fontSize": 30,
+            "textAlign": "center",
+          }
+        }
+      >
+        Recommended
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "white",
+            "fontSize": 16,
+            "textAlign": "center",
+          }
+        }
+      >
+        215 items
+      </Text>
+    </View>
+  </Image>
+  <ScrollViewMock
+    contentContainerStyle={
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+        "paddingLeft": 15,
+      }
+    }
+    horizontal={true}
+    style={
+      Object {
+        "height": 100,
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
+      key="1"
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderColor": "#b2b2b2",
+            "borderRadius": 50,
+            "borderWidth": 1,
+            "height": 40,
+            "justifyContent": "center",
+            "marginRight": 15,
+            "minWidth": 120,
+            "paddingVertical": 12,
+          },
+          null,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#b2b2b2",
+              "fontSize": 18,
+            },
+            null,
+          ]
+        }
+      >
+        For You
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      activeOpacity={0.2}
+      key="2"
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderColor": "#b2b2b2",
+            "borderRadius": 50,
+            "borderWidth": 1,
+            "height": 40,
+            "justifyContent": "center",
+            "marginRight": 15,
+            "minWidth": 120,
+            "paddingVertical": 12,
+          },
+          null,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#b2b2b2",
+              "fontSize": 18,
+            },
+            null,
+          ]
+        }
+      >
+        Food
+      </Text>
+    </TouchableOpacity>
+  </ScrollViewMock>
+  <ProductList
+    callAddToCart={[Function]}
+    callRemoveFromCart={[Function]}
+    cart={
+      Object {
+        "totalProducts": 0,
+      }
+    }
+    products={
+      Array [
+        Object {
+          "price": "$3.49",
+          "quantity": 1,
+          "thumbnail_image": "image",
+          "title": "Type 1 code 1",
+        },
+      ]
+    }
+  />
+</View>
+`;

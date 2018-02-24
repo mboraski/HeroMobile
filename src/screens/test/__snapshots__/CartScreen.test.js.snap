@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CartScreen removes order from cart for quantity > 1 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <OrderList
+    onRemoveOrder={[Function]}
+  />
+  <View
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "bottom": 0,
+        "left": 0,
+        "paddingBottom": 16,
+        "paddingHorizontal": 27,
+        "paddingTop": 27,
+        "position": "absolute",
+        "right": 0,
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 10,
+          "width": 0,
+        },
+        "shadowOpacity": 0.5,
+        "shadowRadius": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginBottom": 22,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#7f7f7f",
+            "fontSize": 16,
+            "marginRight": 11,
+          }
+        }
+      >
+        Order Total:
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "flex": 1,
+            "fontSize": 16,
+          }
+        }
+      >
+        2
+         item
+        s
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      >
+        $
+        6.98
+      </Text>
+    </View>
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 14,
+        }
+      }
+      containerViewStyle={
+        Object {
+          "marginLeft": 0,
+          "marginRight": 0,
+        }
+      }
+      textStyle={
+        Object {
+          "fontSize": 13,
+        }
+      }
+      title="Go to checkout"
+    />
+  </View>
+  <Connect(OopsPopup)
+    closeModal={[Function]}
+    message="Are you sure you want to remove this product from your cart?"
+    openModal={false}
+    showIcon={false}
+  />
+</View>
+`;
+
+exports[`CartScreen shows remove order popup for order quantity === 1 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <OrderList
+    onRemoveOrder={[Function]}
+  />
+  <View
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "bottom": 0,
+        "left": 0,
+        "paddingBottom": 16,
+        "paddingHorizontal": 27,
+        "paddingTop": 27,
+        "position": "absolute",
+        "right": 0,
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 10,
+          "width": 0,
+        },
+        "shadowOpacity": 0.5,
+        "shadowRadius": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginBottom": 22,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#7f7f7f",
+            "fontSize": 16,
+            "marginRight": 11,
+          }
+        }
+      >
+        Order Total:
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "flex": 1,
+            "fontSize": 16,
+          }
+        }
+      >
+        1
+         item
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      >
+        $
+        3.49
+      </Text>
+    </View>
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 14,
+        }
+      }
+      containerViewStyle={
+        Object {
+          "marginLeft": 0,
+          "marginRight": 0,
+        }
+      }
+      textStyle={
+        Object {
+          "fontSize": 13,
+        }
+      }
+      title="Go to checkout"
+    />
+  </View>
+  <Connect(OopsPopup)
+    closeModal={[Function]}
+    message="Are you sure you want to remove this product from your cart?"
+    openModal={false}
+    showIcon={false}
+  />
+</View>
+`;
+
+exports[`CartScreen shows remove order popup for order quantity === 1 2`] = `
+Object {
+  "orderToRemove": Object {
+    "deliveryType": "1",
+    "price": 3.49,
+    "productCode": "1",
+    "quantity": 1,
+    "thumbnail_image": "image",
+    "title": "Type 1 code 1",
+  },
+  "removeOrderPopupVisible": true,
+}
+`;
+
+exports[`CartScreen shows remove order popup for order quantity === 1 3`] = `
+Object {
+  "orderToRemove": null,
+  "removeOrderPopupVisible": false,
+}
+`;

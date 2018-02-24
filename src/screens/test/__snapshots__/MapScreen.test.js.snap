@@ -1,0 +1,637 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <AnimatedComponent
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "left": 0,
+            "margin": 10,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "position": "absolute",
+            "right": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 7,
+              "width": 0,
+            },
+            "shadowOpacity": 0.17,
+            "shadowRadius": 8,
+            "top": 0,
+          },
+          Object {
+            "zIndex": 2,
+          },
+          Object {
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#b2b2b2",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginRight": 50,
+          }
+        }
+      >
+        To
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      />
+    </AnimatedComponent>
+  </TouchableWithoutFeedback>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "bottom": 20,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+        Object {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 20,
+        }
+      }
+      disabled={false}
+      large={true}
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+      title="Use Current Location"
+    />
+  </AnimatedComponent>
+</View>
+`;
+
+exports[`MapScreen renders correctly address 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <AnimatedComponent
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "left": 0,
+            "margin": 10,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "position": "absolute",
+            "right": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 7,
+              "width": 0,
+            },
+            "shadowOpacity": 0.17,
+            "shadowRadius": 8,
+            "top": 0,
+          },
+          Object {
+            "zIndex": 2,
+          },
+          Object {
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#b2b2b2",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginRight": 50,
+          }
+        }
+      >
+        To
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      >
+        address
+      </Text>
+    </AnimatedComponent>
+  </TouchableWithoutFeedback>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "bottom": 20,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+        Object {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 20,
+        }
+      }
+      disabled={false}
+      large={true}
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+      title="Use Current Location"
+    />
+  </AnimatedComponent>
+</View>
+`;
+
+exports[`MapScreen renders correctly pending 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <AnimatedComponent
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "left": 0,
+            "margin": 10,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "position": "absolute",
+            "right": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 7,
+              "width": 0,
+            },
+            "shadowOpacity": 0.17,
+            "shadowRadius": 8,
+            "top": 0,
+          },
+          Object {
+            "zIndex": 2,
+          },
+          Object {
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#b2b2b2",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginRight": 50,
+          }
+        }
+      >
+        To
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      />
+    </AnimatedComponent>
+  </TouchableWithoutFeedback>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "bottom": 20,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+        Object {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 20,
+        }
+      }
+      disabled={true}
+      large={true}
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+      title="Use Current Location"
+    />
+  </AnimatedComponent>
+</View>
+`;
+
+exports[`MapScreen renders correctly searchVisible 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <AnimatedComponent
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "left": 0,
+            "margin": 10,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "position": "absolute",
+            "right": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 7,
+              "width": 0,
+            },
+            "shadowOpacity": 0.17,
+            "shadowRadius": 8,
+            "top": 0,
+          },
+          Object {
+            "zIndex": 2,
+          },
+          Object {
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#b2b2b2",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginRight": 50,
+          }
+        }
+      >
+        To
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      />
+    </AnimatedComponent>
+  </TouchableWithoutFeedback>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "bottom": 20,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+        Object {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 20,
+        }
+      }
+      disabled={false}
+      large={true}
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+      title="Use Current Location"
+    />
+  </AnimatedComponent>
+</View>
+`;
+
+exports[`MapScreen renders correctly with region 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <MapView
+    initialRegion={
+      Object {
+        "latitude": 0,
+        "latitudeDelta": 2,
+        "longitude": 1,
+        "longitudeDelta": 3,
+      }
+    }
+    onMapReady={[Function]}
+    onRegionChangeComplete={[Function]}
+    region={
+      Object {
+        "latitude": 0,
+        "latitudeDelta": 2,
+        "longitude": 1,
+        "longitudeDelta": 3,
+      }
+    }
+    style={
+      Object {
+        "flex": 1,
+        "shadowColor": "transparent",
+      }
+    }
+  >
+    <MapMarker
+      anchor={
+        Object {
+          "x": 0.2,
+          "y": 1,
+        }
+      }
+      centerOffset={
+        Object {
+          "x": 10,
+          "y": -25,
+        }
+      }
+      coordinate={
+        Object {
+          "latitude": 0,
+          "latitudeDelta": 2,
+          "longitude": 1,
+          "longitudeDelta": 3,
+        }
+      }
+      description="Your Delivery Location"
+      image={1}
+      onPress={[Function]}
+      title="You"
+    />
+  </MapView>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <AnimatedComponent
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "left": 0,
+            "margin": 10,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "position": "absolute",
+            "right": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 7,
+              "width": 0,
+            },
+            "shadowOpacity": 0.17,
+            "shadowRadius": 8,
+            "top": 0,
+          },
+          Object {
+            "zIndex": 2,
+          },
+          Object {
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#b2b2b2",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginRight": 50,
+          }
+        }
+      >
+        To
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+          }
+        }
+      >
+        address
+      </Text>
+    </AnimatedComponent>
+  </TouchableWithoutFeedback>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "bottom": 20,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+        Object {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#000",
+          "paddingVertical": 20,
+        }
+      }
+      large={true}
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+      title="Use Current Location"
+    />
+  </AnimatedComponent>
+</View>
+`;

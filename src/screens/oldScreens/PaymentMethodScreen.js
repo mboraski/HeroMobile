@@ -7,26 +7,25 @@ import { connect } from 'react-redux';
 import MenuAndBackButton from '../components/MenuAndBackButton';
 import SectionTitle from '../components/SectionTitle';
 import PaymentMethod from '../components/PaymentMethod';
-import TextButton from '../components/TextButton';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
-import { listCards } from '../actions/paymentActions';
 import { emY } from '../utils/em';
 
 class PaymentMethodScreen extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const signedUp = navigation.state.params && navigation.state.params.signedUp;
-        const onPressHeaderRight = () => navigation.goBack();
-        return {
-            title: 'Payment',
-            headerLeft: signedUp ? null : <MenuAndBackButton navigation={navigation} />,
-            headerRight: signedUp ? <TextButton title="Skip" onPress={onPressHeaderRight} /> : null,
-            headerStyle: Style.header,
-            headerTitleStyle: Style.headerTitle
-        };
-};
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Payment',
+        headerLeft: <MenuAndBackButton navigation={navigation} />,
+        headerStyle: Style.header,
+        headerTitleStyle: Style.headerTitle
+    });
 
     static defaultProps = {
+        cards: [
+            {
+                type: 'visa',
+                number: '4000400040004000'
+            }
+        ],
         accounts: [
             {
                 type: 'bank-america',
@@ -38,10 +37,6 @@ class PaymentMethodScreen extends Component {
         }
     };
 
-    componentDidMount() {
-        this.props.listCards(this.props.user.uid);
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.props.header.toggleState !== nextProps.header.toggleState) {
             if (nextProps.header.isMenuOpen) {
@@ -50,33 +45,24 @@ class PaymentMethodScreen extends Component {
                 this.props.navigation.navigate('DrawerClose');
             }
         }
-        const navigationParams = nextProps.navigation.state.params || {};
-        if (navigationParams.signedUp) {
-            if (this.props.cards.length !== nextProps.cards.length && nextProps.cards.length > 0) {
-                this.props.navigation.goBack();
-            }
-        }
     }
 
     addCard = () => {
         this.props.navigation.navigate('creditCard');
     };
 
-    selectPaymentMethod = card => {
-        this.props.navigation.navigate('creditCard', { card });
+    selectPaymentMethod = () => {
+        this.props.navigation.navigate('creditCard');
     };
 
-    renderCard = (card, index) => {
-        const onPress = () => this.selectPaymentMethod(card);
-        return (
-            <PaymentMethod
-                key={index}
-                type={card.brand}
-                text={card.last4}
-                onPress={onPress}
-            />
-        );
-    };
+    renderCard = (card, index) => (
+        <PaymentMethod
+            key={index}
+            type={card.type}
+            text={card.number}
+            onPress={this.selectPaymentMethod}
+        />
+    );
 
     renderAccount = (account, index) => (
         <PaymentMethod
@@ -124,15 +110,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    header: state.header,
-    cards: state.payment.cards
+    header: state.header
 });
 
-const mapDispatchToProps = {
-    listCards
-};
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    PaymentMethodScreen
-);
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentMethodScreen);
