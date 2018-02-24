@@ -3,14 +3,15 @@
   "description": "A delivery network and service app",
   "slug": "hero-mobile",
   "privacy": "public",
-  "sdkVersion": "17.0.0",
+  "sdkVersion": "25.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
-  "primaryColor": "#cccccc",
+  "primaryColor": "#f5a624",
   "icon": "./assets/icons/app.png",
-  "loading": {
-    "icon": "./assets/icons/loading.png",
-    "hideExponentText": false
+  "splash": {
+    "backgroundColor": "#f5a624",
+    "resizeMode": "cover",
+    "image": "./src/assets/splash.png"
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]

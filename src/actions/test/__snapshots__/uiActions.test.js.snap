@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`uiActions creates hideFeedbackForm action 1`] = `
+Object {
+  "type": "hide_feedback_form",
+}
+`;
+
+exports[`uiActions creates showFeedbackForm action 1`] = `
+Object {
+  "type": "show_feedback_form",
+}
+`;
+
+exports[`uiActions creates toggleSearch action 1`] = `[Function]`;

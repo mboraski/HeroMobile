@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`productActions creates selectDeliveryType action 1`] = `
+Object {
+  "payload": "deliveryType",
+  "type": "select_delivery_type",
+}
+`;

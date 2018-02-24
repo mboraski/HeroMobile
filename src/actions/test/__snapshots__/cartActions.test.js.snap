@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cartActions creates addToCart action 1`] = `
+Object {
+  "payload": Object {
+    "deliveryType": "1",
+    "price": "$3.49",
+    "productCode": "1",
+    "quantity": 1,
+    "thumbnail_image": "image",
+    "title": "Type 1 code 1",
+  },
+  "type": "add_to_cart",
+}
+`;
+
+exports[`cartActions creates removeFromCart action 1`] = `
+Object {
+  "payload": Object {
+    "deliveryType": "1",
+    "price": "$3.49",
+    "productCode": "1",
+    "quantity": 1,
+    "thumbnail_image": "image",
+    "title": "Type 1 code 1",
+  },
+  "type": "remove_from_cart",
+}
+`;

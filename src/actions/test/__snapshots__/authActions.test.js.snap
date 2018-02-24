@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Auth Actions handles signInWithEmailAndPassword action 1`] = `
+Array [
+  Object {
+    "type": "login",
+  },
+  Object {
+    "payload": Object {
+      "email": "email@email.com",
+      "isAnonymous": false,
+    },
+    "type": "login_success",
+  },
+]
+`;
+
+exports[`Testing Auth Actions handles signOut action 1`] = `
+Array [
+  Object {
+    "type": "signup",
+  },
+  Object {
+    "type": "signup_success",
+  },
+]
+`;
+
+exports[`Testing Auth Actions handles signUp action 1`] = `
+Array [
+  Object {
+    "type": "signup",
+  },
+  Object {
+    "payload": Object {
+      "email": "email@email.com",
+      "uid": "simplelogin:1",
+    },
+    "type": "signup_success",
+  },
+]
+`;
+
+exports[`Testing Auth Actions handles updateAccount action 1`] = `
+Array [
+  Object {
+    "type": "update_account",
+  },
+  Object {
+    "type": "update_account_success",
+  },
+]
+`;
+
+exports[`Testing Auth Actions signInWithFacebook 1`] = `
+Array [
+  Object {
+    "type": "login_facebook",
+  },
+  Object {
+    "payload": "token",
+    "type": "login_facebook_success",
+  },
+]
+`;
