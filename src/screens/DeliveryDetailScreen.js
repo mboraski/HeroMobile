@@ -20,7 +20,7 @@ class DeliveryDetailScreen extends Component {
                 <View style={styles.formInputs}>
                     <InlineLabelTextInputField
                         name="name"
-                        label="Full Name" 
+                        label="Full Name"
                     />
                     <InlineLabelTextInputField
                         name="number"

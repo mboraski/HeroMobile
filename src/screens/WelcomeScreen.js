@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
 
     onSlidesComplete = () => {
         this.props.setFirstTimeOpened();
-        this.props.navigation.navigate('auth');
+        this.props.navigation.navigate('apiTester');
     };
 
     render() {

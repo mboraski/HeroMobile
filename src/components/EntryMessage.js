@@ -12,7 +12,7 @@ import {
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import checkIcon from '../assets/icons/check-wrap.png';
+import checkIcon from '../assets/icons/logo-black.png';
 
 const SIZE = emY(5.62);
 type Props = {

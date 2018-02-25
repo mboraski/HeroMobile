@@ -208,6 +208,23 @@ class ApiTester extends Component {
             currentSetLatLon: { lat: 43.23223, lon: 97.293023 },
             status: 'open'
         });
+
+        // TODO: setup listener for order updates
+    };
+    onCreateConnectAccount = () => {
+        const user = auth.currentUser;
+        const args = { uid: user.uid, source: this.state.currentCard };
+        return removeStripeCustomerSource(args)
+            .then(() => {
+                this.setState({
+                    removeStripeCustomerSource: 'Stripe source removed successfully'
+                });
+            })
+            .catch((error) => {
+                this.setState({
+                    removeStripeCustomerSource: error
+                });
+            });
     };
 
     renderContent = () => {

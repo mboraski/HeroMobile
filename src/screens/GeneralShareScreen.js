@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         marginTop: emY(0.75)
     }
 
-}); 
+});
 
 GeneralShareScreen.navigationOptions = {
     title: 'Share',

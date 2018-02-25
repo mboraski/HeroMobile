@@ -2,7 +2,7 @@
 import { StackNavigator } from 'react-navigation';
 
 // Relative Imports
-import apiTester from '../screens/apiTester';
+import ApiTester from '../screens/ApiTester';
 import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -21,9 +21,9 @@ import PromotionShareScreen from '../screens/PromotionShareScreen';
 
 const MainNavigator = StackNavigator(
     {
-        apiTester: { screen: apiTester },
+        apiTester: { screen: ApiTester },
         welcome: { screen: WelcomeScreen },
-        auth: { screen: AuthScreen },
+        auth: { screen: ApiTester },
         profile: { screen: ProfileScreen },
         map: { screen: MapScreen },
         home: { screen: HomeScreen },
@@ -39,7 +39,6 @@ const MainNavigator = StackNavigator(
         promotionShare: { screen: PromotionShareScreen }
     },
     {
-        initialRouteName: 'apiTester',
         navigationOptions: {
             tabBarVisible: false
         },
