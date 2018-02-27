@@ -23,6 +23,10 @@ export function chargeStripeCustomerSource(charge) {
     return instance.post('chargeStripeCustomerSource', charge);
 }
 
+export function createStripeConnectAccount(args) {
+    return instance.post('createStripeConnectAccount', args);
+}
+
 function handleRequestConfig(config) {
     if (__DEV__) {
         console.log(config);

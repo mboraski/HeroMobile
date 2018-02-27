@@ -7,7 +7,8 @@ import { auth, firestore, database } from '../firebase';
 import {
     addStripeCustomerSource,
     removeStripeCustomerSource,
-    chargeStripeCustomerSource
+    chargeStripeCustomerSource,
+    createStripeConnectAccount
 } from '../api/hasty';
 
 import { STRIPE_CLIENT_KEY } from '../constants/Stripe';
@@ -30,6 +31,7 @@ class ApiTester extends Component {
         chargeCurrentCard: null,
         paymentInfo: null,
         selectedSource: null,
+        connectAccount: null,
         currentOrder: null,
         user: null
     }
@@ -213,16 +215,38 @@ class ApiTester extends Component {
     };
     onCreateConnectAccount = () => {
         const user = auth.currentUser;
-        const args = { uid: user.uid, source: this.state.currentCard };
-        return removeStripeCustomerSource(args)
+        const args = {
+            uid: user.uid,
+            email: 'markb539@gmail.com',
+            firstName: 'Mark',
+            lastName: 'Boraski',
+            address: {
+                city: 'Austin',
+                line1: '1007 S Congress Ave',
+                postal_code: '78704',
+                state: 'TX'
+            },
+            dob: {
+                day: 14,
+                month: 3,
+                year: 1988
+            },
+            ssnLast4: 4567,
+            tosAcceptance: {
+                date: 1519384228,
+                ip: '8.8.8.8'
+            }
+        };
+        return createStripeConnectAccount(args)
             .then(() => {
                 this.setState({
-                    removeStripeCustomerSource: 'Stripe source removed successfully'
+                    connectAccount: 'Connect account created successfully'
                 });
             })
             .catch((error) => {
+                console.log('error: ', error);
                 this.setState({
-                    removeStripeCustomerSource: error
+                    connectAccount: 'Error creating connect account'
                 });
             });
     };
@@ -304,6 +328,14 @@ class ApiTester extends Component {
                     <Button
                         onPress={this.onLightBeacon}
                         title="Light A Beacon"
+                        color="#841584"
+                    />
+                    <Text style={styles.titleText}>
+                        {this.state.connectAccount}
+                    </Text>
+                    <Button
+                        onPress={this.onCreateConnectAccount}
+                        title="Create Connect Account"
                         color="#841584"
                     />
                 </View>
