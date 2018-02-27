@@ -15,7 +15,7 @@ import contact from '../assets/icons/contact.png';
 import payment from '../assets/icons/payment.png';
 import avatarIcon from '../assets/icons/user.png';
 
-import CustomerPopup from '../components/CustomerPopup';
+import CustomerPopup from '../components/CommunicationPopup';
 import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 import Status from '../components/HeroMain/Status';
