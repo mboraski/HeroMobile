@@ -9,6 +9,7 @@ import AuthScreen from '../screens/AuthScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
+import HeroMainScreen from '../screens/HeroMainScreen';
 import DeliveryDetailScreen from '../screens/DeliveryDetailScreen';
 import DeliveryNotesScreen from '../screens/DeliveryNotesScreen';
 import DeliveryStatusScreen from '../screens/DeliveryStatusScreen';
@@ -22,11 +23,12 @@ import PromotionShareScreen from '../screens/PromotionShareScreen';
 const MainNavigator = StackNavigator(
     {
         apiTester: { screen: ApiTester },
+        auth: { screen: AuthScreen },
         welcome: { screen: WelcomeScreen },
-        auth: { screen: ApiTester },
         profile: { screen: ProfileScreen },
         map: { screen: MapScreen },
         home: { screen: HomeScreen },
+        main: { screen: HeroMainScreen },
         searchForHero: { screen: SearchForHeroScreen },
         deliveryDetail: { screen: DeliveryDetailScreen },
         deliveryNotes: { screen: DeliveryNotesScreen },

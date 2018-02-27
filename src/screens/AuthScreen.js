@@ -1,7 +1,7 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
 import {
-    Alert,
+    // Alert,
     StyleSheet,
     Text,
     ImageBackground,
@@ -12,10 +12,13 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import { auth } from '../firebase';
 import { listCards } from '../actions/paymentActions';
 import { signInWithFacebook } from '../actions/authActions';
 import EntryMessage from '../components/EntryMessage';
 import { reset } from '../actions/navigationActions';
+import { createStripeConnectAccount } from '../api/hasty';
+
 import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
 import { statusBarOnly } from '../constants/Style';
@@ -37,6 +40,17 @@ class AuthScreen extends Component {
         if (this.props.firstTimeOpened) {
             this.props.navigation.dispatch(reset('welcome'));
         }
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log('User is signed IN!');
+                // fetch if user is also a contractor
+                // if yes, go to main
+                // if no, go to signup form
+            } else {
+                console.log('User is signed OUT!');
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -54,22 +68,27 @@ class AuthScreen extends Component {
     }
 
     signInWithFacebook = () => {
-        this.props
-            .signInWithFacebook()
-            .catch(error => Alert.alert('Error', error.message));
+        // TODO: uncomment after testing
+        // this.props
+        //     .signInWithFacebook()
+        //     .catch(error => Alert.alert('Error', error.message));
+        auth.signInWithEmailAndPassword('markb539@gmail.com', 'Password1')
+            .catch((error) => {
+                console.log('signInWithEmailAndPassword error: ', error);
+            });
     };
 
-    goToMap = () => {
-        this.props.navigation.navigate('map');
+    goToMain = () => {
+        this.props.navigation.navigate('main');
     };
 
     goToPayment = async (user) => {
         const result = await this.props.listCards(user.uid);
         if (result.paymentInfo && result.paymentInfo.total_count === 0) {
-            this.goToMap();
+            this.goToMain();
             this.props.navigation.navigate('paymentMethod', { signedUp: true });
         } else {
-            this.goToMap();
+            this.goToMain();
         }
     };
 
