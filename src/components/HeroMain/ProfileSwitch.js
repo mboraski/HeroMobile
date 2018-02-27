@@ -1,11 +1,11 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { 
-    StyleSheet, 
+import {
+    StyleSheet,
     LayoutAnimation,
-    TouchableOpacity, 
-    Text, 
-    View 
+    TouchableOpacity,
+    Text,
+    View
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -22,33 +22,35 @@ class ProfileSwitch extends Component {
         text: 'Runner'
     };
 
-    onRunner = () => {
+    goOffline = () => {
+        // TODO: remove contractor from source of truth in Austin
         LayoutAnimation.spring();
         this.setState({
             leftVal: 0,
-            text: 'Runner'
+            text: 'Offline'
         });
     }
 
-    onDriver = () => {
+    goOnline = () => {
+        // TODO: add contractor to contractor source of truth and contractor product list in Austin
         LayoutAnimation.spring();
         this.setState({
             leftVal: WIDTH / 2,
-            text: 'Driver'
+            text: 'Online'
         });
     }
 
     render() {
         const { leftVal, text } = this.state;
-        
+
         return (
             <View style={styles.container}>
                 <View style={styles.labelContainer}>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.onRunner} >
-                        <Text style={styles.label}>Runner</Text>
+                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOffline} >
+                        <Text style={styles.label}>Offline</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.onDriver} >
-                        <Text style={styles.label}>Driver</Text>
+                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOnline} >
+                        <Text style={styles.label}>Online</Text>
                     </TouchableOpacity>
                     <View style={[styles.switcher, { left: leftVal }]}>
                         <Text style={styles.switcherLabel}>{text}</Text>
