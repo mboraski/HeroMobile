@@ -213,6 +213,33 @@ class ApiTester extends Component {
 
         // TODO: setup listener for order updates
     };
+    onContractorOnline = () => {
+        database.ref('/userOwned/orders/US/TX/Austin').add({
+            currentSetAddress: '1007 S Congress Ave, Apt 242, Austin, TX 78704',
+            currentSetLatLon: { lat: 43.23223, lon: 97.293023 },
+            status: 'open'
+        });
+
+        // TODO: setup listener for order updates
+    };
+    onContractorOffLine = () => {
+        database.ref('/userOwned/orders/US/TX/Austin').add({
+            currentSetAddress: '1007 S Congress Ave, Apt 242, Austin, TX 78704',
+            currentSetLatLon: { lat: 43.23223, lon: 97.293023 },
+            status: 'open'
+        });
+
+        // TODO: setup listener for order updates
+    };
+    onContractorOffLine = () => {
+        database.ref('/userOwned/orders/US/TX/Austin').add({
+            currentSetAddress: '1007 S Congress Ave, Apt 242, Austin, TX 78704',
+            currentSetLatLon: { lat: 43.23223, lon: 97.293023 },
+            status: 'open'
+        });
+
+        // TODO: setup listener for order updates
+    };
     onCreateConnectAccount = () => {
         const user = auth.currentUser;
         const args = {

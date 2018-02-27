@@ -12,12 +12,12 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import { auth } from '../firebase';
+import { auth, firestore } from '../firebase';
 import { listCards } from '../actions/paymentActions';
 import { signInWithFacebook } from '../actions/authActions';
 import EntryMessage from '../components/EntryMessage';
 import { reset } from '../actions/navigationActions';
-import { createStripeConnectAccount } from '../api/hasty';
+// import { createStripeConnectAccount } from '../api/hasty';
 
 import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
@@ -45,8 +45,15 @@ class AuthScreen extends Component {
             if (user) {
                 console.log('User is signed IN!');
                 // fetch if user is also a contractor
-                // if yes, go to main
-                // if no, go to signup form
+                this.fetchContractorId(user)
+                    .then(() => {
+                        // if yes, go to main
+
+                        // TODO: if no, go to signup form
+                    })
+                    .catch((error) => {
+                        console.log('fetch contractor id error: ', error);
+                    });
             } else {
                 console.log('User is signed OUT!');
             }
@@ -65,6 +72,28 @@ class AuthScreen extends Component {
 
     onAuthSuccess = (user) => {
         this.goToPayment(user);
+    }
+
+    fetchContractorId = () => {
+        const user = auth.currentUser;
+        const uid = user.uid;
+        const docRef = firestore.collection('userReadable').doc(uid);
+        return docRef.get()
+            .then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    console.log('fetched connectId info: ', data.connectId);
+                    // const connectId = data.connectId;
+                    // TODO: stores id to store
+                    this.goToMain();
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log('No such document with payment info!');
+                }
+            })
+            .catch((error) => {
+                console.log('Error getting document:', error);
+            });
     }
 
     signInWithFacebook = () => {
