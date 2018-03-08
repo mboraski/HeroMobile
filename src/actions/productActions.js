@@ -3,6 +3,9 @@ import * as api from '../api/hasty';
 export const GET_PRODUCTS_BY_ADDRESS_REQUEST = 'get_products_by_address_request';
 export const GET_PRODUCTS_BY_ADDRESS_SUCCESS = 'get_products_by_address_success';
 export const GET_PRODUCTS_BY_ADDRESS_FAIL = 'get_products_by_address_fail';
+export const INVENTORY_REQUEST = 'inventory_request';
+export const INVENTORY_SUCCESS = 'inventory_success';
+export const INVENTORY_FAILURE = 'inventory_failure';
 
 export const SELECT_DELIVERY_TYPE = 'select_delivery_type';
 

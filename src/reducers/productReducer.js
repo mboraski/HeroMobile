@@ -1,42 +1,36 @@
 import {
-    GET_PRODUCTS_BY_ADDRESS_REQUEST,
-    GET_PRODUCTS_BY_ADDRESS_SUCCESS,
-    GET_PRODUCTS_BY_ADDRESS_FAIL,
-    SELECT_DELIVERY_TYPE
+    // INVENTORY_REQUEST,
+    INVENTORY_SUCCESS,
+    // INVENTORY_FAILURE
 } from '../actions/productActions';
 
 export const initialState = {
     pending: false,
     error: null,
     availableProducts: {},
-    deliveryType: '1'
+    deliveryType: '1',
+    inventory: {}
 };
 
 export default function (state = initialState, action) {
+    console.log('inventory reducer ran payload: ', action);
     switch (action.type) {
-        case GET_PRODUCTS_BY_ADDRESS_REQUEST:
+        // case INVENTORY_REQUEST:
+        //     return {
+        //         ...state,
+        //         pending: true
+        //     };
+        case INVENTORY_SUCCESS:
+        console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
-                pending: true
+                inventory: action.payload
             };
-        case GET_PRODUCTS_BY_ADDRESS_SUCCESS:
-            return {
-                ...state,
-                pending: false,
-                availableProducts: action.payload.productList,
-                error: null
-            };
-        case GET_PRODUCTS_BY_ADDRESS_FAIL:
-            return {
-                ...state,
-                pending: false,
-                error: action.error
-            };
-        case SELECT_DELIVERY_TYPE:
-            return {
-                ...state,
-                deliveryType: action.payload
-            };
+        // case INVENTORY_FAILURE:
+        //     return {
+        //         ...state,
+        //         pending: false
+        //     };
         default:
             return state;
     }

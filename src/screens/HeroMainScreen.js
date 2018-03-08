@@ -42,15 +42,15 @@ export class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.header.toggleState !== nextProps.header.toggleState) {
-            if (nextProps.header.isMenuOpen) {
-                this.props.navigation.navigate('DrawerOpen');
-            } else {
-                this.props.navigation.navigate('DrawerClose');
-            }
-        }
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if (this.props.header.toggleState !== nextProps.header.toggleState) {
+    //         if (nextProps.header.isMenuOpen) {
+    //             this.props.navigation.navigate('DrawerOpen');
+    //         } else {
+    //             this.props.navigation.navigate('DrawerClose');
+    //         }
+    //     }
+    // }
 
     goToPaymentInfo = () => {
         this.props.navigation.navigate('paymentInfo');
@@ -67,7 +67,9 @@ export class HeroMainScreen extends Component {
     render() {
         const { contactPopupVisible } = this.state;
         const {
-            online
+            online,
+            contractorProducts,
+            currentLocation
         } = this.props;
 
         return (
@@ -84,6 +86,8 @@ export class HeroMainScreen extends Component {
                     {/* <Text style={styles.viewProfile}>View Profile</Text> */}
                     <ProfileSwitch
                         online={online}
+                        contractorProducts={contractorProducts}
+                        currentLocation={currentLocation}
                         goOnline={this.props.goOnline}
                         goOffline={this.props.goOffline}
                     />
@@ -109,7 +113,10 @@ export class HeroMainScreen extends Component {
                     </View> */}
                     <View style={styles.mainItemContainer}>
                         <View>
-                            <MainItem image={inventory} title="Manage Inventory" />
+                            <MainItem
+                                image={inventory}
+                                title="Manage Inventory"
+                            />
                             <MainItem
                                 image={contact}
                                 title="Contact Us"
@@ -117,7 +124,10 @@ export class HeroMainScreen extends Component {
                             />
                         </View>
                         <View>
-                            <MainItem image={history} title="Orders" />
+                            <MainItem
+                                image={history}
+                                title="Orders"
+                            />
                             <MainItem
                                 image={payment}
                                 title="Sign Out"
@@ -213,12 +223,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     // header: state.header,
-    online: state.auth.online
+    online: state.auth.online,
+    contractorProducts: state.product.inventory,
+    currentLocation: { lat: 43.23223, lon: -97.293023 }
 });
 
-const mapDispatchToProps = dispatch => ({
-    goOnline: () => dispatch(goOnline()),
-    goOffline: () => dispatch(goOffline())
-});
+const mapDispatchToProps = {
+    goOnline,
+    goOffline
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);

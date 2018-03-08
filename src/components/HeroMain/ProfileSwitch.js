@@ -56,17 +56,34 @@ class ProfileSwitch extends Component {
         }
     }
 
+    goOnline = () => {
+        const {
+            goOnline,
+            contractorProducts,
+            currentLocation
+        } = this.props;
+        console.log('contractorProducts: ', contractorProducts);
+        goOnline(contractorProducts, currentLocation);
+    }
+
+    goOffline = () => {
+        const {
+            goOffline,
+            contractorProducts
+        } = this.props;
+        goOffline(contractorProducts);
+    }
+
     render() {
         const { leftVal, text } = this.state;
-        const { goOnline, goOffline } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={styles.labelContainer}>
-                    <TouchableOpacity style={styles.leftContainer} onPress={goOffline} >
+                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOffline} >
                         <Text style={styles.label}>Offline</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.leftContainer} onPress={goOnline} >
+                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOnline} >
                         <Text style={styles.label}>Online</Text>
                     </TouchableOpacity>
                     <View style={[styles.switcher, { left: leftVal }]}>

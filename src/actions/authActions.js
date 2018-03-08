@@ -5,6 +5,11 @@ import firebase from '../firebase';
 import { APP_ID } from '../constants/Facebook';
 import { GO_MAIN } from './navigationActions';
 import { dropdownAlert } from './uiActions';
+import {
+    INVENTORY_REQUEST,
+    INVENTORY_SUCCESS,
+    INVENTORY_FAILURE
+} from './productActions';
 import { logContractorError, logCurrentInventoryError } from '../api/hasty';
 
 export const LOGIN = 'login';
@@ -28,6 +33,22 @@ export const CONTRACTOR_APPROVED = 'contractor_approved';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
 
+export const fetchContractorInventory = (dispatch) => {
+    dispatch({ type: INVENTORY_REQUEST });
+    const user = firebase.auth().currentUser;
+    const uid = user.uid;
+    const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
+    inventoryRef.once('value')
+        .then((snapshot) => {
+            const inventory = snapshot.val();
+            console.log('inventory: ', inventory);
+            dispatch({ type: INVENTORY_SUCCESS, payload: inventory });
+        })
+        .catch((error) => {
+            console.log('inventory error: ', error);
+            dispatch({ type: INVENTORY_FAILURE, payload: error });
+        });
+};
 
 export const checkContractorApproval = (dispatch) => {
     const user = firebase.auth().currentUser;
@@ -44,8 +65,11 @@ export const checkContractorApproval = (dispatch) => {
                     console.log('contractor approved data: ', data);
                     // set approval status in store
                     const connectId = data.stripeInfo.newStripeConnectAccount.id;
+                    // const connectId = data.inventory.newStripeConnectAccount.id;
                     // fire auth action
                     dispatch({ type: CONTRACTOR_APPROVED, payload: connectId });
+                    // set contractor inventory
+                    fetchContractorInventory(dispatch);
                     // navigate user to HeroMain
                     dispatch({ type: GO_MAIN });
                 } else if (pending){
@@ -202,55 +226,83 @@ export const online = (contractorProducts, currentLocation) => dispatch => {
     const activeProductsRef = firebase.database().ref('activeProducts/US/TX/Austin/instant');
     return activeProductsRef.once('value')
         .then((snapshot) => {
+            let result;
             const currentProducts = snapshot.val();
-            // loop through current products and add products this hero has
-            const copyCurrentProducts = Object.assign({}, currentProducts);
-            const newProducts = _.reduce(contractorProducts, (accum, product) => {
-                const cProduct = copyCurrentProducts[product.productName] || null;
-                if (cProduct) {
-                    accum[cProduct.productName] = {
-                        quantity: cProduct.quantity + product.quantity,
-                        productName: cProduct.productName,
-                        imageUrl: cProduct.imageUrl,
-                        price: cProduct.price
-                    }
-                } else {
-                    accum[product.productName] = product;
-                }
-                return accum;
-            }, copyCurrentProducts);
-            // set this new productList
-            return activeProductsRef.set(newProducts)
-                .then(() => {
-                    const activeHeroesRef = firebase.database().ref(`activeHeroes/US/TX/Austin/${uid}`);
-                    return activeHeroesRef.set({
-                        currentSetLatLon: { lat: currentLocation.lat, lon: currentLocation.lon },
-                        productList: {
-                            instant: contractorProducts
-                        }
-                    })
-                        .then(() => {
-                            dispatch(dropdownAlert(true, 'Successfully Online!'));
-                            dispatch({ type: ONLINE });
+            if (!currentProducts) {
+                // set this new productList
+                result = activeProductsRef.set(contractorProducts)
+                    .then(() => {
+                        const activeHeroesRef = firebase.database().ref(`activeHeroes/US/TX/Austin/${uid}`);
+                        return activeHeroesRef.set({
+                            currentSetLatLon: { lat: currentLocation.lat, lon: currentLocation.lon },
+                            productList: contractorProducts
                         })
-                        .catch((error) => {
-                            logContractorError(uid, error);
-                            activeHeroesRef.remove();
-                            dispatch(dropdownAlert(true, 'Error setting Hero online status'));
-                            dispatch({ type: OFFLINE });
-                        });
-                })
-                .catch((error) => {
-                    logContractorError(uid, error);
-                    dispatch(dropdownAlert(true, 'Error adding Hero product availability'));
-                    dispatch({ type: OFFLINE });
-                });
-        })
-        .catch((error) => {
-            logContractorError(uid, error);
-            dispatch(dropdownAlert(true, 'Error connecting to online database'));
-            dispatch({ type: OFFLINE });
-        });
+                            .then(() => {
+                                dispatch(dropdownAlert(true, 'Successfully Online!'));
+                                dispatch({ type: ONLINE });
+                            })
+                            .catch((error) => {
+                                logContractorError(uid, error);
+                                activeHeroesRef.remove();
+                                dispatch(dropdownAlert(true, 'Error setting Hero online status'));
+                                dispatch({ type: OFFLINE });
+                            });
+                    })
+                    .catch((error) => {
+                        logContractorError(uid, error);
+                        dispatch(dropdownAlert(true, 'Error adding Hero product availability'));
+                        dispatch({ type: OFFLINE });
+                    });
+            } else {
+                // loop through current products and add products this hero has
+                const copyCurrentProducts = Object.assign({}, currentProducts);
+                const newProducts = _.reduce(contractorProducts, (accum, product) => {
+                    const cProduct = copyCurrentProducts[product.productName] || null;
+                    if (cProduct) {
+                        accum[cProduct.productName] = {
+                            quantity: cProduct.quantity + product.quantity,
+                            productName: cProduct.productName,
+                            imageUrl: cProduct.imageUrl,
+                            price: cProduct.price
+                        }
+                    } else {
+                        accum[product.productName] = product;
+                    }
+                    return accum;
+                }, copyCurrentProducts);
+                // set this new productList
+                result = activeProductsRef.set(newProducts)
+                    .then(() => {
+                        const activeHeroesRef = firebase.database().ref(`activeHeroes/US/TX/Austin/${uid}`);
+                        return activeHeroesRef.set({
+                            currentSetLatLon: { lat: currentLocation.lat, lon: currentLocation.lon },
+                            productList: contractorProducts
+                        })
+                            .then(() => {
+                                dispatch(dropdownAlert(true, 'Successfully Online!'));
+                                dispatch({ type: ONLINE });
+                            })
+                            .catch((error) => {
+                                logContractorError(uid, error);
+                                activeHeroesRef.remove();
+                                dispatch(dropdownAlert(true, 'Error setting Hero online status'));
+                                dispatch({ type: OFFLINE });
+                            });
+                    })
+                    .catch((error) => {
+                        logContractorError(uid, error);
+                        dispatch(dropdownAlert(true, 'Error adding Hero product availability'));
+                        dispatch({ type: OFFLINE });
+                    });
+                }
+                return result;
+            })
+            .catch((error) => {
+                logContractorError(uid, error);
+                console.log('error connecting to online db error: ', error);
+                dispatch(dropdownAlert(true, 'Error connecting to online database'));
+                dispatch({ type: OFFLINE });
+            });
 };
 
 export const offline = (contractorProducts) => dispatch => {
