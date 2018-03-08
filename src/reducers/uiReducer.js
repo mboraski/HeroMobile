@@ -4,7 +4,8 @@ import {
     CLOSE_CUSTOMER_POPUP,
     SHOW_FEEDBACK_FORM,
     HIDE_FEEDBACK_FORM,
-    FIRST_TIME_OPENED
+    FIRST_TIME_OPENED,
+    DROPDOWN_ALERT
 } from '../actions/uiActions';
 
 const initialState = {
@@ -12,7 +13,9 @@ const initialState = {
     searchVisible: false,
     customerPopupVisible: false,
     feedbackFormVisible: false,
-    firstTimeOpened: true
+    firstTimeOpened: true,
+    dropdownAlertVisible: false,
+    dropdownAlertText: ''
 };
 
 export default function (state = initialState, action) {
@@ -47,6 +50,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 firstTimeOpened: false
+            };
+        case DROPDOWN_ALERT:
+            return {
+                ...state,
+                dropdownAlertVisible: action.payload.visible,
+                dropdownAlertText: action.payload.text
             };
         default:
             return state;

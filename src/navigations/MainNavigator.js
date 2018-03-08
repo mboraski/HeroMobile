@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation';
 // Relative Imports
 import ApiTester from '../screens/ApiTester';
 import SearchForHeroScreen from '../screens/SearchForHeroScreen';
-import WelcomeScreen from '../screens/WelcomeScreen';
+// import PendingScreen from '../screens/PendingScreen';
 import AuthScreen from '../screens/AuthScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -19,12 +19,14 @@ import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import PromotionShareScreen from '../screens/PromotionShareScreen';
+import NotificationFeedbackScreen from '../screens/NotificationFeedbackScreen';
+
 
 const MainNavigator = StackNavigator(
     {
         apiTester: { screen: ApiTester },
         auth: { screen: AuthScreen },
-        welcome: { screen: WelcomeScreen },
+        // pending: { screen: PendingScreen },
         profile: { screen: ProfileScreen },
         map: { screen: MapScreen },
         home: { screen: HomeScreen },
@@ -38,7 +40,8 @@ const MainNavigator = StackNavigator(
         paymentMethod: { screen: PaymentMethodScreen },
         checkout: { screen: CheckoutScreen },
         feedback: { screen: FeedbackScreen },
-        promotionShare: { screen: PromotionShareScreen }
+        promotionShare: { screen: PromotionShareScreen },
+        notificationFeedback: { screen: NotificationFeedbackScreen }
     },
     {
         navigationOptions: {

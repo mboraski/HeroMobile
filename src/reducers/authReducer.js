@@ -16,13 +16,16 @@ import {
     // UPDATE_ACCOUNT_FAIL,
     LOGIN_FACEBOOK,
     LOGIN_FACEBOOK_SUCCESS,
-    LOGIN_FACEBOOK_FAIL
+    LOGIN_FACEBOOK_FAIL,
+    CONTRACTOR_APPROVED
 } from '../actions/authActions';
 
 export const initialState = {
     user: null,
+    approved: false,
     pending: false,
-    error: null
+    error: null,
+    connectId: ''
 };
 
 export default function (state = initialState, action) {
@@ -41,7 +44,7 @@ export default function (state = initialState, action) {
                 user: action.payload,
                 expirationDate: action.payload
                     ? moment()
-                          .add(3, 'months')
+                          .add(1, 'months')
                           .toDate()
                     : null
             };
@@ -52,6 +55,13 @@ export default function (state = initialState, action) {
             return { ...state, error: action.error };
         case SIGNOUT_SUCCESS:
             return initialState;
+        case CONTRACTOR_APPROVED:
+            return {
+                ...state,
+                connectId: action.payload,
+                approved: true,
+                pending: false
+            };
         default:
             return state;
     }

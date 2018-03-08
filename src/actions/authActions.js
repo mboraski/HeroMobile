@@ -1,8 +1,10 @@
 import { Facebook } from 'expo';
-import firebase from 'firebase';
-import { auth, firestore } from '../firebase';
 
+import firebase from '../firebase';
 import { APP_ID } from '../constants/Facebook';
+import { GO_MAIN } from './navigationActions';
+import { dropdownAlert } from './uiActions';
+import { logContractorError } from '../api/hasty';
 
 export const LOGIN = 'login';
 export const LOGIN_SUCCESS = 'login_success';
@@ -21,6 +23,45 @@ export const UPDATE_ACCOUNT_FAIL = 'update_account_fail';
 export const LOGIN_FACEBOOK = 'login_facebook';
 export const LOGIN_FACEBOOK_SUCCESS = 'login_facebook_success';
 export const LOGIN_FACEBOOK_FAIL = 'login_facebook_fail';
+export const CONTRACTOR_APPROVED = 'contractor_approved';
+
+
+export const checkContractorApproval = (dispatch) => {
+    const user = firebase.auth().currentUser;
+    const uid = user.uid;
+    console.log('checkContractorApproval ran uid: ', uid);
+    const contractorRef = firebase.firestore().collection('contractors').doc(`${uid}`);
+    return contractorRef.get()
+        .then((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                const approved = data.approval.approved;
+                const pending = data.approval.pending;
+                if (approved) {
+                    console.log('contractor approved data: ', data);
+                    // set approval status in store
+                    const connectId = data.stripeInfo.newStripeConnectAccount.id;
+                    // fire auth action
+                    dispatch({ type: CONTRACTOR_APPROVED, payload: connectId });
+                    // navigate user to HeroMain
+                    dispatch({ type: GO_MAIN });
+                } else if (pending){
+                    // not approved, check status
+                    // if pending, show pending screen
+                } else {
+                    // show signup form
+                }
+            } else {
+                // create one
+            }
+        })
+        .catch((error) => {
+            // alert user that there was an error verifying contractor status and to try signing out and back in again.
+            console.log('checkContractorApproval error: ', error);
+            logContractorError({ uid, error });
+            dispatch(dropdownAlert(true, 'Error verifying contractor status, please try again.'))
+        })
+};
 
 export const signInWithFacebook = () => async dispatch => {
     try {
@@ -35,10 +76,11 @@ export const signInWithFacebook = () => async dispatch => {
             const credential = firebase.auth.FacebookAuthProvider.credential(
                 token
             );
-            return auth
+            return firebase.auth()
                 .signInWithCredential(credential)
                 .then(user => {
                     dispatch({ type: LOGIN_SUCCESS, payload: user });
+                    checkContractorApproval(user, dispatch);
                     return user;
                 })
                 .catch(error => {
@@ -66,7 +108,7 @@ export const signInWithFacebook = () => async dispatch => {
 
 export const signInWithEmailAndPassword = ({ email, password }) => dispatch => {
     dispatch({ type: LOGIN });
-    return auth
+    return firebase.auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
             dispatch({ type: LOGIN_SUCCESS, payload: user });
@@ -81,7 +123,7 @@ export const signInWithEmailAndPassword = ({ email, password }) => dispatch => {
 export const signUp = ({ email, password, name, number }) => async dispatch => {
     try {
         dispatch({ type: SIGNUP });
-        const user = await auth.createUserWithEmailAndPassword(email, password);
+        const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
         dispatch({ type: SIGNUP_SUCCESS, payload: user });
         await updateAccount(user.uid, {
             displayName: String(name),
@@ -96,7 +138,7 @@ export const signUp = ({ email, password, name, number }) => async dispatch => {
 
 export const signOut = () => dispatch => {
     dispatch({ type: SIGNOUT });
-    return auth
+    return firebase.auth()
         .signOut()
         .then(result => {
             dispatch({ type: SIGNOUT_SUCCESS });
@@ -110,7 +152,7 @@ export const signOut = () => dispatch => {
 
 export const updateAccount = (id, values) => dispatch => {
     dispatch({ type: UPDATE_ACCOUNT });
-    return firestore
+    return firebase.firestore()
         .collection('users')
         .doc(id)
         .set(values, { merge: true })
@@ -124,4 +166,11 @@ export const updateAccount = (id, values) => dispatch => {
         });
 };
 
-export const authChanged = user => ({ type: AUTH_CHANGED, payload: user });
+export const authChanged = (user) => dispatch => {
+    console.log('authChanged ran');
+    if (user) {
+        console.log('authChanged user: ', user);
+        checkContractorApproval(dispatch);
+    }
+    dispatch({ type: AUTH_CHANGED, payload: user });
+};

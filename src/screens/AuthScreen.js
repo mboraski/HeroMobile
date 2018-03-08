@@ -1,9 +1,8 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
 import {
-    // Alert,
+    Alert,
     StyleSheet,
-    Text,
     ImageBackground,
     KeyboardAvoidingView,
     ScrollView
@@ -12,20 +11,16 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import { auth, firestore } from '../firebase';
 import { listCards } from '../actions/paymentActions';
 import { signInWithFacebook } from '../actions/authActions';
 import EntryMessage from '../components/EntryMessage';
-import { reset } from '../actions/navigationActions';
-// import { createStripeConnectAccount } from '../api/hasty';
-
+import Text from '../components/Text';
 import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
 import { statusBarOnly } from '../constants/Style';
 import { emY } from '../utils/em';
 
-// TODO: replace with real image that gets fetched
-const SOURCE = { uri: 'https://source.unsplash.com/random/800x600' };
+import AuthScreenBackground from '../assets/AuthScreenBackground.jpg';
 // TODO: add width then use for drawer width. Save to store.
 
 class AuthScreen extends Component {
@@ -36,88 +31,53 @@ class AuthScreen extends Component {
         openModal: true
     };
 
-    componentDidMount() {
-        if (this.props.firstTimeOpened) {
-            this.props.navigation.dispatch(reset('welcome'));
-        }
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log('User is signed IN!');
-                // fetch if user is also a contractor
-                this.fetchContractorId(user)
-                    .then(() => {
-                        // if yes, go to main
-
-                        // TODO: if no, go to signup form
-                    })
-                    .catch((error) => {
-                        console.log('fetch contractor id error: ', error);
-                    });
-            } else {
-                console.log('User is signed OUT!');
-            }
-        });
+    componentWillMount() {
+        this.focusSubscription = this.props.navigation.addListener('didFocus', this.handleFocus);
     }
 
     componentWillReceiveProps(nextProps) {
         this.onAuthComplete(nextProps);
     }
 
+    componentWillUnmount() {
+        if (this.focusSubscription) {
+            this.focusSubscription.remove();
+        }
+    }
+
     onAuthComplete = props => {
         if (props.user && !this.props.user) {
             this.onAuthSuccess(props.user);
         }
-    }
+    };
 
-    onAuthSuccess = (user) => {
+    onAuthSuccess = user => {
         this.goToPayment(user);
-    }
+    };
 
-    fetchContractorId = () => {
-        const user = auth.currentUser;
-        const uid = user.uid;
-        const docRef = firestore.collection('userReadable').doc(uid);
-        return docRef.get()
-            .then((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    console.log('fetched connectId info: ', data.connectId);
-                    // const connectId = data.connectId;
-                    // TODO: stores id to store
-                    this.goToMain();
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log('No such document with payment info!');
-                }
-            })
-            .catch((error) => {
-                console.log('Error getting document:', error);
-            });
-    }
+    handleFocus = () => {
+        if (this.props.user) {
+            this.onAuthSuccess(this.props.user);
+        }
+    };
 
     signInWithFacebook = () => {
-        // TODO: uncomment after testing
-        // this.props
-        //     .signInWithFacebook()
-        //     .catch(error => Alert.alert('Error', error.message));
-        auth.signInWithEmailAndPassword('markb539@gmail.com', 'Password1')
-            .catch((error) => {
-                console.log('signInWithEmailAndPassword error: ', error);
-            });
+        this.props
+            .signInWithFacebook()
+            .catch(error => Alert.alert('Error', error.message));
     };
 
-    goToMain = () => {
-        this.props.navigation.navigate('main');
+    goToMap = () => {
+        this.props.navigation.navigate('map');
     };
 
-    goToPayment = async (user) => {
+    goToPayment = async user => {
         const result = await this.props.listCards(user.uid);
         if (result.paymentInfo && result.paymentInfo.total_count === 0) {
-            this.goToMain();
+            this.goToMap();
             this.props.navigation.navigate('paymentMethod', { signedUp: true });
         } else {
-            this.goToMain();
+            this.goToMap();
         }
     };
 
@@ -132,7 +92,7 @@ class AuthScreen extends Component {
                     style={styles.container}
                     behavior="position"
                 >
-                    <ImageBackground source={SOURCE} style={styles.image}>
+                    <ImageBackground source={AuthScreenBackground} style={styles.image}>
                         <Text style={styles.imageText}>HELLO</Text>
                     </ImageBackground>
                     <Button
@@ -149,9 +109,11 @@ class AuthScreen extends Component {
                         textStyle={styles.buttonText}
                     />
                     <EntryMessage
+                        openModal={this.state.openModal}
+                        closeModal={this.closeModal}
                         message={'Hello and welcome to our official SXSW soft launch! Thanks so much for being a part of this amazing journey! Signup or login with Facebook above.'}
                     />
-               </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
             </ScrollView>
         );
     }
