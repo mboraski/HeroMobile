@@ -18,7 +18,7 @@ import avatarIcon from '../assets/icons/user.png';
 import { online as goOnline, offline as goOffline } from '../actions/authActions';
 
 import CustomerPopup from '../components/CommunicationPopup';
-import MenuButton from '../components/MenuButton';
+// import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 // import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
@@ -31,11 +31,11 @@ const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
 export class HeroMainScreen extends Component {
     static navigationOptions = {
-        title: '',
-        headerLeft: <MenuButton />,
+        title: 'HERO',
+        headerLeft: null,
         headerRight: null,
         headerStyle: Style.headerBorderless,
-        headerTitleStyle: Style.headerTitle
+        headerTitleStyle: Style.headerTitleLogo
     };
 
     state = {
@@ -69,6 +69,7 @@ export class HeroMainScreen extends Component {
         const {
             online
         } = this.props;
+
         return (
             <ScrollView style={styles.scrollContainer}>
                 <View style={styles.container}>
@@ -116,10 +117,10 @@ export class HeroMainScreen extends Component {
                             />
                         </View>
                         <View>
-                            <MainItem image={history} title="History" />
+                            <MainItem image={history} title="Orders" />
                             <MainItem
                                 image={payment}
-                                title="Payment Info"
+                                title="Sign Out"
                                 onPress={this.goToPaymentInfo}
                             />
                         </View>
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    header: state.header,
+    // header: state.header,
     online: state.auth.online
 });
 

@@ -1,7 +1,7 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Image } from 'react-native';
-import Expo from 'expo';
+import { StyleSheet, Image, Platform } from 'react-native';
+import Expo, { Font } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 
@@ -12,12 +12,23 @@ import RootContainer from './src/screens/RootContainer';
 import { store, persistor } from './src/store';
 
 class App extends Component {
-    componentDidMount() {
-        // TODO: HAMO-28: Wire up push notifications
+    state = {
+        fontLoaded: false
+    };
+
+    async componentDidMount() {
+        const fonts = {
+            goodtimes: require('./src/assets/fonts/goodtimes.ttf')
+        };
+        if (Platform.OS === 'android') {
+            fonts.Arial = require('./src/assets/fonts/arial.ttf');
+        }
+        await Font.loadAsync(fonts);
+        this.setState({ fontLoaded: true });
     }
 
     render() {
-        return (
+        return this.state.fontLoaded ? (
             <Provider store={store}>
                 <PersistGate
                     persistor={persistor}
@@ -32,6 +43,12 @@ class App extends Component {
                     <RootContainer />
                 </PersistGate>
             </Provider>
+        ) : (
+            <Image
+                source={splashImage}
+                style={[StyleSheet.absoluteFill, styles.splash]}
+                resizeMode="contain"
+            />
         );
     }
 }

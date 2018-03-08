@@ -95,7 +95,13 @@ export default StyleSheet.create({
         color: 'rgba(0, 0, 0, .9)',
         marginHorizontal: 16,
         fontWeight: '500',
-        fontSize: 17
+        fontSize: 17,
+        fontFamily: 'Arial',
+    },
+    headerTitleLogo: {
+        fontFamily: 'goodtimes',
+        fontWeight: 'normal',
+        fontSize: 21
     },
     headerLeft: {
         marginRight: 0,
