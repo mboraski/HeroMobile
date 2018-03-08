@@ -31,6 +31,10 @@ export function logContractorError(args) {
     return instance.post('logContractorError', args);
 }
 
+export function logCurrentInventoryError(args) {
+    return instance.post('logCurrentInventoryError', args);
+}
+
 function handleRequestConfig(config) {
     if (__DEV__) {
         console.log(config);
