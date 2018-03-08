@@ -24,6 +24,8 @@ export const LOGIN_FACEBOOK = 'login_facebook';
 export const LOGIN_FACEBOOK_SUCCESS = 'login_facebook_success';
 export const LOGIN_FACEBOOK_FAIL = 'login_facebook_fail';
 export const CONTRACTOR_APPROVED = 'contractor_approved';
+export const ONLINE = 'online';
+export const OFFLINE = 'offline';
 
 
 export const checkContractorApproval = (dispatch) => {
@@ -174,3 +176,19 @@ export const authChanged = (user) => dispatch => {
     }
     dispatch({ type: AUTH_CHANGED, payload: user });
 };
+
+export const online = () => {
+    return firebase.database()
+        .collection('users')
+        .doc(id)
+        .set(values, { merge: true })
+        .then(result => {
+            dispatch({ type: UPDATE_ACCOUNT_SUCCESS });
+            return result;
+        })
+        .catch(error => {
+            dispatch({ type: UPDATE_ACCOUNT_FAIL });
+            throw error;
+        });
+}({ type: ONLINE });
+export const offline = () => ({ type: OFFLINE });

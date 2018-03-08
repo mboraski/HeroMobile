@@ -19,37 +19,54 @@ const HEIGHT = emY(2.169);
 class ProfileSwitch extends Component {
     state = {
         leftVal: 0,
-        text: 'Runner'
+        text: 'Offline'
     };
 
-    goOffline = () => {
-        // TODO: remove contractor from source of truth in Austin
-        LayoutAnimation.spring();
-        this.setState({
-            leftVal: 0,
-            text: 'Offline'
-        });
+    componentWillMount() {
+        if (this.props.online) {
+            LayoutAnimation.spring()
+            this.setState({
+                leftVal: WIDTH / 2,
+                text: 'Online'
+            });
+        } else {
+            LayoutAnimation.spring()
+            this.setState({
+                leftVal: 0,
+                text: 'Offline'
+            });
+        }
     }
 
-    goOnline = () => {
-        // TODO: add contractor to contractor source of truth and contractor product list in Austin
-        LayoutAnimation.spring();
-        this.setState({
-            leftVal: WIDTH / 2,
-            text: 'Online'
-        });
+    componentWillReceiveProps(nextProps) {
+        if (this.props.online !== nextProps.online) {
+            if (nextProps.online) {
+                LayoutAnimation.spring()
+                this.setState({
+                    leftVal: WIDTH / 2,
+                    text: 'Online'
+                });
+            } else {
+                LayoutAnimation.spring()
+                this.setState({
+                    leftVal: 0,
+                    text: 'Offline'
+                });
+            }
+        }
     }
 
     render() {
         const { leftVal, text } = this.state;
+        const { goOnline, goOffline } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={styles.labelContainer}>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOffline} >
+                    <TouchableOpacity style={styles.leftContainer} onPress={goOffline} >
                         <Text style={styles.label}>Offline</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOnline} >
+                    <TouchableOpacity style={styles.leftContainer} onPress={goOnline} >
                         <Text style={styles.label}>Online</Text>
                     </TouchableOpacity>
                     <View style={[styles.switcher, { left: leftVal }]}>

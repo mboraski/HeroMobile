@@ -1,24 +1,26 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
 import loaderGradient from '../assets/loader-gradient.png';
 import loaderTicks from '../assets/loader-ticks.png';
-import races from '../assets/icons/races.png';
-import distance from '../assets/icons/distance.png';
-import earned from '../assets/icons/earned.png';
+// import races from '../assets/icons/races.png';
+// import distance from '../assets/icons/distance.png';
+// import earned from '../assets/icons/earned.png';
 import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history.png';
 import contact from '../assets/icons/contact.png';
 import payment from '../assets/icons/payment.png';
 import avatarIcon from '../assets/icons/user.png';
 
+import { online as goOnline, offline as goOffline } from '../actions/authActions';
+
 import CustomerPopup from '../components/CommunicationPopup';
 import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
-import Status from '../components/HeroMain/Status';
+// import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
@@ -37,7 +39,6 @@ export class HeroMainScreen extends Component {
     };
 
     state = {
-        name: 'Hanna Morgan',
         contactPopupVisible: false
     };
 
@@ -64,8 +65,10 @@ export class HeroMainScreen extends Component {
     };
 
     render() {
-        const { name, contactPopupVisible } = this.state;
-
+        const { contactPopupVisible } = this.state;
+        const {
+            online
+        } = this.props;
         return (
             <ScrollView style={styles.scrollContainer}>
                 <View style={styles.container}>
@@ -76,10 +79,14 @@ export class HeroMainScreen extends Component {
                         <Image source={loaderGradient} style={styles.gradient} />
                         <Image source={loaderTicks} style={styles.ticks} />
                     </View>
-                    <Text style={styles.name}>{name}</Text>
-                    <Text style={styles.viewProfile}>View Profile</Text>
-                    <ProfileSwitch />
-                    <View style={styles.statusContainer}>
+                    {/* <Text style={styles.name}>{name}</Text> */}
+                    {/* <Text style={styles.viewProfile}>View Profile</Text> */}
+                    <ProfileSwitch
+                        online={online}
+                        goOnline={this.props.goOnline}
+                        goOffline={this.props.goOffline}
+                    />
+                    {/* <View style={styles.statusContainer}>
                         <Status
                             style={styles.status}
                             image={races}
@@ -98,7 +105,7 @@ export class HeroMainScreen extends Component {
                             title="Earned"
                             description="$3123.00"
                         />
-                    </View>
+                    </View> */}
                     <View style={styles.mainItemContainer}>
                         <View>
                             <MainItem image={inventory} title="Manage Inventory" />
@@ -204,9 +211,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    header: state.header
+    header: state.header,
+    online: state.auth.online
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    goOnline: () => dispatch(goOnline()),
+    goOffline: () => dispatch(goOffline())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);

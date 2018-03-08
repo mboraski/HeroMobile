@@ -60,6 +60,10 @@ class RootContainer extends Component {
         this.notificationSubscription = Notifications.addListener(
             this.handleNotification
         );
+
+        // fetch if contractor is online
+        // fire appropriate actions
+
     }
 
     handleNotification = notification => {
@@ -124,7 +128,8 @@ const mapStateToProps = state => ({
     customerPopupVisible: state.ui.customerPopupVisible,
     dropdownAlertVisible: state.ui.dropdownAlertVisible,
     dropdownAlertText: state.ui.dropdownAlertText,
-    nav: state.nav
+    nav: state.nav,
+    online: state.auth.online
 });
 
 const mapDispatchToProps = dispatch => ({

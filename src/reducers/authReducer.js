@@ -17,7 +17,9 @@ import {
     LOGIN_FACEBOOK,
     LOGIN_FACEBOOK_SUCCESS,
     LOGIN_FACEBOOK_FAIL,
-    CONTRACTOR_APPROVED
+    CONTRACTOR_APPROVED,
+    ONLINE,
+    OFFLINE
 } from '../actions/authActions';
 
 export const initialState = {
@@ -25,7 +27,8 @@ export const initialState = {
     approved: false,
     pending: false,
     error: null,
-    connectId: ''
+    connectId: '',
+    online: false
 };
 
 export default function (state = initialState, action) {
@@ -61,6 +64,16 @@ export default function (state = initialState, action) {
                 connectId: action.payload,
                 approved: true,
                 pending: false
+            };
+        case ONLINE:
+            return {
+                ...state,
+                online: true
+            };
+        case OFFLINE:
+            return {
+                ...state,
+                online: false
             };
         default:
             return state;
