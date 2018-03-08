@@ -9,7 +9,7 @@ const header = {
     flexDirection: 'row',
     paddingTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fff',
-    height: emY(5.25),
+    height: emY(4.25),
     shadowRadius: 0,
     shadowOffset: {
         height: 0

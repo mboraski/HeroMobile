@@ -4,18 +4,24 @@ import { StyleSheet, ScrollView, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import { Text } from '../components/Text';
 import loaderGradient from '../assets/loader-gradient.png';
 import loaderTicks from '../assets/loader-ticks.png';
 // import races from '../assets/icons/races.png';
 // import distance from '../assets/icons/distance.png';
 // import earned from '../assets/icons/earned.png';
 import inventory from '../assets/icons/inventory.png';
-import history from '../assets/icons/history.png';
+import history from '../assets/icons/history2.png';
 import contact from '../assets/icons/contact.png';
-import payment from '../assets/icons/payment.png';
+import logoBlack from '../assets/icons/logo-black3.png';
+import { getFacebookInfo } from '../selectors/authSelectors';
 import avatarIcon from '../assets/icons/user.png';
 
-import { online as goOnline, offline as goOffline } from '../actions/authActions';
+import {
+    online as goOnline,
+    offline as goOffline,
+    getUserOnlineStatus
+} from '../actions/authActions';
 
 import CustomerPopup from '../components/CommunicationPopup';
 // import MenuButton from '../components/MenuButton';
@@ -29,7 +35,7 @@ import { emY } from '../utils/em';
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
-export class HeroMainScreen extends Component {
+class HeroMainScreen extends Component {
     static navigationOptions = {
         title: 'HERO',
         headerLeft: null,
@@ -52,6 +58,10 @@ export class HeroMainScreen extends Component {
     //     }
     // }
 
+    componentDidMount() {
+        this.props.getUserOnlineStatus();
+    }
+
     goToPaymentInfo = () => {
         this.props.navigation.navigate('paymentInfo');
     };
@@ -69,7 +79,8 @@ export class HeroMainScreen extends Component {
         const {
             online,
             contractorProducts,
-            currentLocation
+            currentLocation,
+            facebookInfo
         } = this.props;
 
         return (
@@ -77,7 +88,22 @@ export class HeroMainScreen extends Component {
                 <View style={styles.container}>
                     <View style={styles.loader}>
                         <View style={styles.imageContainer}>
-                            <Image source={avatarIcon} style={styles.image} />
+                            {facebookInfo && facebookInfo.photoURL ? (
+                                <Image
+                                    source={{ uri: facebookInfo.photoURL }}
+                                    style={styles.image}
+                                />
+                            ) :
+                                <Image
+                                    source={avatarIcon}
+                                    style={styles.image}
+                                />
+                            }
+                            {facebookInfo && facebookInfo.displayName ? (
+                                <Text style={styles.name}>
+                                    {facebookInfo.displayName}
+                                </Text>
+                            ) : null}
                         </View>
                         <Image source={loaderGradient} style={styles.gradient} />
                         <Image source={loaderTicks} style={styles.ticks} />
@@ -115,7 +141,8 @@ export class HeroMainScreen extends Component {
                         <View>
                             <MainItem
                                 image={inventory}
-                                title="Manage Inventory"
+                                title="Inventory"
+                                onPress={this.openContactPopup}
                             />
                             <MainItem
                                 image={contact}
@@ -127,9 +154,10 @@ export class HeroMainScreen extends Component {
                             <MainItem
                                 image={history}
                                 title="Orders"
+                                onPress={this.goToPaymentInfo}
                             />
                             <MainItem
-                                image={payment}
+                                image={logoBlack}
                                 title="Sign Out"
                                 onPress={this.goToPaymentInfo}
                             />
@@ -225,12 +253,14 @@ const mapStateToProps = state => ({
     // header: state.header,
     online: state.auth.online,
     contractorProducts: state.product.inventory,
-    currentLocation: { lat: 43.23223, lon: -97.293023 }
+    currentLocation: { lat: 43.23223, lon: -97.293023 },
+    facebookInfo: getFacebookInfo(state)
 });
 
 const mapDispatchToProps = {
     goOnline,
-    goOffline
+    goOffline,
+    getUserOnlineStatus
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
