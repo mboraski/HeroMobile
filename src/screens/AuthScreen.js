@@ -111,7 +111,7 @@ class AuthScreen extends Component {
                     <EntryMessage
                         openModal={this.state.openModal}
                         closeModal={this.closeModal}
-                        message={'Hello and welcome to our official SXSW soft launch! Thanks so much for being a part of this amazing journey! Signup or login with Facebook above.'}
+                        message={'Hello and welcome to our official SXSW soft launch! Thanks so much for being a part of this amazing journey! Login with Facebook above.'}
                     />
                 </KeyboardAvoidingView>
             </ScrollView>

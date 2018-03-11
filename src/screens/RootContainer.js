@@ -9,7 +9,7 @@ import { Permissions, Notifications } from 'expo';
 // Relative Imports
 import firebase from '../firebase';
 import MenuNavigator from '../navigations/MenuNavigator';
-import CommunicationPopup from '../components/CommunicationPopup';
+// import CommunicationPopup from '../components/CommunicationPopup';
 import DropdownAlert from '../components/DropdownAlert';
 import { authChanged, signOut } from '../actions/authActions';
 import { closeCustomerPopup, dropdownAlert } from '../actions/uiActions';
@@ -63,7 +63,10 @@ class RootContainer extends Component {
 
         // fetch if contractor is online
         // fire appropriate actions
+    }
 
+    componentWillUnmount() {
+        firebase.database().ref('products/US/TX/Austin').off();
     }
 
     handleNotification = notification => {
@@ -89,7 +92,7 @@ class RootContainer extends Component {
 
     render() {
         const {
-            customerPopupVisible,
+            // customerPopupVisible,
             dropdownAlertVisible,
             dropdownAlertText
         } = this.props;
@@ -101,10 +104,10 @@ class RootContainer extends Component {
         return (
             <View style={styles.container}>
                 <MenuNavigator navigation={navigation} />
-                <CommunicationPopup
+                {/* <CommunicationPopup
                     openModal={customerPopupVisible}
                     closeModal={this.handleCustomerPopupClose}
-                />
+                /> */}
                 <DropdownAlert
                     visible={dropdownAlertVisible}
                     text={dropdownAlertText}

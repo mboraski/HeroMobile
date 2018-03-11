@@ -1,45 +1,47 @@
 // Third Party Imports
 import React, { Component } from 'react';
 import {
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
-    Text,
     View,
-    Image,
+    ImageBackground,
     TouchableOpacity,
     Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MaterialIcons } from '@expo/vector-icons';
+import _ from 'lodash';
+// import firebase from '../firebase';
 
 // Relative Imports
 import ProductList from '../components/ProductList';
-import MenuButton from '../components/MenuButton';
-import CartButton from '../components/CartButton';
-import SearchBar from '../components/SearchBar';
+// import MenuButton from '../components/MenuButton';
+// import CartButton from '../components/CartButton';
+// import SearchBar from '../components/SearchBar';
+import Text from '../components/Text';
 import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
-import Style from '../constants/Style';
-import { addToCart, removeFromCart } from '../actions/cartActions';
-import { selectDeliveryType } from '../actions/productActions';
-import { getProductsByDeliveryType } from '../selectors/productSelectors';
+// import Style from '../constants/Style';
+import { addToCart } from '../actions/cartActions';
+import { selectCategory, fetchProductsRequest } from '../actions/productActions';
+import { dropdownAlert } from '../actions/uiActions';
+import getProductsState from '../selectors/productSelectors';
 import { emY } from '../utils/em';
+import AuthScreenBackground from '../assets/AuthScreenBackground.jpg';
+import HomeHeader from '../containers/HomeHeader';
 
-const SOURCE = { uri: 'https://source.unsplash.com/random/800x600' };
-const FILTERS = [{ name: 'For You', id: '1' }, { name: 'Food', id: '2' }];
 
-export class HomeScreen extends Component {
-    static navigationOptions = {
-        title: 'Hasty Logo',
-        headerLeft: <MenuButton />,
-        headerTitle: <SearchBar />,
-        headerRight: <CartButton />,
-        headerStyle: Style.headerLarge,
-        headerTitleStyle: Style.headerTitle
-    };
-
-    state = { filter: FILTERS[0] };
+class HomeScreen extends Component {
+    componentDidMount() {
+        this.props.fetchProductsRequest();
+        if (this.props.itemCountUp) {
+            this.props.dropdownAlert(true, 'More products available!');
+        } else if (this.props.itemCountDown) {
+            this.props.dropdownAlert(true, 'Some products are no longer available');
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.header.toggleState !== nextProps.header.toggleState) {
@@ -49,47 +51,63 @@ export class HomeScreen extends Component {
                 this.props.navigation.navigate('DrawerClose');
             }
         }
+        if (!this.props.cart && nextProps.cart) {
+            this.props.fetchProductsRequest();
+        }
+        if (!this.props.itemCountUp && nextProps.itemCountUp) {
+            this.props.dropdownAlert(true, 'More products available!');
+        } else if (!this.props.itemCountDown && nextProps.itemCountDown) {
+            this.props.dropdownAlert(true, 'Some products are no longer available');
+        } else {
+            this.props.dropdownAlert(false, '');
+        }
     }
 
-    onPressFilter(filter) {
-        console.log(filter);
-    }
-
-    callAddToCart = product => {
+    callAddToCart = (product) => {
         this.props.addToCart(product);
     };
 
-    callRemoveFromCart = product => {
-        this.props.removeFromCart(product);
-    };
+    formatCategory = (category) =>
+        (category ? category.toUpperCase() : '')
 
     goToCheckout = () => {
         this.props.navigation.navigate('checkout');
     };
 
-    renderFilter = filter => {
-        const selectedFilter = this.props.deliveryType === filter.id;
-        const filterButtonSelected = selectedFilter ? styles.filterButtonSelected : null;
-        const filterButtonTextSelected = selectedFilter ? styles.filterButtonTextSelected : null;
-        const onPress = () => this.props.selectFilter(filter.id);
-        return (
-            <TouchableOpacity
-                key={filter.id}
-                style={[styles.filterButton, filterButtonSelected]}
-                onPress={onPress}
-            >
-                <Text style={[styles.filterButtonText, filterButtonTextSelected]}>
-                    {filter.name}
-                </Text>
-            </TouchableOpacity>
-        );
+    renderCategories = () => {
+        const selectedCategory = this.props.category;
+        return _.map(this.props.categories, (category, i) => {
+            const selectedFilter = category.toLowerCase() === selectedCategory.toLowerCase();
+            const filterButtonSelected = selectedFilter ? styles.filterButtonSelected : null;
+            const filterButtonTextSelected = selectedFilter ?
+                styles.filterButtonTextSelected : null;
+            const onPress = () => this.props.selectFilter(category);
+            return (
+                <TouchableOpacity
+                    key={i}
+                    style={[styles.filterButton, filterButtonSelected]}
+                    onPress={onPress}
+                >
+                    <Text style={[styles.filterButtonText, filterButtonTextSelected]}>
+                        {category}
+                    </Text>
+                </TouchableOpacity>
+            );
+        });
     };
 
     render() {
-        const { cart, products } = this.props;
+        const {
+            cartQuantity,
+            productPending,
+            productsShown,
+            category,
+            numberOfProducts,
+            productImages
+        } = this.props;
         return (
             <View style={styles.container}>
-                {cart.totalQuantity > 0 ? (
+                {cartQuantity > 0 ? (
                     <TouchableOpacity style={styles.checkout} onPress={this.goToCheckout}>
                         <Text style={styles.imageTitle}>Go to Checkout</Text>
                         <View style={styles.checkoutIconContainer}>
@@ -102,27 +120,39 @@ export class HomeScreen extends Component {
                         </View>
                     </TouchableOpacity>
                 ) : (
-                    <Image source={SOURCE} style={styles.image}>
+                    <ImageBackground source={AuthScreenBackground} style={styles.image}>
                         <View style={[StyleSheet.absoluteFill, styles.imageTint]} />
                         <View>
-                            <Text style={styles.imageTitle}>Recommended</Text>
-                            <Text style={styles.imageMeta}>215 items</Text>
+                            <Text style={styles.imageTitle}>{this.formatCategory(category)}</Text>
+                            <Text style={styles.imageMeta}>
+                                {numberOfProducts} items
+                            </Text>
                         </View>
-                    </Image>
+                    </ImageBackground>
                 )}
-                <ScrollView
-                    horizontal
-                    style={styles.filters}
-                    contentContainerStyle={styles.filtersContent}
-                >
-                    {FILTERS.map(this.renderFilter)}
-                </ScrollView>
-                <ProductList
-                    cart={cart}
-                    products={products}
-                    callAddToCart={this.callAddToCart}
-                    callRemoveFromCart={this.callRemoveFromCart}
-                />
+                {productPending ? (
+                    <ActivityIndicator
+                        size="large"
+                        style={StyleSheet.absoluteFill}
+                    />
+                ) :
+                    <View style={styles.container}>
+                        <ScrollView
+                            horizontal
+                            style={styles.filters}
+                            contentContainerStyle={styles.filtersContent}
+                        >
+                            {this.renderCategories()}
+                        </ScrollView>
+                        {productsShown &&
+                            <ProductList
+                                products={productsShown}
+                                productImages={productImages}
+                                callAddToCart={this.callAddToCart}
+                            />
+                        }
+                    </View>
+                }
             </View>
         );
     }
@@ -134,7 +164,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     image: {
-        height: Dimensions.window.height / 4,
+        height: Dimensions.window.height / 5,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -154,7 +184,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     checkout: {
-        height: Dimensions.window.height / 4,
+        height: Dimensions.window.height / 5,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Color.GREEN_500
@@ -173,17 +203,20 @@ const styles = StyleSheet.create({
     filters: {
         ...Platform.select({
             ios: {
-                height: emY(6.25)
+                height: 70,
+                maxHeight: 70
             },
             android: {
-                height: emY(6.25) + 30
+                height: 70,
+                maxHeight: 70
             }
         })
     },
     filtersContent: {
-        paddingLeft: 15,
+        paddingLeft: 5,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        maxHeight: 70
     },
     filterButton: {
         minWidth: 120,
@@ -191,8 +224,8 @@ const styles = StyleSheet.create({
         borderColor: Color.GREY_400,
         borderWidth: StyleSheet.hairlineWidth * 2,
         borderRadius: 50,
-        paddingVertical: emY(0.75),
-        marginRight: 15,
+        paddingVertical: 10,
+        marginRight: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -209,26 +242,26 @@ const styles = StyleSheet.create({
     }
 });
 
-HomeScreen.navigationOptions = ({ navigation }) => ({
-    title: 'Hasty Logo',
-    headerLeft: <MenuButton />,
-    headerTitle: <SearchBar />,
-    headerRight: <CartButton navigation={navigation} />,
-    headerStyle: Style.headerLarge,
-    headerTitleStyle: Style.headerTitle
-});
+HomeScreen.navigationOptions = {
+    header: <HomeHeader />
+};
 
-const mapStateToProps = state => ({
-    cart: state.cart,
-    products: getProductsByDeliveryType(state),
-    deliveryType: state.product.deliveryType,
-    header: state.header,
-});
+// HomeScreen.navigationOptions = ({ navigation }) => ({
+//     title: 'Hasty Logo',
+//     headerLeft: <MenuButton />,
+//     headerTitle: <SearchBar />,
+//     headerRight: <CartButton navigation={navigation} />,
+//     headerStyle: Style.headerLarge,
+//     headerTitleStyle: Style.headerTitle
+// });
+
+const mapStateToProps = state => getProductsState(state);
 
 const mapDispatchToProps = dispatch => ({
-    selectFilter: filter => dispatch(selectDeliveryType(filter)),
-    addToCart: product => dispatch(addToCart(product)),
-    removeFromCart: product => dispatch(removeFromCart(product)),
+    selectFilter: category => dispatch(selectCategory(category)),
+    addToCart: productInfo => dispatch(addToCart(productInfo)),
+    fetchProductsRequest: () => dispatch(fetchProductsRequest()),
+    dropdownAlert: (visible, message) => dispatch(dropdownAlert(visible, message))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

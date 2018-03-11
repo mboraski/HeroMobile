@@ -12,7 +12,7 @@ import loaderTicks from '../assets/loader-ticks.png';
 // import earned from '../assets/icons/earned.png';
 import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
-import contact from '../assets/icons/contact.png';
+// import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
 import { getFacebookInfo } from '../selectors/authSelectors';
 import avatarIcon from '../assets/icons/user.png';
@@ -20,10 +20,11 @@ import avatarIcon from '../assets/icons/user.png';
 import {
     online as goOnline,
     offline as goOffline,
-    getUserOnlineStatus
+    getUserOnlineStatus,
+    signOut
 } from '../actions/authActions';
 
-import CustomerPopup from '../components/CommunicationPopup';
+// import CustomerPopup from '../components/CommunicationPopup';
 // import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 // import Status from '../components/HeroMain/Status';
@@ -62,20 +63,32 @@ class HeroMainScreen extends Component {
         this.props.getUserOnlineStatus();
     }
 
-    goToPaymentInfo = () => {
-        this.props.navigation.navigate('paymentInfo');
+    // goToPaymentInfo = () => {
+    //     this.props.navigation.navigate('paymentInfo');
+    // };
+
+    signOut = () => {
+        this.props.signOut();
     };
 
-    openContactPopup = () => {
-        this.setState({ contactPopupVisible: true });
+    currentInventory = () => {
+        this.props.navigation.navigate('currentInventory');
     };
 
-    contactConfirmed = () => {
-        this.setState({ contactPopupVisible: false });
+    updateInventory = () => {
+        this.props.navigation.navigate('home');
     };
+
+    // openContactPopup = () => {
+    //     this.setState({ contactPopupVisible: true });
+    // };
+
+    // contactConfirmed = () => {
+    //     this.setState({ contactPopupVisible: false });
+    // };
 
     render() {
-        const { contactPopupVisible } = this.state;
+        // const { contactPopupVisible } = this.state;
         const {
             online,
             contractorProducts,
@@ -141,30 +154,30 @@ class HeroMainScreen extends Component {
                         <View>
                             <MainItem
                                 image={inventory}
-                                title="Inventory"
-                                onPress={this.openContactPopup}
+                                title="Current Inventory"
+                                onPress={this.currentInventory}
                             />
                             <MainItem
-                                image={contact}
-                                title="Contact Us"
-                                onPress={this.openContactPopup}
+                                image={inventory}
+                                title="Update Inventory"
+                                onPress={this.updateInventory}
                             />
                         </View>
                         <View>
                             <MainItem
                                 image={history}
                                 title="Orders"
-                                onPress={this.goToPaymentInfo}
+                                onPress={this.orders}
                             />
                             <MainItem
                                 image={logoBlack}
                                 title="Sign Out"
-                                onPress={this.goToPaymentInfo}
+                                onPress={this.signOut}
                             />
                         </View>
                     </View>
                 </View>
-                <CustomerPopup openModal={contactPopupVisible} closeModal={this.contactConfirmed} />
+                {/* <CustomerPopup openModal={contactPopupVisible} closeModal={this.contactConfirmed} /> */}
             </ScrollView>
         );
     }
@@ -260,7 +273,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     goOnline,
     goOffline,
-    getUserOnlineStatus
+    getUserOnlineStatus,
+    signOut
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);

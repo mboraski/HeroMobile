@@ -1,40 +1,53 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 
 // Relative Imports
 import OrderDetail from './OrderDetail';
+import Text from './Text';
 import { emY } from '../utils/em';
 import Color from '../constants/Color';
 
 class OrderList extends Component {
     renderOrders() {
+        const {
+            orders,
+            orderImages,
+            onAddOrder,
+            onRemoveOrder,
+            displayOnly
+        } = this.props;
         let prevDeliveryType;
-        return _.map(this.props.orders, order => {
+        return _.map(orders, order => {
+            const image = orderImages[order.productName] || '';
             let renderMark;
-            if (prevDeliveryType !== order.deliveryType) {
+            if (prevDeliveryType !== 'instant') {
                 renderMark = (
-                    <View key={`${order.deliveryType}-${order.productCode}`}>
+                    <View key={`instant-${order.productName}`}>
                         <View style={styles.headerItem}>
                             <Text style={styles.typeLabel}>Delivery Type: </Text>
-                            <Text style={styles.valueLabel}>{order.deliveryType}</Text>
+                            <Text style={styles.valueLabel}>{'Instant'}</Text>
                         </View>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
-                            onAddOrder={() => this.props.onAddOrder(order)}
-                            onRemoveOrder={() => this.props.onRemoveOrder(order)}
+                            image={image}
+                            onAddOrder={() => onAddOrder(order)}
+                            onRemoveOrder={() => onRemoveOrder(order)}
                         />
                     </View>
                 );
-                prevDeliveryType = order.deliveryType;
+                prevDeliveryType = 'instant';
             } else {
                 renderMark = (
-                    <View key={`${order.deliveryType}-${order.productCode}`}>
+                    <View key={`instant-${order.productName}`}>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
-                            onAddOrder={() => this.props.onAddOrder(order)}
-                            onRemoveOrder={() => this.props.onRemoveOrder(order)}
+                            image={image}
+                            onAddOrder={() => onAddOrder(order)}
+                            onRemoveOrder={() => onRemoveOrder(order)}
                         />
                     </View>
                 );
@@ -53,6 +66,10 @@ class OrderList extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
     headerItem: {
         flexDirection: 'row',
         paddingHorizontal: 20,

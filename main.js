@@ -1,6 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image, Platform, ActivityIndicator } from 'react-native';
 import Expo, { Font } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -44,11 +44,7 @@ class App extends Component {
                 </PersistGate>
             </Provider>
         ) : (
-            <Image
-                source={splashImage}
-                style={[StyleSheet.absoluteFill, styles.splash]}
-                resizeMode="contain"
-            />
+            <ActivityIndicator size={'large'} />
         );
     }
 }

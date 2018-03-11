@@ -1,6 +1,6 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 
@@ -42,6 +42,7 @@ class DeliveryStatusScreen extends Component {
                 </TouchableOpacity>
                 <Text style={styles.searching}>Searching...</Text>
                 <Notification onRef={ref => (this.notRef = ref)} />
+                <Button />
                 <View style={styles.label}>
                     <Text style={styles.labelText}>Located Heroes...</Text>
                 </View>

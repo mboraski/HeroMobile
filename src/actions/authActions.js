@@ -18,9 +18,9 @@ export const LOGIN_FAIL = 'login_fail';
 export const SIGNUP = 'signup';
 export const SIGNUP_SUCCESS = 'signup_success';
 export const SIGNUP_FAIL = 'signup_fail';
-export const SIGNOUT = 'signup';
-export const SIGNOUT_SUCCESS = 'signup_success';
-export const SIGNOUT_FAIL = 'signup_fail';
+export const SIGNOUT = 'signout';
+export const SIGNOUT_SUCCESS = 'signout_success';
+export const SIGNOUT_FAIL = 'signout_fail';
 export const REDIRECT_TO_SIGNUP = 'redirect_to_signup';
 export const AUTH_CHANGED = 'auth_changed';
 export const UPDATE_ACCOUNT = 'update_account';
@@ -32,6 +32,21 @@ export const LOGIN_FACEBOOK_FAIL = 'login_facebook_fail';
 export const CONTRACTOR_APPROVED = 'contractor_approved';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
+
+
+export const signOut = () => dispatch => {
+    dispatch({ type: SIGNOUT });
+    return firebase.auth()
+        .signOut()
+        .then(result => {
+            dispatch({ type: SIGNOUT_SUCCESS });
+            return result;
+        })
+        .catch(error => {
+            dispatch({ type: SIGNOUT_FAIL, error });
+            throw error;
+        });
+};
 
 export const fetchContractorInventory = (dispatch) => {
     dispatch({ type: INVENTORY_REQUEST });
@@ -161,20 +176,6 @@ export const signUp = ({ email, password, name, number }) => async dispatch => {
         dispatch({ type: SIGNUP_FAIL, error });
         throw error;
     }
-};
-
-export const signOut = () => dispatch => {
-    dispatch({ type: SIGNOUT });
-    return firebase.auth()
-        .signOut()
-        .then(result => {
-            dispatch({ type: SIGNOUT_SUCCESS });
-            return result;
-        })
-        .catch(error => {
-            dispatch({ type: SIGNOUT_FAIL, error });
-            throw error;
-        });
 };
 
 export const updateAccount = (id, values) => dispatch => {

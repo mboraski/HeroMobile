@@ -4,15 +4,15 @@ import {
     StyleSheet,
     View,
     Text,
-    Image,
+    // Image,
     Platform
 } from 'react-native';
 
 // Relative Imports
 import Color from '../constants/Color';
-import Style from '../constants/Style';
+// import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import checkIcon from '../assets/icons/logo-black.png';
+// import logoBlack from '../assets/icons/logo-black.png';
 
 const SIZE = emY(5.62);
 type Props = {
@@ -55,7 +55,7 @@ class EntryMessage extends Component {
                     <View style={styles.innerContainer}>
                         <Text style={styles.label}>{message}</Text>
                     </View>
-                    <Image source={checkIcon} style={styles.checkIcon} resizeMode="contain" />
+                    {/* <Image source={logoBlack} style={styles.checkIcon} resizeMode="contain" /> */}
                 </View>
             </View>
         );

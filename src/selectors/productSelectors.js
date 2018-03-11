@@ -6,6 +6,7 @@ import { getCartTotalQuantity, getCartInstantProducts } from './cartSelectors';
 export const getItemCountUp = state => state.cart.itemCountUp;
 export const getItemCountDown = state => state.cart.itemCountDown;
 export const getProductsPending = state => state.product.pending;
+export const getProductImages = state => state.product.productImages;
 export const getCategory = state => state.product.category.toUpperCase();
 export const getHeader = state => state.header;
 
@@ -59,6 +60,7 @@ const getProductsState = createSelector(
         getCategory,
         getCategories,
         getNumberOfProducts,
+        getProductImages,
         getHeader
     ],
     (
@@ -71,6 +73,7 @@ const getProductsState = createSelector(
         category,
         categories,
         numberOfProducts,
+        productImages,
         header
     ) => ({
         cart,
@@ -82,6 +85,7 @@ const getProductsState = createSelector(
         category,
         categories,
         numberOfProducts,
+        productImages,
         header
     })
 );

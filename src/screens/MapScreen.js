@@ -5,7 +5,8 @@ import {
     Text,
     TouchableWithoutFeedback,
     Platform,
-    Animated
+    Animated,
+    ActivityIndicator
 } from 'react-native';
 import { MapView, Constants } from 'expo';
 import { connect } from 'react-redux';
@@ -16,7 +17,7 @@ import { setCurrentLocation } from '../actions/cartActions';
 import { getProductsByAddress } from '../actions/productActions';
 import { toggleSearch } from '../actions/uiActions';
 import PredictionList from '../components/PredictionList';
-import LogoSpinner from '../components/LogoSpinner';
+// import LogoSpinner from '../components/LogoSpinner';
 import MapHeader from '../containers/MapHeader';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
@@ -72,9 +73,9 @@ export class MapScreen extends Component {
         }
     };
 
-    onButtonPress = async () => {
+    onButtonPress = () => {
         this.props.setCurrentLocation(this.props.address, this.props.region);
-        await this.props.getProductsByAddress(this.props.address);
+        // await this.props.getProductsByAddress(this.props.address);
         this.props.navigation.navigate('home');
     };
 
@@ -186,7 +187,13 @@ export class MapScreen extends Component {
                         ]}
                     />
                 ) : null}
-                {productPending ? <LogoSpinner style={StyleSheet.absoluteFill} /> : null}
+                {productPending ?
+                    <ActivityIndicator
+                        size="large"
+                        style={StyleSheet.absoluteFill}
+                    /> :
+                    null
+                }
             </View>
         );
     }

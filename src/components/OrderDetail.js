@@ -1,63 +1,55 @@
 // Third Part Imports
 import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
-
-import productImage0 from '../assets/product-0.png';
-import productImage1 from '../assets/product-1.png';
-import productImage2 from '../assets/product-2.png';
-import productImage3 from '../assets/product-3.png';
-
-const images = [
-    productImage0,
-    productImage1,
-    productImage2,
-    productImage3
-];
 
 const ICON_CONTAINER_SIZE = emY(2.1875);
 const ICON_SIZE = emY(0.75);
 
 const OrderDetail = props => {
-    const { onAddOrder, onRemoveOrder } = props;
-    const { title, price, deliveryType, thumbnail_image, quantity } = props.order;
-    const temp_thumbnail_image = images[props.order.productCode % 4];
+    const { onAddOrder, onRemoveOrder, order, image, displayOnly } = props;
+    const { productName, price, quantityTaken, quantity } = order;
+    const formattedPrice = `${Number.parseFloat(price / 100).toFixed(2)}`;
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={temp_thumbnail_image} resizeMode="contain" />
+            <Image style={styles.image} source={{ uri: image }} resizeMode="contain" />
             <View style={styles.content}>
-                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.title}>{productName}</Text>
                 <View style={styles.deliveryType}>
                     <Text style={styles.deliveryTypeLabel}>Delivery Type:</Text>
-                    <Text style={styles.deliveryTypeValue}>{deliveryType}</Text>
+                    <Text style={styles.deliveryTypeValue}>{'Instant'}</Text>
                 </View>
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <Text style={styles.changeDeliveryTypeText}>Change delivery type</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
             <View style={styles.actions}>
-                <Text style={styles.price}>${price}</Text>
-                <View style={styles.quantityContainer}>
-                    <Icon
-                        name="remove"
-                        size={ICON_SIZE}
-                        containerStyle={styles.iconContainer}
-                        iconStyle={styles.icon}
-                        onPress={onRemoveOrder}
-                    />
-                    <Text style={styles.quantity}>{quantity}</Text>
-                    <Icon
-                        name="add"
-                        size={ICON_SIZE}
-                        containerStyle={styles.iconContainer}
-                        iconStyle={styles.icon}
-                        onPress={onAddOrder}
-                    />
-                </View>
+                <Text style={styles.price}>${formattedPrice}</Text>
+                    {displayOnly ?
+                        <Text style={styles.quantity}>{quantity}</Text> :
+                        <View style={styles.quantityContainer}>
+                            <Icon
+                                name="remove"
+                                size={ICON_SIZE}
+                                containerStyle={styles.iconContainer}
+                                iconStyle={styles.icon}
+                                onPress={onRemoveOrder}
+                            />
+                            <Text style={styles.quantity}>{quantityTaken}</Text>
+                            <Icon
+                                name="add"
+                                size={ICON_SIZE}
+                                containerStyle={styles.iconContainer}
+                                iconStyle={styles.icon}
+                                onPress={onAddOrder}
+                            />
+                        </View>
+                    }
             </View>
         </View>
     );

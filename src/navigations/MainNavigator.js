@@ -2,17 +2,18 @@
 import { StackNavigator } from 'react-navigation';
 
 // Relative Imports
-import ApiTester from '../screens/ApiTester';
+// import ApiTester from '../screens/ApiTester';
 import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 // import PendingScreen from '../screens/PendingScreen';
 import AuthScreen from '../screens/AuthScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+// import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
 import HeroMainScreen from '../screens/HeroMainScreen';
 import DeliveryDetailScreen from '../screens/DeliveryDetailScreen';
 import DeliveryNotesScreen from '../screens/DeliveryNotesScreen';
 import DeliveryStatusScreen from '../screens/DeliveryStatusScreen';
+import CurrentInventory from '../screens/CurrentInventory';
 import CartScreen from '../screens/CartScreen';
 import CreditCardScreen from '../screens/CreditCardScreen';
 import PaymentMethodScreen from '../screens/PaymentMethodScreen';
@@ -24,10 +25,10 @@ import NotificationFeedbackScreen from '../screens/NotificationFeedbackScreen';
 
 const MainNavigator = StackNavigator(
     {
-        apiTester: { screen: ApiTester },
+        // apiTester: { screen: ApiTester },
         auth: { screen: AuthScreen },
         // pending: { screen: PendingScreen },
-        profile: { screen: ProfileScreen },
+        // profile: { screen: ProfileScreen },
         map: { screen: MapScreen },
         home: { screen: HomeScreen },
         main: { screen: HeroMainScreen },
@@ -35,7 +36,8 @@ const MainNavigator = StackNavigator(
         deliveryDetail: { screen: DeliveryDetailScreen },
         deliveryNotes: { screen: DeliveryNotesScreen },
         deliveryStatus: { screen: DeliveryStatusScreen },
-        cart: { screen: CartScreen },
+        currentInventory: { screen: CurrentInventory },
+        // cart: { screen: CartScreen },
         creditCard: { screen: CreditCardScreen },
         paymentMethod: { screen: PaymentMethodScreen },
         checkout: { screen: CheckoutScreen },
