@@ -1,101 +1,166 @@
+import _ from 'lodash';
 import {
     ADD_TO_CART,
     REMOVE_FROM_CART,
-    SET_CURRENT_LOCATION
+    SET_CURRENT_LOCATION,
+    UPDATE_CART
 } from '../actions/cartActions';
 
-function normalizeCurrency(currency) {
-    if (typeof currency === 'string') return Number(currency.replace(/[^0-9\.-]+/g, ''));
-    return currency;
-}
+// function normalizeCurrency(currency) {
+//     if (typeof currency === 'string') return Number(currency.replace(/[^0-9\.-]+/g, ''));
+//     return currency;
+// }
 
 export const initialState = {
-    orderId: '',
-    totalQuantity: 0,
-    totalCost: 0,
-    currentSetAddress: '',
-    currentSetLatLon: { lat: null, lon: null },
-    products: {}
+    products: {
+        instant: {}
+    },
+    itemCountUp: false,
+    itemCountDown: false,
+    serviceFee: 0,
+    deliveryFee: 0,
+    serviceRate: 0.1,
+    localSalesTaxRate: 0.0625,
+    currentSetAddress: '310 E 5th St, Austin, TX 78701',
+    region: {
+        latitude: 30.2666247,
+        longitude: -97.7405174,
+        latitudeDelta: 0.0043,
+        longitudeDelta: 0.0034
+    }
 };
 
-function addToType(state = {}, product) {
-    return {
-        ...state,
-        [product.deliveryType]: addToCode(state[product.deliveryType], product)
-    };
-}
+const addProductToCart = (product, instantCartProducts) => {
+    const instantCart = Object.assign({}, instantCartProducts);
+    const cartItem = instantCart[product.productName] || {};
+    cartItem.quantityTaken += 1;
+    return instantCart;
+};
 
-function addToCode(state = {}, product) {
-    return {
-        ...state,
-        [product.productCode]: addToOrder(state[product.productCode], product)
-    };
-}
+const removeProductFromCart = (product, instantCartProducts) => {
+    const instantCart = Object.assign({}, instantCartProducts);
+    const cartItem = instantCart[product.productName] || {};
+    cartItem.quantityTaken -= 1;
+    return instantCart;
+};
 
-function addToOrder(state = { quantity: 0 }, product) {
-    return {
-        ...product,
-        ...state,
-        price: !state.price ? normalizeCurrency(product.price) : state.price,
-        quantity: state.quantity + 1
-    };
-}
+const mutateProductsIntoCart = (newProducts) => {
+    // for each product, set a new object in the cart object at key of productName
+    const newInstantCart = {};
+    _.forEach(newProducts.instant, (product) => {
+        if (product) {
+            newInstantCart[product.productName] = {
+                categories: product.categories,
+                imageUrl: product.imageUrl,
+                price: product.price,
+                productName: product.productName,
+                quantityAvailable: product.quantity,
+                quantityTaken: 0
+            };
+        }
+    });
+    return { instant: newInstantCart };
+    // for each product, set a new object in the cart object at key of productName
+    // const newFastCart = {};
+    // _.forEach(newProducts.fast, (product) => {
+    //     newFastCart[product.productName] = {
+    //         categories: product.categories,
+    //         imageUrl: product.imageUrl,
+    //         price: product.price,
+    //         productName: product.productName,
+    //         quantityAvailable: product.quantity,
+    //         quantityTaken: 0
+    //     }
+    // })
+};
 
-function removeFromType(state, product) {
-    return {
-        ...state,
-        [product.deliveryType]: removeFromCode(state[product.deliveryType], product)
-    };
-}
+const mergeCarts = (newCart, oldCart) => {
+    const netCart = { instant: {} };
+    let itemCountUp = false;
+    let itemCountDown = false;
+    _.forEach(newCart.instant, (item) => {
+        const oldItem = oldCart.instant[item.productName];
+        if (oldItem) {
+            // did the quantity available go down
+            // did the quantity available go up
+            const upOrDown = oldItem.quantityAvailable - item.quantityAvailable;
+            let newQuantityTaken = 0;
+            if (item.quantityAvailable < oldItem.quantityTaken) {
+                newQuantityTaken = item.quantityAvailable;
+            } else {
+                newQuantityTaken = oldItem.quantityTaken;
+            }
+            if (upOrDown < 0) {
+                itemCountUp = true;
+            } else {
+                itemCountDown = true;
+                netCart.instant[oldItem.productName] = {
+                    categories: oldItem.categories,
+                    imageUrl: oldItem.imageUrl,
+                    price: oldItem.price,
+                    productName: oldItem.productName,
+                    quantityAvailable: item.quantityAvailable,
+                    quantityTaken: newQuantityTaken
+                };
+            }
+        } else {
+            itemCountUp = true;
+            netCart.instant[item.productName] = item;
+        }
+    });
+    return { netCart, itemCountUp, itemCountDown };
+};
 
-function removeFromCode(state, product) {
-    return {
-        ...state,
-        [product.productCode]: removeFromOrder(state[product.productCode])
-    };
-}
-
-function removeFromOrder(state) {
-    if (state.quantity === 0) {
-        return state;
-    }
-    return {
-        ...state,
-        quantity: state.quantity - 1
-    };
-}
+// const removeProductFromCart = (product, key, cartProducts) => {
+//     let cartItem = cartProducts[key] || null;
+//     if (!cartItem) {
+//         cartItem = product;
+//     } else {
+//         cartItem.quantity = --cartItem.quantity;
+//     }
+//     return cartItem;
+// };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case ADD_TO_CART:
+        case ADD_TO_CART: {
+            const product = action.payload;
+            const newCart = addProductToCart(product, state.products.instant);
             return {
                 ...state,
-                products: addToType(state.products, action.payload),
-                totalQuantity: state.totalQuantity + 1,
-                totalCost: Math.max(
-                    0,
-                    (state.totalCost + normalizeCurrency(action.payload.price)).toFixed(2)
-                )
+                products: {
+                    instant: newCart
+                }
             };
-        case REMOVE_FROM_CART:
+        }
+        case REMOVE_FROM_CART: {
+            const product = action.payload;
+            const newCart = removeProductFromCart(product, state.products.instant);
             return {
                 ...state,
-                products: removeFromType(state.products, action.payload),
-                totalQuantity: Math.max(0, state.totalQuantity - 1),
-                totalCost: Math.max(
-                    0,
-                    (state.totalCost - normalizeCurrency(action.payload.price)).toFixed(2)
-                )
+                products: {
+                    instant: newCart
+                }
             };
+        }
         case SET_CURRENT_LOCATION:
             return {
                 ...state,
                 currentSetAddress: action.payload.address,
-                currentSetLatLon: {
-                    lat: action.payload.region.latitude,
-                    lon: action.payload.region.longitude
-                }
+                region: action.payload.region
             };
+        case UPDATE_CART: {
+            const translate = mutateProductsIntoCart(action.payload);
+            const merge = mergeCarts(translate, state.products);
+            console.log('translate: ', translate);
+            console.log('merge: ', merge);
+            return {
+                ...state,
+                products: merge.netCart,
+                itemCountUp: merge.itemCountUp,
+                itemCountDown: merge.itemCountDown
+            };
+        }
         default:
             return state;
     }

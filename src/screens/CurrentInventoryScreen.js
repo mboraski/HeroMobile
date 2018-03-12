@@ -11,7 +11,7 @@ import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 
-export class CartScreen extends Component {
+class CurrentInventoryScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Current Inventory',
         headerLeft: <BackButton onPress={() => navigation.goBack()} />,
@@ -98,4 +98,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentInventoryScreen);

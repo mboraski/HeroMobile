@@ -4,6 +4,10 @@ import _ from 'lodash';
 // import { getAvailableProducts } from './productSelectors';
 
 export const getCartProducts = state => state.cart.products;
+export const getTaxRate = state => state.cart.localSalesTaxRate;
+export const getServiceRate = state => state.cart.serviceRate;
+export const getDeliveryFee = state => state.cart.deliveryFee;
+export const getServiceFee = state => state.cart.serviceFee;
 
 export const getCartInstantProducts = createSelector(
     [getCartProducts],
@@ -28,6 +32,35 @@ export const getCartOrders = createSelector(
         _.filter(products, (product) =>
             (product.quantityTaken > 0))
 );
+
+export const getCartPureTotal = createSelector(
+    [getCartOrders],
+    (orders) =>
+        orders.reduce((acc, order) => acc + (order.price * order.quantityTaken), 0)
+);
+
+export const getCartTaxTotal = createSelector(
+    [getCartPureTotal, getTaxRate],
+    (total, taxRate) =>
+        (total * taxRate)
+);
+
+export const getCartServiceCharge = createSelector(
+    [getCartPureTotal, getServiceRate],
+    (total, serviceRate) =>
+        (total * serviceRate)
+);
+
+export const getCartCostTotal = createSelector(
+    [getCartPureTotal, getCartServiceCharge, getDeliveryFee, getServiceFee],
+    (total, serviceCharge, deliveryFee, serviceFee) =>
+        (total + serviceCharge + deliveryFee + serviceFee)
+);
+
+export const getUpdateInventory = createSelector(
+    [],
+    () =>
+);
 // export const getCartOrders = createSelector(
 //     getCartProducts,
 //     getDeliveryTypes,
@@ -42,28 +75,4 @@ export const getCartOrders = createSelector(
 //             )
 //             .reduce((a, b) => a.concat(b), [])
 //             .filter(order => order.quantity > 0)
-// );
-
-// export const getCartTotalQuantity = createSelector(getCartOrders, orders =>
-//     orders.reduce((acc, order) => acc + order.quantity, 0)
-// );
-
-// export const getCartTotalCost = createSelector(getCartOrders, orders =>
-//     orders.reduce((acc, order) => acc + order.price * order.quantity, 0).toFixed(2)
-// );
-
-/**
- * Cart order is available if the product of same type and code exists and has a quantity > 0
- */
-// export const getAvailableCartOrders = createSelector(
-//     [getAvailableProducts, getCartOrders],
-//     (products, orders) =>
-//         orders.map(order => {
-//             const product =
-//                 products[order.deliveryType] && products[order.deliveryType][order.productCode];
-//             return {
-//                 ...order,
-//                 available: product && product.quantity > 0
-//             };
-//         })
 // );

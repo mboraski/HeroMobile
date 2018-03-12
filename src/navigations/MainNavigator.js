@@ -8,16 +8,17 @@ import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 import AuthScreen from '../screens/AuthScreen';
 // import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
-import MapScreen from '../screens/MapScreen';
+// import MapScreen from '../screens/MapScreen';
 import HeroMainScreen from '../screens/HeroMainScreen';
 import DeliveryDetailScreen from '../screens/DeliveryDetailScreen';
 import DeliveryNotesScreen from '../screens/DeliveryNotesScreen';
 import DeliveryStatusScreen from '../screens/DeliveryStatusScreen';
-import CurrentInventory from '../screens/CurrentInventory';
-import CartScreen from '../screens/CartScreen';
+import CurrentInventoryScreen from '../screens/CurrentInventoryScreen';
+import UpdateInventoryScreen from '../screens/UpdateInventoryScreen';
+// import CartScreen from '../screens/CartScreen';
 import CreditCardScreen from '../screens/CreditCardScreen';
 import PaymentMethodScreen from '../screens/PaymentMethodScreen';
-import CheckoutScreen from '../screens/CheckoutScreen';
+// import CheckoutScreen from '../screens/CheckoutScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import PromotionShareScreen from '../screens/PromotionShareScreen';
 import NotificationFeedbackScreen from '../screens/NotificationFeedbackScreen';
@@ -29,18 +30,19 @@ const MainNavigator = StackNavigator(
         auth: { screen: AuthScreen },
         // pending: { screen: PendingScreen },
         // profile: { screen: ProfileScreen },
-        map: { screen: MapScreen },
+        // map: { screen: MapScreen },
         home: { screen: HomeScreen },
         main: { screen: HeroMainScreen },
         searchForHero: { screen: SearchForHeroScreen },
         deliveryDetail: { screen: DeliveryDetailScreen },
         deliveryNotes: { screen: DeliveryNotesScreen },
         deliveryStatus: { screen: DeliveryStatusScreen },
-        currentInventory: { screen: CurrentInventory },
+        currentInventory: { screen: CurrentInventoryScreen },
+        updateInventory: { screen: UpdateInventoryScreen },
         // cart: { screen: CartScreen },
         creditCard: { screen: CreditCardScreen },
         paymentMethod: { screen: PaymentMethodScreen },
-        checkout: { screen: CheckoutScreen },
+        // checkout: { screen: CheckoutScreen },
         feedback: { screen: FeedbackScreen },
         promotionShare: { screen: PromotionShareScreen },
         notificationFeedback: { screen: NotificationFeedbackScreen }

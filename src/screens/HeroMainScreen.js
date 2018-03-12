@@ -4,6 +4,7 @@ import { StyleSheet, ScrollView, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import firebase from '../firebase';
 import { Text } from '../components/Text';
 import loaderGradient from '../assets/loader-gradient.png';
 import loaderTicks from '../assets/loader-ticks.png';
@@ -14,9 +15,9 @@ import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
-import { getFacebookInfo } from '../selectors/authSelectors';
 import avatarIcon from '../assets/icons/user.png';
-
+import { getFacebookInfo } from '../selectors/authSelectors';
+import { fetchProductsRequest } from '../actions/productActions';
 import {
     online as goOnline,
     offline as goOffline,
@@ -61,6 +62,11 @@ class HeroMainScreen extends Component {
 
     componentDidMount() {
         this.props.getUserOnlineStatus();
+        this.props.fetchProductsRequest();
+    }
+
+    componentWillUnmount() {
+        firebase.database().ref('products/US/TX/Austin').off();
     }
 
     // goToPaymentInfo = () => {
@@ -76,7 +82,7 @@ class HeroMainScreen extends Component {
     };
 
     updateInventory = () => {
-        this.props.navigation.navigate('home');
+        this.props.navigation.navigate('updateInventory');
     };
 
     // openContactPopup = () => {
@@ -265,7 +271,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
     // header: state.header,
     online: state.auth.online,
-    contractorProducts: state.product.inventory,
+    contractorProducts: state.inventory.inventory,
     currentLocation: { lat: 43.23223, lon: -97.293023 },
     facebookInfo: getFacebookInfo(state)
 });
@@ -274,7 +280,8 @@ const mapDispatchToProps = {
     goOnline,
     goOffline,
     getUserOnlineStatus,
-    signOut
+    signOut,
+    fetchProductsRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);

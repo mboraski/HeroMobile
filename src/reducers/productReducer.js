@@ -4,9 +4,6 @@ import {
     FETCH_PRODUCTS_SUCCESS,
     FETCH_PRODUCTS_FAILURE,
     SET_IMAGE,
-    // INVENTORY_REQUEST,
-    INVENTORY_SUCCESS,
-    // INVENTORY_FAILURE
 } from '../actions/productActions';
 
 export const initialState = {
@@ -17,8 +14,7 @@ export const initialState = {
     },
     category: 'SXSW',
     // products: {},
-    productImages: {},
-    inventory: {}
+    productImages: {}
 };
 
 export default function (state = initialState, action) {
@@ -45,12 +41,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 category: action.payload
-            };
-        case INVENTORY_SUCCESS:
-        // console.log('inventory success of reducer ran payload: ', action.payload);
-            return {
-                ...state,
-                inventory: action.payload
             };
         case SET_IMAGE: {
             const { productName = '', url = '' } = action.payload;

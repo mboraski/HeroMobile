@@ -5,11 +5,7 @@ import firebase from '../firebase';
 import { APP_ID } from '../constants/Facebook';
 import { GO_MAIN } from './navigationActions';
 import { dropdownAlert } from './uiActions';
-import {
-    INVENTORY_REQUEST,
-    INVENTORY_SUCCESS,
-    INVENTORY_FAILURE
-} from './productActions';
+import { fetchContractorInventory } from './inventoryActions';
 import { logContractorError, logCurrentInventoryError } from '../api/hasty';
 
 export const LOGIN = 'login';
@@ -45,23 +41,6 @@ export const signOut = () => dispatch => {
         .catch(error => {
             dispatch({ type: SIGNOUT_FAIL, error });
             throw error;
-        });
-};
-
-export const fetchContractorInventory = (dispatch) => {
-    dispatch({ type: INVENTORY_REQUEST });
-    const user = firebase.auth().currentUser;
-    const uid = user.uid;
-    const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
-    inventoryRef.once('value')
-        .then((snapshot) => {
-            const inventory = snapshot.val();
-            console.log('inventory: ', inventory);
-            dispatch({ type: INVENTORY_SUCCESS, payload: inventory });
-        })
-        .catch((error) => {
-            console.log('inventory error: ', error);
-            dispatch({ type: INVENTORY_FAILURE, payload: error });
         });
 };
 
