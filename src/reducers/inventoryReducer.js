@@ -16,17 +16,23 @@ export const initialState = {
 };
 
 const addProductToInventory = (product, inventory) => {
+    console.log('addProductToInventory inventory: ', inventory);
     const instantInventory = Object.assign({}, inventory);
-    const inventoryItem = instantInventory[product.productName] || {};
-    inventoryItem.quantity += 1;
+    console.log('addProductToInventory instantInventory: ', instantInventory);
+    if (!instantInventory[product.productName]) {
+        instantInventory[product.productName] = product;
+    }
+    if (product.quantityAvailable > product.quantityTaken) {
+        instantInventory[product.productName].quantityTaken += 1;
+    }
     return instantInventory;
 };
 
 const removeProductFromInventory = (product, inventory) => {
     const instantInventory = Object.assign({}, inventory);
     const inventoryItem = instantInventory[product.productName] || {};
-    if (inventoryItem.quantity > 0) {
-        inventoryItem.quantity -= 1;
+    if (inventoryItem.quantityAvailable > 0) {
+        inventoryItem.quantityTaken -= 1;
     }
     return instantInventory;
 };
@@ -37,14 +43,14 @@ export default function (state = initialState, action) {
         console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
-                inventory: action.payload,
+                inventory: action.payload || {},
                 pending: false,
             };
         case CONFIRM_INVENTORY_SUCCESS:
         // console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
-                inventory: action.payload,
+                inventory: action.payload || {},
                 pending: false
             };
         case CONFIRM_INVENTORY_FAILURE:
@@ -62,6 +68,7 @@ export default function (state = initialState, action) {
             };
         case ADD_TO_INVENTORY: {
             const product = action.payload;
+            console.log('state: ', state);
             const newInventory = addProductToInventory(product, state.inventory);
             return {
                 ...state,

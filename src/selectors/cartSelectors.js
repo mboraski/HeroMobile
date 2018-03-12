@@ -23,7 +23,7 @@ export const getCartInstantProducts = createSelector(
 export const getInventoryTotalQuantity = createSelector(
     [getInventory],
     (products) =>
-        _.reduce(products, (acc, product) => acc + product.quantity, 0)
+        _.reduce(products, (acc, product) => acc + product.quantityTaken, 0)
 );
 //
 // export const getDeliveryTypes = createSelector(getCartProducts, products => Object.keys(products));
@@ -31,12 +31,16 @@ export const getInventoryTotalQuantity = createSelector(
 /**
  * Turns product map into 1D array with code and type and removes orders with 0 quantity
  */
-// export const getCartOrders = createSelector(
-//     [getCartInstantProducts],
-//     (products) =>
-//         _.filter(products, (product) =>
-//             (product.quantityTaken > 0))
-// );
+export const getCartOrders = createSelector(
+    [getInventory],
+    (inventory) =>
+        _.reduce(inventory, (accum, product) => {
+            if (product.quantityTaken > 0) {
+                accum[product.productName] = product;
+            }
+            return accum;
+        }, {})
+);
 
 // export const getCartPureTotal = createSelector(
 //     [getCartOrders],
@@ -71,7 +75,8 @@ export const getUpdateInventory = createSelector(
                 const takenProduct = inventory[product.productName];
                 accum[product.productName] = product;
                 if (takenProduct) {
-                    accum[product.productName].quantityTaken = takenProduct.quantity;
+                    accum[product.productName].quantityTaken = takenProduct.quantityTaken;
+                    console.log('accum: ', accum);
                 }
                 return accum;
             }, {});

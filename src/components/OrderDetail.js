@@ -13,7 +13,7 @@ const ICON_SIZE = emY(0.75);
 
 const OrderDetail = props => {
     const { onAddOrder, onRemoveOrder, order, image, displayOnly } = props;
-    const { productName, price, quantityTaken, quantity } = order;
+    const { productName, price, quantityTaken } = order;
     const formattedPrice = `${Number.parseFloat(price / 100).toFixed(2)}`;
     return (
         <View style={styles.container}>
@@ -28,29 +28,33 @@ const OrderDetail = props => {
                     <Text style={styles.changeDeliveryTypeText}>Change delivery type</Text>
                 </TouchableOpacity> */}
             </View>
-            <View style={styles.actions}>
-                <Text style={styles.price}>${formattedPrice}</Text>
-                    {displayOnly ?
-                        <Text style={styles.quantity}>{quantity}</Text> :
-                        <View style={styles.quantityContainer}>
-                            <Icon
-                                name="remove"
-                                size={ICON_SIZE}
-                                containerStyle={styles.iconContainer}
-                                iconStyle={styles.icon}
-                                onPress={onRemoveOrder}
-                            />
-                            <Text style={styles.quantity}>{quantityTaken}</Text>
-                            <Icon
-                                name="add"
-                                size={ICON_SIZE}
-                                containerStyle={styles.iconContainer}
-                                iconStyle={styles.icon}
-                                onPress={onAddOrder}
-                            />
-                        </View>
-                    }
-            </View>
+            {displayOnly ?
+                <View style={styles.actions}>
+                    <View style={styles.quantityContainer}>
+                        <Text style={styles.quantity}>{quantityTaken}</Text>
+                    </View>
+                </View> :
+                <View style={styles.actions}>
+                    <Text style={styles.price}>${formattedPrice}</Text>
+                    <View style={styles.quantityContainer}>
+                        <Icon
+                            name="remove"
+                            size={ICON_SIZE}
+                            containerStyle={styles.iconContainer}
+                            iconStyle={styles.icon}
+                            onPress={onRemoveOrder}
+                        />
+                        <Text style={styles.quantity}>{quantityTaken}</Text>
+                        <Icon
+                            name="add"
+                            size={ICON_SIZE}
+                            containerStyle={styles.iconContainer}
+                            iconStyle={styles.icon}
+                            onPress={onAddOrder}
+                        />
+                    </View>
+                </View>
+            }
         </View>
     );
 };

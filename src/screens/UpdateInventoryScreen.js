@@ -5,7 +5,8 @@ import {
     ScrollView,
     View,
     Platform,
-    Animated
+    Animated,
+    ActivityIndicator
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -13,12 +14,17 @@ import { connect } from 'react-redux';
 // Relative Imports
 import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
+import Text from '../components/Text';
 import OrderList from '../components/OrderList';
 import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import { getUpdateInventory } from '../selectors/cartSelectors';
+import {
+    getUpdateInventory,
+    getCartOrders,
+    getInventoryTotalQuantity
+} from '../selectors/cartSelectors';
 import { confirmUpdateInventory, addToInventory, removeFromInventory } from '../actions/inventoryActions';
 import { dropdownAlert } from '../actions/uiActions';
 
@@ -54,13 +60,12 @@ export class UpdateInventoryScreeen extends Component {
     }
 
     confirmUpdate = () => {
-        this.props.confirmUpdateInventory();
+        this.props.confirmUpdateInventory(this.props.cartOrders);
     }
 
     handleAddOrder = (product) => {
-        if (product.quantityTaken < product.quantity) {
-            this.props.addToInventory(product);
-        }
+        console.log('handleAddOrder: ', product);
+        this.props.addToInventory(product);
     }
 
     handleRemoveOrder = (product) => {
@@ -68,31 +73,38 @@ export class UpdateInventoryScreeen extends Component {
     }
 
     render() {
-        const { updateInventory, pending, orderImages } = this.props;
+        const { updateInventory, pending, orderImages, inventoryTotalQuantity } = this.props;
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.scrollContainer}>
-                    <View style={styles.container}>
-                        {!pending &&
+                {pending ?
+                    <ActivityIndicator
+                        size="large"
+                        style={StyleSheet.absoluteFill}
+                    /> :
+                    <ScrollView style={styles.scrollContainer}>
+                        <View style={styles.container}>
                             <OrderList
                                 orders={updateInventory}
                                 orderImages={orderImages}
                                 onAddOrder={this.handleAddOrder}
                                 onRemoveOrder={this.handleRemoveOrder}
                             />
-                        }
-
-                    </View>
-                    <View style={styles.cart}>
-                        <Button
-                            onPress={this.confirmUpdate}
-                            title="CONFIRM UPDATE!"
-                            containerViewStyle={styles.buttonContainer}
-                            buttonStyle={styles.button}
-                            textStyle={styles.buttonText}
-                        />
-                    </View>
-                </ScrollView>
+                        </View>
+                        <View style={styles.cart}>
+                            <View style={styles.meta}>
+                                <Text style={styles.label}>Total Quantity:</Text>
+                                <Text style={styles.cost}>{inventoryTotalQuantity}</Text>
+                            </View>
+                            <Button
+                                onPress={this.confirmUpdate}
+                                title="CONFIRM UPDATE!"
+                                containerViewStyle={styles.buttonContainer}
+                                buttonStyle={styles.button}
+                                textStyle={styles.buttonText}
+                            />
+                        </View>
+                    </ScrollView>
+                }
             </View>
         );
     }
@@ -141,14 +153,10 @@ const styles = StyleSheet.create({
         marginBottom: emY(19.19)
     },
     cart: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        position: 'relative',
         backgroundColor: '#fff',
         paddingHorizontal: 23,
-        paddingTop: emY(1.25),
-        paddingBottom: emY(1.32),
+        paddingVertical: 20,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -194,7 +202,9 @@ const mapStateToProps = state => ({
     itemCountUp: state.cart.itemCountUp,
     itemCountDown: state.cart.itemCountDown,
     pending: state.inventory.pending,
-    orderImages: state.product.productImages
+    orderImages: state.product.productImages,
+    inventoryTotalQuantity: getInventoryTotalQuantity(state),
+    cartOrders: getCartOrders(state)
 });
 
 const mapDispatchToProps = {

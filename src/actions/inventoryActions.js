@@ -8,6 +8,8 @@ export const INVENTORY_FAILURE = 'inventory_failure';
 export const CONFIRM_INVENTORY_REQUEST = 'confirm_inventory_request';
 export const CONFIRM_INVENTORY_SUCCESS = 'confirm_inventory_success';
 export const CONFIRM_INVENTORY_FAILURE = 'confirm_inventory_failure';
+export const ADD_TO_INVENTORY = 'add_to_inventory';
+export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
 
 export const fetchContractorInventory = (dispatch) => {
     dispatch({ type: INVENTORY_REQUEST });
@@ -26,15 +28,10 @@ export const fetchContractorInventory = (dispatch) => {
         });
 };
 
-export const confirmUpdateInventory = (cart) => dispatch => {
+export const confirmUpdateInventory = (newInventory) => dispatch => {
     dispatch({ type: CONFIRM_INVENTORY_REQUEST });
     const user = firebase.auth().currentUser;
     const uid = user.uid;
-    const filteredInventory = _.filter(cart.instant, (product) => (product.quantityTaken > 0))
-    const newInventory = _.reduce(filteredInventory, (accum, product) => {
-        accum[product.productName] = product;
-        return accum;
-    }, {});
     const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
     inventoryRef.set(newInventory)
         .then(() => {
@@ -45,3 +42,13 @@ export const confirmUpdateInventory = (cart) => dispatch => {
             dispatch({ type: CONFIRM_INVENTORY_FAILURE, payload: error });
         });
 };
+
+export const addToInventory = product => ({
+    type: ADD_TO_INVENTORY,
+    payload: product
+});
+
+export const removeFromInventory = product => ({
+    type: REMOVE_FROM_INVENTORY,
+    payload: product
+});
