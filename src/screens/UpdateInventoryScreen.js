@@ -19,8 +19,8 @@ import Dimensions from '../constants/Dimensions';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 import { getUpdateInventory } from '../selectors/cartSelectors';
-import { addToCart, removeFromCart } from '../actions/cartActions';
-import { confirmUpdateInventory } from '../actions/inventoryActions';
+import { confirmUpdateInventory, addToInventory, removeFromInventory } from '../actions/inventoryActions';
+import { dropdownAlert } from '../actions/uiActions';
 
 export class UpdateInventoryScreeen extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -54,25 +54,30 @@ export class UpdateInventoryScreeen extends Component {
     }
 
     confirmUpdate = () => {
-        this.props.confirmUpdateInventory(this.props.cart);
+        this.props.confirmUpdateInventory();
     }
 
-    handleRemoveOrder = (quantity) => {
-        if (quantity > 0) {
-            this.props.removeFromCart();
+    handleAddOrder = (product) => {
+        if (product.quantityTaken < product.quantity) {
+            this.props.addToInventory(product);
         }
     }
 
+    handleRemoveOrder = (product) => {
+        this.props.removeFromInventory(product);
+    }
+
     render() {
-        const { cart, pending } = this.props;
+        const { updateInventory, pending, orderImages } = this.props;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollContainer}>
                     <View style={styles.container}>
-                        {pending &&
+                        {!pending &&
                             <OrderList
-                                orders={cart}
-                                onAddOrder={this.props.addToCart}
+                                orders={updateInventory}
+                                orderImages={orderImages}
+                                onAddOrder={this.handleAddOrder}
                                 onRemoveOrder={this.handleRemoveOrder}
                             />
                         }
@@ -185,16 +190,18 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    cart: getUpdateInventory(state),
+    updateInventory: getUpdateInventory(state),
     itemCountUp: state.cart.itemCountUp,
     itemCountDown: state.cart.itemCountDown,
-    pending: state.product.pending
+    pending: state.inventory.pending,
+    orderImages: state.product.productImages
 });
 
 const mapDispatchToProps = {
-    addToCart,
-    removeFromCart,
-    confirmUpdateInventory
+    addToInventory,
+    removeFromInventory,
+    confirmUpdateInventory,
+    dropdownAlert
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateInventoryScreeen);

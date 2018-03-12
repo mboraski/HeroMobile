@@ -18,6 +18,7 @@ import logoBlack from '../assets/icons/logo-black3.png';
 import avatarIcon from '../assets/icons/user.png';
 import { getFacebookInfo } from '../selectors/authSelectors';
 import { fetchProductsRequest } from '../actions/productActions';
+import { dropdownAlert } from '../actions/uiActions';
 import {
     online as goOnline,
     offline as goOffline,
@@ -82,7 +83,11 @@ class HeroMainScreen extends Component {
     };
 
     updateInventory = () => {
-        this.props.navigation.navigate('updateInventory');
+        if (!this.props.online) {
+            this.props.navigation.navigate('updateInventory');
+        } else {
+            this.props.dropdownAlert(true, 'Go offline before editing inventory');
+        }
     };
 
     // openContactPopup = () => {
@@ -281,7 +286,8 @@ const mapDispatchToProps = {
     goOffline,
     getUserOnlineStatus,
     signOut,
-    fetchProductsRequest
+    fetchProductsRequest,
+    dropdownAlert
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);

@@ -7,7 +7,7 @@ import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 // import PendingScreen from '../screens/PendingScreen';
 import AuthScreen from '../screens/AuthScreen';
 // import ProfileScreen from '../screens/ProfileScreen';
-import HomeScreen from '../screens/HomeScreen';
+// import HomeScreen from '../screens/HomeScreen';
 // import MapScreen from '../screens/MapScreen';
 import HeroMainScreen from '../screens/HeroMainScreen';
 import DeliveryDetailScreen from '../screens/DeliveryDetailScreen';
@@ -31,7 +31,7 @@ const MainNavigator = StackNavigator(
         // pending: { screen: PendingScreen },
         // profile: { screen: ProfileScreen },
         // map: { screen: MapScreen },
-        home: { screen: HomeScreen },
+        // home: { screen: HomeScreen },
         main: { screen: HeroMainScreen },
         searchForHero: { screen: SearchForHeroScreen },
         deliveryDetail: { screen: DeliveryDetailScreen },

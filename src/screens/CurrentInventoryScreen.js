@@ -4,6 +4,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import { fetchContractorInventory } from '../actions/inventoryActions';
 import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
 import OrderList from '../components/OrderList';
@@ -20,6 +21,9 @@ class CurrentInventoryScreen extends Component {
         headerTitleStyle: Style.headerTitle
     });
 
+    componentDidMount() {
+        this.props.fetchContractorInventory();
+    }
 
     render() {
         const { contractorProducts, productImages } = this.props;
@@ -92,10 +96,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    contractorProducts: state.product.inventory,
+    contractorProducts: state.inventory.inventory,
     productImages: state.product.productImages
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    fetchContractorInventory: () => (dispatch) => fetchContractorInventory(dispatch)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentInventoryScreen);
