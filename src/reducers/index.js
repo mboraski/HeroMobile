@@ -10,3 +10,4 @@ export { default as header } from './navigationReducer';
 export { default as notification } from './notificationReducer';
 export { default as nav } from './navReducer';
 export { default as inventory } from './inventoryReducer';
+export { default as orders } from './orderReducer';

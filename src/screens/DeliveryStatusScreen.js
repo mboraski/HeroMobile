@@ -1,26 +1,45 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
+import _ from 'lodash';
 
 // Relative Imports
-import loaderGradient from '../assets/loader-gradient.png';
-import loaderTicks from '../assets/loader-ticks.png';
-import MenuButtonRight from '../components/MenuButtonRight';
+// import loaderGradient from '../assets/loader-gradient.png';
+// import loaderTicks from '../assets/loader-ticks.png';
+import MenuButton from '../components/MenuButton';
 import BrandButton from '../components/BrandButton';
-import Notification from '../components/Notification';
-import HeroList from '../components/HeroList';
-import Spinner from '../components/Spinner';
+// import Notification from '../components/Notification';
+// import HeroList from '../components/HeroList';
+// import Spinner from '../components/Spinner';
+import Text from '../components/Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import tempAvatar from '../assets/profile.png';
+import orderStatuses from '../constants/Order';
+// import tempAvatar from '../assets/profile.png';
+// import { getFacebookInfo } from '../selectors/authSelectors';
+import {
+    fishOrdersRequest
+} from '../actions/orderActions';
 
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
 class DeliveryStatusScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Order',
+        headerLeft: <MenuButton style={Style.headerLeft} />,
+        headerRight: <BrandButton onPress={() => navigation.goBack()} />,
+        headerStyle: Style.headerBorderless,
+        headerTitleStyle: [Style.headerTitle, Style.headerTitleLogo]
+    });
+
+    componentDidMount() {
+        this.props.fishOrdersRequest();
+    }
+
     componentWillReceiveProps(nextProps) {
         if (this.props.header.toggleState !== nextProps.header.toggleState) {
             if (nextProps.header.isMenuOpen) {
@@ -29,33 +48,135 @@ class DeliveryStatusScreen extends Component {
                 this.props.navigation.navigate('DrawerClose');
             }
         }
+        if (!this.props.potentialOrders && nextProps.potentialOrders) {
+            this.props.dropdownAlert(true, 'New order request!');
+        } else {
+            this.props.dropdownAlert(false, '');
+        }
+    }
+
+    acceptRequest = (order) => {
+        this.props.acceptRequest(order);
+    }
+
+    renderOrderRequests = () => {
+        const {
+            potentialOrders,
+            state
+        } = this.props;
+        if (state.unaccepted) {
+            return null;
+        } else {
+            return _.forEach(potentialOrders, (order) => (
+                <View style={styles.state}>
+                    <View style={styles.meta}>
+                        <Text style={styles.label}>Order Request:</Text>
+                    </View>
+                    <Button
+                        onPress={this.acceptRequest.bind(this, order)}
+                        title="ACCEPT REQUEST"
+                        containerViewStyle={styles.buttonContainer}
+                        buttonStyle={styles.button}
+                        textStyle={styles.buttonText}
+                    />
+                </View>
+            ));
+        }
+    }
+
+    renderOrderState = () => {
+        const {
+            currentOrder,
+            state
+        } = this.props;
+        if (currentOrder) {
+            return (
+                <View>
+                    {state.accepted &&
+                        <View style={styles.state}>
+                            <View style={styles.meta}>
+                                <Text style={styles.label}>Arrived at Location:</Text>
+                            </View>
+                            <Button
+                                onPress={this.acceptRequest.bind(this, currentOrder)}
+                                title="ARRIVED!"
+                                containerViewStyle={styles.buttonContainer}
+                                buttonStyle={styles.button}
+                                textStyle={styles.buttonText}
+                            />
+                        </View>
+                    }
+                    {state.arrived &&
+                        <View style={styles.state}>
+                            <View style={styles.meta}>
+                                <Text style={styles.label}>Mark order complete:</Text>
+                            </View>
+                            <Button
+                                onPress={this.acceptRequest.bind(this, currentOrder)}
+                                title="COMPLETE ORDER"
+                                containerViewStyle={styles.buttonContainer}
+                                buttonStyle={styles.button}
+                                textStyle={styles.buttonText}
+                            />
+                        </View>
+                    }
+                </View>
+            );
+        }
     }
 
     render() {
+        const {
+            pending,
+            potentialOrders,
+            currentOrder
+        } = this.props;
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.notRef.receiveNotification()}>
-                    <Spinner
-                        image={tempAvatar}
-                        style={styles.loader}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.searching}>Searching...</Text>
-                <Notification onRef={ref => (this.notRef = ref)} />
-                <Button />
-                <View style={styles.label}>
-                    <Text style={styles.labelText}>Located Heroes...</Text>
-                </View>
-                <HeroList />
+                {!potentialOrders || !currentOrder ?
+                    <View style={styles.container}>
+                        <Text style={styles.searching}>Scanning the sky for beacons...</Text>
+                        <ActivityIndicator
+                            size="large"
+                            color="#F5A623"
+                        />
+                    </View> :
+                    <View style={styles.container}>
+                        {pending ?
+                            <ActivityIndicator
+                                size="large"
+                                color="#F5A623"
+                            /> :
+                            <View style={styles.container}>
+                                {this.renderOrderRequests()}
+                                {this.renderOrderState()}
+                            </View>
+                        }
+                    </View>
+                }
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    buttonContainer: {
+        marginTop: 10
+    },
+    button: {
+        backgroundColor: '#000',
+        height: emY(3.75)
+    },
+    buttonText: {
+        fontSize: emY(0.8125)
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    profile: {
+        alignItems: 'center',
+        marginTop: emY(2.68)
     },
     loader: {
         height: emY(11),
@@ -101,33 +222,54 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: emY(3)
     },
+    spinner: {
+        marginVertical: 30
+    },
+    meta: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5,
+        alignItems: 'center'
+    },
     label: {
-        borderBottomWidth: StyleSheet.hairlineWidth * 3,
-        borderColor: Color.GREY_300,
-        backgroundColor: Color.WHITE,
-        paddingBottom: emY(0.375),
-        marginLeft: 27,
-        marginRight: 27
+        fontSize: 14,
+        color: Color.GREY_600,
+        marginRight: 11
     },
     labelText: {
         color: Color.GREY_600,
         fontSize: emY(1.0625),
         letterSpacing: 0.5
-    }
+    },
+    state: {
+        position: 'relative',
+        backgroundColor: '#fff',
+        paddingHorizontal: 23,
+        paddingVertical: 20,
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: emY(0.625) },
+                shadowOpacity: 0.5,
+                shadowRadius: emY(1.5)
+            },
+            android: {
+                elevation: 10
+            }
+        })
+    },
 });
-
-DeliveryStatusScreen.navigationOptions = {
-    title: 'Hasty',
-    headerLeft: <MenuButtonRight />,
-    headerRight: <BrandButton />,
-    headerStyle: Style.headerBorderless,
-    headerTitleStyle: Style.headerTitle
-};
 
 const mapStateToProps = state => ({
-    header: state.header
+    header: state.header,
+    potentialOrders: state.orders.potentialOrders,
+    pending: state.orders.pending,
+    currentOrder: state.orders.currentOrder,
+    status: state.orders.status
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = {
+    fishOrdersRequest
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeliveryStatusScreen);
