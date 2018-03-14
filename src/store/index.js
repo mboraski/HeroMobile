@@ -39,6 +39,6 @@ export const store = createStore(
 export const persistor = persistStore(store);
 
 // clears async storage
-// persistor.purge();
+persistor.purge();
 
 export default { persistor, store };
