@@ -44,9 +44,9 @@ export const signOut = () => dispatch => {
         });
 };
 
-export const checkContractorApproval = (dispatch) => {
+export const checkContractorApproval = () => dispatch => {
     const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const uid = user ? user.uid : null;
     console.log('checkContractorApproval ran uid: ', uid);
     const contractorRef = firebase.firestore().collection('contractors').doc(`${uid}`);
     return contractorRef.get()
@@ -58,15 +58,16 @@ export const checkContractorApproval = (dispatch) => {
                 if (approved) {
                     console.log('contractor approved data: ', data);
                     // set approval status in store
-                    const connectId = data.stripeInfo.newStripeConnectAccount.id;
+                    // const connectId = data.stripeInfo.newStripeConnectAccount.id;
                     // const connectId = data.inventory.newStripeConnectAccount.id;
                     // fire auth action
-                    dispatch({ type: CONTRACTOR_APPROVED, payload: connectId });
+                    dispatch({ type: CONTRACTOR_APPROVED });
+                    // dispatch({ type: CONTRACTOR_APPROVED, payload: connectId });
                     // set contractor inventory
                     fetchContractorInventory(dispatch);
                     // navigate user to HeroMain
                     dispatch({ type: GO_MAIN });
-                } else if (pending){
+                } else if (pending) {
                     // not approved, check status
                     // if pending, show pending screen
                 } else {
@@ -81,7 +82,7 @@ export const checkContractorApproval = (dispatch) => {
             console.log('checkContractorApproval error: ', error);
             logContractorError({ uid, error });
             dispatch(dropdownAlert(true, 'Error verifying contractor status, please try again.'))
-        })
+        });
 };
 
 export const signInWithFacebook = () => async dispatch => {
@@ -101,7 +102,6 @@ export const signInWithFacebook = () => async dispatch => {
                 .signInWithCredential(credential)
                 .then(user => {
                     dispatch({ type: LOGIN_SUCCESS, payload: user });
-                    checkContractorApproval(user, dispatch);
                     return user;
                 })
                 .catch(error => {
@@ -175,16 +175,12 @@ export const updateAccount = (id, values) => dispatch => {
 
 export const authChanged = (user) => dispatch => {
     console.log('authChanged ran');
-    if (user) {
-        console.log('authChanged user: ', user);
-        checkContractorApproval(dispatch);
-    }
     dispatch({ type: AUTH_CHANGED, payload: user });
 };
 
 export const getUserOnlineStatus = () => dispatch => {
     const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const uid = user ? user.uid : null;
     const activeHeroesRef = firebase.database().ref(`activeHeroes/US/TX/Austin/${uid}`);
     return activeHeroesRef.once('value')
         .then((snapshot) => {
@@ -202,7 +198,7 @@ export const getUserOnlineStatus = () => dispatch => {
 
 export const online = (contractorProducts, currentLocation) => dispatch => {
     const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const uid = user ? user.uid : null;
     const activeProductsRef = firebase.database().ref('activeProducts/US/TX/Austin/instant');
     return activeProductsRef.once('value')
         .then((snapshot) => {

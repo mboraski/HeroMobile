@@ -1,13 +1,13 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
 import firebase from '../firebase';
 import { Text } from '../components/Text';
-import loaderGradient from '../assets/loader-gradient.png';
-import loaderTicks from '../assets/loader-ticks.png';
+// import loaderGradient from '../assets/loader-gradient.png';
+// import loaderTicks from '../assets/loader-ticks.png';
 // import races from '../assets/icons/races.png';
 // import distance from '../assets/icons/distance.png';
 // import earned from '../assets/icons/earned.png';
@@ -90,6 +90,14 @@ class HeroMainScreen extends Component {
         }
     };
 
+    orders = () => {
+        if (this.props.online) {
+            this.props.navigation.navigate('deliveryStatus');
+        } else {
+            this.props.dropdownAlert(true, 'Go online before editing inventory');
+        }
+    };
+
     // openContactPopup = () => {
     //     this.setState({ contactPopupVisible: true });
     // };
@@ -104,91 +112,91 @@ class HeroMainScreen extends Component {
             online,
             contractorProducts,
             currentLocation,
-            facebookInfo
+            facebookInfo,
+            pending
         } = this.props;
+        console.log('facebookInfo: ', facebookInfo);
 
         return (
             <ScrollView style={styles.scrollContainer}>
-                <View style={styles.container}>
-                    <View style={styles.loader}>
-                        <View style={styles.imageContainer}>
-                            {facebookInfo && facebookInfo.photoURL ? (
-                                <Image
-                                    source={{ uri: facebookInfo.photoURL }}
-                                    style={styles.image}
-                                />
-                            ) :
-                                <Image
-                                    source={avatarIcon}
-                                    style={styles.image}
-                                />
-                            }
-                            {facebookInfo && facebookInfo.displayName ? (
-                                <Text style={styles.name}>
-                                    {facebookInfo.displayName}
-                                </Text>
-                            ) : null}
+                {!pending ?
+                    <View style={styles.container}>
+                        <View style={styles.loader}>
+                            <View style={styles.imageContainer}>
+                                {facebookInfo && facebookInfo.photoURL ? (
+                                    <Image
+                                        source={{ uri: facebookInfo.photoURL }}
+                                        style={styles.image}
+                                    />
+                                ) :
+                                    <Image
+                                        source={avatarIcon}
+                                        style={styles.image}
+                                    />
+                                }
+                            </View>
                         </View>
-                        <Image source={loaderGradient} style={styles.gradient} />
-                        <Image source={loaderTicks} style={styles.ticks} />
-                    </View>
-                    {/* <Text style={styles.name}>{name}</Text> */}
-                    {/* <Text style={styles.viewProfile}>View Profile</Text> */}
-                    <ProfileSwitch
-                        online={online}
-                        contractorProducts={contractorProducts}
-                        currentLocation={currentLocation}
-                        goOnline={this.props.goOnline}
-                        goOffline={this.props.goOffline}
+                        {/* <Text style={styles.name}>{name}</Text> */}
+                        {/* <Text style={styles.viewProfile}>View Profile</Text> */}
+                        <ProfileSwitch
+                            online={online}
+                            contractorProducts={contractorProducts}
+                            currentLocation={currentLocation}
+                            goOnline={this.props.goOnline}
+                            goOffline={this.props.goOffline}
+                        />
+                        {/* <View style={styles.statusContainer}>
+                            <Status
+                                style={styles.status}
+                                image={races}
+                                title="Races"
+                                description="213"
+                            />
+                            <Status
+                                style={styles.status}
+                                image={distance}
+                                title="Distance"
+                                description="438km"
+                            />
+                            <Status
+                                style={styles.status}
+                                image={earned}
+                                title="Earned"
+                                description="$3123.00"
+                            />
+                        </View> */}
+                        <View style={styles.mainItemContainer}>
+                            <View>
+                                <MainItem
+                                    image={inventory}
+                                    title="Current Inventory"
+                                    onPress={this.currentInventory}
+                                />
+                                <MainItem
+                                    image={inventory}
+                                    title="Update Inventory"
+                                    onPress={this.updateInventory}
+                                />
+                            </View>
+                            <View>
+                                <MainItem
+                                    image={history}
+                                    title="Orders"
+                                    onPress={this.orders}
+                                />
+                                <MainItem
+                                    image={logoBlack}
+                                    title="Sign Out"
+                                    onPress={this.signOut}
+                                />
+                            </View>
+                        </View>
+                    </View> :
+                    <ActivityIndicator
+                        size="large"
+                        style={StyleSheet.absoluteFill}
                     />
-                    {/* <View style={styles.statusContainer}>
-                        <Status
-                            style={styles.status}
-                            image={races}
-                            title="Races"
-                            description="213"
-                        />
-                        <Status
-                            style={styles.status}
-                            image={distance}
-                            title="Distance"
-                            description="438km"
-                        />
-                        <Status
-                            style={styles.status}
-                            image={earned}
-                            title="Earned"
-                            description="$3123.00"
-                        />
-                    </View> */}
-                    <View style={styles.mainItemContainer}>
-                        <View>
-                            <MainItem
-                                image={inventory}
-                                title="Current Inventory"
-                                onPress={this.currentInventory}
-                            />
-                            <MainItem
-                                image={inventory}
-                                title="Update Inventory"
-                                onPress={this.updateInventory}
-                            />
-                        </View>
-                        <View>
-                            <MainItem
-                                image={history}
-                                title="Orders"
-                                onPress={this.orders}
-                            />
-                            <MainItem
-                                image={logoBlack}
-                                title="Sign Out"
-                                onPress={this.signOut}
-                            />
-                        </View>
-                    </View>
-                </View>
-                {/* <CustomerPopup openModal={contactPopupVisible} closeModal={this.contactConfirmed} /> */}
+                }
             </ScrollView>
         );
     }
@@ -213,8 +221,6 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flexDirection: 'row',
-        borderWidth: StyleSheet.hairlineWidth * 10,
-        borderColor: Color.GREY_300,
         height: IMAGE_CONTAINER_SIZE,
         width: IMAGE_CONTAINER_SIZE,
         borderRadius: IMAGE_CONTAINER_SIZE / 2,
@@ -278,7 +284,8 @@ const mapStateToProps = state => ({
     online: state.auth.online,
     contractorProducts: state.inventory.inventory,
     currentLocation: { lat: 43.23223, lon: -97.293023 },
-    facebookInfo: getFacebookInfo(state)
+    facebookInfo: getFacebookInfo(state),
+    pending: state.inventory.pending
 });
 
 const mapDispatchToProps = {

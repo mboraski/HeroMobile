@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { listCards } from '../actions/paymentActions';
-import { signInWithFacebook } from '../actions/authActions';
+import { signInWithFacebook, checkContractorApproval } from '../actions/authActions';
 import EntryMessage from '../components/EntryMessage';
 import Text from '../components/Text';
 import Color from '../constants/Color';
@@ -51,8 +51,9 @@ class AuthScreen extends Component {
         }
     };
 
-    onAuthSuccess = user => {
-        this.goToPayment(user);
+    onAuthSuccess = () => {
+        // this.goToPayment(user);
+        this.props.checkContractorApproval();
     };
 
     handleFocus = () => {
@@ -67,19 +68,19 @@ class AuthScreen extends Component {
             .catch(error => Alert.alert('Error', error.message));
     };
 
-    goToMap = () => {
-        this.props.navigation.navigate('map');
-    };
-
-    goToPayment = async user => {
-        const result = await this.props.listCards(user.uid);
-        if (result.paymentInfo && result.paymentInfo.total_count === 0) {
-            this.goToMap();
-            this.props.navigation.navigate('paymentMethod', { signedUp: true });
-        } else {
-            this.goToMap();
-        }
-    };
+    // goToMap = () => {
+    //     this.props.navigation.navigate('map');
+    // };
+    //
+    // goToPayment = async () => {
+    //     // const result = await this.props.listCards(user.uid);
+    //     // if (result.paymentInfo && result.paymentInfo.total_count === 0) {
+    //     //     this.goToMap();
+    //     //     this.props.navigation.navigate('paymentMethod', { signedUp: true });
+    //     // } else {
+    //         this.goToMap();
+    //     // }
+    // };
 
     closeModal = () => {
         this.setState({ openModal: false });
@@ -174,7 +175,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     signInWithFacebook,
-    listCards
+    listCards,
+    checkContractorApproval
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

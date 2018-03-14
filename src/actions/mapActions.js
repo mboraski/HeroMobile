@@ -42,4 +42,10 @@ export const getCurrentLocation = () => async dispatch => {
         })
     );
     dispatch({ type: GET_CURRENT_LOCATION_SUCCESS });
+    return {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+    };
 };

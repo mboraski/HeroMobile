@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import firebase from '../firebase';
 import { dropdownAlert } from './uiActions';
 
@@ -14,13 +13,18 @@ export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
 export const fetchContractorInventory = (dispatch) => {
     dispatch({ type: INVENTORY_REQUEST });
     const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const uid = user ? user.uid : null;
     const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
     inventoryRef.once('value')
         .then((snapshot) => {
             const inventory = snapshot.val();
-            console.log('inventory: ', inventory);
-            dispatch({ type: INVENTORY_SUCCESS, payload: inventory });
+            if (inventory) {
+                console.log('inventory: ', inventory);
+                dispatch({ type: INVENTORY_SUCCESS, payload: inventory });
+            } else {
+                console.log('empty inventory');
+                dispatch({ type: INVENTORY_SUCCESS, payload: {} });
+            }
         })
         .catch((error) => {
             console.log('inventory error: ', error);
@@ -31,7 +35,7 @@ export const fetchContractorInventory = (dispatch) => {
 export const confirmUpdateInventory = (newInventory) => dispatch => {
     dispatch({ type: CONFIRM_INVENTORY_REQUEST });
     const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const uid = user ? user.uid : null;
     const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
     inventoryRef.set(newInventory)
         .then(() => {

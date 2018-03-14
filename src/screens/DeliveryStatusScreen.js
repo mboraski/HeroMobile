@@ -8,7 +8,7 @@ import _ from 'lodash';
 // Relative Imports
 // import loaderGradient from '../assets/loader-gradient.png';
 // import loaderTicks from '../assets/loader-ticks.png';
-import MenuButton from '../components/MenuButton';
+import BackButton from '../components/BackButton';
 import BrandButton from '../components/BrandButton';
 // import Notification from '../components/Notification';
 // import HeroList from '../components/HeroList';
@@ -19,7 +19,8 @@ import Style from '../constants/Style';
 import { emY } from '../utils/em';
 import orderStatuses from '../constants/Order';
 // import tempAvatar from '../assets/profile.png';
-// import { getFacebookInfo } from '../selectors/authSelectors';
+import { getHero } from '../selectors/authSelectors';
+import { dropdownAlert } from '../actions/uiActions';
 import {
     fishOrdersRequest
 } from '../actions/orderActions';
@@ -30,8 +31,8 @@ const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 class DeliveryStatusScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Order',
-        headerLeft: <MenuButton style={Style.headerLeft} />,
-        headerRight: <BrandButton onPress={() => navigation.goBack()} />,
+        headerLeft: <BackButton onPress={() => navigation.goBack()} />,
+        headerRight: <BrandButton />,
         headerStyle: Style.headerBorderless,
         headerTitleStyle: [Style.headerTitle, Style.headerTitleLogo]
     });
@@ -56,7 +57,11 @@ class DeliveryStatusScreen extends Component {
     }
 
     acceptRequest = (order) => {
-        this.props.acceptRequest(order);
+        this.props.acceptRequest({
+            orderId: order.orderId,
+            productsSatisfied: this.props.productsSatisfied,
+            hero: this.props.hero
+        });
     }
 
     renderOrderRequests = () => {
@@ -64,10 +69,11 @@ class DeliveryStatusScreen extends Component {
             potentialOrders,
             state
         } = this.props;
-        if (state.unaccepted) {
-            return null;
+        let result;
+        if (state === orderStatuses.unaccepted) {
+            result = null;
         } else {
-            return _.forEach(potentialOrders, (order) => (
+            result = _.map(potentialOrders, (order) => (
                 <View style={styles.state}>
                     <View style={styles.meta}>
                         <Text style={styles.label}>Order Request:</Text>
@@ -82,44 +88,58 @@ class DeliveryStatusScreen extends Component {
                 </View>
             ));
         }
+        return result;
+    }
+
+    renderAccepted = () => {
+        const { currentOrder, state } = this.props;
+        if (state === orderStatuses.accepted) {
+            return (
+                <View style={styles.state}>
+                    <View style={styles.meta}>
+                        <Text style={styles.label}>Arrived at Location:</Text>
+                    </View>
+                    <Button
+                        onPress={this.acceptRequest.bind(this, currentOrder)}
+                        title="ARRIVED!"
+                        containerViewStyle={styles.buttonContainer}
+                        buttonStyle={styles.button}
+                        textStyle={styles.buttonText}
+                    />
+                </View>
+            );
+        }
+    }
+
+    renderArrived = () => {
+        const { currentOrder, state } = this.props;
+        if (state === orderStatuses.arrived) {
+            return (
+                <View style={styles.state}>
+                    <View style={styles.meta}>
+                        <Text style={styles.label}>Mark order complete:</Text>
+                    </View>
+                    <Button
+                        onPress={this.acceptRequest.bind(this, currentOrder)}
+                        title="COMPLETE ORDER"
+                        containerViewStyle={styles.buttonContainer}
+                        buttonStyle={styles.button}
+                        textStyle={styles.buttonText}
+                    />
+                </View>
+            );
+        }
     }
 
     renderOrderState = () => {
         const {
-            currentOrder,
-            state
+            currentOrder
         } = this.props;
         if (currentOrder) {
             return (
                 <View>
-                    {state.accepted &&
-                        <View style={styles.state}>
-                            <View style={styles.meta}>
-                                <Text style={styles.label}>Arrived at Location:</Text>
-                            </View>
-                            <Button
-                                onPress={this.acceptRequest.bind(this, currentOrder)}
-                                title="ARRIVED!"
-                                containerViewStyle={styles.buttonContainer}
-                                buttonStyle={styles.button}
-                                textStyle={styles.buttonText}
-                            />
-                        </View>
-                    }
-                    {state.arrived &&
-                        <View style={styles.state}>
-                            <View style={styles.meta}>
-                                <Text style={styles.label}>Mark order complete:</Text>
-                            </View>
-                            <Button
-                                onPress={this.acceptRequest.bind(this, currentOrder)}
-                                title="COMPLETE ORDER"
-                                containerViewStyle={styles.buttonContainer}
-                                buttonStyle={styles.button}
-                                textStyle={styles.buttonText}
-                            />
-                        </View>
-                    }
+                    {this.renderAccepted()}
+                    {this.renderArrived()}
                 </View>
             );
         }
@@ -265,11 +285,14 @@ const mapStateToProps = state => ({
     potentialOrders: state.orders.potentialOrders,
     pending: state.orders.pending,
     currentOrder: state.orders.currentOrder,
-    status: state.orders.status
+    status: state.orders.status,
+    productsSatisfied: state.orders.productsSatisfied,
+    hero: getHero(state)
 });
 
 const mapDispatchToProps = {
-    fishOrdersRequest
+    fishOrdersRequest,
+    dropdownAlert
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeliveryStatusScreen);

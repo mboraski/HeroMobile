@@ -19,11 +19,13 @@ export const fetchProductsRequest = () =>
                 const products = snapshot.val();
                 // for some reason firebase has empty hashed database objects, this filters them
                 // TODO: figure out why firebase did this
-                const filteredProducts = {};
-                filteredProducts.instant = _.filter(products.instant, (product) => !!product);
-                dispatch(fetchProductsSuccess(filteredProducts));
-                dispatch(fetchProductImages(filteredProducts, dispatch));
-                dispatch(updateCart(filteredProducts));
+                if (products) {
+                    const filteredProducts = {};
+                    filteredProducts.instant = _.filter(products.instant, (product) => !!product);
+                    dispatch(fetchProductsSuccess(filteredProducts));
+                    dispatch(fetchProductImages(filteredProducts, dispatch));
+                    dispatch(updateCart(filteredProducts));
+                }
             });
             // .off();
     };

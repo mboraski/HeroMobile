@@ -1,6 +1,8 @@
-// export default {
-//     unaccepted: 'unaccepted',
-//     accepted: 'accepted',
-//     arrived: 'arrived',
-//     completed: 'completed'
-// };
+const orderStatuses = {
+    unaccepted: 'unaccepted',
+    accepted: 'accepted',
+    arrived: 'arrived',
+    completed: 'completed'
+};
+
+export default orderStatuses;

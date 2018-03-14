@@ -61,7 +61,7 @@ export default function (state = initialState, action) {
         case CONTRACTOR_APPROVED:
             return {
                 ...state,
-                connectId: action.payload,
+                // connectId: action.payload,
                 approved: true,
                 pending: false
             };

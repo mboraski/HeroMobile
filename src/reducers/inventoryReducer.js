@@ -1,5 +1,5 @@
 import {
-    // INVENTORY_REQUEST,
+    INVENTORY_REQUEST,
     INVENTORY_SUCCESS,
     // INVENTORY_FAILURE,
     CONFIRM_INVENTORY_SUCCESS,
@@ -39,6 +39,11 @@ const removeProductFromInventory = (product, inventory) => {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case INVENTORY_REQUEST:
+            return {
+                ...state,
+                pending: true,
+            };
         case INVENTORY_SUCCESS:
         console.log('inventory success of reducer ran payload: ', action.payload);
             return {
