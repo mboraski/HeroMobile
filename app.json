@@ -8,7 +8,7 @@
         "version": "1.0.0",
         "orientation": "portrait",
         "primaryColor": "#f5a624",
-        "icon": "./src/assets/icons/app.png",
+        "icon": "./src/assets/icons/HastyOrangeIcon.png",
         "splash": {
             "backgroundColor": "#f5a624",
             "resizeMode": "cover",
@@ -19,6 +19,7 @@
         },
         "ios": {
             "bundleIdentifier": "com.spartanspeedofservice.hastyhero",
+            "loadJSInBackgroundExperimental": true,
             "supportsTablet": true
         }
     }
