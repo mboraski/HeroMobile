@@ -4,7 +4,7 @@
         "description": "A delivery network and service app",
         "slug": "hero-mobile",
         "privacy": "public",
-        "sdkVersion": "25.0.0",
+        "sdkVersion": "26.0.0",
         "version": "1.0.0",
         "orientation": "portrait",
         "primaryColor": "#f5a624",
