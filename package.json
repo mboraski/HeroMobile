@@ -21,7 +21,8 @@
     "scripts": {
         "precommit": "pretty-quick --staged",
         "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
-        "test": "node_modules/.bin/jest"
+        "test": "node_modules/.bin/jest",
+        "package": "npm prune --production && npm dedupe"
     },
     "jest": {
         "preset": "jest-expo",
