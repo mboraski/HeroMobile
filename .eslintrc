@@ -1,7 +1,11 @@
 {
-    "extends": "hasty",
+    "extends": ["hasty", "prettier"],
     "env": {
         "jest": true
     },
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": "error"
+    }
 }
