@@ -1,11 +1,11 @@
 {
     "expo": {
-        "name": "Hasty Hero Mobile App",
-        "description": "A delivery network and service app",
+        "name": "HeroMobile",
+        "description": "Hasty Partner Mobile App",
         "slug": "hero-mobile",
         "privacy": "public",
         "sdkVersion": "26.0.0",
-        "version": "1.0.0",
+        "version": "0.1.0",
         "orientation": "portrait",
         "primaryColor": "#f5a624",
         "icon": "./src/assets/icons/HastyOrangeIcon.png",
@@ -18,9 +18,12 @@
             "assetExts": ["ttf", "mp4"]
         },
         "ios": {
-            "bundleIdentifier": "com.spartanspeedofservice.hastyhero",
+            "bundleIdentifier": "com.spartanspeedofservice.hastypartner",
             "loadJSInBackgroundExperimental": true,
             "supportsTablet": true
+        },
+        "android": {
+            "package": "com.spartanspeedofservice.hastypartner"
         }
     }
 }
