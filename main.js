@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 // Relative Imports
 import splashImage from './src/assets/splash.png';
 import Color from './src/constants/Color';
-import RootContainer from './src/screens/RootContainer';
+import RootContainer from './src/containers/RootContainer';
 import { store, persistor } from './src/store';
 
 class App extends Component {

@@ -8,7 +8,7 @@
         "version": "0.1.0",
         "orientation": "portrait",
         "primaryColor": "#f5a624",
-        "icon": "./src/assets/icons/HastyOrangeIcon.png",
+        "icon": "./src/assets/icons/HastyBlackIcon.png",
         "splash": {
             "backgroundColor": "#f5a624",
             "resizeMode": "cover",
@@ -18,12 +18,12 @@
             "assetExts": ["ttf", "mp4"]
         },
         "ios": {
-            "bundleIdentifier": "com.spartanspeedofservice.hastycontractor",
+            "bundleIdentifier": "com.spartanspeedofservice.hastyhero",
             "loadJSInBackgroundExperimental": true,
             "supportsTablet": true
         },
         "android": {
-            "package": "com.spartanspeedofservice.hastycontractor"
+            "package": "com.spartanspeedofservice.hastyhero"
         }
     }
 }

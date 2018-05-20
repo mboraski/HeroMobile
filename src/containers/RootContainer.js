@@ -66,7 +66,7 @@ class RootContainer extends Component {
     }
 
     componentWillUnmount() {
-        firebase.database().ref('products/US/TX/Austin').off();
+        this.props.turnOffProductListener();
     }
 
     handleNotification = notification => {
@@ -140,6 +140,7 @@ const mapDispatchToProps = dispatch => ({
     ...bindActionCreators(
         {
             closeCustomerPopup,
+            turnOffProductListener,
             dropdownAlert,
             authChanged,
             signOut
