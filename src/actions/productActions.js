@@ -1,6 +1,9 @@
+// Third Party Imports
 import filter from 'lodash.filter';
 import forEach from 'lodash.foreach';
-import firebase from '../firebase';
+import firebase from 'firebase';
+
+// Relative Imports
 import { updateCart } from './cartActions';
 
 // Action Types
@@ -17,6 +20,7 @@ export const SET_IMAGE = 'set_image';
 const PRODUCTS_URL = 'products';
 const productsRef = firebase.database().ref(PRODUCTS_URL);
 
+// Helper Functions
 const onProductFetchSuccess = (snapshot, dispatch) => {
     const products = snapshot.val();
     // for some reason firebase has empty hashed database objects, this filters them
@@ -33,6 +37,7 @@ const onProductFetchSuccess = (snapshot, dispatch) => {
     }
 };
 
+// Actions
 export const addProductListener = callback => productsRef.on('value', callback);
 
 export const removeProductListener = () => productsRef.off();

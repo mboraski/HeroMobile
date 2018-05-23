@@ -24,6 +24,7 @@
         "test": "node_modules/.bin/jest"
     },
     "jest": {
+        "testEnvironment": "node",
         "preset": "jest-expo",
         "setupFiles": ["./src/jest/enzyme.js", "./src/mocks/Dimensions.js"],
         "snapshotSerializers": ["enzyme-to-json/serializer"]
