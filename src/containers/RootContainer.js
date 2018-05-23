@@ -5,9 +5,9 @@ import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Permissions, Notifications } from 'expo';
+import firebase from 'firebase';
 
 // Relative Imports
-import firebase from '../firebase';
 import MenuNavigator from '../navigations/MenuNavigator';
 // import CommunicationPopup from '../components/CommunicationPopup';
 import DropdownAlert from '../components/DropdownAlert';
@@ -66,7 +66,10 @@ class RootContainer extends Component {
     }
 
     componentWillUnmount() {
-        this.props.turnOffProductListener();
+        firebase
+            .database()
+            .ref('products/US/TX/Austin')
+            .off();
     }
 
     handleNotification = notification => {
@@ -140,7 +143,6 @@ const mapDispatchToProps = dispatch => ({
     ...bindActionCreators(
         {
             closeCustomerPopup,
-            turnOffProductListener,
             dropdownAlert,
             authChanged,
             signOut
