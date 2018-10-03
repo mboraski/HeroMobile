@@ -3,7 +3,7 @@
         "name": "HeroMobile",
         "description": "Hasty Contractor Mobile App",
         "slug": "hero-mobile",
-        "privacy": "private",
+        "privacy": "unlisted",
         "sdkVersion": "30.0.0",
         "version": "0.1.0",
         "orientation": "portrait",
