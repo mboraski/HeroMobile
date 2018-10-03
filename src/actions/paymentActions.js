@@ -1,4 +1,4 @@
-import firebase from '../firebase';
+import { firebaseAuth } from '../../firebase';
 import * as api from '../api/hasty';
 import { dropdownAlert } from './uiActions';
 
@@ -16,7 +16,8 @@ export const SUBMIT_PAYMENT_REQUEST = 'submit_payment_request';
 export const SUBMIT_PAYMENT_SUCCESS = 'submit_payment_success';
 export const SUBMIT_PAYMENT_FAILURE = 'submit_payment_failure';
 
-export const submitPaymentRequest = () => dispatch => dispatch({ type: SUBMIT_PAYMENT_REQUEST });
+export const submitPaymentRequest = () => dispatch =>
+    dispatch({ type: SUBMIT_PAYMENT_REQUEST });
 
 export const submitPayment = (
     navigation,
@@ -25,26 +26,27 @@ export const submitPayment = (
     notes,
     orderId,
     cart
-    ) => async dispatch => {
-        // TODO: do something with notes
-        const user = firebase.auth().currentUser;
-        const uid = user.uid;
-        const charge = {
-            amount: Math.ceil(totalCost),
-            currency: 'usd',
-            source: cardId
-        };
-        return api.chargeStripeCustomerSource({ uid, charge, notes, orderId, cart })
-            .then(() => {
-                dropdownAlert(true, 'Payment success');
-                dispatch({ type: SUBMIT_PAYMENT_SUCCESS });
-                navigation.navigate('deliveryStatus');
-            })
-            .catch(() => {
-                dropdownAlert(true, 'Error submitting payment');
-                dispatch({ type: SUBMIT_PAYMENT_FAILURE });
-            });
-        };
+) => async dispatch => {
+    // TODO: do something with notes
+    const user = firebaseAuth.currentUser;
+    const uid = user.uid;
+    const charge = {
+        amount: Math.ceil(totalCost),
+        currency: 'usd',
+        source: cardId
+    };
+    return api
+        .chargeStripeCustomerSource({ uid, charge, notes, orderId, cart })
+        .then(() => {
+            dropdownAlert(true, 'Payment success');
+            dispatch({ type: SUBMIT_PAYMENT_SUCCESS });
+            navigation.navigate('deliveryStatus');
+        })
+        .catch(() => {
+            dropdownAlert(true, 'Error submitting payment');
+            dispatch({ type: SUBMIT_PAYMENT_FAILURE });
+        });
+};
 
 export const addCard = (...args) => async dispatch => {
     try {
@@ -109,6 +111,6 @@ export const listCards = uid => async dispatch => {
     // }
 };
 
-export const selectCard = (card) => dispatch => {
+export const selectCard = card => dispatch => {
     dispatch({ type: SELECTED_CARD, payload: card.id });
 };

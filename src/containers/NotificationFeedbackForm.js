@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { database } from '../firebase';
+import { rtdb } from '../../firebase';
 
 import Color from '../constants/Color';
 import TextInputField from '../components/TextInputField';
@@ -131,12 +131,11 @@ const styles = StyleSheet.create({
 const formOptions = {
     form: 'Notification',
     onSubmit({ feedbackMessage }, dispatch, props) {
-        return database
+        return rtdb
             .ref(`userFeedback/sxsw/${props.formKey}`)
             .push({ feedbackMessage })
             .catch(error => {
                 console.error(error.message);
-                throw new SubmissionError({ _error: error.message });
             });
     },
     onSubmitSuccess(values, dispatch, props) {
@@ -148,6 +147,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    reduxForm(formOptions)(NotificationFeedbackForm)
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(reduxForm(formOptions)(NotificationFeedbackForm));

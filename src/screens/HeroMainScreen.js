@@ -1,10 +1,16 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Image, ActivityIndicator } from 'react-native';
+import {
+    StyleSheet,
+    ScrollView,
+    View,
+    Image,
+    ActivityIndicator
+} from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import firebase from '../firebase';
+import { rtdb } from '../../firebase';
 import { Text } from '../components/Text';
 // import loaderGradient from '../assets/loader-gradient.png';
 // import loaderTicks from '../assets/loader-ticks.png';
@@ -67,7 +73,7 @@ class HeroMainScreen extends Component {
     }
 
     componentWillUnmount() {
-        firebase.database().ref('products/US/TX/Austin').off();
+        rtdb.ref('products/US/TX/Austin').off();
     }
 
     // goToPaymentInfo = () => {
@@ -86,7 +92,10 @@ class HeroMainScreen extends Component {
         if (!this.props.online) {
             this.props.navigation.navigate('updateInventory');
         } else {
-            this.props.dropdownAlert(true, 'Go offline before editing inventory');
+            this.props.dropdownAlert(
+                true,
+                'Go offline before editing inventory'
+            );
         }
     };
 
@@ -94,7 +103,10 @@ class HeroMainScreen extends Component {
         if (this.props.online) {
             this.props.navigation.navigate('deliveryStatus');
         } else {
-            this.props.dropdownAlert(true, 'Go online before editing inventory');
+            this.props.dropdownAlert(
+                true,
+                'Go online before editing inventory'
+            );
         }
     };
 
@@ -119,7 +131,7 @@ class HeroMainScreen extends Component {
 
         return (
             <ScrollView style={styles.scrollContainer}>
-                {!pending ?
+                {!pending ? (
                     <View style={styles.container}>
                         <View style={styles.loader}>
                             <View style={styles.imageContainer}>
@@ -128,12 +140,12 @@ class HeroMainScreen extends Component {
                                         source={{ uri: facebookInfo.photoURL }}
                                         style={styles.image}
                                     />
-                                ) :
+                                ) : (
                                     <Image
                                         source={avatarIcon}
                                         style={styles.image}
                                     />
-                                }
+                                )}
                             </View>
                         </View>
                         {/* <Text style={styles.name}>{name}</Text> */}
@@ -191,12 +203,13 @@ class HeroMainScreen extends Component {
                                 />
                             </View>
                         </View>
-                    </View> :
+                    </View>
+                ) : (
                     <ActivityIndicator
                         size="large"
                         style={StyleSheet.absoluteFill}
                     />
-                }
+                )}
             </ScrollView>
         );
     }
@@ -297,4 +310,7 @@ const mapDispatchToProps = {
     dropdownAlert
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HeroMainScreen);

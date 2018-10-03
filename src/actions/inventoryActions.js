@@ -1,4 +1,4 @@
-import firebase from '../firebase';
+import { firebaseAuth, rtdb } from '../../firebase';
 import { dropdownAlert } from './uiActions';
 
 export const INVENTORY_REQUEST = 'inventory_request';
@@ -10,13 +10,14 @@ export const CONFIRM_INVENTORY_FAILURE = 'confirm_inventory_failure';
 export const ADD_TO_INVENTORY = 'add_to_inventory';
 export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
 
-export const fetchContractorInventory = (dispatch) => {
+export const fetchContractorInventory = dispatch => {
     dispatch({ type: INVENTORY_REQUEST });
-    const user = firebase.auth().currentUser;
+    const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : null;
-    const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
-    inventoryRef.once('value')
-        .then((snapshot) => {
+    const inventoryRef = rtdb.ref(`heroes/${uid}/inventory`);
+    inventoryRef
+        .once('value')
+        .then(snapshot => {
             const inventory = snapshot.val();
             if (inventory) {
                 console.log('inventory: ', inventory);
@@ -26,23 +27,27 @@ export const fetchContractorInventory = (dispatch) => {
                 dispatch({ type: INVENTORY_SUCCESS, payload: {} });
             }
         })
-        .catch((error) => {
+        .catch(error => {
             console.log('inventory error: ', error);
             dispatch({ type: INVENTORY_FAILURE, payload: error });
         });
 };
 
-export const confirmUpdateInventory = (newInventory) => dispatch => {
+export const confirmUpdateInventory = newInventory => dispatch => {
     dispatch({ type: CONFIRM_INVENTORY_REQUEST });
-    const user = firebase.auth().currentUser;
+    const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : null;
-    const inventoryRef = firebase.database().ref(`heroes/${uid}/inventory`);
-    inventoryRef.set(newInventory)
+    const inventoryRef = rtdb.ref(`heroes/${uid}/inventory`);
+    inventoryRef
+        .set(newInventory)
         .then(() => {
             dispatch(dropdownAlert(true, 'Successfully updated inventory'));
-            dispatch({ type: CONFIRM_INVENTORY_SUCCESS, payload: newInventory });
+            dispatch({
+                type: CONFIRM_INVENTORY_SUCCESS,
+                payload: newInventory
+            });
         })
-        .catch((error) => {
+        .catch(error => {
             dispatch({ type: CONFIRM_INVENTORY_FAILURE, payload: error });
         });
 };
