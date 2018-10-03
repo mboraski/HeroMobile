@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
-import { connect } from 'react-redux';
-import { reduxForm, SubmissionError } from 'redux-form';
-
 import {
-    signInWithEmailAndPassword,
-    signInWithFacebook
-} from '../actions/authActions';
-import Color from '../constants/Color';
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    ActivityIndicator
+} from 'react-native';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
+
+import { createUserWithEmailAndPassword } from '../actions/authActions';
+
+import { getUser } from '../selectors/authSelectors';
+
 import InlineLabelTextInputField from '../components/InlineLabelTextInputField';
-import LogoSpinner from '../components/LogoSpinner';
 import SuccessState from '../components/SuccessState';
+import Text from '../components/Text';
+
 import required from '../validation/required';
 import validEmail from '../validation/validEmail';
+import validPhoneNumber from '../validation/validPhoneNumber';
 import validPassword from '../validation/validPassword';
-import { emY } from '../utils/em';
-import { formatError } from '../utils/errors';
 
-class SignInForm extends Component {
+import Color from '../constants/Color';
+import { emY } from '../utils/em';
+
+class SignUpFormContainer extends Component {
     componentWillReceiveProps(nextProps) {
         this.onAuthComplete(nextProps);
     }
 
     onAuthComplete = props => {
-        if (props.user && !this.props.user) {
-            this.props.onAuthSuccess();
-        }
-    };
-
-    signInWithFacebook = () => {
-        this.props
-            .signInWithFacebook()
-            .catch(error => Alert.alert('Error', error.message));
+        props.checkContractorApproval();
     };
 
     render() {
-        // TODO: Show correctly login failure notice. Part of store.
         const {
-            anyTouched,
             pending,
             submitting,
             submitSucceeded,
@@ -50,13 +46,24 @@ class SignInForm extends Component {
         } = this.props;
         const disabled =
             pending || submitting || asyncValidating || invalid || pristine;
-        const submitText =
-            anyTouched && invalid
-                ? 'Please fix issues before continuing'
-                : 'Continue';
+        const submitText = 'Create Account';
         return (
             <View style={styles.container}>
                 <View style={styles.formInputs}>
+                    <InlineLabelTextInputField
+                        autoCapitalize={'words'}
+                        containerStyle={styles.fieldContainer}
+                        name="firstName"
+                        label="First Name"
+                        validate={[required]}
+                    />
+                    <InlineLabelTextInputField
+                        autoCapitalize={'words'}
+                        containerStyle={styles.fieldContainer}
+                        name="lastName"
+                        label="Last Name"
+                        validate={[required]}
+                    />
                     <InlineLabelTextInputField
                         autoCapitalize={'none'}
                         containerStyle={styles.fieldContainer}
@@ -66,6 +73,13 @@ class SignInForm extends Component {
                         validate={[required, validEmail]}
                     />
                     <InlineLabelTextInputField
+                        containerStyle={styles.fieldContainer}
+                        name="number"
+                        label="Phone Number"
+                        keyboardType="phone-pad"
+                        validate={[required, validPhoneNumber]}
+                    />
+                    <InlineLabelTextInputField
                         autoCapitalize={'none'}
                         containerStyle={styles.fieldContainer}
                         name="password"
@@ -73,61 +87,52 @@ class SignInForm extends Component {
                         secureTextEntry
                         validate={[required, validPassword]}
                     />
+                    <InlineLabelTextInputField
+                        autoCapitalize={'none'}
+                        containerStyle={styles.fieldContainer}
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        secureTextEntry
+                        validate={[required, validPassword]}
+                    />
                     {submitting ? (
-                        <LogoSpinner style={[StyleSheet.absoluteFill, styles.spinner]} />
+                        <ActivityIndicator
+                            size="large"
+                            color={Color.ORANGE_500}
+                        />
                     ) : null}
                     {submitSucceeded ? (
                         <SuccessState
-                            style={[StyleSheet.absoluteFill]}
+                            style={StyleSheet.absoluteFill}
                             onAnimationEnd={this.props.onAuthSuccess}
                         />
                     ) : null}
                 </View>
-                {error && (
-                    <Text style={styles.signUpError}>{formatError(error)}</Text>
-                )}
+                {error && <Text style={styles.signUpError}>{error}</Text>}
                 <TouchableOpacity
-                    onPress={handleSubmit}
+                    onPress={handleSubmit(createUserWithEmailAndPassword)}
                     style={[
                         styles.button,
                         styles.buttonMargin,
-                        !anyTouched && invalid && styles.buttonDisabled,
-                        anyTouched && invalid && styles.buttonInvalid
+                        invalid && styles.buttonDisabled
                     ]}
                     disabled={disabled}
                 >
                     <Text style={styles.buttonText}>{submitText}</Text>
                 </TouchableOpacity>
-                <Button
-                    onPress={this.signInWithFacebook}
-                    title="Log In with Facebook"
-                    icon={{
-                        type: 'material-community',
-                        name: 'facebook-box',
-                        color: '#fff',
-                        size: 25
-                    }}
-                    containerViewStyle={styles.buttonContainer}
-                    buttonStyle={styles.button}
-                    textStyle={styles.buttonText}
-                />
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    authState: {
-        paddingBottom: emY(2)
-    },
     container: {
         flex: 1,
         marginBottom: 15
     },
     formInputs: {
         paddingHorizontal: 15,
-        marginBottom: emY(2.0),
-        marginTop: emY(1.7)
+        paddingBottom: emY(1.5)
     },
     fieldContainer: {
         backgroundColor: '#fff'
@@ -147,6 +152,9 @@ const styles = StyleSheet.create({
     },
     buttonInvalid: {
         backgroundColor: Color.RED_500
+    },
+    buttonIcon: {
+        marginRight: 10
     },
     buttonText: {
         color: '#fff',
@@ -169,33 +177,28 @@ const styles = StyleSheet.create({
 });
 
 const formOptions = {
-    form: 'SignIn',
-    onSubmit(values, dispatch, props) {
-        return props.signInWithEmailAndPassword(values).catch(error => {
-            throw new SubmissionError({ _error: error.message });
-        });
-    },
-    onSubmitFail(errors, dispatch, submitError, props) {
-        console.log('onSubmitFail errors: ', errors);
-        console.log('onSubmitFail submitError: ', submitError);
-        console.log('onSubmitFail props: ', props);
+    form: 'SignUp',
+    validate(values) {
+        const errors = {};
+        if (values.password !== values.confirmPassword) {
+            errors.confirmPassword = 'Passwords must match';
+        } else if (
+            !values.firstName ||
+            !values.lastName ||
+            !values.email ||
+            !values.number ||
+            !values.password ||
+            !values.confirmPassword
+        ) {
+            errors.missingValues = 'Some form field values are missing';
+        }
+        return errors;
     }
 };
 
-const mapStateToProps = ({ auth }) => ({
-    user: auth.user,
-    initialValues: __DEV__
-        ? {
-              email: 'markb539@gmail.com'
-          }
-        : undefined
-});
+const mapStateToProps = state => ({ user: getUser(state) });
 
-const mapDispatchToProps = {
-    signInWithFacebook,
-    signInWithEmailAndPassword
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    reduxForm(formOptions)(SignInForm)
-);
+export default connect(
+    mapStateToProps,
+    {}
+)(reduxForm(formOptions)(SignUpFormContainer));

@@ -1,63 +1,65 @@
 import moment from 'moment';
 
 import {
-    LOGIN,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
-    SIGNUP,
+    AUTH_CHANGED,
+    SIGNUP_REQUEST,
     SIGNUP_SUCCESS,
     SIGNUP_FAIL,
-    SIGNOUT,
+    SIGNIN_REQUEST,
+    SIGNIN_SUCCESS,
+    SIGNIN_FAIL,
+    SIGNOUT_REQUEST,
     SIGNOUT_SUCCESS,
     SIGNOUT_FAIL,
-    AUTH_CHANGED,
-    // UPDATE_ACCOUNT,
-    // UPDATE_ACCOUNT_SUCCESS,
-    // UPDATE_ACCOUNT_FAIL,
-    LOGIN_FACEBOOK,
-    LOGIN_FACEBOOK_SUCCESS,
-    LOGIN_FACEBOOK_FAIL,
+    USER_READABLE_SUCCESS,
     CONTRACTOR_APPROVED,
     ONLINE,
     OFFLINE
 } from '../actions/authActions';
 
-export const initialState = {
+const initialState = {
     user: null,
-    approved: false,
+    userReadable: null,
     pending: false,
     error: null,
-    connectId: '',
+    expirationDate: null,
     online: false
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
+    const payload = action.payload;
+
     switch (action.type) {
-        case LOGIN:
-        case LOGIN_FACEBOOK:
-        case SIGNUP:
-        case SIGNOUT:
-            return { ...state, pending: true };
-        case LOGIN_SUCCESS:
-        case LOGIN_FACEBOOK_SUCCESS:
-        case SIGNUP_SUCCESS:
         case AUTH_CHANGED:
             return {
                 ...state,
-                user: action.payload,
-                expirationDate: action.payload
+                user: payload,
+                expirationDate: payload // Assumes firebase returns no payload if not authenticated
                     ? moment()
                           .add(1, 'months')
                           .toDate()
                     : null
             };
-        case LOGIN_FAIL:
-        case LOGIN_FACEBOOK_FAIL:
+        case SIGNUP_REQUEST:
+            return { ...state, pending: true };
+        case SIGNUP_SUCCESS:
+            return { ...state, userReadable: payload, pending: false };
         case SIGNUP_FAIL:
-        case SIGNOUT_FAIL:
-            return { ...state, error: action.error };
+            return { ...state, pending: false, error: payload };
+        case SIGNIN_REQUEST:
+            return { ...state, pending: true };
+        case SIGNIN_SUCCESS:
+            return { ...state, pending: false };
+        case SIGNIN_FAIL:
+            return { ...state, pending: false, error: payload };
+        case SIGNOUT_REQUEST:
+            return { ...state, pending: true };
         case SIGNOUT_SUCCESS:
             return initialState;
+        case SIGNOUT_FAIL:
+            return { ...state, error: payload, pending: false };
+        case USER_READABLE_SUCCESS:
+            return { ...state, userReadable: payload };
         case CONTRACTOR_APPROVED:
             return {
                 ...state,

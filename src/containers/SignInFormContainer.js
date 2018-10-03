@@ -1,38 +1,34 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
-import { signInWithFacebook, signUp } from '../actions/authActions';
+import { signInWithEmailAndPassword } from '../actions/authActions';
 import Color from '../constants/Color';
 import InlineLabelTextInputField from '../components/InlineLabelTextInputField';
 import LogoSpinner from '../components/LogoSpinner';
 import SuccessState from '../components/SuccessState';
+import Text from '../components/Text';
+import { getUser } from '../selectors/authSelectors';
 import required from '../validation/required';
 import validEmail from '../validation/validEmail';
-import validPhoneNumber from '../validation/validPhoneNumber';
 import validPassword from '../validation/validPassword';
 import { emY } from '../utils/em';
+import { formatError } from '../utils/errors';
 
-class SignUpForm extends Component {
+class SignInFormContainer extends Component {
     componentWillReceiveProps(nextProps) {
         this.onAuthComplete(nextProps);
     }
 
     onAuthComplete = props => {
         if (props.user && !this.props.user) {
-            this.props.onAuthSuccess();
+            this.props.navigation.navigate('map');
         }
     };
 
-    signInWithFacebook = () => {
-        this.props
-            .signInWithFacebook()
-            .catch(error => Alert.alert('Error', error.message));
-    };
-
     render() {
+        // TODO: Show correctly login failure notice. Part of store.
         const {
             anyTouched,
             pending,
@@ -44,23 +40,15 @@ class SignUpForm extends Component {
             error,
             handleSubmit
         } = this.props;
-        console.log('SignUpForm render error: ', error);
         const disabled =
             pending || submitting || asyncValidating || invalid || pristine;
         const submitText =
             anyTouched && invalid
-                ? 'Please fill out form with no errors or empty fields.'
-                : 'Create Account';
+                ? 'Please fix issues before continuing'
+                : 'Continue';
         return (
             <View style={styles.container}>
                 <View style={styles.formInputs}>
-                    <InlineLabelTextInputField
-                        autoCapitalize={'words'}
-                        containerStyle={styles.fieldContainer}
-                        name="name"
-                        label="Name"
-                        validate={[required]}
-                    />
                     <InlineLabelTextInputField
                         autoCapitalize={'none'}
                         containerStyle={styles.fieldContainer}
@@ -70,25 +58,10 @@ class SignUpForm extends Component {
                         validate={[required, validEmail]}
                     />
                     <InlineLabelTextInputField
-                        containerStyle={styles.fieldContainer}
-                        name="number"
-                        label="Phone Number"
-                        keyboardType="phone-pad"
-                        validate={[required, validPhoneNumber]}
-                    />
-                    <InlineLabelTextInputField
                         autoCapitalize={'none'}
                         containerStyle={styles.fieldContainer}
                         name="password"
                         label="Password"
-                        secureTextEntry
-                        validate={[required, validPassword]}
-                    />
-                    <InlineLabelTextInputField
-                        autoCapitalize={'none'}
-                        containerStyle={styles.fieldContainer}
-                        name="confirmPassword"
-                        label="Confirm Password"
                         secureTextEntry
                         validate={[required, validPassword]}
                     />
@@ -99,14 +72,16 @@ class SignUpForm extends Component {
                     ) : null}
                     {submitSucceeded ? (
                         <SuccessState
-                            style={StyleSheet.absoluteFill}
+                            style={[StyleSheet.absoluteFill]}
                             onAnimationEnd={this.props.onAuthSuccess}
                         />
                     ) : null}
                 </View>
-                {error && <Text style={styles.signUpError}>{error}</Text>}
+                {error && (
+                    <Text style={styles.signUpError}>{formatError(error)}</Text>
+                )}
                 <TouchableOpacity
-                    onPress={handleSubmit}
+                    onPress={handleSubmit(signInWithEmailAndPassword)}
                     style={[
                         styles.button,
                         styles.buttonMargin,
@@ -117,32 +92,28 @@ class SignUpForm extends Component {
                 >
                     <Text style={styles.buttonText}>{submitText}</Text>
                 </TouchableOpacity>
-                <Button
-                    onPress={this.signInWithFacebook}
-                    title="Sign Up with Facebook"
-                    icon={{
-                        type: 'material-community',
-                        name: 'facebook-box',
-                        color: '#fff',
-                        size: 25
-                    }}
-                    containerViewStyle={styles.buttonContainer}
-                    buttonStyle={styles.button}
-                    textStyle={styles.buttonText}
-                />
+                {/* <TextInput
+                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                    onChangeText={(promoCode) => this.setState({ promoCode })}
+                    value={this.state.promoCode}
+                /> */}
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    authState: {
+        paddingBottom: emY(2)
+    },
     container: {
         flex: 1,
         marginBottom: 15
     },
     formInputs: {
         paddingHorizontal: 15,
-        paddingBottom: emY(1.5)
+        marginBottom: emY(2.0),
+        marginTop: emY(1.7)
     },
     fieldContainer: {
         backgroundColor: '#fff'
@@ -162,9 +133,6 @@ const styles = StyleSheet.create({
     },
     buttonInvalid: {
         backgroundColor: Color.RED_500
-    },
-    buttonIcon: {
-        marginRight: 10
     },
     buttonText: {
         color: '#fff',
@@ -187,42 +155,21 @@ const styles = StyleSheet.create({
 });
 
 const formOptions = {
-    form: 'SignUp',
+    form: 'SignIn',
     validate(values) {
         const errors = {};
-        if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = 'Passwords must match';
-        } else if (
-            !values.name ||
-            !values.email ||
-            !values.number ||
-            !values.password ||
-            !values.confirmPassword
-        ) {
+        if (!values.email || !values.password) {
             errors.missingValues = 'Some form field values are missing';
         }
-        console.log('validate errors: ', errors);
         return errors;
-    },
-    onSubmit(values, dispatch, props) {
-        return props.signInWithEmailAndPassword(values).catch(error => {
-            throw new SubmissionError({ _error: error.message });
-        });
-    },
-    onSubmitFail(errors, dispatch, submitError, props) {
-        console.log('onSubmitFail errors: ', errors);
-        console.log('onSubmitFail submitError: ', submitError);
-        console.log('onSubmitFail props: ', props);
     }
 };
 
-const mapStateToProps = ({ auth }) => ({ user: auth.user });
+const mapStateToProps = state => ({
+    user: getUser(state)
+});
 
-const mapDispatchToProps = {
-    signInWithFacebook,
-    signUp
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    reduxForm(formOptions)(SignUpForm)
-);
+export default connect(
+    mapStateToProps,
+    {}
+)(reduxForm(formOptions)(SignInFormContainer));

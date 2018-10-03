@@ -1,19 +1,25 @@
+// Third Party Imports
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, NavigationActions } from 'react-navigation';
-import { bindActionCreators } from 'redux';
+// import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import moment from 'moment';
-import { Permissions, Notifications } from 'expo';
-import firebase from 'firebase';
+import { Permissions } from 'expo';
 
 // Relative Imports
 import MenuNavigator from '../navigations/MenuNavigator';
-// import CommunicationPopup from '../components/CommunicationPopup';
+import CommunicationPopup from '../components/CommunicationPopup';
 import DropdownAlert from '../components/DropdownAlert';
-import { authChanged, signOut } from '../actions/authActions';
+import { listenToAuthChanges, signOut } from '../actions/authActions';
 import { closeCustomerPopup, dropdownAlert } from '../actions/uiActions';
-import { reduxBoundAddListener } from '../store';
+import { unListenProductsRef } from '../actions/productActions';
+// import { reduxBoundAddListener } from '../store';
+
+// const initialValuesRef = firebase.database().ref('initialValues');
+//
+// const activeProductsRef = firebase
+//     .database()
+//     .ref('activeProducts/US/TX/Austin');
 
 class RootContainer extends Component {
     async componentWillMount() {
@@ -24,9 +30,7 @@ class RootContainer extends Component {
             this.props.signOut();
         }
 
-        firebase.auth().onAuthStateChanged(user => {
-            this.props.authChanged(user);
-        });
+        this.props.listenToAuthChanges();
 
         const { status: existingStatus } = await Permissions.getAsync(
             Permissions.NOTIFICATIONS
@@ -44,46 +48,36 @@ class RootContainer extends Component {
             finalStatus = status;
         }
 
-        // Stop here if the user did not grant permissions
-        if (finalStatus !== 'granted') {
-            return;
+        if (finalStatus === 'granted') {
+            // Get the token that uniquely identifies this device
+            // let token = await Notifications.getExpoPushTokenAsync();
+            // Handle notifications that are received or selected while the app
+            // is open. If the app was closed and then opened by tapping the
+            // notification (rather than just tapping the app icon to open it),
+            // this function will fire on the next tick after the app starts
+            // with the notification data.
+            // this.notificationSubscription = Notifications.addListener(
+            //     this.handleNotification
+            // );
         }
-
-        // Get the token that uniquely identifies this device
-        let token = await Notifications.getExpoPushTokenAsync();
-
-        // Handle notifications that are received or selected while the app
-        // is open. If the app was closed and then opened by tapping the
-        // notification (rather than just tapping the app icon to open it),
-        // this function will fire on the next tick after the app starts
-        // with the notification data.
-        this.notificationSubscription = Notifications.addListener(
-            this.handleNotification
-        );
-
-        // fetch if contractor is online
-        // fire appropriate actions
     }
 
-    componentWillUnmount() {
-        firebase
-            .database()
-            .ref('products/US/TX/Austin')
-            .off();
+    componentWillUnMount() {
+        this.props.unListenProductsRef();
     }
 
-    handleNotification = notification => {
-        if (notification.data) {
-            if (notification.data.type === 'feedback') {
-                this.props.dispatch(
-                    NavigationActions.navigate({
-                        routeName: 'notificationFeedback',
-                        params: notification.data
-                    })
-                );
-            }
-        }
-    };
+    // handleNotification = notification => {
+    //     if (notification.data) {
+    //         if (notification.data.type === 'feedback') {
+    //             this.props.dispatch(
+    //                 NavigationActions.navigate({
+    //                     routeName: 'notificationFeedback',
+    //                     params: notification.data
+    //                 })
+    //             );
+    //         }
+    //     }
+    // };
 
     handleCustomerPopupClose = () => {
         this.props.closeCustomerPopup();
@@ -95,22 +89,22 @@ class RootContainer extends Component {
 
     render() {
         const {
-            // customerPopupVisible,
+            customerPopupVisible,
             dropdownAlertVisible,
             dropdownAlertText
         } = this.props;
-        const navigation = addNavigationHelpers({
-            dispatch: this.props.dispatch,
-            state: this.props.nav,
-            addListener: reduxBoundAddListener
-        });
+        // const navigation = addNavigationHelpers({
+        //     dispatch,
+        //     state: nav
+        //     // addListener: reduxBoundAddListener
+        // });
         return (
             <View style={styles.container}>
-                <MenuNavigator navigation={navigation} />
-                {/* <CommunicationPopup
+                <MenuNavigator />
+                <CommunicationPopup
                     openModal={customerPopupVisible}
                     closeModal={this.handleCustomerPopupClose}
-                /> */}
+                />
                 <DropdownAlert
                     visible={dropdownAlertVisible}
                     text={dropdownAlertText}
@@ -130,25 +124,21 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
     user: state.auth.user,
     authExpirationDate: state.auth.expirationDate,
-    isOpened: state.isOpened,
     customerPopupVisible: state.ui.customerPopupVisible,
     dropdownAlertVisible: state.ui.dropdownAlertVisible,
     dropdownAlertText: state.ui.dropdownAlertText,
-    nav: state.nav,
-    online: state.auth.online
+    nav: state.nav
 });
 
-const mapDispatchToProps = dispatch => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            closeCustomerPopup,
-            dropdownAlert,
-            authChanged,
-            signOut
-        },
-        dispatch
-    )
-});
+const mapDispatchToProps = {
+    unListenProductsRef,
+    closeCustomerPopup,
+    dropdownAlert,
+    listenToAuthChanges,
+    signOut
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RootContainer);
