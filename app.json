@@ -3,14 +3,14 @@
         "name": "HeroMobile",
         "description": "Hasty Contractor Mobile App",
         "slug": "hero-mobile",
-        "privacy": "public",
-        "sdkVersion": "26.0.0",
+        "privacy": "private",
+        "sdkVersion": "30.0.0",
         "version": "0.1.0",
         "orientation": "portrait",
-        "primaryColor": "#f5a624",
+        "primaryColor": "#f5a623",
         "icon": "./src/assets/icons/HastyBlackIcon.png",
         "splash": {
-            "backgroundColor": "#f5a624",
+            "backgroundColor": "#f5a623",
             "resizeMode": "cover",
             "image": "./src/assets/splash.png"
         },

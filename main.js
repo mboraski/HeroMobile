@@ -53,7 +53,7 @@ class App extends Component {
 
 const styles = StyleSheet.create({
     splash: {
-        backgroundColor: Color.YELLOW_600
+        backgroundColor: Color.DEFAULT
     }
 });
 

@@ -1,4 +1,6 @@
 export default {
+    DEFAULT: '#F5A623',
+    ORANGE_DEFAULT: '#F5A623',
     BLUE_500: '#3aa2fc',
     GREY_100: '#F4F4F4', //0.05
     GREY_200: '#E4E4E4', //0.1
