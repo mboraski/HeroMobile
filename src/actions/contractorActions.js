@@ -44,15 +44,16 @@ export const fetchContractor = () => dispatch => {
 
 export const online = (region, dispatch) => {
     const user = firebaseAuth.currentUser;
-    const uid = user ? user.uid : null;
+    const uid = user.uid;
     const contractorRef = rtdb.ref(`contractors/${uid}`);
     return contractorRef
-        .set({ online: true, region })
+        .update({ online: true, region })
         .then(() => {
             dispatch({ type: ONLINE });
             dispatch(dropdownAlert(true, 'Successfully Online!'));
         })
         .catch(error => {
+            dispatch({ type: OFFLINE });
             logContractorError(uid, error);
             dispatch(dropdownAlert(true, 'Error setting Hero online status'));
         });
@@ -60,7 +61,7 @@ export const online = (region, dispatch) => {
 
 export const offline = () => dispatch => {
     const user = firebaseAuth.currentUser;
-    const uid = user ? user.uid : null;
+    const uid = user.uid;
     const contractorRef = rtdb.ref(`contractors/${uid}`);
     return contractorRef
         .child('online')
@@ -70,6 +71,7 @@ export const offline = () => dispatch => {
             dispatch(dropdownAlert(true, 'Successfully Offline!'));
         })
         .catch(error => {
+            dispatch({ type: ONLINE });
             logContractorError(uid, error);
             dispatch(dropdownAlert(true, 'Error setting Hero online status'));
         });

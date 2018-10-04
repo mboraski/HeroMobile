@@ -131,10 +131,9 @@ class HeroMainScreen extends Component {
                         {/* <Text style={styles.name}>{name}</Text> */}
                         {/* <Text style={styles.viewProfile}>View Profile</Text> */}
                         <ProfileSwitch
-                            online={getCurrentLocation}
+                            online={online}
                             region={region}
-                            getCurrentLocation={getCurrentLocation}
-                            goOnline={this.props.goOnline}
+                            goOnline={this.props.getCurrentLocation}
                             goOffline={this.props.goOffline}
                         />
                         {/* <View style={styles.statusContainer}>
