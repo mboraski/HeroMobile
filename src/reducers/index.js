@@ -9,5 +9,5 @@ export { default as product } from './productReducer';
 export { default as header } from './navigationReducer';
 export { default as notification } from './notificationReducer';
 // export { default as nav } from './navReducer';
-export { default as inventory } from './inventoryReducer';
+export { default as contractor } from './contractorReducer';
 export { default as orders } from './orderReducer';

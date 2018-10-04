@@ -1,6 +1,6 @@
 import { firebaseAuth, rtdb } from '../../firebase';
 import { dropdownAlert } from './uiActions';
-import { logContractorError, logCurrentInventoryError } from '../api/hasty';
+import { logContractorError } from '../api/hasty';
 
 export const FETCH_CONTRACTOR_REQUEST = 'inventory_request';
 export const FETCH_CONTRACTOR_SUCCESS = 'inventory_success';
@@ -42,218 +42,36 @@ export const fetchContractor = () => dispatch => {
         });
 };
 
-export const online = (contractorProducts, currentLocation) => dispatch => {
+export const online = (region, dispatch) => {
     const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : null;
-    const activeProductsRef = rtdb.ref('activeProducts/US/TX/Austin/instant');
-    return activeProductsRef
-        .once('value')
-        .then(snapshot => {
-            let result;
-            const currentProducts = snapshot.val();
-            if (!currentProducts) {
-                // set this new productList
-                result = activeProductsRef
-                    .set(contractorProducts)
-                    .then(() => {
-                        const activeHeroesRef = rtdb.ref(
-                            `activecontractors/US/TX/Austin/${uid}`
-                        );
-                        return activeHeroesRef
-                            .set({
-                                currentSetLatLon: {
-                                    lat: currentLocation.lat,
-                                    lon: currentLocation.lon
-                                },
-                                productList: contractorProducts
-                            })
-                            .then(() => {
-                                dispatch(
-                                    dropdownAlert(true, 'Successfully Online!')
-                                );
-                                dispatch({ type: ONLINE });
-                            })
-                            .catch(error => {
-                                logContractorError(uid, error);
-                                activeHeroesRef.remove();
-                                dispatch(
-                                    dropdownAlert(
-                                        true,
-                                        'Error setting Hero online status'
-                                    )
-                                );
-                                dispatch({ type: OFFLINE });
-                            });
-                    })
-                    .catch(error => {
-                        logContractorError(uid, error);
-                        dispatch(
-                            dropdownAlert(
-                                true,
-                                'Error adding Hero product availability'
-                            )
-                        );
-                        dispatch({ type: OFFLINE });
-                    });
-            } else {
-                // loop through current products and add products this hero has
-                const copyCurrentProducts = Object.assign({}, currentProducts);
-                const newProducts = _.reduce(
-                    contractorProducts,
-                    (accum, product) => {
-                        const cProduct =
-                            copyCurrentProducts[product.productName] || null;
-                        if (cProduct) {
-                            accum[cProduct.productName] = {
-                                quantity: cProduct.quantity + product.quantity,
-                                productName: cProduct.productName,
-                                imageUrl: cProduct.imageUrl,
-                                price: cProduct.price
-                            };
-                        } else {
-                            accum[product.productName] = product;
-                        }
-                        return accum;
-                    },
-                    copyCurrentProducts
-                );
-                // set this new productList
-                result = activeProductsRef
-                    .set(newProducts)
-                    .then(() => {
-                        const activeHeroesRef = rtdb.ref(
-                            `activecontractors/US/TX/Austin/${uid}`
-                        );
-                        return activeHeroesRef
-                            .set({
-                                currentSetLatLon: {
-                                    lat: currentLocation.lat,
-                                    lon: currentLocation.lon
-                                },
-                                productList: contractorProducts
-                            })
-                            .then(() => {
-                                dispatch(
-                                    dropdownAlert(true, 'Successfully Online!')
-                                );
-                                dispatch({ type: ONLINE });
-                            })
-                            .catch(error => {
-                                logContractorError(uid, error);
-                                activeHeroesRef.remove();
-                                dispatch(
-                                    dropdownAlert(
-                                        true,
-                                        'Error setting Hero online status'
-                                    )
-                                );
-                                dispatch({ type: OFFLINE });
-                            });
-                    })
-                    .catch(error => {
-                        logContractorError(uid, error);
-                        dispatch(
-                            dropdownAlert(
-                                true,
-                                'Error adding Hero product availability'
-                            )
-                        );
-                        dispatch({ type: OFFLINE });
-                    });
-            }
-            return result;
+    const contractorRef = rtdb.ref(`contractors/${uid}`);
+    return contractorRef
+        .set({ online: true, region })
+        .then(() => {
+            dispatch({ type: ONLINE });
+            dispatch(dropdownAlert(true, 'Successfully Online!'));
         })
         .catch(error => {
             logContractorError(uid, error);
-            console.log('error connecting to online db error: ', error);
-            dispatch(
-                dropdownAlert(true, 'Error connecting to online database')
-            );
-            dispatch({ type: OFFLINE });
+            dispatch(dropdownAlert(true, 'Error setting Hero online status'));
         });
 };
 
-export const offline = contractorProducts => dispatch => {
+export const offline = () => dispatch => {
     const user = firebaseAuth.currentUser;
-    const uid = user.uid;
-    const activeHeroesRef = rtdb.ref(`activecontractors/US/TX/Austin/${uid}`);
-    return activeHeroesRef
-        .remove()
+    const uid = user ? user.uid : null;
+    const contractorRef = rtdb.ref(`contractors/${uid}`);
+    return contractorRef
+        .child('online')
+        .set(false)
         .then(() => {
-            const activeProductsRef = rtdb.ref(
-                'activeProducts/US/TX/Austin/instant'
-            );
-            return activeProductsRef
-                .once('value')
-                .then(snapshot => {
-                    const currentProducts = snapshot.val();
-                    // loop through current products and add products this hero has
-                    const copyCurrentProducts = Object.assign(
-                        {},
-                        currentProducts
-                    );
-                    const newProducts = _.reduce(
-                        contractorProducts,
-                        (accum, product) => {
-                            const cProduct =
-                                copyCurrentProducts[product.productName] ||
-                                null;
-                            if (cProduct) {
-                                const quantity =
-                                    cProduct.quantity - product.quantity;
-                                if (quantity > 0) {
-                                    accum[cProduct.productName] = {
-                                        quantity,
-                                        productName: cProduct.productName,
-                                        imageUrl: cProduct.imageUrl,
-                                        price: cProduct.price
-                                    };
-                                } else {
-                                    accum[cProduct.productName] = null;
-                                }
-                            } else {
-                                accum[product.productName] = product;
-                            }
-                            return accum;
-                        },
-                        copyCurrentProducts
-                    );
-                    return activeProductsRef
-                        .set(newProducts)
-                        .then(() => {
-                            dispatch(
-                                dropdownAlert(true, 'Successfully Offline!')
-                            );
-                            dispatch({ type: OFFLINE });
-                        })
-                        .catch(error => {
-                            logContractorError(uid, error);
-                            logCurrentInventoryError(uid, error, newProducts);
-                            dispatch(
-                                dropdownAlert(
-                                    true,
-                                    'Offline, but error setting available products'
-                                )
-                            );
-                            dispatch({ type: OFFLINE });
-                        });
-                })
-                .catch(error => {
-                    logContractorError(uid, error);
-                    logCurrentInventoryError(uid, error, null);
-                    dispatch(
-                        dropdownAlert(
-                            true,
-                            'Offline, but error reading product availability'
-                        )
-                    );
-                    dispatch({ type: OFFLINE });
-                });
+            dispatch({ type: OFFLINE });
+            dispatch(dropdownAlert(true, 'Successfully Offline!'));
         })
         .catch(error => {
             logContractorError(uid, error);
-            dispatch(dropdownAlert(true, 'Error going offline'));
-            dispatch({ type: ONLINE });
+            dispatch(dropdownAlert(true, 'Error setting Hero online status'));
         });
 };
 

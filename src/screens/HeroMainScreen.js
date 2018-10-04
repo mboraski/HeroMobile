@@ -20,26 +20,30 @@ import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
 import avatarIcon from '../assets/icons/user.png';
-import { fetchProductsRequest } from '../actions/productActions';
 import { dropdownAlert } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
 import {
-    online as goOnline,
     offline as goOffline,
     fetchContractor
 } from '../actions/contractorActions';
+import { getCurrentLocation } from '../actions/mapActions';
 
 import {
     getOnline,
-    getRegion,
-    getPending
+    getPending,
+    getFirstName,
+    getLastName
 } from '../selectors/contractorSelectors';
+
+import { getCoords } from '../selectors/mapSelectors';
 
 // import CustomerPopup from '../components/CommunicationPopup';
 // import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 // import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
+import Text from '../components/Text';
+
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -92,28 +96,20 @@ class HeroMainScreen extends Component {
         }
     };
 
-    // openContactPopup = () => {
-    //     this.setState({ contactPopupVisible: true });
-    // };
-
-    // contactConfirmed = () => {
-    //     this.setState({ contactPopupVisible: false });
-    // };
-
     render() {
-        // const { contactPopupVisible } = this.state;
         const {
             online,
-            contractorProducts,
-            currentLocation,
             facebookInfo,
-            pending
+            pending,
+            firstName,
+            lastName,
+            region
         } = this.props;
 
         return (
-            <ScrollView style={styles.scrollContainer}>
+            <View style={styles.container}>
                 {!pending ? (
-                    <View style={styles.container}>
+                    <ScrollView style={styles.scrollContainer}>
                         <View style={styles.loader}>
                             <View style={styles.imageContainer}>
                                 {facebookInfo && facebookInfo.photoURL ? (
@@ -129,12 +125,15 @@ class HeroMainScreen extends Component {
                                 )}
                             </View>
                         </View>
+                        <Text style={styles.name}>
+                            {firstName} {lastName}
+                        </Text>
                         {/* <Text style={styles.name}>{name}</Text> */}
                         {/* <Text style={styles.viewProfile}>View Profile</Text> */}
                         <ProfileSwitch
-                            online={online}
-                            contractorProducts={contractorProducts}
-                            currentLocation={currentLocation}
+                            online={getCurrentLocation}
+                            region={region}
+                            getCurrentLocation={getCurrentLocation}
                             goOnline={this.props.goOnline}
                             goOffline={this.props.goOffline}
                         />
@@ -184,14 +183,17 @@ class HeroMainScreen extends Component {
                                 />
                             </View>
                         </View>
-                    </View>
+                    </ScrollView>
                 ) : (
-                    <ActivityIndicator
-                        size="large"
-                        style={StyleSheet.absoluteFill}
-                    />
+                    <View style={styles.overlay}>
+                        <ActivityIndicator
+                            animating={pending}
+                            size="large"
+                            color="#f5a623"
+                        />
+                    </View>
                 )}
-            </ScrollView>
+            </View>
         );
     }
 }
@@ -206,12 +208,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     loader: {
-        marginTop: 0,
+        flex: 1,
         height: emY(11),
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
-        marginBottom: emY(1)
+        flexDirection: 'row'
     },
     imageContainer: {
         flexDirection: 'row',
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
         color: Color.BLACK,
         fontSize: emY(1.25),
         textAlign: 'center',
-        marginBottom: emY(0.606)
+        marginBottom: emY(1)
     },
     viewProfile: {
         color: Color.BLACK,
@@ -270,24 +271,34 @@ const styles = StyleSheet.create({
         marginRight: emY(3.5),
         marginTop: emY(1.25),
         marginBottom: emY(1)
+    },
+    overlay: {
+        position: 'absolute',
+        zIndex: 100,
+        backgroundColor: 'rgba(52, 52, 52, 0.6)',
+        justifyContent: 'center',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0
     }
 });
 
 const mapStateToProps = state => ({
     // header: state.header,
     online: getOnline(state),
-    contractorProducts: getInventory(state),
-    currentLocation: getRegion(state),
-    pending: getPending(state)
+    pending: getPending(state),
+    firstName: getFirstName(state),
+    lastName: getLastName(state),
+    region: getCoords(state)
 });
 
 const mapDispatchToProps = {
-    goOnline,
     goOffline,
     fetchContractor,
     signOut,
-    fetchProductsRequest,
-    dropdownAlert
+    dropdownAlert,
+    getCurrentLocation
 };
 
 export default connect(

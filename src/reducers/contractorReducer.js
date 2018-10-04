@@ -18,8 +18,9 @@ export const initialState = {
     inventory: {},
     method: 'walk',
     online: false,
-    region: {},
     status: '',
+    firstName: '',
+    lastName: '',
     pending: false,
     error: null
 };
@@ -59,8 +60,9 @@ export default function(state = initialState, action) {
                 inventory: action.payload.inventory,
                 method: action.payload.method,
                 online: action.payload.online,
-                region: action.payload.region,
                 status: action.payload.status,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
                 pending: false
             };
         case FETCH_CONTRACTOR_ERROR:

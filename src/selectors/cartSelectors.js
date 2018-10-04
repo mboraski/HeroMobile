@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
 
-import { getInventory } from './inventorySelectors';
+import { getInventory } from './contractorSelectors';
 
 export const getCartProducts = state => state.cart.products;
 // export const getTaxRate = state => state.cart.localSalesTaxRate;
@@ -11,8 +11,7 @@ export const getCartProducts = state => state.cart.products;
 
 export const getCartInstantProducts = createSelector(
     [getCartProducts],
-    (products) =>
-        products.instant
+    products => products.instant
 );
 
 // export const getCartTotalQuantity = createSelector(
@@ -22,7 +21,7 @@ export const getCartInstantProducts = createSelector(
 // );
 export const getInventoryTotalQuantity = createSelector(
     [getInventory],
-    (products) =>
+    products =>
         _.reduce(products, (acc, product) => acc + product.quantityTaken, 0)
 );
 //
@@ -31,15 +30,17 @@ export const getInventoryTotalQuantity = createSelector(
 /**
  * Turns product map into 1D array with code and type and removes orders with 0 quantity
  */
-export const getCartOrders = createSelector(
-    [getInventory],
-    (inventory) =>
-        _.reduce(inventory, (accum, product) => {
+export const getCartOrders = createSelector([getInventory], inventory =>
+    _.reduce(
+        inventory,
+        (accum, product) => {
             if (product.quantityTaken > 0) {
                 accum[product.productName] = product;
             }
             return accum;
-        }, {})
+        },
+        {}
+    )
 );
 
 // export const getCartPureTotal = createSelector(
@@ -71,16 +72,21 @@ export const getUpdateInventory = createSelector(
     (instantProducts, inventory) => {
         console.log('getUpdateInventory instantProducts: ', instantProducts);
         console.log('getUpdateInventory getInventory: ', inventory);
-        const result = _.reduce(instantProducts, (accum, product) => {
+        const result = _.reduce(
+            instantProducts,
+            (accum, product) => {
                 const takenProduct = inventory[product.productName];
                 accum[product.productName] = product;
                 if (takenProduct) {
-                    accum[product.productName].quantityTaken = takenProduct.quantityTaken;
+                    accum[product.productName].quantityTaken =
+                        takenProduct.quantityTaken;
                     console.log('accum: ', accum);
                 }
                 return accum;
-            }, {});
-            console.log('result: ', result);
+            },
+            {}
+        );
+        console.log('result: ', result);
         return result;
     }
 );
