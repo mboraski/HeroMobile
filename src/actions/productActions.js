@@ -6,7 +6,7 @@ import { updateCart } from './cartActions';
 export const SELECT_CATEGORY = 'select_category';
 export const INVENTORY_REQUEST = 'inventory_request';
 export const INVENTORY_SUCCESS = 'inventory_success';
-export const INVENTORY_FAILURE = 'inventory_failure';
+export const INVENTORY_ERROR = 'INVENTORY_ERROR';
 export const FETCH_PRODUCTS_REQUEST = 'fetch_products_request';
 export const FETCH_PRODUCTS_SUCCESS = 'fetch_products_success';
 export const FETCH_PRODUCTS_FAILURE = 'fetch_products_failure';

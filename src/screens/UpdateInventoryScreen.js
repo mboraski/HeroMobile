@@ -25,7 +25,11 @@ import {
     getCartOrders,
     getInventoryTotalQuantity
 } from '../selectors/cartSelectors';
-import { confirmUpdateInventory, addToInventory, removeFromInventory } from '../actions/inventoryActions';
+import {
+    confirmUpdateInventory,
+    addToInventory,
+    removeFromInventory
+} from '../actions/contractorActions';
 import { dropdownAlert } from '../actions/uiActions';
 
 export class UpdateInventoryScreeen extends Component {
@@ -45,7 +49,10 @@ export class UpdateInventoryScreeen extends Component {
         if (this.props.itemCountUp) {
             this.props.dropdownAlert(true, 'More products available!');
         } else if (this.props.itemCountDown) {
-            this.props.dropdownAlert(true, 'Some products are no longer available');
+            this.props.dropdownAlert(
+                true,
+                'Some products are no longer available'
+            );
         }
     }
 
@@ -53,7 +60,10 @@ export class UpdateInventoryScreeen extends Component {
         if (!this.props.itemCountUp && nextProps.itemCountUp) {
             this.props.dropdownAlert(true, 'More products available!');
         } else if (!this.props.itemCountDown && nextProps.itemCountDown) {
-            this.props.dropdownAlert(true, 'Some products are no longer available');
+            this.props.dropdownAlert(
+                true,
+                'Some products are no longer available'
+            );
         } else {
             this.props.dropdownAlert(false, '');
         }
@@ -61,26 +71,32 @@ export class UpdateInventoryScreeen extends Component {
 
     confirmUpdate = () => {
         this.props.confirmUpdateInventory(this.props.cartOrders);
-    }
+    };
 
-    handleAddOrder = (product) => {
+    handleAddOrder = product => {
         console.log('handleAddOrder: ', product);
         this.props.addToInventory(product);
-    }
+    };
 
-    handleRemoveOrder = (product) => {
+    handleRemoveOrder = product => {
         this.props.removeFromInventory(product);
-    }
+    };
 
     render() {
-        const { updateInventory, pending, orderImages, inventoryTotalQuantity } = this.props;
+        const {
+            updateInventory,
+            pending,
+            orderImages,
+            inventoryTotalQuantity
+        } = this.props;
         return (
             <View style={styles.container}>
-                {pending ?
+                {pending ? (
                     <ActivityIndicator
                         size="large"
                         style={StyleSheet.absoluteFill}
-                    /> :
+                    />
+                ) : (
                     <ScrollView style={styles.scrollContainer}>
                         <View style={styles.container}>
                             <OrderList
@@ -92,8 +108,12 @@ export class UpdateInventoryScreeen extends Component {
                         </View>
                         <View style={styles.cart}>
                             <View style={styles.meta}>
-                                <Text style={styles.label}>Total Quantity:</Text>
-                                <Text style={styles.cost}>{inventoryTotalQuantity}</Text>
+                                <Text style={styles.label}>
+                                    Total Quantity:
+                                </Text>
+                                <Text style={styles.cost}>
+                                    {inventoryTotalQuantity}
+                                </Text>
                             </View>
                             <Button
                                 onPress={this.confirmUpdate}
@@ -104,7 +124,7 @@ export class UpdateInventoryScreeen extends Component {
                             />
                         </View>
                     </ScrollView>
-                }
+                )}
             </View>
         );
     }
@@ -214,4 +234,7 @@ const mapDispatchToProps = {
     dropdownAlert
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateInventoryScreeen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UpdateInventoryScreeen);

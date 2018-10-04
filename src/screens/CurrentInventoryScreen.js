@@ -4,7 +4,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import { fetchContractorInventory } from '../actions/inventoryActions';
+import { fetchContractorInventory } from '../actions/contractorActions';
 import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
 import OrderList from '../components/OrderList';
@@ -101,7 +101,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    fetchContractorInventory: () => (dispatch) => fetchContractorInventory(dispatch)
+    fetchContractorInventory: () => dispatch =>
+        fetchContractorInventory(dispatch)
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentInventoryScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CurrentInventoryScreen);

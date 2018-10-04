@@ -12,9 +12,7 @@ import {
     SIGNOUT_SUCCESS,
     SIGNOUT_FAIL,
     USER_READABLE_SUCCESS,
-    CONTRACTOR_APPROVED,
-    ONLINE,
-    OFFLINE
+    CONTRACTOR_APPROVED
 } from '../actions/authActions';
 
 const initialState = {
@@ -22,8 +20,7 @@ const initialState = {
     userReadable: null,
     pending: false,
     error: null,
-    expirationDate: null,
-    online: false
+    expirationDate: null
 };
 
 export default function(state = initialState, action) {
@@ -66,16 +63,6 @@ export default function(state = initialState, action) {
                 // connectId: action.payload,
                 approved: true,
                 pending: false
-            };
-        case ONLINE:
-            return {
-                ...state,
-                online: true
-            };
-        case OFFLINE:
-            return {
-                ...state,
-                online: false
             };
         default:
             return state;

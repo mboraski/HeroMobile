@@ -25,13 +25,13 @@ import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
 class SignUpFormContainer extends Component {
-    componentWillReceiveProps(nextProps) {
-        this.onAuthComplete(nextProps);
-    }
-
-    onAuthComplete = props => {
-        props.checkContractorApproval();
-    };
+    // componentWillReceiveProps(nextProps) {
+    //     this.onAuthComplete(nextProps);
+    // }
+    //
+    // onAuthComplete = props => {
+    //     props.checkContractorApproval();
+    // };
 
     render() {
         const {
@@ -198,7 +198,9 @@ const formOptions = {
 
 const mapStateToProps = state => ({ user: getUser(state) });
 
+const mapDispatchToProps = {};
+
 export default connect(
     mapStateToProps,
-    {}
+    mapDispatchToProps
 )(reduxForm(formOptions)(SignUpFormContainer));

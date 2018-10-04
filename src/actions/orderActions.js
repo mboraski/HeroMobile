@@ -23,7 +23,7 @@ export const fishOrdersRequest = () => dispatch => {
     const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : null;
     const activeHeroRef = rtdb.ref(
-        `activeHeroes/US/TX/Austin/${uid}/potentialOrders`
+        `activecontractors/US/TX/Austin/${uid}/potentialOrders`
     );
     activeHeroRef.on('value', snapshot => {
         const potentialOrders = snapshot.val();

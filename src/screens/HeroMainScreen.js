@@ -10,8 +10,6 @@ import {
 import { connect } from 'react-redux';
 
 // Relative Imports
-import { rtdb } from '../../firebase';
-import { Text } from '../components/Text';
 // import loaderGradient from '../assets/loader-gradient.png';
 // import loaderTicks from '../assets/loader-ticks.png';
 // import races from '../assets/icons/races.png';
@@ -22,15 +20,20 @@ import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
 import avatarIcon from '../assets/icons/user.png';
-import { getFacebookInfo } from '../selectors/authSelectors';
 import { fetchProductsRequest } from '../actions/productActions';
 import { dropdownAlert } from '../actions/uiActions';
+import { signOut } from '../actions/authActions';
 import {
     online as goOnline,
     offline as goOffline,
-    getUserOnlineStatus,
-    signOut
-} from '../actions/authActions';
+    fetchContractor
+} from '../actions/contractorActions';
+
+import {
+    getOnline,
+    getRegion,
+    getPending
+} from '../selectors/contractorSelectors';
 
 // import CustomerPopup from '../components/CommunicationPopup';
 // import MenuButton from '../components/MenuButton';
@@ -57,31 +60,13 @@ class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (this.props.header.toggleState !== nextProps.header.toggleState) {
-    //         if (nextProps.header.isMenuOpen) {
-    //             this.props.navigation.navigate('DrawerOpen');
-    //         } else {
-    //             this.props.navigation.navigate('DrawerClose');
-    //         }
-    //     }
-    // }
-
     componentDidMount() {
-        this.props.getUserOnlineStatus();
-        this.props.fetchProductsRequest();
+        this.props.fetchContractor();
     }
-
-    componentWillUnmount() {
-        rtdb.ref('products/US/TX/Austin').off();
-    }
-
-    // goToPaymentInfo = () => {
-    //     this.props.navigation.navigate('paymentInfo');
-    // };
 
     signOut = () => {
-        this.props.signOut();
+        // TODO: needs to take user offline first
+        // this.props.signOut();
     };
 
     currentInventory = () => {
@@ -103,10 +88,7 @@ class HeroMainScreen extends Component {
         if (this.props.online) {
             this.props.navigation.navigate('deliveryStatus');
         } else {
-            this.props.dropdownAlert(
-                true,
-                'Go online before editing inventory'
-            );
+            this.props.dropdownAlert(true, 'Must be online');
         }
     };
 
@@ -127,7 +109,6 @@ class HeroMainScreen extends Component {
             facebookInfo,
             pending
         } = this.props;
-        console.log('facebookInfo: ', facebookInfo);
 
         return (
             <ScrollView style={styles.scrollContainer}>
@@ -181,7 +162,7 @@ class HeroMainScreen extends Component {
                             <View>
                                 <MainItem
                                     image={inventory}
-                                    title="Current Inventory"
+                                    title="View Inventory"
                                     onPress={this.currentInventory}
                                 />
                                 <MainItem
@@ -294,17 +275,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     // header: state.header,
-    online: state.auth.online,
-    contractorProducts: state.inventory.inventory,
-    currentLocation: { lat: 43.23223, lon: -97.293023 },
-    facebookInfo: getFacebookInfo(state),
-    pending: state.inventory.pending
+    online: getOnline(state),
+    contractorProducts: getInventory(state),
+    currentLocation: getRegion(state),
+    pending: getPending(state)
 });
 
 const mapDispatchToProps = {
     goOnline,
     goOffline,
-    getUserOnlineStatus,
+    fetchContractor,
     signOut,
     fetchProductsRequest,
     dropdownAlert
