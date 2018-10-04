@@ -191,4 +191,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = { openCustomerPopup, signOut };
 
-export default connect(null, mapDispatchToProps)(MenuContent);
+export default connect(
+    null,
+    mapDispatchToProps
+)(MenuContent);

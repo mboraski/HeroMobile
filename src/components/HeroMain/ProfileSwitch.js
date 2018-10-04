@@ -7,7 +7,6 @@ import {
     Text,
     View
 } from 'react-native';
-import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../../utils/em';
@@ -24,13 +23,13 @@ class ProfileSwitch extends Component {
 
     componentWillMount() {
         if (this.props.online) {
-            LayoutAnimation.spring()
+            LayoutAnimation.spring();
             this.setState({
                 leftVal: WIDTH / 2,
                 text: 'Online'
             });
         } else {
-            LayoutAnimation.spring()
+            LayoutAnimation.spring();
             this.setState({
                 leftVal: 0,
                 text: 'Offline'
@@ -41,13 +40,13 @@ class ProfileSwitch extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.online !== nextProps.online) {
             if (nextProps.online) {
-                LayoutAnimation.spring()
+                LayoutAnimation.spring();
                 this.setState({
                     leftVal: WIDTH / 2,
                     text: 'Online'
                 });
             } else {
-                LayoutAnimation.spring()
+                LayoutAnimation.spring();
                 this.setState({
                     leftVal: 0,
                     text: 'Offline'
@@ -57,33 +56,27 @@ class ProfileSwitch extends Component {
     }
 
     goOnline = () => {
-        const {
-            goOnline,
-            contractorProducts,
-            currentLocation
-        } = this.props;
-        console.log('contractorProducts: ', contractorProducts);
-        goOnline(contractorProducts, currentLocation);
-    }
-
-    goOffline = () => {
-        const {
-            goOffline,
-            contractorProducts
-        } = this.props;
-        goOffline(contractorProducts);
-    }
+        const { goOnline, region } = this.props;
+        return goOnline(region);
+    };
 
     render() {
         const { leftVal, text } = this.state;
+        const { goOffline } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={styles.labelContainer}>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOffline} >
+                    <TouchableOpacity
+                        style={styles.leftContainer}
+                        onPress={goOffline}
+                    >
                         <Text style={styles.label}>Offline</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.leftContainer} onPress={this.goOnline} >
+                    <TouchableOpacity
+                        style={styles.leftContainer}
+                        onPress={this.goOnline}
+                    >
                         <Text style={styles.label}>Online</Text>
                     </TouchableOpacity>
                     <View style={[styles.switcher, { left: leftVal }]}>
@@ -98,7 +91,7 @@ class ProfileSwitch extends Component {
 const styles = StyleSheet.create({
     container: {
         height: HEIGHT,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     labelContainer: {
         flex: 1,
@@ -110,7 +103,7 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         flex: 1,
-        width: WIDTH / 2,
+        width: WIDTH / 2
     },
     label: {
         fontSize: emY(1),
@@ -136,8 +129,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
-
-export default connect(null, mapDispatchToProps)(ProfileSwitch);
+export default ProfileSwitch;

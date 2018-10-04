@@ -1,5 +1,6 @@
 // Third Party Imports
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
+import { Platform } from 'react-native';
 
 // Relative Imports
 // import ApiTester from '../screens/ApiTester';
@@ -23,8 +24,9 @@ import FeedbackScreen from '../screens/FeedbackScreen';
 import PromotionShareScreen from '../screens/PromotionShareScreen';
 import NotificationFeedbackScreen from '../screens/NotificationFeedbackScreen';
 
+const getHeaderMode = () => (Platform.OS === 'ios' ? 'float' : 'screen');
 
-const MainNavigator = StackNavigator(
+export default createStackNavigator(
     {
         // apiTester: { screen: ApiTester },
         auth: { screen: AuthScreen },
@@ -48,11 +50,10 @@ const MainNavigator = StackNavigator(
         notificationFeedback: { screen: NotificationFeedbackScreen }
     },
     {
+        initialRouteName: 'auth',
         navigationOptions: {
             tabBarVisible: false
         },
-        lazy: true
+        headerMode: getHeaderMode()
     }
 );
-
-export default MainNavigator;

@@ -1,51 +1,58 @@
 import { Location, Permissions } from 'expo';
 
-import { geocode, reverseGeocode } from './googleMapsActions';
-import Dimensions from '../constants/Dimensions';
+import { dropdownAlert } from './uiActions';
+import { online, OFFLINE } from './contractorActions';
 
-const ASPECT_RATIO = Dimensions.window.width / Dimensions.window.height;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+// TODO: remove. This is temp for dev
+const LATITUDE = 30.2666247;
+const LONGITUDE = -97.7405174;
 
-export const SAVE_ADDRESS = 'save_address';
-export const SET_REGION = 'set_region';
-export const SET_CURRENT_LOCATION = 'set_current_location';
 export const GET_CURRENT_LOCATION_REQUEST = 'get_current_location_request';
 export const GET_CURRENT_LOCATION_SUCCESS = 'get_current_location_success';
 export const GET_CURRENT_LOCATION_ERROR = 'get_current_location_error';
+export const ADD_LOCATION_SUBSCRIPTION = 'add_location_subscription';
+export const REMOVE_LOCATION_SUBSCRIPTION = 'remove_location_subscription';
 
-export const saveAddress = address => dispatch => {
-    dispatch({ type: SAVE_ADDRESS, payload: address });
-    return dispatch(geocode({ address }));
-};
-export const setRegion = region => dispatch => {
-    dispatch({ type: SET_REGION, payload: region });
-    return dispatch(reverseGeocode({ latlng: `${region.latitude},${region.longitude}` }));
-};
-
-export const getCurrentLocation = () => async dispatch => {
-    dispatch({ type: GET_CURRENT_LOCATION_REQUEST });
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-        dispatch({
-            type: GET_CURRENT_LOCATION_ERROR,
-            error: 'Permission to access location was denied'
-        });
-    }
-    const location = await Location.getCurrentPositionAsync({});
-    dispatch(
-        setRegion({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA
-        })
-    );
-    dispatch({ type: GET_CURRENT_LOCATION_SUCCESS });
-    return {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
-    };
+export const getCurrentLocation = region => async dispatch => {
+    // TODO: remove. This is temp for dev
+    return online({ latitude: LATITUDE, longitude: LONGITUDE }, dispatch);
+    // try {
+    //     dispatch({ type: GET_CURRENT_LOCATION_REQUEST });
+    //     const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    //     if (status !== 'granted') {
+    //         dispatch({ type: OFFLINE });
+    //         dispatch(
+    //             dropdownAlert(true, 'Permission to access location was denied')
+    //         );
+    //         throw new Error('Permission to access location was denied');
+    //     } else {
+    //         const locationServices = await Location.getProviderStatusAsync();
+    //         if (!locationServices.locationServicesEnabled) {
+    //             dispatch({ type: OFFLINE });
+    //             dispatch(
+    //                 dropdownAlert(true, 'Location services need to be enabled')
+    //             );
+    //             throw new Error('Location services need to be enabled');
+    //         }
+    //         const location = await Location.getCurrentPositionAsync({
+    //             enableHighAccuracy: true,
+    //             maximumAge: 10000
+    //         });
+    //         // listenForLocationChanges(dispatch); // TODO: add back in
+    //         dispatch({
+    //             type: GET_CURRENT_LOCATION_SUCCESS,
+    //             payload: {
+    //                 timestamp: location.timestamp,
+    //                 coords: location.coords
+    //             }
+    //         });
+    //         online(region, dispatch);
+    //     }
+    // } catch (error) {
+    //     dispatch({
+    //         type: GET_CURRENT_LOCATION_ERROR,
+    //         error
+    //     });
+    //     dispatch({ type: OFFLINE });
+    // }
 };

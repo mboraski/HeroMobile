@@ -3,7 +3,7 @@ import {
     FETCH_PRODUCTS_REQUEST,
     FETCH_PRODUCTS_SUCCESS,
     FETCH_PRODUCTS_FAILURE,
-    SET_IMAGE,
+    SET_IMAGE
 } from '../actions/productActions';
 
 export const initialState = {
@@ -13,11 +13,10 @@ export const initialState = {
         instant: {}
     },
     category: 'SXSW',
-    // products: {},
     productImages: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
     switch (action.type) {
         case FETCH_PRODUCTS_REQUEST:
             return {
@@ -29,13 +28,13 @@ export default function (state = initialState, action) {
                 ...state,
                 availableProducts: action.payload,
                 error: null,
-                pending: false,
+                pending: false
             };
         case FETCH_PRODUCTS_FAILURE:
             return {
                 ...state,
                 error: action.payload,
-                pending: false,
+                pending: false
             };
         case SELECT_CATEGORY:
             return {
@@ -44,7 +43,9 @@ export default function (state = initialState, action) {
             };
         case SET_IMAGE: {
             const { productName = '', url = '' } = action.payload;
-            const productImages = Object.assign({}, state.productImages, { [productName]: url });
+            const productImages = Object.assign({}, state.productImages, {
+                [productName]: url
+            });
             return {
                 ...state,
                 productImages

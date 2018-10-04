@@ -1,11 +1,15 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Image, ActivityIndicator } from 'react-native';
+import {
+    StyleSheet,
+    ScrollView,
+    View,
+    Image,
+    ActivityIndicator
+} from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import firebase from '../firebase';
-import { Text } from '../components/Text';
 // import loaderGradient from '../assets/loader-gradient.png';
 // import loaderTicks from '../assets/loader-ticks.png';
 // import races from '../assets/icons/races.png';
@@ -16,21 +20,30 @@ import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
 import avatarIcon from '../assets/icons/user.png';
-import { getFacebookInfo } from '../selectors/authSelectors';
-import { fetchProductsRequest } from '../actions/productActions';
 import { dropdownAlert } from '../actions/uiActions';
+import { signOut } from '../actions/authActions';
 import {
-    online as goOnline,
     offline as goOffline,
-    getUserOnlineStatus,
-    signOut
-} from '../actions/authActions';
+    fetchContractor
+} from '../actions/contractorActions';
+import { getCurrentLocation } from '../actions/mapActions';
+
+import {
+    getOnline,
+    getPending,
+    getFirstName,
+    getLastName
+} from '../selectors/contractorSelectors';
+
+import { getCoords } from '../selectors/mapSelectors';
 
 // import CustomerPopup from '../components/CommunicationPopup';
 // import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
 // import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
+import Text from '../components/Text';
+
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -51,31 +64,13 @@ class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (this.props.header.toggleState !== nextProps.header.toggleState) {
-    //         if (nextProps.header.isMenuOpen) {
-    //             this.props.navigation.navigate('DrawerOpen');
-    //         } else {
-    //             this.props.navigation.navigate('DrawerClose');
-    //         }
-    //     }
-    // }
-
     componentDidMount() {
-        this.props.getUserOnlineStatus();
-        this.props.fetchProductsRequest();
+        this.props.fetchContractor();
     }
-
-    componentWillUnmount() {
-        firebase.database().ref('products/US/TX/Austin').off();
-    }
-
-    // goToPaymentInfo = () => {
-    //     this.props.navigation.navigate('paymentInfo');
-    // };
 
     signOut = () => {
-        this.props.signOut();
+        // TODO: needs to take user offline first
+        // this.props.signOut();
     };
 
     currentInventory = () => {
@@ -86,7 +81,10 @@ class HeroMainScreen extends Component {
         if (!this.props.online) {
             this.props.navigation.navigate('updateInventory');
         } else {
-            this.props.dropdownAlert(true, 'Go offline before editing inventory');
+            this.props.dropdownAlert(
+                true,
+                'Go offline before editing inventory'
+            );
         }
     };
 
@@ -94,33 +92,24 @@ class HeroMainScreen extends Component {
         if (this.props.online) {
             this.props.navigation.navigate('deliveryStatus');
         } else {
-            this.props.dropdownAlert(true, 'Go online before editing inventory');
+            this.props.dropdownAlert(true, 'Must be online');
         }
     };
 
-    // openContactPopup = () => {
-    //     this.setState({ contactPopupVisible: true });
-    // };
-
-    // contactConfirmed = () => {
-    //     this.setState({ contactPopupVisible: false });
-    // };
-
     render() {
-        // const { contactPopupVisible } = this.state;
         const {
             online,
-            contractorProducts,
-            currentLocation,
             facebookInfo,
-            pending
+            pending,
+            firstName,
+            lastName,
+            region
         } = this.props;
-        console.log('facebookInfo: ', facebookInfo);
 
         return (
-            <ScrollView style={styles.scrollContainer}>
-                {!pending ?
-                    <View style={styles.container}>
+            <View style={styles.container}>
+                {!pending ? (
+                    <ScrollView style={styles.scrollContainer}>
                         <View style={styles.loader}>
                             <View style={styles.imageContainer}>
                                 {facebookInfo && facebookInfo.photoURL ? (
@@ -128,21 +117,23 @@ class HeroMainScreen extends Component {
                                         source={{ uri: facebookInfo.photoURL }}
                                         style={styles.image}
                                     />
-                                ) :
+                                ) : (
                                     <Image
                                         source={avatarIcon}
                                         style={styles.image}
                                     />
-                                }
+                                )}
                             </View>
                         </View>
+                        <Text style={styles.name}>
+                            {firstName} {lastName}
+                        </Text>
                         {/* <Text style={styles.name}>{name}</Text> */}
                         {/* <Text style={styles.viewProfile}>View Profile</Text> */}
                         <ProfileSwitch
                             online={online}
-                            contractorProducts={contractorProducts}
-                            currentLocation={currentLocation}
-                            goOnline={this.props.goOnline}
+                            region={region}
+                            goOnline={this.props.getCurrentLocation}
                             goOffline={this.props.goOffline}
                         />
                         {/* <View style={styles.statusContainer}>
@@ -169,7 +160,7 @@ class HeroMainScreen extends Component {
                             <View>
                                 <MainItem
                                     image={inventory}
-                                    title="Current Inventory"
+                                    title="View Inventory"
                                     onPress={this.currentInventory}
                                 />
                                 <MainItem
@@ -191,13 +182,17 @@ class HeroMainScreen extends Component {
                                 />
                             </View>
                         </View>
-                    </View> :
-                    <ActivityIndicator
-                        size="large"
-                        style={StyleSheet.absoluteFill}
-                    />
-                }
-            </ScrollView>
+                    </ScrollView>
+                ) : (
+                    <View style={styles.overlay}>
+                        <ActivityIndicator
+                            animating={pending}
+                            size="large"
+                            color="#f5a623"
+                        />
+                    </View>
+                )}
+            </View>
         );
     }
 }
@@ -212,12 +207,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     loader: {
-        marginTop: 0,
+        flex: 1,
         height: emY(11),
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
-        marginBottom: emY(1)
+        flexDirection: 'row'
     },
     imageContainer: {
         flexDirection: 'row',
@@ -252,7 +246,7 @@ const styles = StyleSheet.create({
         color: Color.BLACK,
         fontSize: emY(1.25),
         textAlign: 'center',
-        marginBottom: emY(0.606)
+        marginBottom: emY(1)
     },
     viewProfile: {
         color: Color.BLACK,
@@ -276,25 +270,37 @@ const styles = StyleSheet.create({
         marginRight: emY(3.5),
         marginTop: emY(1.25),
         marginBottom: emY(1)
+    },
+    overlay: {
+        position: 'absolute',
+        zIndex: 100,
+        backgroundColor: 'rgba(52, 52, 52, 0.6)',
+        justifyContent: 'center',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0
     }
 });
 
 const mapStateToProps = state => ({
     // header: state.header,
-    online: state.auth.online,
-    contractorProducts: state.inventory.inventory,
-    currentLocation: { lat: 43.23223, lon: -97.293023 },
-    facebookInfo: getFacebookInfo(state),
-    pending: state.inventory.pending
+    online: getOnline(state),
+    pending: getPending(state),
+    firstName: getFirstName(state),
+    lastName: getLastName(state),
+    region: getCoords(state)
 });
 
 const mapDispatchToProps = {
-    goOnline,
     goOffline,
-    getUserOnlineStatus,
+    fetchContractor,
     signOut,
-    fetchProductsRequest,
-    dropdownAlert
+    dropdownAlert,
+    getCurrentLocation
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeroMainScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HeroMainScreen);

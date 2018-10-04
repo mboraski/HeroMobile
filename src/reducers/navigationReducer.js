@@ -5,10 +5,10 @@ import {
 
 const initialState = {
     isMenuOpen: false,
-    toggleState: false,
+    toggleState: false
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
     switch (action.type) {
         case TOGGLE_MENU_OPEN:
             return {
@@ -20,7 +20,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isMenuOpen: false,
-                toggleState: !state.toggleState,
+                toggleState: !state.toggleState
             };
         default:
             return state;

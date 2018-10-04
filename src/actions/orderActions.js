@@ -1,4 +1,4 @@
-import firebase from '../firebase';
+import { rtdb, firebaseAuth } from '../../firebase';
 import orderStatuses from '../constants/Order';
 
 import { distanceMatrix } from './googleMapsActions';
@@ -20,10 +20,12 @@ export const COMPLETE_ORDER_FAILURE = 'accept_order_failure';
 
 export const fishOrdersRequest = () => dispatch => {
     dispatch({ type: FISH_ORDERS_REQUEST });
-    const user = firebase.auth().currentUser;
+    const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : null;
-    const activeHeroRef = firebase.database().ref(`activeHeroes/US/TX/Austin/${uid}/potentialOrders`);
-    activeHeroRef.on('value', (snapshot) => {
+    const activeHeroRef = rtdb.ref(
+        `activecontractors/US/TX/Austin/${uid}/potentialOrders`
+    );
+    activeHeroRef.on('value', snapshot => {
         const potentialOrders = snapshot.val();
         dispatch({
             type: FISH_ORDERS_SUCCESS,
@@ -32,7 +34,12 @@ export const fishOrdersRequest = () => dispatch => {
     });
 };
 
-export const acceptRequest = (order, productsSatisfied, hero, region) => async dispatch => {
+export const acceptRequest = (
+    order,
+    productsSatisfied,
+    hero,
+    region
+) => async dispatch => {
     console.log('orderId: ', order.orderId);
     console.log('productsSatisfied: ', productsSatisfied);
     console.log('hero: ', hero);
@@ -43,7 +50,9 @@ export const acceptRequest = (order, productsSatisfied, hero, region) => async d
         dropdownAlert(true, 'Could not get current location');
     } else {
         // determine delivery distance
-        const origins = `${currentLocation.latitude}, ${currentLocation.longitude}`;
+        const origins = `${currentLocation.latitude}, ${
+            currentLocation.longitude
+        }`;
         const destinations = `${region.latitude},${region.longitude}`;
         const result = await distanceMatrix({
             units: 'imperial',
@@ -52,56 +61,65 @@ export const acceptRequest = (order, productsSatisfied, hero, region) => async d
         });
         if (result.rows[0].elements[0].duration.value > 60 * 30) {
             dropdownAlert(true, 'You are too far away');
-            dispatch({ type: ACCEPT_ORDER_FAILURE, payload: 'You are too far away' });
+            dispatch({
+                type: ACCEPT_ORDER_FAILURE,
+                payload: 'You are too far away'
+            });
         } else {
             dropdownAlert(false, '');
             // create link to google maps
-            hero.deliveryTime = (result.rows[0].elements[0].duration.value / 60);
-            const orderRef = firebase.database().ref(`orders/US/TX/Austin/${order.orderId}`);
-            orderRef.set({
-                productsSatisfied,
-                hero,
-                status: orderStatuses.accepted
-            })
-            .then(() => {
-                const successPayload = {
-                    link: `https://www.google.com/maps/dir/?api=1&origin=${origins}&destinations=${destinations}&travelmode=walking`
-                };
-                dispatch({ type: ACCEPT_ORDER_SUCCESS, payload: successPayload });
-            })
-            .catch((error) => {
-                dispatch({ type: ACCEPT_ORDER_FAILURE, payload: error });
-            });
+            hero.deliveryTime = result.rows[0].elements[0].duration.value / 60;
+            const orderRef = rtdb.ref(`orders/US/TX/Austin/${order.orderId}`);
+            orderRef
+                .set({
+                    productsSatisfied,
+                    hero,
+                    status: orderStatuses.accepted
+                })
+                .then(() => {
+                    const successPayload = {
+                        link: `https://www.google.com/maps/dir/?api=1&origin=${origins}&destinations=${destinations}&travelmode=walking`
+                    };
+                    dispatch({
+                        type: ACCEPT_ORDER_SUCCESS,
+                        payload: successPayload
+                    });
+                })
+                .catch(error => {
+                    dispatch({ type: ACCEPT_ORDER_FAILURE, payload: error });
+                });
         }
     }
 };
 
-export const arriveRequest = (orderId) => dispatch => {
+export const arriveRequest = orderId => dispatch => {
     dispatch({ type: ARRIVE_ORDER_REQUEST });
 
-    const orderRef = firebase.database().ref(`orders/US/TX/Austin/${orderId}`);
-    orderRef.set({
-        status: orderStatuses.arrived
-    })
-    .then(() => {
-        dispatch({ type: ARRIVE_ORDER_SUCCESS });
-    })
-    .catch((error) => {
-        dispatch({ type: ARRIVE_ORDER_FAILURE, payload: error });
-    });
+    const orderRef = rtdb.ref(`orders/US/TX/Austin/${orderId}`);
+    orderRef
+        .set({
+            status: orderStatuses.arrived
+        })
+        .then(() => {
+            dispatch({ type: ARRIVE_ORDER_SUCCESS });
+        })
+        .catch(error => {
+            dispatch({ type: ARRIVE_ORDER_FAILURE, payload: error });
+        });
 };
 
-export const completeRequest = (orderId) => dispatch => {
+export const completeRequest = orderId => dispatch => {
     dispatch({ type: COMPLETE_ORDER_REQUEST });
 
-    const orderRef = firebase.database().ref(`orders/US/TX/Austin/${orderId}`);
-    orderRef.set({
-        status: orderStatuses.completed
-    })
-    .then(() => {
-        dispatch({ type: COMPLETE_ORDER_SUCCESS });
-    })
-    .catch((error) => {
-        dispatch({ type: COMPLETE_ORDER_FAILURE, payload: error });
-    });
+    const orderRef = rtdb.ref(`orders/US/TX/Austin/${orderId}`);
+    orderRef
+        .set({
+            status: orderStatuses.completed
+        })
+        .then(() => {
+            dispatch({ type: COMPLETE_ORDER_SUCCESS });
+        })
+        .catch(error => {
+            dispatch({ type: COMPLETE_ORDER_FAILURE, payload: error });
+        });
 };
