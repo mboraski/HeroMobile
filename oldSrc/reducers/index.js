@@ -1,0 +1,13 @@
+export { reducer as form } from 'redux-form';
+export { default as auth } from './authReducer';
+export { default as cart } from './cartReducer';
+export { default as checkout } from './checkoutReducer';
+export { default as map } from './mapReducer';
+export { default as ui } from './uiReducer';
+export { default as payment } from './paymentReducer';
+export { default as product } from './productReducer';
+export { default as header } from './navigationReducer';
+export { default as notification } from './notificationReducer';
+// export { default as nav } from './navReducer';
+export { default as contractor } from './contractorReducer';
+export { default as orders } from './orderReducer';

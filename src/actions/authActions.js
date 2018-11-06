@@ -1,8 +1,10 @@
 import { SubmissionError } from 'redux-form';
 
-import { firebaseAuth, db, rtdb } from '../../firebase';
+import { firebaseAuth, db } from '../../firebase';
 
-import { dropdownAlert } from './uiActions';
+import { UPDATE_STRIPE_INFO } from './paymentActions';
+
+import { persistor } from '../store';
 
 export const AUTH_CHANGED = 'auth_changed';
 export const SIGNUP_REQUEST = 'signup_request';
@@ -16,19 +18,7 @@ export const SIGNOUT_SUCCESS = 'signout_success';
 export const SIGNOUT_FAIL = 'signout_fail';
 export const USER_READABLE_SUCCESS = 'user_readable_success';
 export const USER_READABLE_ERROR = 'user_readable_fail';
-export const LOGIN = 'login';
-export const LOGIN_SUCCESS = 'login_success';
-export const LOGIN_FAIL = 'login_fail';
-export const SIGNUP = 'signup';
-export const SIGNOUT = 'signout';
-export const REDIRECT_TO_SIGNUP = 'redirect_to_signup';
-export const UPDATE_ACCOUNT = 'update_account';
-export const UPDATE_ACCOUNT_SUCCESS = 'update_account_success';
-export const UPDATE_ACCOUNT_FAIL = 'update_account_fail';
-export const LOGIN_FACEBOOK = 'login_facebook';
-export const LOGIN_FACEBOOK_SUCCESS = 'login_facebook_success';
-export const LOGIN_FACEBOOK_FAIL = 'login_facebook_fail';
-export const CONTRACTOR_APPROVED = 'contractor_approved';
+export const SET_EXPO_PUSH_TOKEN_REQUEST = 'set_expo_push_token_request';
 
 export const createUserWithEmailAndPassword = (values, dispatch) =>
     new Promise((resolve, reject) => {
@@ -68,7 +58,7 @@ export const createUserWithEmailAndPassword = (values, dispatch) =>
                 });
                 return reject(
                     new SubmissionError({
-                        _error: 'Crrrazy error'
+                        _error: 'Authentication error'
                     })
                 );
             });
@@ -105,6 +95,8 @@ export const signOut = () => async dispatch => {
     try {
         dispatch({ type: SIGNOUT_REQUEST });
         const result = await firebaseAuth.signOut();
+        dispatch({ type: SIGNOUT_SUCCESS });
+        persistor.purge();
         return result;
     } catch (error) {
         dispatch({ type: SIGNOUT_FAIL, error });
@@ -112,8 +104,8 @@ export const signOut = () => async dispatch => {
     }
 };
 
-export const listenToAuthChanges = () => dispatch =>
-    firebaseAuth.onAuthStateChanged(async user => {
+export const listenToAuthChanges = () => dispatch => {
+    firebaseAuth.onAuthStateChanged(user => {
         dispatch({ type: AUTH_CHANGED, payload: user });
         if (user) {
             dispatch({ type: SIGNIN_SUCCESS });
@@ -121,64 +113,42 @@ export const listenToAuthChanges = () => dispatch =>
             dispatch({ type: SIGNOUT_SUCCESS });
         }
     });
+};
 
-// export const checkContractorApproval = () => dispatch => {
-//     const user = firebaseAuth.currentUser;
-//     const uid = user ? user.uid : null;
-//     const contractorRef = rtdb.ref(`contractors/${uid}`);
-//     return contractorRef
-//         .get()
-//         .then(doc => {
-//             if (doc.exists) {
-//                 const data = doc.data();
-//                 const approved = data.approval.approved;
-//                 const pending = data.approval.pending;
-//                 if (approved) {
-//                     // set approval status in store
-//                     // const connectId = data.stripeInfo.newStripeConnectAccount.id;
-//                     // const connectId = data.inventory.newStripeConnectAccount.id;
-//                     // fire auth action
-//                     dispatch({ type: CONTRACTOR_APPROVED, payload: data });
-//                     // dispatch({ type: CONTRACTOR_APPROVED, payload: connectId });
-//                     // set contractor inventory
-//                     fetchContractorInventory(dispatch);
-//                     // navigate user to HeroMain
-//                     dispatch({ type: GO_MAIN });
-//                 } else if (pending) {
-//                     // not approved, check status
-//                     // if pending, show pending screen
-//                 } else {
-//                     // show signup form
-//                 }
-//             } else {
-//                 // create one
-//             }
-//         })
-//         .catch(error => {
-//             // alert user that there was an error verifying contractor status and to try signing out and back in again.
-//             console.log('checkContractorApproval error: ', error);
-//             logContractorError({ uid, error });
-//             dispatch(
-//                 dropdownAlert(
-//                     true,
-//                     'Error verifying contractor status, please try again.'
-//                 )
-//             );
-//         });
-// };
+export const setUserExpoPushToken = token => dispatch => {
+    dispatch({ type: SET_EXPO_PUSH_TOKEN_REQUEST }); // TODO: NOT LISTENED TO
+    const userDoc = db.collection('users').doc(firebaseAuth.currentUser.uid);
+    return userDoc.update({ expoPushToken: token });
+};
 
-export const updateAccount = (id, values) => dispatch => {
-    dispatch({ type: UPDATE_ACCOUNT });
-    return db
-        .collection('users')
-        .doc(id)
-        .set(values, { merge: true })
-        .then(result => {
-            dispatch({ type: UPDATE_ACCOUNT_SUCCESS });
-            return result;
-        })
-        .catch(error => {
-            dispatch({ type: UPDATE_ACCOUNT_FAIL });
-            throw error;
-        });
+export const getUserReadable = () => dispatch => {
+    if (firebaseAuth.currentUser) {
+        return db
+            .collection('userReadable')
+            .doc(firebaseAuth.currentUser.uid)
+            .get()
+            .then(snap => {
+                const userData = snap.data();
+                dispatch({
+                    type: USER_READABLE_SUCCESS,
+                    payload: userData
+                });
+                if (
+                    userData &&
+                    userData.stripeInfo &&
+                    userData.stripeInfo.stripeCustomerId
+                ) {
+                    dispatch({
+                        type: UPDATE_STRIPE_INFO,
+                        payload: userData.stripeInfo
+                    });
+                }
+            })
+            .catch(error =>
+                dispatch({
+                    type: USER_READABLE_ERROR,
+                    payload: error
+                })
+            );
+    }
 };

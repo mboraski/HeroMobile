@@ -1,7 +1,7 @@
 // Third Party Imports
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import _ from 'lodash';
+import map from 'lodash.map';
 
 // Relative Imports
 import OrderDetail from './OrderDetail';
@@ -11,26 +11,22 @@ import Color from '../constants/Color';
 
 class OrderList extends Component {
     renderOrders() {
-        const {
-            orders,
-            orderImages,
-            onAddOrder,
-            onRemoveOrder,
-            displayOnly
-        } = this.props;
+        const { orders, orderImages, onAddOrder, onRemoveOrder } = this.props;
         let prevDeliveryType;
-        return _.map(orders, order => {
-            const image = orderImages[order.productName] || '';
+        return map(orders, order => {
+            // TODO: this is a bandaid
+            const image = orderImages ? orderImages[order.productName] : '';
             let renderMark;
             if (prevDeliveryType !== 'instant') {
                 renderMark = (
                     <View key={`instant-${order.productName}`}>
                         <View style={styles.headerItem}>
-                            <Text style={styles.typeLabel}>Delivery Type: </Text>
+                            <Text style={styles.typeLabel}>
+                                Delivery Type:{' '}
+                            </Text>
                             <Text style={styles.valueLabel}>{'Instant'}</Text>
                         </View>
                         <OrderDetail
-                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}
@@ -43,7 +39,6 @@ class OrderList extends Component {
                 renderMark = (
                     <View key={`instant-${order.productName}`}>
                         <OrderDetail
-                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}

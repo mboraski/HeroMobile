@@ -12,13 +12,13 @@ function isPushed(state, result = false) {
 }
 
 class MenuAndBackButton extends Component {
-    onBack = () => {
+    goBack = () => {
         this.props.navigation.goBack();
     };
     render() {
-        const { nav, navigation } = this.props;
-        if (isPushed(nav)) {
-            return <BackButton navigation={navigation} onPress={this.onBack} />;
+        const { navigation } = this.props;
+        if (isPushed(navigation.state)) {
+            return <BackButton onPress={this.goBack} />;
         }
         return <MenuButton navigation={navigation} />;
     }

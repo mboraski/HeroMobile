@@ -1,6 +1,6 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -9,13 +9,19 @@ import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
 import OrderList from '../components/OrderList';
 import OopsPopup from '../components/OopsPopup';
+import Text from '../components/Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import { getAvailableCartOrders } from '../selectors/cartSelectors';
-import * as actions from '../actions/cartActions';
+import {
+    getCartProducts,
+    getCartTotalQuantity,
+    getCartPureTotal
+} from '../selectors/cartSelectors';
+import { addToCart, removeFromCart } from '../actions/cartActions';
+import { dropdownAlert } from '../actions/uiActions';
 
-export class CartScreen extends Component {
+class CartScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Cart',
         headerLeft: <BackButton onPress={() => navigation.goBack()} />,
@@ -28,36 +34,70 @@ export class CartScreen extends Component {
         removeOrderPopupVisible: false
     };
 
-    handleRemoveOrder = order => {
-        if (order.quantity === 1) {
-            this.setState({ removeOrderPopupVisible: true, orderToRemove: order });
+    componentDidMount() {
+        if (this.props.itemCountUp) {
+            this.props.dropdownAlert(true, 'More products available!');
+        } else if (this.props.itemCountDown) {
+            this.props.dropdownAlert(
+                true,
+                'Some products are no longer available'
+            );
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if (!this.props.cart && nextProps.cart) {
+        //     this.props.fetchProductsRequest();
+        // }
+        if (!this.props.itemCountUp && nextProps.itemCountUp) {
+            this.props.dropdownAlert(true, 'More products available!');
+        } else if (!this.props.itemCountDown && nextProps.itemCountDown) {
+            this.props.dropdownAlert(
+                true,
+                'Some products are no longer available'
+            );
         } else {
-            this.props.removeFromCart(order);
+            this.props.dropdownAlert(false, '');
+        }
+    }
+
+    handleRemoveProduct = product => {
+        if (product.quantity === 1) {
+            this.setState({
+                removeOrderPopupVisible: true,
+                orderToRemove: product
+            });
+        } else {
+            this.props.removeFromCart(product);
         }
     };
 
-    removeOrderConfirmed = confirmed => {
+    removeProductConfirmed = confirmed => {
         if (confirmed) {
             this.props.removeFromCart(this.state.orderToRemove);
-            this.setState({ removeOrderPopupVisible: false, orderToRemove: null });
+            this.setState({
+                removeOrderPopupVisible: false,
+                orderToRemove: null
+            });
         }
     };
 
     render() {
-        const { orders, addToCart, totalQuantity, totalCost } = this.props;
+        const { orders, totalQuantity, totalCost } = this.props;
         const { removeOrderPopupVisible } = this.state;
         return (
             <View style={styles.container}>
                 <OrderList
                     orders={orders}
-                    onAddOrder={addToCart}
-                    onRemoveOrder={this.handleRemoveOrder}
+                    onAddOrder={this.props.addToCart}
+                    onRemoveOrder={this.handleRemoveProduct}
                 />
                 <View style={styles.cart}>
                     <View style={styles.meta}>
-                        <Text style={styles.label}>Order Total:</Text>
+                        <Text style={styles.label}>Pre Tax/Fee Total:</Text>
                         <Text style={styles.quantity}>
-                            {totalQuantity} item{totalQuantity > 1 ? 's' : ''}
+                            {totalQuantity} item
+                            {totalQuantity > 1 ? 's' : ''}
                         </Text>
                         <Text style={styles.cost}>${totalCost}</Text>
                     </View>
@@ -70,7 +110,7 @@ export class CartScreen extends Component {
                 </View>
                 <OopsPopup
                     openModal={removeOrderPopupVisible}
-                    closeModal={this.removeOrderConfirmed}
+                    closeModal={this.removeProductConfirmed}
                     message="Are you sure you want to remove this product from your cart?"
                     showIcon={false}
                 />
@@ -136,15 +176,18 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    cart: state.cart,
-    orders: getAvailableCartOrders(state),
-    totalCost: state.cart.totalCost,
-    totalQuantity: state.cart.totalQuantity
+    orders: getCartProducts(state),
+    totalCost: getCartPureTotal(state),
+    totalQuantity: getCartTotalQuantity(state)
 });
 
 const mapDispatchToProps = {
-    addToCart: actions.addToCart,
-    removeFromCart: actions.removeFromCart
+    addToCart,
+    removeFromCart,
+    dropdownAlert
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CartScreen);

@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
-const SIZE = emY(1.5625);
+const SIZE = emY(1);
 
 class LocationButton extends Component {
     render() {

@@ -1,3 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing Auth Reducer handles signInWithEmailAndPassword action 1`] = `
+Object {
+  "error": null,
+  "pending": false,
+  "user": null,
+}
+`;
+
+exports[`Testing Auth Reducer handles signInWithFacebook action 1`] = `
+Object {
+  "error": null,
+  "pending": false,
+  "user": null,
+}
+`;
+
+exports[`Testing Auth Reducer handles signOut action 1`] = `
+Object {
+  "error": null,
+  "pending": false,
+  "user": null,
+}
+`;
+
+exports[`Testing Auth Reducer handles signUp action 1`] = `
+Object {
+  "error": null,
+  "pending": false,
+  "user": null,
+}
+`;
+
+exports[`Testing Auth Reducer handles updateAccount action 1`] = `
+Object {
+  "error": null,
+  "pending": false,
+  "user": null,
+}
+`;
+
 exports[`Testing Auth Reducer reducer example 1`] = `Object {}`;

@@ -8,6 +8,16 @@
         "version": "0.1.0",
         "orientation": "portrait",
         "primaryColor": "#f5a623",
+        "assetBundlePatterns": [
+            "src/assets/*",
+            "src/assets/fonts/*",
+            "src/assets/icons/*"
+        ],
+        "updates": {
+            "enabled": true,
+            "checkAutomatically": "ON_LOAD",
+            "fallbackToCacheTimeout": 90000
+        },
         "icon": "./src/assets/icons/HastyBlackIcon.png",
         "splash": {
             "backgroundColor": "#f5a623",

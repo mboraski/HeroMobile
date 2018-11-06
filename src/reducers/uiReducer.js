@@ -7,6 +7,7 @@ import {
     FIRST_TIME_OPENED,
     DROPDOWN_ALERT
 } from '../actions/uiActions';
+import { SIGNOUT_SUCCESS } from '../actions/authActions';
 
 const initialState = {
     headerVisible: true,
@@ -20,6 +21,8 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch (action.type) {
+        case SIGNOUT_SUCCESS:
+            return initialState;
         case TOGGLE_SEARCH:
             return {
                 ...state,

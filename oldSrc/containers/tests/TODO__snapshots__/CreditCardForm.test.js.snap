@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreditCardForm should render correctly 1`] = `
+<KeyboardAvoidingView
+  behavior="padding"
+  keyboardVerticalOffset={16}
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <Component
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <CardNumberInputField
+          containerStyle={
+            Object {
+              "flex": 1,
+            }
+          }
+          keyboardType="number-pad"
+          label="CARD NUMBER"
+          name="number"
+          normalize={[Function]}
+          placeholder=""
+          validate={[Function]}
+        />
+        <TextInputField
+          containerStyle={
+            Object {
+              "width": 140,
+            }
+          }
+          keyboardType="number-pad"
+          label="EXP. DATE"
+          name="exp"
+          normalize={[Function]}
+          style={
+            Object {
+              "textAlign": "center",
+            }
+          }
+          validate={[Function]}
+        />
+      </View>
+      <TextInputField
+        label="CARDHOLDER NAME"
+        name="name"
+        validate={[Function]}
+      />
+      <TextInputField
+        containerStyle={
+          Object {
+            "width": 120,
+          }
+        }
+        keyboardType="number-pad"
+        label="CVC"
+        name="cvc"
+        placeholder=""
+        secureTextEntry={true}
+        validate={[Function]}
+      />
+    </View>
+  </Component>
+</KeyboardAvoidingView>
+`;
+
+exports[`CreditCardForm should render correctly with card 1`] = `
+<KeyboardAvoidingView
+  behavior="padding"
+  keyboardVerticalOffset={16}
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <Component
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <CardNumberInputField
+          containerStyle={
+            Object {
+              "flex": 1,
+            }
+          }
+          keyboardType="number-pad"
+          label="CARD NUMBER"
+          name="number"
+          normalize={[Function]}
+          placeholder="**** **** **** 4242"
+          validate={[Function]}
+        />
+        <TextInputField
+          containerStyle={
+            Object {
+              "width": 140,
+            }
+          }
+          keyboardType="number-pad"
+          label="EXP. DATE"
+          name="exp"
+          normalize={[Function]}
+          style={
+            Object {
+              "textAlign": "center",
+            }
+          }
+          validate={[Function]}
+        />
+      </View>
+      <TextInputField
+        label="CARDHOLDER NAME"
+        name="name"
+        validate={[Function]}
+      />
+      <TextInputField
+        containerStyle={
+          Object {
+            "width": 120,
+          }
+        }
+        keyboardType="number-pad"
+        label="CVC"
+        name="cvc"
+        placeholder="***"
+        secureTextEntry={true}
+        validate={[Function]}
+      />
+    </View>
+    <Button
+      buttonStyle={
+        Object {
+          "backgroundColor": "#fff",
+          "justifyContent": "flex-start",
+          "paddingHorizontal": 23.466666666666665,
+          "paddingVertical": 15,
+        }
+      }
+      containerViewStyle={
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#cccccc",
+          "borderTopWidth": 0.5,
+          "marginBottom": 20,
+          "marginLeft": 0,
+          "marginRight": 0,
+        }
+      }
+      onPress={[Function]}
+      textStyle={
+        Object {
+          "color": "#000",
+          "fontSize": 16,
+        }
+      }
+      title="Delete Card"
+    />
+  </Component>
+</KeyboardAvoidingView>
+`;

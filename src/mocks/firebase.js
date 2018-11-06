@@ -1,4 +1,4 @@
-jest.mock('../firebase', () => {
+jest.mock('firebase', () => {
     const firebasemock = require('firebase-mock');
 
     const mockdatabase = new firebasemock.MockFirebase();

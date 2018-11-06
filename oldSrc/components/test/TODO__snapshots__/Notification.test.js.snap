@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 160,
+      "overflow": "hidden",
+    }
+  }
+>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#F5A623",
+          "left": 27,
+          "paddingVertical": 20,
+          "position": "absolute",
+          "right": 27,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 6,
+            "width": 0,
+          },
+          "shadowOpacity": 0.25,
+          "shadowRadius": 13,
+        },
+        Object {
+          "opacity": 1,
+          "top": 0,
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 17,
+          "textAlign": "center",
+        }
+      }
+    >
+      Searching the skies for signs of a hero...
+    </Text>
+  </AnimatedComponent>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#F5A623",
+          "left": 27,
+          "paddingVertical": 20,
+          "position": "absolute",
+          "right": 27,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 6,
+            "width": 0,
+          },
+          "shadowOpacity": 0.25,
+          "shadowRadius": 13,
+        },
+        Object {
+          "top": 176,
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 17,
+          "textAlign": "center",
+        }
+      }
+    >
+      Searching the skies for signs of a hero...
+    </Text>
+  </AnimatedComponent>
+</View>
+`;

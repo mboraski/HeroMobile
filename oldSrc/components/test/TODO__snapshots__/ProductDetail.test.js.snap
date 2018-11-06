@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductDetail renders correctly 1`] = `
+<AnimatedComponent
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Array [
+        Object {
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 7,
+            "width": 0,
+          },
+          "shadowOpacity": 0.15,
+          "shadowRadius": 6,
+        },
+        Object {
+          "backgroundColor": "#fff",
+          "borderRadius": 11,
+          "paddingHorizontal": 15,
+          "paddingVertical": 15,
+        },
+        undefined,
+      ],
+      Object {
+        "opacity": 1,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+          "marginBottom": 18,
+        },
+        false,
+      ]
+    }
+  >
+    <Icon
+      allowFontScaling={false}
+      name="plus"
+      size={35}
+      style={
+        Array [
+          Object {
+            "color": "#E4E4E4",
+          },
+          false,
+        ]
+      }
+    />
+  </View>
+  <Image
+    resizeMode="contain"
+    style={
+      Object {
+        "height": 99.2,
+        "marginBottom": 35.2,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "marginBottom": 6,
+            "marginRight": 12,
+          },
+          Object {},
+        ]
+      }
+    >
+      Redbull
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "marginBottom": 6,
+            "marginRight": 12,
+          },
+          Object {
+            "color": "#3aa2fc",
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      $3.49
+    </Text>
+  </View>
+</AnimatedComponent>
+`;

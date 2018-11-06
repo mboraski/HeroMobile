@@ -1,64 +1,72 @@
 import axios from 'axios';
+import { functions } from '../../firebase';
 
 export const instance = axios.create({
     baseURL: 'https://us-central1-hasty-14d18.cloudfunctions.net/'
 });
+// For testing:
 // const instance = axios.create({
 //     baseURL: 'http://localhost:5000/hasty-14d18/us-central1/'
 // });
 
-export function getProductsByLocation(args) {
-    return instance.post('getProductsByLocation', args);
+export function completeOrder(args) {
+    const co = functions.httpsCallable('completeOrder');
+    return co(args);
+}
+
+export function createStripeCustomerWithCard(args) {
+    const csawc = functions.httpsCallable('createStripeCustomerWithCard');
+    return csawc(args);
 }
 
 export function addStripeCustomerSource(args) {
-    return instance.post('addStripeCustomerSource', args);
+    const ascs = functions.httpsCallable('addStripeCustomerSource');
+    return ascs(args);
 }
 
 export function removeStripeCustomerSource(args) {
-    return instance.post('removeStripeCustomerSource', args);
+    const rscs = functions.httpsCallable('removeStripeCustomerSource');
+    return rscs(args);
 }
 
-export function chargeStripeCustomerSource(charge) {
-    return instance.post('chargeStripeCustomerSource', charge);
+export function chargeStripeCustomerSource(args) {
+    const cscs = functions.httpsCallable('chargeStripeCustomerSource');
+    return cscs(args);
 }
 
-export function createStripeConnectAccount(args) {
-    return instance.post('createStripeConnectAccount', args);
+export function consumerCallsContractor(args) {
+    const ccc = functions.httpsCallable('consumerCallsContractor');
+    return ccc(args);
 }
 
-export function logContractorError(args) {
-    return instance.post('logContractorError', args);
-}
-
-export function logCurrentInventoryError(args) {
-    return instance.post('logCurrentInventoryError', args);
+export function logCustomerError(args) {
+    return instance.post('logCustomerError', args);
 }
 
 function handleRequestConfig(config) {
     if (__DEV__) {
-        console.log(config);
+        // console.log(config);
     }
     return config;
 }
 
 function handleRequestError(error) {
     if (__DEV__) {
-        console.log(error);
+        // console.log(error);
     }
     return Promise.reject(error);
 }
 
 function handleResponseSuccess(config) {
     if (__DEV__) {
-        console.log(config);
+        // console.log(config);
     }
     return config;
 }
 
 function handleResponseError(error) {
     if (__DEV__) {
-        console.log(error);
+        // console.log(error);
     }
     return Promise.reject(error);
 }

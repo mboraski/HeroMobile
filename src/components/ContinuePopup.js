@@ -1,61 +1,37 @@
 // Third Party Imports
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Modal,
     View,
-    Text,
     Image,
     TouchableOpacity,
     Platform
 } from 'react-native';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 import checkIcon from '../assets/icons/check-wrap.png';
 
 const SIZE = emY(5.62);
-type Props = {
-    openModal: boolean,
-    closeModal: () => {},
-    message: string
-};
 
 class ContinuePopup extends Component {
-    state = {
-        modalVisible: false,
-    }
-
-    componentDidMount() {
-        const { openModal } = this.props;
-        this.setState({
-            modalVisible: openModal,
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.openModal !== this.props.openModal) {
-            this.setState({
-                modalVisible: nextProps.openModal
-            });
-        }
-    }
-
-    closeModal(apply) {
-        this.props.closeModal(apply);
-    }
-
-    props: Props;
+    static propTypes = {
+        isOpen: PropTypes.bool.isRequired,
+        closeModal: PropTypes.func.isRequired,
+        message: PropTypes.string.isRequired
+    };
 
     render() {
-        const { message } = this.props;
-        const { modalVisible } = this.state;
+        const { message, isOpen, closeModal } = this.props;
         return (
             <Modal
                 animationType="slide"
-                visible={modalVisible}
+                visible={isOpen}
                 onRequestClose={() => {}}
                 style={styles.modalContainer}
                 transparent
@@ -63,7 +39,7 @@ class ContinuePopup extends Component {
                 <View style={styles.container}>
                     <TouchableOpacity
                         style={Style.backdropContainer}
-                        onPress={() => this.closeModal()}
+                        onPress={closeModal}
                         activeOpacity={1}
                     >
                         <Text style={Style.clearText}>.</Text>
@@ -72,17 +48,27 @@ class ContinuePopup extends Component {
                         <View style={styles.innerContainer}>
                             <Text style={styles.label}>{message}</Text>
                             <TouchableOpacity
-                                onPress={() => this.closeModal(true)}
-                                style={[styles.button, { backgroundColor: Color.BLACK }]}
+                                onPress={closeModal}
+                                style={[
+                                    styles.button,
+                                    { backgroundColor: Color.BLACK }
+                                ]}
                             >
                                 <Text
-                                    style={[styles.buttonLabel, { color: Color.WHITE }]}
+                                    style={[
+                                        styles.buttonLabel,
+                                        { color: Color.WHITE }
+                                    ]}
                                 >
                                     CONTINUE
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <Image source={checkIcon} style={styles.checkIcon} resizeMode="contain" />
+                        <Image
+                            source={checkIcon}
+                            style={styles.checkIcon}
+                            resizeMode="contain"
+                        />
                     </View>
                 </View>
             </Modal>
@@ -95,13 +81,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Color.CLEAR,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     outerContainer: {
         paddingTop: SIZE / 2.0,
         backgroundColor: Color.CLEAR,
         marginHorizontal: 22,
-        alignSelf: 'stretch',
+        alignSelf: 'stretch'
     },
     innerContainer: {
         backgroundColor: Color.WHITE,
@@ -124,7 +110,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: emY(1.08),
         marginHorizontal: 70,
-        lineHeight: emY(1.5),
+        lineHeight: emY(1.5)
     },
     checkIcon: {
         position: 'absolute',
@@ -137,10 +123,10 @@ const styles = StyleSheet.create({
         height: emY(2.88),
         marginTop: emY(2.3),
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     buttonLabel: {
-        fontSize: emY(0.96),
+        fontSize: emY(0.96)
     }
 });
 

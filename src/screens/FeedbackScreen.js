@@ -1,21 +1,33 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 
 // Relative Imports
-import { showFeedbackForm, hideFeedbackForm } from '../actions/uiActions';
-import FeedbackFormCloseButton from '../containers/FeedbackFormCloseButton';
+import FeedbackFormCloseButtonContainer from '../containers/FeedbackFormCloseButtonContainer';
+import FeedbackFormContainer from '../containers/FeedbackFormContainer';
+
 import Rating from '../components/Rating';
-import FeedbackForm from '../containers/FeedbackForm';
+import Text from '../components/Text';
+
+import {
+    showFeedbackForm,
+    hideFeedbackForm,
+    dropdownAlert
+} from '../actions/uiActions';
+import { completeOrder } from '../actions/orderActions';
+
+import { getFeedbackFormVisible } from '../selectors/uiSelectors';
+import { getContractorName, getOrderId } from '../selectors/orderSelectors';
+
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 
 const keyboardVerticalOffset = emY(1);
 
-export class FeedbackScreen extends Component {
+class FeedbackScreen extends Component {
     state = {
         userRating: 0,
         productRating: 0,
@@ -40,31 +52,42 @@ export class FeedbackScreen extends Component {
 
     onButtonPress = () => {
         if (!this.props.feedbackFormVisible) {
-            if (
-                this.state.userRating <= 3 ||
-                this.state.productRating <= 3 ||
-                this.state.overallRating <= 3
-            ) {
-                this.props.showFeedbackForm();
-            }
+            this.props.showFeedbackForm();
         }
     };
 
-    onSubmitSuccess = () => {
-        this.props.navigation.goBack();
+    onSubmit = (result, dispatch) => {
+        let message = '';
+        if (result) {
+            // send name and message also
+            message = result.message;
+        }
+        const userRating = this.state.userRating;
+        const productRating = this.state.productRating;
+        const overallRating = this.state.overallRating;
+        dispatch(dropdownAlert(true, 'Thanks! See you again soon!'));
+        completeOrder({
+            dispatch,
+            orderId: this.props.orderId,
+            userRating,
+            productRating,
+            overallRating,
+            message
+        });
+        this.props.navigation.navigate('map');
     };
 
     render() {
-        const { name, numProducts, feedbackFormVisible } = this.props;
+        const { name, feedbackFormVisible } = this.props;
         const { userRating, productRating, overallRating } = this.state;
-        const productTitle = numProducts > 1 ? 'How were your products?' : 'How was your product?';
+        const productTitle = 'How was the product condition?';
         return feedbackFormVisible ? (
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior="padding"
                 keyboardVerticalOffset={keyboardVerticalOffset}
             >
-                <FeedbackForm onSubmitSucceeded={this.onSubmitSuccess} />
+                <FeedbackFormContainer onSubmitSuccess={this.onSubmit} />
             </KeyboardAvoidingView>
         ) : (
             <View style={styles.container}>
@@ -81,7 +104,9 @@ export class FeedbackScreen extends Component {
                         value={productRating}
                         onChange={this.handleProductRating}
                     />
-                    <Text style={styles.title}>How was your experience overall?</Text>
+                    <Text style={styles.title}>
+                        How was your experience overall?
+                    </Text>
                     <Rating
                         style={styles.rating}
                         value={overallRating}
@@ -89,7 +114,7 @@ export class FeedbackScreen extends Component {
                     />
                 </View>
                 <Button
-                    title="SEND"
+                    title="CONTINUE"
                     onPress={this.onButtonPress}
                     containerViewStyle={styles.buttonContainer}
                     buttonStyle={styles.button}
@@ -127,25 +152,28 @@ const styles = StyleSheet.create({
     }
 });
 
-FeedbackScreen.navigationOptions = ({ navigation }) => {
-    const handlePressClose = () => navigation.goBack();
+FeedbackScreen.navigationOptions = () => {
     return {
         title: 'Feedback',
-        headerLeft: <FeedbackFormCloseButton onPress={handlePressClose} />,
         headerStyle: Style.header,
-        headerTitleStyle: Style.headerTitle
+        headerTitleStyle: Style.headerTitle,
+        headerLeft: <FeedbackFormCloseButtonContainer />
     };
 };
 
 const mapStateToProps = state => ({
-    name: 'Jessica',
-    numProducts: 1,
-    feedbackFormVisible: state.ui.feedbackFormVisible
+    name: getContractorName(state),
+    feedbackFormVisible: getFeedbackFormVisible(state),
+    orderId: getOrderId(state)
 });
 
-const mapDispatchToProps = { 
-    showFeedbackForm, 
-    hideFeedbackForm 
+const mapDispatchToProps = {
+    showFeedbackForm,
+    hideFeedbackForm,
+    completeOrder
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FeedbackScreen);

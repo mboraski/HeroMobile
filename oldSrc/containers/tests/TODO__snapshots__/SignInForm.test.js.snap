@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignInForm should render correctly 1`] = `
+<ReduxForm
+  actions={
+    Object {
+      "facebookLogin": [Function],
+      "loginEmailPassword": [Function],
+    }
+  }
+  anyTouched={false}
+  asyncValidating={false}
+  fields={
+    Object {
+      "email": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+      "password": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+    }
+  }
+  handleSubmit={[Function]}
+  invalid={false}
+  pending={false}
+  pristine={true}
+  submitting={false}
+/>
+`;
+
+exports[`SignInForm should render correctly with error 1`] = `
+<ReduxForm
+  actions={
+    Object {
+      "facebookLogin": [Function],
+      "loginEmailPassword": [Function],
+    }
+  }
+  anyTouched={true}
+  asyncValidating={false}
+  fields={
+    Object {
+      "email": Object {
+        "error": "error",
+        "touched": true,
+        "value": "",
+      },
+      "password": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+    }
+  }
+  handleSubmit={[Function]}
+  invalid={true}
+  pending={false}
+  pristine={false}
+  submitting={false}
+/>
+`;
+
+exports[`SignInForm should render correctly with submitSuccess 1`] = `
+<ReduxForm
+  actions={
+    Object {
+      "facebookLogin": [Function],
+      "loginEmailPassword": [Function],
+    }
+  }
+  anyTouched={true}
+  asyncValidating={false}
+  fields={
+    Object {
+      "email": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+      "password": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+    }
+  }
+  handleSubmit={[Function]}
+  invalid={false}
+  pending={false}
+  pristine={false}
+  submitSucceeded={true}
+  submitting={false}
+/>
+`;
+
+exports[`SignInForm should render correctly with submitting 1`] = `
+<ReduxForm
+  actions={
+    Object {
+      "facebookLogin": [Function],
+      "loginEmailPassword": [Function],
+    }
+  }
+  anyTouched={true}
+  asyncValidating={false}
+  fields={
+    Object {
+      "email": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+      "password": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+    }
+  }
+  handleSubmit={[Function]}
+  invalid={false}
+  pending={false}
+  pristine={false}
+  submitting={true}
+/>
+`;
+
+exports[`SignInForm should render correctly with untouched disabled 1`] = `
+<ReduxForm
+  actions={
+    Object {
+      "facebookLogin": [Function],
+      "loginEmailPassword": [Function],
+    }
+  }
+  anyTouched={false}
+  asyncValidating={false}
+  fields={
+    Object {
+      "email": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+      "password": Object {
+        "error": null,
+        "touched": false,
+        "value": "",
+      },
+    }
+  }
+  handleSubmit={[Function]}
+  invalid={true}
+  pending={false}
+  pristine={false}
+  submitting={false}
+/>
+`;

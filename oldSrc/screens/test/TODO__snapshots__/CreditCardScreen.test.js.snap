@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreditCardScreen renders correctly 1`] = `
+<Form(CreditCardScreen)
+  anyTouched={false}
+  array={
+    Object {
+      "insert": [Function],
+      "move": [Function],
+      "pop": [Function],
+      "push": [Function],
+      "remove": [Function],
+      "removeAll": [Function],
+      "shift": [Function],
+      "splice": [Function],
+      "swap": [Function],
+      "unshift": [Function],
+    }
+  }
+  arrayInsert={[Function]}
+  arrayMove={[Function]}
+  arrayPop={[Function]}
+  arrayPush={[Function]}
+  arrayRemove={[Function]}
+  arrayRemoveAll={[Function]}
+  arrayShift={[Function]}
+  arraySplice={[Function]}
+  arraySwap={[Function]}
+  arrayUnshift={[Function]}
+  asyncValidating={false}
+  autofill={[Function]}
+  blur={[Function]}
+  change={[Function]}
+  clearAsyncError={[Function]}
+  clearSubmit={[Function]}
+  clearSubmitErrors={[Function]}
+  destroy={[Function]}
+  destroyOnUnmount={true}
+  dirty={false}
+  dispatch={[Function]}
+  enableReinitialize={false}
+  focus={[Function]}
+  forceUnregisterOnUnmount={false}
+  form="CreditCard"
+  getFormState={[Function]}
+  initialize={[Function]}
+  initialized={false}
+  invalid={false}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pristine={true}
+  pure={true}
+  registerField={[Function]}
+  reset={[Function]}
+  setSubmitFailed={[Function]}
+  setSubmitSucceeded={[Function]}
+  shouldAsyncValidate={[Function]}
+  shouldValidate={[Function]}
+  startAsyncValidation={[Function]}
+  startSubmit={[Function]}
+  stopAsyncValidation={[Function]}
+  stopSubmit={[Function]}
+  submit={[Function]}
+  submitFailed={false}
+  submitSucceeded={false}
+  submitting={false}
+  syncErrors={Object {}}
+  syncWarnings={Object {}}
+  touch={[Function]}
+  touchOnBlur={true}
+  touchOnChange={false}
+  unregisterField={[Function]}
+  untouch={[Function]}
+  updateSyncErrors={[Function]}
+  updateSyncWarnings={[Function]}
+  valid={true}
+  validExceptSubmit={true}
+  values={Object {}}
+/>
+`;

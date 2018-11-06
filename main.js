@@ -1,6 +1,12 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Image, Platform, ActivityIndicator } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    Platform,
+    ActivityIndicator
+} from 'react-native';
 import Expo, { Font } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -46,7 +52,9 @@ class App extends Component {
                 </PersistGate>
             </Provider>
         ) : (
-            <ActivityIndicator size={'large'} />
+            <View style={styles.overlay}>
+                <ActivityIndicator size="large" color="#f5a623" />
+            </View>
         );
     }
 }
@@ -54,6 +62,16 @@ class App extends Component {
 const styles = StyleSheet.create({
     splash: {
         backgroundColor: Color.DEFAULT
+    },
+    overlay: {
+        position: 'absolute',
+        zIndex: 100,
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        justifyContent: 'center',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0
     }
 });
 

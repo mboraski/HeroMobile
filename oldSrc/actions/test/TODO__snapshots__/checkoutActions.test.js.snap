@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkoutActions creates setDeliveryNotes action 1`] = `
+Object {
+  "payload": "notes",
+  "type": "SET_DELIVERY_NOTES",
+}
+`;

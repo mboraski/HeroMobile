@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HomeScreen renders correctly 1`] = `
+exports[`ProductsScreen renders correctly 1`] = `
 <View
   style={
     Object {

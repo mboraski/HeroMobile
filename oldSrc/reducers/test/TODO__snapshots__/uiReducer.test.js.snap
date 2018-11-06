@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`uiReducer handles hideFeedbackForm action 1`] = `
+Object {
+  "customerPopupVisible": false,
+  "feedbackFormVisible": false,
+  "headerVisible": true,
+  "searchVisible": false,
+}
+`;
+
+exports[`uiReducer handles showFeedbackForm action 1`] = `
+Object {
+  "customerPopupVisible": false,
+  "feedbackFormVisible": true,
+  "headerVisible": true,
+  "searchVisible": false,
+}
+`;
+
+exports[`uiReducer handles toggleSearch action 1`] = `
+Object {
+  "customerPopupVisible": false,
+  "feedbackFormVisible": false,
+  "headerVisible": true,
+  "searchVisible": false,
+}
+`;

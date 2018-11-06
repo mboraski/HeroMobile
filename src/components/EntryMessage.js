@@ -1,18 +1,12 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    // Image,
-    Platform
-} from 'react-native';
+import { StyleSheet, View, Text, Image, Platform } from 'react-native';
 
 // Relative Imports
 import Color from '../constants/Color';
-// import Style from '../constants/Style';
+import Style from '../constants/Style';
 import { emY } from '../utils/em';
-// import logoBlack from '../assets/icons/logo-black.png';
+import checkIcon from '../assets/icons/check-wrap.png';
 
 const SIZE = emY(5.62);
 type Props = {
@@ -23,13 +17,13 @@ type Props = {
 
 class EntryMessage extends Component {
     state = {
-        modalVisible: false,
-    }
+        modalVisible: false
+    };
 
     componentDidMount() {
         const { openModal } = this.props;
         this.setState({
-            modalVisible: openModal,
+            modalVisible: openModal
         });
     }
 
@@ -55,7 +49,11 @@ class EntryMessage extends Component {
                     <View style={styles.innerContainer}>
                         <Text style={styles.label}>{message}</Text>
                     </View>
-                    {/* <Image source={logoBlack} style={styles.checkIcon} resizeMode="contain" /> */}
+                    <Image
+                        source={checkIcon}
+                        style={styles.checkIcon}
+                        resizeMode="contain"
+                    />
                 </View>
             </View>
         );
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
         paddingTop: SIZE / 2,
         backgroundColor: Color.CLEAR,
         marginHorizontal: 22,
-        alignSelf: 'stretch',
+        alignSelf: 'stretch'
     },
     innerContainer: {
         backgroundColor: Color.WHITE,
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: emY(1.08),
         marginHorizontal: 40,
-        lineHeight: emY(1.5),
+        lineHeight: emY(1.5)
     },
     checkIcon: {
         position: 'absolute',

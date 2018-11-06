@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prediction renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#cccccc",
+        "flexDirection": "row",
+        "paddingHorizontal": 35,
+        "paddingVertical": 14.4,
+      },
+      undefined,
+    ]
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "height": 32,
+        "marginRight": 15,
+        "width": 32,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "flex": 1,
+        "flexWrap": "wrap",
+        "fontSize": 16,
+      }
+    }
+  >
+    description
+  </Text>
+</TouchableOpacity>
+`;

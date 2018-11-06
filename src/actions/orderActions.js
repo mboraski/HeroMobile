@@ -1,125 +1,145 @@
-import { rtdb, firebaseAuth } from '../../firebase';
-import orderStatuses from '../constants/Order';
+import { orderStatuses } from '../constants/Order';
+import { rtdb } from '../../firebase';
+import * as api from '../api/hasty';
+import { CLEAR_CART } from './cartActions';
 
-import { distanceMatrix } from './googleMapsActions';
-import { getCurrentLocation } from './mapActions';
-import { dropdownAlert } from './uiActions';
+const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
 
-export const FISH_ORDERS_REQUEST = 'fish_orders_request';
-export const FISH_ORDERS_SUCCESS = 'fish_orders_success';
-export const FISH_ORDERS_FAILURE = 'fish_orders_failure';
-export const ACCEPT_ORDER_REQUEST = 'accept_order_request';
-export const ACCEPT_ORDER_SUCCESS = 'accept_order_success';
-export const ACCEPT_ORDER_FAILURE = 'accept_order_failure';
-export const ARRIVE_ORDER_REQUEST = 'accept_order_request';
-export const ARRIVE_ORDER_SUCCESS = 'accept_order_success';
-export const ARRIVE_ORDER_FAILURE = 'accept_order_failure';
-export const COMPLETE_ORDER_REQUEST = 'accept_order_request';
-export const COMPLETE_ORDER_SUCCESS = 'accept_order_success';
-export const COMPLETE_ORDER_FAILURE = 'accept_order_failure';
+export const SET_CONTRACTORS = 'set_contractors';
+export const CLEAR_ORDER = 'clear_order';
+export const ORDER_CREATION_SUCCESS = 'order_creation_success';
+export const LISTEN_ORDER_STATUS = 'listen_order_status';
+export const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS';
+export const UPDATE_ORDER_FULFILLMENT = 'update_order_fulfillment';
+export const UPDATE_ORDER_ERROR = 'update_order_error';
+export const CALL_CONTRACTOR_REQUEST = 'call_contractor_request';
+export const COMPLETE_ORDER_REQUEST = 'complete_order_request';
+export const COMPLETE_ORDER_SUCCESS = 'complete_order_success';
+export const COMPLETE_ORDER_ERROR = 'complete_order_error';
 
-export const fishOrdersRequest = () => dispatch => {
-    dispatch({ type: FISH_ORDERS_REQUEST });
-    const user = firebaseAuth.currentUser;
-    const uid = user ? user.uid : null;
-    const activeHeroRef = rtdb.ref(
-        `activecontractors/US/TX/Austin/${uid}/potentialOrders`
-    );
-    activeHeroRef.on('value', snapshot => {
-        const potentialOrders = snapshot.val();
-        dispatch({
-            type: FISH_ORDERS_SUCCESS,
-            payload: potentialOrders
+export const setContractors = contractors => ({
+    type: SET_CONTRACTORS,
+    payload: contractors
+});
+
+export const clearOrder = () => dispatch => dispatch({ type: CLEAR_ORDER });
+
+export const completeOrder = async values => {
+    const {
+        dispatch,
+        orderId,
+        userRating,
+        productRating,
+        overallRating,
+        message
+    } = values;
+    try {
+        const result = await api.completeOrder({
+            orderId,
+            userRating,
+            productRating,
+            overallRating,
+            message
         });
-    });
-};
-
-export const acceptRequest = (
-    order,
-    productsSatisfied,
-    hero,
-    region
-) => async dispatch => {
-    console.log('orderId: ', order.orderId);
-    console.log('productsSatisfied: ', productsSatisfied);
-    console.log('hero: ', hero);
-    console.log('region: ', region);
-    dispatch({ type: ACCEPT_ORDER_REQUEST });
-    const currentLocation = await getCurrentLocation();
-    if (!currentLocation) {
-        dropdownAlert(true, 'Could not get current location');
-    } else {
-        // determine delivery distance
-        const origins = `${currentLocation.latitude}, ${
-            currentLocation.longitude
-        }`;
-        const destinations = `${region.latitude},${region.longitude}`;
-        const result = await distanceMatrix({
-            units: 'imperial',
-            origins,
-            destinations
-        });
-        if (result.rows[0].elements[0].duration.value > 60 * 30) {
-            dropdownAlert(true, 'You are too far away');
-            dispatch({
-                type: ACCEPT_ORDER_FAILURE,
-                payload: 'You are too far away'
-            });
-        } else {
-            dropdownAlert(false, '');
-            // create link to google maps
-            hero.deliveryTime = result.rows[0].elements[0].duration.value / 60;
-            const orderRef = rtdb.ref(`orders/US/TX/Austin/${order.orderId}`);
-            orderRef
-                .set({
-                    productsSatisfied,
-                    hero,
-                    status: orderStatuses.accepted
-                })
-                .then(() => {
-                    const successPayload = {
-                        link: `https://www.google.com/maps/dir/?api=1&origin=${origins}&destinations=${destinations}&travelmode=walking`
-                    };
-                    dispatch({
-                        type: ACCEPT_ORDER_SUCCESS,
-                        payload: successPayload
-                    });
-                })
-                .catch(error => {
-                    dispatch({ type: ACCEPT_ORDER_FAILURE, payload: error });
-                });
-        }
+        dispatch({ type: CLEAR_CART });
+        dispatch({ type: CLEAR_ORDER });
+        return result;
+    } catch (error) {
+        return;
     }
 };
 
-export const arriveRequest = orderId => dispatch => {
-    dispatch({ type: ARRIVE_ORDER_REQUEST });
+export const listenToOrderStatus = orderId => dispatch => {
+    dispatch({ type: LISTEN_ORDER_STATUS });
 
-    const orderRef = rtdb.ref(`orders/US/TX/Austin/${orderId}`);
-    orderRef
-        .set({
-            status: orderStatuses.arrived
-        })
-        .then(() => {
-            dispatch({ type: ARRIVE_ORDER_SUCCESS });
-        })
-        .catch(error => {
-            dispatch({ type: ARRIVE_ORDER_FAILURE, payload: error });
+    return rtdb
+        .ref(`${ORDER_REF}/${orderId}/fulfillment/status`)
+        .on('value', snapshot => {
+            const status = snapshot.val();
+            // look at just what has changed
+            switch (status) {
+                case orderStatuses.open:
+                    dispatch({
+                        type: UPDATE_ORDER_STATUS,
+                        payload: orderStatuses.open
+                    });
+                    break;
+                case orderStatuses.cancelled:
+                    dispatch({
+                        type: UPDATE_ORDER_STATUS,
+                        payload: orderStatuses.cancelled
+                    });
+                    break;
+                case orderStatuses.inprogress:
+                    dispatch({
+                        type: UPDATE_ORDER_STATUS,
+                        payload: orderStatuses.inprogress
+                    });
+                    break;
+                case orderStatuses.satisfied:
+                    dispatch({
+                        type: UPDATE_ORDER_STATUS,
+                        payload: orderStatuses.satisfied
+                    });
+                    break;
+                case orderStatuses.completed:
+                    dispatch({
+                        type: UPDATE_ORDER_STATUS,
+                        payload: orderStatuses.completed
+                    });
+                    break;
+                default:
+                    break;
+            }
         });
 };
 
-export const completeRequest = orderId => dispatch => {
-    dispatch({ type: COMPLETE_ORDER_REQUEST });
+export const unListenOrderStatus = orderId =>
+    rtdb.ref(`${ORDER_REF}/${orderId}/fulfillment/status`).off();
 
-    const orderRef = rtdb.ref(`orders/US/TX/Austin/${orderId}`);
-    orderRef
-        .set({
-            status: orderStatuses.completed
-        })
-        .then(() => {
-            dispatch({ type: COMPLETE_ORDER_SUCCESS });
-        })
-        .catch(error => {
-            dispatch({ type: COMPLETE_ORDER_FAILURE, payload: error });
+export const listenToOrderFulfillment = orderId => dispatch => {
+    return rtdb
+        .ref(`${ORDER_REF}/${orderId}/fulfillment/actualFulfillment`)
+        .on('value', snapshot => {
+            const fulfillment = snapshot.val();
+            if (fulfillment) {
+                dispatch({
+                    type: UPDATE_ORDER_FULFILLMENT,
+                    payload: fulfillment
+                });
+            }
         });
+};
+
+export const unListenToOrderFulfillment = orderId =>
+    rtdb.ref(`${ORDER_REF}/${orderId}/fulfillment/actualFulfillment`).off();
+
+export const listenToOrderError = orderId => dispatch => {
+    return rtdb
+        .ref(`${ORDER_REF}/${orderId}/fulfillment/error`)
+        .on('value', snapshot => {
+            const error = snapshot.val();
+            if (error) {
+                dispatch({ type: UPDATE_ORDER_ERROR, payload: error });
+            }
+        });
+};
+
+export const unListenOrderError = orderId =>
+    rtdb.ref(`${ORDER_REF}/${orderId}/fulfillment/error`).off();
+
+export const contactContractor = (
+    contractorId,
+    phoneNumber
+) => async dispatch => {
+    dispatch({ type: CALL_CONTRACTOR_REQUEST }); // TODO: nothing listening yet
+    try {
+        await api.consumerCallsContractor({
+            contractorId,
+            phoneNumber
+        });
+        console.log('call to contractor success: ');
+    } catch (err) {
+        console.log('call to contractor errored: ');
+    }
 };

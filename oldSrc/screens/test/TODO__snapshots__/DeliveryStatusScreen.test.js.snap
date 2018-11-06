@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeliveryStatusScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Spinner
+      disabled={false}
+      image={1}
+      imageStyle={
+        Object {
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 176,
+          "justifyContent": "center",
+          "marginBottom": 16,
+        }
+      }
+    />
+  </TouchableOpacity>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 23,
+        "marginBottom": 48,
+        "textAlign": "center",
+      }
+    }
+  >
+    Searching...
+  </Text>
+  <Connect(Notification)
+    onRef={[Function]}
+  />
+  <View
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "borderBottomWidth": 1.5,
+        "borderColor": "#cccccc",
+        "marginLeft": 27,
+        "marginRight": 27,
+        "paddingBottom": 6,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#7f7f7f",
+          "fontSize": 17,
+          "letterSpacing": 0.5,
+        }
+      }
+    >
+      Located Heroes...
+    </Text>
+  </View>
+  <Connect(HeroList) />
+</View>
+`;

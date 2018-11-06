@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardImage renders correctly 1`] = `
+<Image
+  resizeMode="contain"
+  style={
+    Array [
+      Object {
+        "alignSelf": "center",
+        "width": 50,
+      },
+      undefined,
+    ]
+  }
+/>
+`;

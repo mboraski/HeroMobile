@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PromotionShareScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 20,
+      }
+    }
+  >
+    <Connect(ShareButton)
+      onPress={[Function]}
+      source={1}
+      style={
+        Object {
+          "backgroundColor": "#b2b2b2",
+          "marginHorizontal": 10,
+        }
+      }
+    />
+    <Connect(ShareButton)
+      onPress={[Function]}
+      source={1}
+      style={
+        Object {
+          "backgroundColor": "#b2b2b2",
+          "marginHorizontal": 10,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 20,
+      }
+    }
+  >
+    <Connect(ShareButton)
+      onPress={[Function]}
+      source={1}
+      style={
+        Object {
+          "backgroundColor": "#b2b2b2",
+          "marginHorizontal": 10,
+        }
+      }
+    />
+    <Connect(ShareButton)
+      onPress={[Function]}
+      source={1}
+      style={
+        Object {
+          "backgroundColor": "#b2b2b2",
+          "marginHorizontal": 10,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "bottom": 61.76,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+      }
+    }
+  >
+    <Connect(ShareButton)
+      onPress={[Function]}
+      source={1}
+      style={
+        Object {
+          "borderColor": "#000000",
+          "borderWidth": 1,
+        }
+      }
+    />
+  </View>
+</View>
+`;

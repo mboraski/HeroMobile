@@ -1,9 +1,17 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Modal, View, Text, Image, TouchableOpacity, Platform } from 'react-native';
+import {
+    StyleSheet,
+    Modal,
+    View,
+    Image,
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -79,15 +87,35 @@ class OopsPopup extends Component {
                         <Text style={styles.message}>{message}</Text>
                         <TouchableOpacity
                             onPress={() => this.closeModal(true)}
-                            style={[styles.button, { backgroundColor: Color.BLACK }]}
+                            style={[
+                                styles.button,
+                                { backgroundColor: Color.BLACK }
+                            ]}
                         >
-                            <Text style={[styles.buttonLabel, { color: Color.WHITE }]}>OK</Text>
+                            <Text
+                                style={[
+                                    styles.buttonLabel,
+                                    { color: Color.WHITE }
+                                ]}
+                            >
+                                OK
+                            </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => this.closeModal(true)}
-                            style={[styles.button, { backgroundColor: Color.WHITE }]}
+                            style={[
+                                styles.button,
+                                { backgroundColor: Color.WHITE }
+                            ]}
                         >
-                            <Text style={[styles.buttonLabel, { color: Color.BLACK }]}>Cancel</Text>
+                            <Text
+                                style={[
+                                    styles.buttonLabel,
+                                    { color: Color.BLACK }
+                                ]}
+                            >
+                                Cancel
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -152,8 +180,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(OopsPopup);
+export default connect(
+    null,
+    mapDispatchToProps
+)(OopsPopup);

@@ -4,7 +4,6 @@ import {
     StyleSheet,
     Modal,
     View,
-    Text,
     Image,
     TouchableOpacity,
     Platform
@@ -12,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -28,13 +28,13 @@ type Props = {
 class RatingPopup extends Component {
     state = {
         modalVisible: false,
-        rate: 0,
-    }
+        rate: 0
+    };
 
     componentDidMount() {
         const { openModal } = this.props;
         this.setState({
-            modalVisible: openModal,
+            modalVisible: openModal
         });
     }
 
@@ -95,12 +95,15 @@ class RatingPopup extends Component {
                         <Text style={Style.clearText}>.</Text>
                     </TouchableOpacity>
                     <View style={styles.innerContainer}>
-                        <Text style={styles.label}>How would you like to rate us?</Text>
+                        <Text style={styles.label}>
+                            How would you like to rate us?
+                        </Text>
                         <View style={styles.ratingContainer}>
                             {rateButtons}
                         </View>
                         <Text style={styles.label}>
-                            Tap the number of stars you would give us on scale from 1-5
+                            Tap the number of stars you would give us on scale
+                            from 1-5
                         </Text>
                     </View>
                 </View>
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Color.CLEAR,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     innerContainer: {
         backgroundColor: Color.WHITE,
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
     label: {
         textAlign: 'center',
         fontSize: emY(1.08),
-        marginVertical: emY(1.58),
+        marginVertical: emY(1.58)
     },
     ratingContainer: {
         flexDirection: 'row',
@@ -154,19 +157,22 @@ const styles = StyleSheet.create({
         borderRadius: emY(1.65),
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Color.BLACK,
+        backgroundColor: Color.BLACK
     },
     starIcon: {
         width: SIZE,
-        height: SIZE,
+        height: SIZE
     },
     buttonLabel: {
-        fontSize: emY(0.96),
+        fontSize: emY(0.96)
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(RatingPopup);
+export default connect(
+    null,
+    mapDispatchToProps
+)(RatingPopup);

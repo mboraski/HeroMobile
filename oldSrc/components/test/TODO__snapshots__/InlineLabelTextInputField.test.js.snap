@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InlineLabelTextInputField component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#cccccc",
+        "flexDirection": "row",
+        "marginBottom": 5,
+        "paddingHorizontal": 15,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontSize": 16,
+            "marginRight": 15,
+            "paddingVertical": 14,
+          },
+          undefined,
+          false,
+        ]
+      }
+    >
+      label
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <TextInput
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "fontSize": 16,
+              "textAlign": "right",
+            },
+            undefined,
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`InlineLabelTextInputField component renders correctly with error 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#cccccc",
+        "flexDirection": "row",
+        "marginBottom": 5,
+        "paddingHorizontal": 15,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontSize": 16,
+            "marginRight": 15,
+            "paddingVertical": 14,
+          },
+          undefined,
+          Object {
+            "color": "rgb(243, 108, 96)",
+          },
+        ]
+      }
+    >
+      label
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <TextInput
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "fontSize": 16,
+              "textAlign": "right",
+            },
+            undefined,
+            Object {
+              "color": "rgb(243, 108, 96)",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "rgb(243, 108, 96)",
+        "fontSize": 12.8,
+        "marginBottom": 10,
+        "paddingHorizontal": 15,
+      }
+    }
+  >
+    error
+  </Text>
+</View>
+`;
+
+exports[`InlineLabelTextInputField field renders correctly 1`] = `
+<Field
+  component={[Function]}
+  name="Test_Input_Name"
+/>
+`;

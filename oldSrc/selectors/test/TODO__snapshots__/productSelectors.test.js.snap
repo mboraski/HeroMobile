@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`productSelector getProductsByDeliveryType 1`] = `
+Array [
+  Object {
+    "deliveryType": "1",
+    "price": "$3.49",
+    "productCode": "1",
+    "quantity": 1,
+    "thumbnail_image": "image",
+    "title": "Type 1 code 1",
+  },
+]
+`;
+
+exports[`productSelector getProductsByDeliveryType with empty list 1`] = `Array []`;

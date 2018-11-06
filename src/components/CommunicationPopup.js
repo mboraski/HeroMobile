@@ -1,9 +1,17 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Modal, View, Text, Image, TouchableOpacity, Platform } from 'react-native';
+import {
+    StyleSheet,
+    Modal,
+    View,
+    Image,
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
 import callIcon from '../assets/icons/call.png';
@@ -82,7 +90,11 @@ class CustomerServicePopup extends Component {
                     style={styles.button}
                     onPress={() => this.buttonClickHandler(item.index)}
                 >
-                    <Image source={item.icon} style={styles.icon} resizeMode="contain" />
+                    <Image
+                        source={item.icon}
+                        style={styles.icon}
+                        resizeMode="contain"
+                    />
                 </TouchableOpacity>
                 <Text style={styles.buttonLabel}>{item.title}</Text>
             </View>
@@ -103,9 +115,12 @@ class CustomerServicePopup extends Component {
                     />
                     <View style={styles.innerContainer}>
                         <Text style={styles.label}>
-                            Select the way you want to connect with customer service
+                            Select the way you want to connect with customer
+                            service
                         </Text>
-                        <View style={styles.buttonGroupContainer}>{buttonGroup}</View>
+                        <View style={styles.buttonGroupContainer}>
+                            {buttonGroup}
+                        </View>
                     </View>
                 </View>
             </Modal>
@@ -171,8 +186,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(CustomerServicePopup);
+export default connect(
+    null,
+    mapDispatchToProps
+)(CustomerServicePopup);

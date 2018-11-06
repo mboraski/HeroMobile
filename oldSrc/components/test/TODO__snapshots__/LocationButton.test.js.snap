@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocationButton renders correctly 1`] = `
+<Icon
+  color="black"
+  containerStyle={
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+        "marginRight": 12,
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.3,
+        "shadowRadius": 1,
+      },
+      undefined,
+    ]
+  }
+  iconStyle={
+    Object {
+      "color": "#4c4c4c",
+      "transform": Array [
+        Object {
+          "rotate": "45deg",
+        },
+      ],
+    }
+  }
+  name="navigation"
+  raised={true}
+  reverse={false}
+  reverseColor="white"
+  size={25}
+  underlayColor="white"
+/>
+`;

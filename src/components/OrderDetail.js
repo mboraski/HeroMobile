@@ -12,49 +12,39 @@ const ICON_CONTAINER_SIZE = emY(2.1875);
 const ICON_SIZE = emY(0.75);
 
 const OrderDetail = props => {
-    const { onAddOrder, onRemoveOrder, order, image, displayOnly } = props;
+    const { onAddOrder, onRemoveOrder, order, image } = props;
     const { productName, price, quantityTaken } = order;
     const formattedPrice = `${Number.parseFloat(price / 100).toFixed(2)}`;
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: image }} resizeMode="contain" />
+            <Image
+                style={styles.image}
+                source={{ uri: image }}
+                resizeMode="contain"
+            />
             <View style={styles.content}>
                 <Text style={styles.title}>{productName}</Text>
-                <View style={styles.deliveryType}>
-                    <Text style={styles.deliveryTypeLabel}>Delivery Type:</Text>
-                    <Text style={styles.deliveryTypeValue}>{'Instant'}</Text>
+                <View style={styles.quantityContainer}>
+                    <Icon
+                        name="remove"
+                        size={ICON_SIZE}
+                        containerStyle={styles.iconContainer}
+                        iconStyle={styles.icon}
+                        onPress={onRemoveOrder}
+                    />
+                    <Text style={styles.quantity}>{quantityTaken}</Text>
+                    <Icon
+                        name="add"
+                        size={ICON_SIZE}
+                        containerStyle={styles.iconContainer}
+                        iconStyle={styles.icon}
+                        onPress={onAddOrder}
+                    />
                 </View>
-                {/* <TouchableOpacity>
-                    <Text style={styles.changeDeliveryTypeText}>Change delivery type</Text>
-                </TouchableOpacity> */}
             </View>
-            {displayOnly ?
-                <View style={styles.actions}>
-                    <View style={styles.quantityContainer}>
-                        <Text style={styles.quantity}>{quantityTaken}</Text>
-                    </View>
-                </View> :
-                <View style={styles.actions}>
-                    <Text style={styles.price}>${formattedPrice}</Text>
-                    <View style={styles.quantityContainer}>
-                        <Icon
-                            name="remove"
-                            size={ICON_SIZE}
-                            containerStyle={styles.iconContainer}
-                            iconStyle={styles.icon}
-                            onPress={onRemoveOrder}
-                        />
-                        <Text style={styles.quantity}>{quantityTaken}</Text>
-                        <Icon
-                            name="add"
-                            size={ICON_SIZE}
-                            containerStyle={styles.iconContainer}
-                            iconStyle={styles.icon}
-                            onPress={onAddOrder}
-                        />
-                    </View>
-                </View>
-            }
+            <View style={styles.actions}>
+                <Text style={styles.price}>${formattedPrice}</Text>
+            </View>
         </View>
     );
 };
@@ -77,12 +67,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     title: {
-        fontSize: emY(1.25),
+        fontSize: emY(0.75),
         flex: 1,
         marginBottom: emY(0.5)
     },
     price: {
-        fontSize: emY(1.25),
+        fontSize: emY(0.75),
         textAlign: 'right',
         marginRight: 10,
         marginBottom: emY(1.375)

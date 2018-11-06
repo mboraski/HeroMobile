@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapReducer handles ADD_CARD action 1`] = `
+Object {
+  "cards": Array [],
+  "pending": true,
+}
+`;
+
+exports[`mapReducer handles ADD_CARD_FAIL action 1`] = `
+Object {
+  "cards": Array [],
+  "error": "error",
+  "pending": false,
+}
+`;
+
+exports[`mapReducer handles ADD_CARD_SUCCESS action 1`] = `
+Object {
+  "cards": Array [],
+  "pending": false,
+}
+`;
+
+exports[`mapReducer handles DELETE_CARD action 1`] = `
+Object {
+  "cards": Array [],
+  "pending": true,
+}
+`;
+
+exports[`mapReducer handles DELETE_CARD_FAIL action 1`] = `
+Object {
+  "cards": Array [],
+  "error": "error",
+  "pending": false,
+}
+`;
+
+exports[`mapReducer handles DELETE_CARD_SUCCESS action 1`] = `
+Object {
+  "cards": Array [],
+  "pending": false,
+}
+`;
+
+exports[`mapReducer handles LIST_CARDS action 1`] = `
+Object {
+  "cards": Array [],
+  "pending": true,
+}
+`;
+
+exports[`mapReducer handles LIST_CARDS_FAIL action 1`] = `
+Object {
+  "cards": Array [],
+  "error": "error",
+  "pending": false,
+}
+`;
+
+exports[`mapReducer handles LIST_CARDS_SUCCESS action 1`] = `
+Object {
+  "cards": "mockdata",
+  "error": null,
+  "pending": false,
+}
+`;

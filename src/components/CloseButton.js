@@ -14,15 +14,21 @@ class CloseButton extends Component {
         const { style, ...props } = this.props;
         return (
             <TouchableOpacity {...props} style={[styles.container, style]}>
-                <Image source={closeIcon} style={styles.image} resizeMode="contain" />
+                <Image
+                    source={closeIcon}
+                    style={styles.image}
+                    resizeMode="contain"
+                />
             </TouchableOpacity>
         );
     }
 }
 
+// TODO: remove display none when X functionality implemented
 const styles = StyleSheet.create({
     container: {
-        marginLeft: 20
+        marginLeft: 20,
+        display: 'none'
     },
     image: {
         width: SIZE,
@@ -30,8 +36,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(CloseButton);
+export default connect(
+    null,
+    mapDispatchToProps
+)(CloseButton);

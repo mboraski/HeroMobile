@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionTitle renders correctly 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={true}
+  disabled={false}
+  ellipsizeMode="tail"
+  style={
+    Array [
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 13,
+        "paddingBottom": 16,
+        "paddingHorizontal": 15,
+        "paddingTop": 35,
+      },
+      undefined,
+    ]
+  }
+/>
+`;

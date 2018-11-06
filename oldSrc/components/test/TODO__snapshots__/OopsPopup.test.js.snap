@@ -1,0 +1,365 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OopsPopup renders correctly 1`] = `
+<Component
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0)",
+          }
+        }
+      >
+        .
+      </Text>
+    </TouchableOpacity>
+    <View
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 4,
+          "justifyContent": "center",
+          "marginHorizontal": 22,
+          "paddingHorizontal": 17,
+          "paddingVertical": 18.08,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginVertical": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        Oops
+      </Text>
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 55.04,
+            "marginBottom": 25.28,
+            "width": 55.04,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginBottom": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        message
+      </Text>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 20,
+              "height": 40,
+              "justifyContent": "center",
+              "marginHorizontal": 33,
+              "marginVertical": 12,
+            },
+            Object {
+              "backgroundColor": "#000000",
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15.36,
+              },
+              Object {
+                "color": "#ffffff",
+              },
+            ]
+          }
+        >
+          OK
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 20,
+              "height": 40,
+              "justifyContent": "center",
+              "marginHorizontal": 33,
+              "marginVertical": 12,
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15.36,
+              },
+              Object {
+                "color": "#000000",
+              },
+            ]
+          }
+        >
+          Cancel
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Component>
+`;
+
+exports[`OopsPopup renders correctly no icon 1`] = `
+<Component
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0)",
+          }
+        }
+      >
+        .
+      </Text>
+    </TouchableOpacity>
+    <View
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 4,
+          "justifyContent": "center",
+          "marginHorizontal": 22,
+          "paddingHorizontal": 17,
+          "paddingVertical": 18.08,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginVertical": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        Oops
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "marginBottom": 25.28,
+            "textAlign": "center",
+          }
+        }
+      >
+        message
+      </Text>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 20,
+              "height": 40,
+              "justifyContent": "center",
+              "marginHorizontal": 33,
+              "marginVertical": 12,
+            },
+            Object {
+              "backgroundColor": "#000000",
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15.36,
+              },
+              Object {
+                "color": "#ffffff",
+              },
+            ]
+          }
+        >
+          OK
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 20,
+              "height": 40,
+              "justifyContent": "center",
+              "marginHorizontal": 33,
+              "marginVertical": 12,
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15.36,
+              },
+              Object {
+                "color": "#000000",
+              },
+            ]
+          }
+        >
+          Cancel
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Component>
+`;

@@ -1,8 +1,9 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 // Relative Imports
+import Text from './Text';
 import { emY } from '../utils/em';
 import Color from '../constants/Color';
 
@@ -30,13 +31,21 @@ class MenuItem extends Component {
 
         if (badge) {
             badgeElement = (
-                <TouchableOpacity {...props} onPress={this.onPress} style={styles.badgeContainer}>
+                <TouchableOpacity
+                    {...props}
+                    onPress={this.onPress}
+                    style={styles.badgeContainer}
+                >
                     <Text style={styles.badge}>{badge}</Text>
                 </TouchableOpacity>
             );
         }
         return (
-            <TouchableOpacity {...props} onPress={this.onPress} style={styles.container}>
+            <TouchableOpacity
+                {...props}
+                onPress={this.onPress}
+                style={styles.container}
+            >
                 <Image style={styles.image} source={image} />
                 <Text style={styles.title}>{title}</Text>
                 {badgeElement}

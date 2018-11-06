@@ -1,4 +1,4 @@
-const STRIPE_CLIENT_KEY = 'pk_test_5W0mS0OlfYGw7fRu0linjLeH';
+const STRIPE_CLIENT_KEY = 'pk_live_eBxSXuGpFNQGgUfbGIC9ypz4';
 
 export { STRIPE_CLIENT_KEY };
 export default STRIPE_CLIENT_KEY;

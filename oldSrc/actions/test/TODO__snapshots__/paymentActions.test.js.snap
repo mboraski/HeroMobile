@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapActions addCard 1`] = `
+Array [
+  Object {
+    "type": "add_card",
+  },
+  Object {
+    "type": "add_card_success",
+  },
+]
+`;
+
+exports[`mapActions deleteCard 1`] = `
+Array [
+  Object {
+    "type": "delete_card",
+  },
+  Object {
+    "type": "delete_card_success",
+  },
+]
+`;
+
+exports[`mapActions listCards 1`] = `
+Array [
+  Object {
+    "type": "list_cards",
+  },
+  Object {
+    "payload": "mockdata",
+    "type": "list_cards_success",
+  },
+]
+`;

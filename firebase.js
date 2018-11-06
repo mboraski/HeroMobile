@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 
 require('firebase/firestore');
+require('firebase/functions');
 
 const config = {
     apiKey: 'AIzaSyBEIuNlAAKU8byP2NUptaZTPtHobhYqMQA',
@@ -13,7 +14,6 @@ const config = {
 
 try {
     firebase.initializeApp(config);
-    console.log(firebase.name);
 } catch (err) {
     console.error('Firebase initialization error: ', err);
 }
@@ -23,6 +23,7 @@ export const rtdb = firebase.database();
 export const firebaseAuth = firebase.auth();
 // export const messaging = firebase.messaging();
 export const db = firebase.firestore();
+export const functions = firebase.functions();
 
 // Disable deprecated features
 db.settings({

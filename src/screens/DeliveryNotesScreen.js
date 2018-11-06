@@ -4,7 +4,7 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 // Relative Imports
 import CloseButton from '../components/CloseButton';
-import DeliveryNotesForm from '../containers/DeliveryNotesForm';
+import DeliveryNotesFormContainer from '../containers/DeliveryNotesFormContainer';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 
@@ -28,7 +28,9 @@ class DeliveryNotesScreen extends Component {
                 behavior="padding"
                 keyboardVerticalOffset={keyboardVerticalOffset}
             >
-                <DeliveryNotesForm navigation={this.props.navigation} />
+                <DeliveryNotesFormContainer
+                    navigation={this.props.navigation}
+                />
             </KeyboardAvoidingView>
         );
     }

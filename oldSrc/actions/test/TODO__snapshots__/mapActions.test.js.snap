@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapActions creates saveAddress action 1`] = `
+Object {
+  "payload": "address",
+  "type": "save_address",
+}
+`;
+
+exports[`mapActions getCurrentLocation 1`] = `[Function]`;
+
+exports[`mapActions getCurrentLocation 2`] = `
+Array [
+  Object {
+    "type": "get_current_location_request",
+  },
+  Object {
+    "payload": Object {
+      "latitude": 0,
+      "latitudeDelta": 0.0922,
+      "longitude": 1,
+      "longitudeDelta": 0.03841666666666667,
+    },
+    "type": "set_region",
+  },
+  Object {
+    "payload": Object {
+      "latlng": "0,1",
+    },
+    "type": "google_maps_reverse_geocode_request",
+  },
+  Object {
+    "type": "get_current_location_success",
+  },
+  Object {
+    "payload": Object {
+      "data": "data",
+    },
+    "type": "google_maps_reverse_geocode_success",
+  },
+]
+`;
+
+exports[`mapActions saveAddress 1`] = `
+Array [
+  Object {
+    "payload": "address",
+    "type": "save_address",
+  },
+  Object {
+    "payload": Object {
+      "address": "address",
+    },
+    "type": "google_maps_geocode_request",
+  },
+  Object {
+    "payload": Object {
+      "data": "data",
+    },
+    "type": "google_maps_geocode_success",
+  },
+]
+`;
+
+exports[`mapActions setRegion 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "latitude": 0,
+      "longitude": 0,
+    },
+    "type": "set_region",
+  },
+  Object {
+    "payload": Object {
+      "latlng": "0,0",
+    },
+    "type": "google_maps_reverse_geocode_request",
+  },
+  Object {
+    "payload": Object {
+      "data": "data",
+    },
+    "type": "google_maps_reverse_geocode_success",
+  },
+]
+`;

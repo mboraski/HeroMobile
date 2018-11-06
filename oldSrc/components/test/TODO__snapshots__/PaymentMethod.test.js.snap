@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentMethod renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#cccccc",
+        "flexDirection": "row",
+        "paddingHorizontal": 12,
+        "paddingVertical": 15,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "flex": 1,
+        "fontSize": 16,
+      }
+    }
+  />
+  <Image
+    source={1}
+    style={Object {}}
+  />
+</TouchableOpacity>
+`;

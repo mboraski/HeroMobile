@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeliveryNotesScreen renders correctly 1`] = `
+<View
+  keyboardVerticalOffset={16}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <Connect(ReduxForm) />
+</View>
+`;

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentMethodScreen renders correctly 1`] = `
+<ScrollViewMock
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <SectionTitle
+    title="MY CARDS"
+  />
+  <PaymentMethod
+    key="0"
+    onPress={[Function]}
+    text="4000400040004000"
+    type="visa"
+  />
+  <PaymentMethod
+    onPress={[Function]}
+    text="Add Card"
+  />
+  <SectionTitle
+    title="MY BANK ACCOUNT"
+  />
+  <PaymentMethod
+    key="0"
+    onPress={[Function]}
+    text="Bank of America"
+    type="bank-america"
+  />
+  <SectionTitle
+    title="MY PAYPAL"
+  />
+  <PaymentMethod
+    onPress={[Function]}
+    text="johndoe@gmail.com"
+    type="paypal"
+  />
+</ScrollViewMock>
+`;

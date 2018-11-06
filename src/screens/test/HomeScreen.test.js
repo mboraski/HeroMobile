@@ -6,9 +6,9 @@ test.only('real recognize real', () => {
 // import React from 'react';
 // import { shallow } from 'enzyme';
 //
-// import { HomeScreen } from '../HomeScreen';
+// import { ProductsScreen } from '../ProductsScreen';
 //
-// describe('HomeScreen', () => {
+// describe('ProductsScreen', () => {
 //     it('renders correctly', () => {
 //         const props = {
 //             products: [
@@ -26,7 +26,7 @@ test.only('real recognize real', () => {
 //                 isMenuOpen: false
 //             }
 //         };
-//         const render = shallow(<HomeScreen {...props} />);
+//         const render = shallow(<ProductsScreen {...props} />);
 //         expect(render).toMatchSnapshot();
 //     });
 // });

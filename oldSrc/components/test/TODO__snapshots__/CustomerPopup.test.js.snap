@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerPopup renders correctly 1`] = `
+<Component
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0)",
+          }
+        }
+      >
+        .
+      </Text>
+    </TouchableOpacity>
+    <View
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 6,
+          "justifyContent": "center",
+          "marginHorizontal": 22,
+          "paddingHorizontal": 17,
+          "paddingVertical": 24,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 10,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 24,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 17.28,
+            "lineHeight": 24,
+            "marginHorizontal": 30,
+            "marginVertical": 16,
+            "textAlign": "center",
+          }
+        }
+      >
+        Select the way you want to connect with customer service
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginTop": 16,
+          }
+        }
+      >
+        <View
+          key="0"
+        >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#000000",
+                "borderRadius": 44.96,
+                "height": 89.92,
+                "justifyContent": "center",
+                "width": 89.92,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={1}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "height": 29.973333333333333,
+                  "width": 29.973333333333333,
+                }
+              }
+            />
+          </TouchableOpacity>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "alignSelf": "center",
+                "fontSize": 13.28,
+                "marginTop": 16,
+              }
+            }
+          >
+            CALL
+          </Text>
+        </View>
+        <View
+          key="1"
+        >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#000000",
+                "borderRadius": 44.96,
+                "height": 89.92,
+                "justifyContent": "center",
+                "width": 89.92,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={1}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "height": 29.973333333333333,
+                  "width": 29.973333333333333,
+                }
+              }
+            />
+          </TouchableOpacity>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "alignSelf": "center",
+                "fontSize": 13.28,
+                "marginTop": 16,
+              }
+            }
+          >
+            LIVE CHAT
+          </Text>
+        </View>
+        <View
+          key="2"
+        >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#000000",
+                "borderRadius": 44.96,
+                "height": 89.92,
+                "justifyContent": "center",
+                "width": 89.92,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={1}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "height": 29.973333333333333,
+                  "width": 29.973333333333333,
+                }
+              }
+            />
+          </TouchableOpacity>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            disabled={false}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "alignSelf": "center",
+                "fontSize": 13.28,
+                "marginTop": 16,
+              }
+            }
+          >
+            EMAIL
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</Component>
+`;

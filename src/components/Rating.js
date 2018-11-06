@@ -1,7 +1,7 @@
 // Third Party Imports
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import times from 'lodash/times';
+import times from 'lodash.times';
 
 import fillIcon from '../assets/icons/star-fill.png';
 import emptyIcon from '../assets/icons/star-empty.png';
@@ -28,7 +28,11 @@ export default class BackButton extends Component {
             <TouchableOpacity key={index} onPress={onPress}>
                 <Image
                     source={source}
-                    style={[styles.rating, { width: size, height: size }, ratingStyle]}
+                    style={[
+                        styles.rating,
+                        { width: size, height: size },
+                        ratingStyle
+                    ]}
                 />
             </TouchableOpacity>
         );
@@ -37,7 +41,9 @@ export default class BackButton extends Component {
     render() {
         const { style, ratingCount } = this.props;
         return (
-            <View style={[styles.container, style]}>{times(ratingCount, this.renderRating)}</View>
+            <View style={[styles.container, style]}>
+                {times(ratingCount, this.renderRating)}
+            </View>
         );
     }
 }

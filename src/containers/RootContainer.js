@@ -2,35 +2,50 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-// import { addNavigationHelpers, NavigationActions } from 'react-navigation';
-import moment from 'moment';
-import { Permissions } from 'expo';
+// import moment from 'moment';
+import { Permissions, Notifications } from 'expo';
 
 // Relative Imports
 import MenuNavigator from '../navigations/MenuNavigator';
 import CommunicationPopup from '../components/CommunicationPopup';
 import DropdownAlert from '../components/DropdownAlert';
-import { listenToAuthChanges, signOut } from '../actions/authActions';
+import {
+    listenToAuthChanges,
+    signOut,
+    setUserExpoPushToken
+} from '../actions/authActions';
 import { closeCustomerPopup, dropdownAlert } from '../actions/uiActions';
-import { unListenProductsRef } from '../actions/productActions';
-// import { reduxBoundAddListener } from '../store';
+import { unListenCustomerBlock } from '../actions/productActions';
+import {
+    unListenOrderStatus,
+    unListenToOrderFulfillment,
+    unListenOrderError,
+    listenToOrderStatus,
+    listenToOrderFulfillment,
+    listenToOrderError
+} from '../actions/orderActions';
 
-// const initialValuesRef = firebase.database().ref('initialValues');
-//
-// const activeProductsRef = firebase
-//     .database()
-//     .ref('activeProducts/US/TX/Austin');
+import { getOrderId } from '../selectors/orderSelectors';
 
 class RootContainer extends Component {
-    async componentWillMount() {
-        if (
-            this.props.user &&
-            moment().isAfter(moment(this.props.authExpirationDate))
-        ) {
-            this.props.signOut();
-        }
-
+    componentWillMount() {
         this.props.listenToAuthChanges();
+
+        // if (
+        //     this.props.user || firebaseAuth.currentUser &&
+        //     moment().isAfter(moment(this.props.authExpirationDate))
+        // ) {
+        //     console.log('current moment: ', moment().toDate());
+        //     this.props.signOut();
+        // }
+    }
+
+    async componentDidMount() {
+        if (this.props.orderId) {
+            this.props.listenToOrderStatus(this.props.orderId);
+            this.props.listenToOrderError(this.props.orderId);
+            this.props.listenToOrderFulfillment(this.props.orderId);
+        }
 
         const { status: existingStatus } = await Permissions.getAsync(
             Permissions.NOTIFICATIONS
@@ -48,36 +63,33 @@ class RootContainer extends Component {
             finalStatus = status;
         }
 
+        // Temp since iOS does not ask twice.
+        // const token = await Notifications.getExpoPushTokenAsync();
+        // this.props.setUserExpoPushToken(token);
+
         if (finalStatus === 'granted') {
-            // Get the token that uniquely identifies this device
-            // let token = await Notifications.getExpoPushTokenAsync();
-            // Handle notifications that are received or selected while the app
-            // is open. If the app was closed and then opened by tapping the
-            // notification (rather than just tapping the app icon to open it),
-            // this function will fire on the next tick after the app starts
-            // with the notification data.
+            const token = await Notifications.getExpoPushTokenAsync();
+            this.props.setUserExpoPushToken(token);
             // this.notificationSubscription = Notifications.addListener(
             //     this.handleNotification
             // );
         }
     }
 
-    componentWillUnMount() {
-        this.props.unListenProductsRef();
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.orderId && nextProps.orderId) {
+            this.props.listenToOrderStatus(nextProps.orderId);
+            this.props.listenToOrderError(nextProps.orderId);
+            this.props.listenToOrderFulfillment(nextProps.orderId);
+        }
     }
 
-    // handleNotification = notification => {
-    //     if (notification.data) {
-    //         if (notification.data.type === 'feedback') {
-    //             this.props.dispatch(
-    //                 NavigationActions.navigate({
-    //                     routeName: 'notificationFeedback',
-    //                     params: notification.data
-    //                 })
-    //             );
-    //         }
-    //     }
-    // };
+    componentWillUnMount() {
+        this.props.unListenCustomerBlock();
+        this.props.unListenToOrderFulfillment(this.props.orderId);
+        this.props.unListenOrderError(this.props.orderId);
+        this.props.unListenOrderStatus(this.props.orderId);
+    }
 
     handleCustomerPopupClose = () => {
         this.props.closeCustomerPopup();
@@ -127,15 +139,23 @@ const mapStateToProps = state => ({
     customerPopupVisible: state.ui.customerPopupVisible,
     dropdownAlertVisible: state.ui.dropdownAlertVisible,
     dropdownAlertText: state.ui.dropdownAlertText,
+    orderId: getOrderId(state),
     nav: state.nav
 });
 
 const mapDispatchToProps = {
-    unListenProductsRef,
+    unListenCustomerBlock,
+    setUserExpoPushToken,
     closeCustomerPopup,
     dropdownAlert,
     listenToAuthChanges,
-    signOut
+    signOut,
+    unListenOrderStatus,
+    unListenToOrderFulfillment,
+    unListenOrderError,
+    listenToOrderStatus,
+    listenToOrderFulfillment,
+    listenToOrderError
 };
 
 export default connect(
