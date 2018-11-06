@@ -8,6 +8,6 @@ export { default as payment } from './paymentReducer';
 export { default as product } from './productReducer';
 export { default as header } from './navigationReducer';
 export { default as notification } from './notificationReducer';
-// export { default as nav } from './navReducer';
+export { default as contractor } from './contractorReducer';
 export { default as order } from './orderReducer';
 export { default as marketing } from './marketingReducer';

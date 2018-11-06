@@ -5,7 +5,8 @@ import {
     LISTEN_ORDER_STATUS,
     UPDATE_ORDER_STATUS,
     UPDATE_ORDER_FULFILLMENT,
-    UPDATE_ORDER_ERROR
+    UPDATE_ORDER_ERROR,
+    UPDATE_ORDERS
 } from '../actions/orderActions';
 import { SIGNOUT_SUCCESS } from '../actions/authActions';
 

@@ -11,7 +11,7 @@ export default createDrawerNavigator(
         mainNavigator: { screen: MainNavigator }
     },
     {
-        drawerWidth: 300, // TODO: change to a percentage of the screen width
+        drawerWidth: 200, // TODO: change to a percentage of the screen width
         drawerPosition: 'left',
         contentComponent: props => <MenuContainer {...props} />
     }

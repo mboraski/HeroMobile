@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 
 // Relative Imports
 import apiTester from '../screens/apiTester';
+import HeroMainScreen from '../screens/HeroMainScreen';
 import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -19,12 +20,17 @@ import CheckoutScreen from '../screens/CheckoutScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import PromotionShareScreen from '../screens/PromotionShareScreen';
 import NotificationFeedbackScreen from '../screens/NotificationFeedbackScreen';
+import OrderScreen from '../screens/OrderScreen';
+import OrdersScreen from '../screens/OrdersScreen';
 
 const getHeaderMode = () => (Platform.OS === 'ios' ? 'float' : 'screen');
 
 export default createStackNavigator(
     {
         apiTester: { screen: apiTester },
+        main: { screen: HeroMainScreen },
+        order: { screen: OrderScreen },
+        orders: { screen: OrdersScreen },
         welcome: { screen: WelcomeScreen },
         auth: { screen: AuthScreen },
         profile: { screen: ProfileScreen },

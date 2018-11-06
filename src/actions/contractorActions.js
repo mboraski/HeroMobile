@@ -13,23 +13,23 @@ export const CONFIRM_INVENTORY_SUCCESS = 'confirm_inventory_success';
 export const CONFIRM_INVENTORY_ERROR = 'confirm_inventory_error';
 export const ADD_TO_INVENTORY = 'add_to_inventory';
 export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
+export const UPDATE_ORDERS = 'update_orders';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
 
-const CUSTOMER_BLOCK_REF = 'activeProducts/US/TX/Austin';
+const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
 
 export const fetchContractor = () => dispatch => {
     dispatch({ type: FETCH_CONTRACTOR_REQUEST });
     const user = firebaseAuth.currentUser;
     const uid = user ? user.uid : '';
-    const activeHeroesRef = rtdb.ref(
-        `${CUSTOMER_BLOCK_REF}/contractors/${uid}`
-    );
+    const activeHeroesRef = rtdb.ref(`contractors/${uid}`);
     return activeHeroesRef
         .once('value')
         .then(snapshot => {
             const heroData = snapshot.val();
-            if (heroData) {
+            console.log('hero data: ', heroData);
+            if (heroData && heroData.online) {
                 dispatch({ type: FETCH_CONTRACTOR_SUCCESS, payload: heroData });
                 dispatch({ type: ONLINE });
             } else {
@@ -38,7 +38,7 @@ export const fetchContractor = () => dispatch => {
             }
         })
         .catch(error => {
-            logContractorError(uid, error);
+            console.log('fetch contractor error: ', error);
             dispatch({ type: FETCH_CONTRACTOR_ERROR, payload: error });
             dispatch(
                 dropdownAlert(true, 'Error retrieving Hero online status')
@@ -76,6 +76,34 @@ export const offline = () => dispatch => {
         })
         .catch(error => {
             dispatch({ type: ONLINE });
+            logContractorError(uid, error);
+            dispatch(dropdownAlert(true, 'Error setting Hero online status'));
+        });
+};
+
+export const listenToOrders = () => dispatch => {
+    return rtdb.ref(`${ORDER_REF}`).on('value', snapshot => {
+        const data = snapshot.val();
+        if (data) {
+            dispatch({ type: UPDATE_ORDERS, payload: data });
+        }
+    });
+};
+
+export const unListenToOrders = () => rtdb.ref(`${ORDER_REF}`).off();
+
+export const changeOrderStatus = () => dispatch => {
+    const user = firebaseAuth.currentUser;
+    const uid = user.uid;
+    const contractorRef = rtdb.ref(`contractors/${uid}`);
+    return contractorRef
+        .update({ online: true, region })
+        .then(() => {
+            dispatch({ type: ONLINE });
+            dispatch(dropdownAlert(true, 'Successfully Online!'));
+        })
+        .catch(error => {
+            dispatch({ type: OFFLINE });
             logContractorError(uid, error);
             dispatch(dropdownAlert(true, 'Error setting Hero online status'));
         });

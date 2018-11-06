@@ -37,6 +37,6 @@ export const store = createStore(Reducer, {}, enhancer);
 export const persistor = persistStore(store);
 
 // clears async storage
-// persistor.purge();
+persistor.purge();
 
 export default { persistor, store };

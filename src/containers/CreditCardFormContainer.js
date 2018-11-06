@@ -38,7 +38,7 @@ import { STRIPE_CLIENT_KEY } from '../constants/Stripe';
 const stripe = stripeClient(STRIPE_CLIENT_KEY);
 const keyboardVerticalOffset = emY(1);
 
-export class CreditCardFormContainer extends Component {
+class CreditCardFormContainer extends Component {
     deleteCardConfirm = () => {
         Alert.alert('Confirm', 'Are you sure you want to delete this card?', [
             { text: 'Cancel', style: 'cancel' },

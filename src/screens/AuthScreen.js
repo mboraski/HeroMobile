@@ -30,13 +30,13 @@ class AuthScreen extends Component {
     static navigationOptions = statusBarOnly;
 
     state = {
-        signUp: true,
+        signUp: false,
         openModal: false
     };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.user) {
-            this.props.navigation.navigate('map');
+            this.props.navigation.navigate('main');
         }
     }
 
