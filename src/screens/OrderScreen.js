@@ -1,33 +1,70 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Linking, Platform } from 'react-native';
 import { Button } from 'react-native-elements';
 
 // Relative Imports
 import { getOrders } from '../selectors/contractorSelectors';
 import { changeOrderStatus } from '../actions/contractorActions';
 import BackButton from '../components/BackButton';
+import OrderInfo from '../components/OrderInfo';
 import Style from '../constants/Style';
 
 class OrderScreen extends Component {
     changeOrderStatusEnRoute = () => {
-        this.props.changeOrderStatus('');
+        const { orderId } = this.props;
+        console.log('orderId: ', orderId);
+
+        this.props.changeOrderStatus('en_route', orderId);
     };
 
     changeOrderStatusArrived = () => {
-        this.props.changeOrderStatus('');
+        const { orderId } = this.props;
+
+        this.props.changeOrderStatus('arrived', orderId);
     };
 
     changeOrderStatusCompleted = () => {
-        this.props.changeOrderStatus('');
+        const { orderId } = this.props;
+
+        this.props.changeOrderStatus('delivered', orderId);
+    };
+
+    specifyOrder = () => {
+        const { orders, orderId } = this.props;
+        // TODO: log error if no match;
+        return orders[orderId];
+    };
+
+    askForDirections = () => {
+        const { address } = this.props;
+        const encodedAddress = encodeURIComponent(address);
+        if (Platform.OS === 'ios') {
+            Linking.openURL(`http://maps.apple.com/?daddr=${encodedAddress}`);
+        } else {
+            Linking.openURL(`http://maps.google.com/?daddr=${encodedAddress}`);
+        }
+        return;
     };
 
     render() {
-        const { orders, orderId } = this.props;
-        // TODO: show product list and count
+        const order = this.specifyOrder();
+        const customerInfo = order.customerInfo;
+
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
+                <OrderInfo
+                    products={order.cart}
+                    notes={customerInfo.notes}
+                    firstName={customerInfo.firstName}
+                    lastName={customerInfo.lastName}
+                />
+                <Button
+                    title={'View Route'}
+                    buttonStyle={styles.button}
+                    onPress={this.askForDirections}
+                />
                 <Button
                     title={'En Route'}
                     buttonStyle={styles.button}
@@ -43,7 +80,7 @@ class OrderScreen extends Component {
                     buttonStyle={styles.button}
                     onPress={this.changeOrderStatusCompleted}
                 />
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -61,10 +98,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-    const orderId =
+    const id =
         props.navigation.state.params && props.navigation.state.params.orderId;
     return {
-        orderId,
+        orderId: id,
         orders: getOrders(state)
     };
 };

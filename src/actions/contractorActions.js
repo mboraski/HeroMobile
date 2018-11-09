@@ -18,6 +18,7 @@ export const ONLINE = 'online';
 export const OFFLINE = 'offline';
 
 const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
+const CONSUMER_BLOCK_REF = 'activeProducts/US/TX/Austin';
 
 export const fetchContractor = () => dispatch => {
     dispatch({ type: FETCH_CONTRACTOR_REQUEST });
@@ -92,21 +93,16 @@ export const listenToOrders = () => dispatch => {
 
 export const unListenToOrders = () => rtdb.ref(`${ORDER_REF}`).off();
 
-export const changeOrderStatus = () => dispatch => {
-    const user = firebaseAuth.currentUser;
-    const uid = user.uid;
-    const contractorRef = rtdb.ref(`contractors/${uid}`);
-    return contractorRef
-        .update({ online: true, region })
-        .then(() => {
-            dispatch({ type: ONLINE });
-            dispatch(dropdownAlert(true, 'Successfully Online!'));
-        })
-        .catch(error => {
-            dispatch({ type: OFFLINE });
-            logContractorError(uid, error);
-            dispatch(dropdownAlert(true, 'Error setting Hero online status'));
-        });
+export const changeOrderStatus = (status, orderId) => dispatch => {
+    const contractor = firebaseAuth.currentUser;
+    if (contractor) {
+        const orderRef = rtdb.ref(
+            `${CONSUMER_BLOCK_REF}/orders/${orderId}/fulfillment/actualFulfillment/full/${
+                contractor.uid
+            }`
+        );
+        return orderRef.update({ status });
+    }
 };
 
 export const fetchContractorInventory = dispatch => {

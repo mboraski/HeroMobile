@@ -47,8 +47,8 @@ class OrdersScreen extends Component {
 
     renderOrderSummary = (order, index) => {
         if (order) {
-            const { firstName = 'na', lastName = 'na' } = order.consumerInfo;
-            const onPress = () => this.selectOrder(order);
+            const { firstName, lastName } = order.consumerInfo;
+            const onPress = () => this.selectOrder(index);
             return (
                 <Order
                     key={index}
