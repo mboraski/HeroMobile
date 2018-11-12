@@ -26,7 +26,7 @@ import Style from '../constants/Style';
 class OrdersScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: 'Payment Method',
+            title: 'Orders',
             headerLeft: <MenuAndBackButton navigation={navigation} />,
             headerStyle: Style.header,
             headerTitleStyle: Style.headerTitle
@@ -38,7 +38,7 @@ class OrdersScreen extends Component {
     }
 
     componentWillUnmount() {
-        this.props.unListenToOrders();
+        unListenToOrders();
     }
 
     selectOrder = orderId => {
@@ -48,10 +48,13 @@ class OrdersScreen extends Component {
     renderOrderSummary = (order, index) => {
         if (order) {
             const { firstName, lastName } = order.consumerInfo;
+            const fulfillment = order.fulfillment;
+            const status = fulfillment.status;
             const onPress = () => this.selectOrder(index);
             return (
                 <Order
                     key={index}
+                    status={status}
                     firstName={firstName}
                     lastName={lastName}
                     onPress={onPress}
@@ -109,8 +112,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    listenToOrders,
-    unListenToOrders
+    listenToOrders
 };
 
 export default connect(

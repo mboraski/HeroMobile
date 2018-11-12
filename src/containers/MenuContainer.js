@@ -25,6 +25,14 @@ const getRoute = (items, routeName) =>
     items.find(item => item.key === routeName);
 
 class MenuContent extends Component {
+    mainPress = () => {
+        this.props.navigation.navigate('main');
+    };
+
+    ordersPress = () => {
+        this.props.navigation.navigate('orders');
+    };
+
     orderPress = () => {
         this.props.navigation.navigate('deliveryStatus');
     };
@@ -63,6 +71,16 @@ class MenuContent extends Component {
                     ) : null}
                 </View>
                 <ScrollView style={styles.menuItems}>
+                    <MenuItem
+                        onPress={this.ordersPress}
+                        image={heroIcon}
+                        title="Orders"
+                    />
+                    <MenuItem
+                        onPress={this.mainPress}
+                        image={heroIcon}
+                        title="Hero Main"
+                    />
                     <MenuItem
                         route={getRoute(items, 'order')}
                         activeItemKey={activeItemKey}

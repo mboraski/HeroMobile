@@ -8,7 +8,7 @@ import Text from './Text';
 import { emY } from '../utils/em';
 import Color from '../constants/Color';
 
-class OrderInfo extends Component {
+class OrderCartInfo extends Component {
     renderProducts() {
         const { products } = this.props;
         return map(products, product => {
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default OrderInfo;
+export default OrderCartInfo;

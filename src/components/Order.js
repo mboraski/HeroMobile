@@ -7,11 +7,12 @@ import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
-export default function Order({ firstName, lastName, ...props }) {
+export default function Order({ firstName, lastName, status, ...props }) {
     return (
         <TouchableOpacity {...props} style={[styles.container]}>
             <Text style={styles.text}>{firstName}</Text>
             <Text style={styles.text}>{lastName}</Text>
+            <Text style={styles.text}>{status}</Text>
         </TouchableOpacity>
     );
 }
