@@ -10,11 +10,11 @@ import MenuItem from '../components/MenuItem';
 import Text from '../components/Text';
 import ToggleBackButton from '../components/ToggleBackButton';
 import heroIcon from '../assets/icons/logo-black.png';
-import notificationIcon from '../assets/icons/notification.png';
-import cartIcon from '../assets/icons/cart.png';
-import paymentIcon from '../assets/icons/payment.png';
+// import notificationIcon from '../assets/icons/notification.png';
+// import cartIcon from '../assets/icons/cart.png';
+// import paymentIcon from '../assets/icons/payment.png';
 import historyIcon from '../assets/icons/history.png';
-import locationIcon from '../assets/icons/location.png';
+// import locationIcon from '../assets/icons/location.png';
 import { openCustomerPopup } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
 import { getUserReadable } from '../selectors/authSelectors';
@@ -81,54 +81,53 @@ class MenuContent extends Component {
                         image={heroIcon}
                         title="Hero Main"
                     />
-                    <MenuItem
+                    {/*<MenuItem
                         route={getRoute(items, 'order')}
                         activeItemKey={activeItemKey}
                         onPress={this.orderPress}
                         image={notificationIcon}
                         title="Order"
                         // badge="0"
-                    />
-                    <MenuItem
+                    />*/}
+                    {/*<MenuItem
                         route={getRoute(items, 'checkout')}
                         activeItemKey={activeItemKey}
                         onPress={this.checkoutPress}
                         image={cartIcon}
                         title="Checkout"
-                    />
-                    <MenuItem
+                    />*/}
+                    {/*<MenuItem
                         route={getRoute(items, 'products')}
                         activeItemKey={activeItemKey}
                         onPress={this.productsPress}
                         image={historyIcon}
                         title="Products"
-                    />
-                    <MenuItem
+                    />*/}
+                    {/*<MenuItem
                         route={getRoute(items, 'map')}
                         activeItemKey={activeItemKey}
                         onPress={this.mapPress}
                         image={locationIcon}
                         title="Map"
-                    />
-                    <MenuItem
+                    />*/}
+                    {/*<MenuItem
                         route={getRoute(items, 'paymentMethod')}
                         activeItemKey={activeItemKey}
                         onPress={this.paymentMethod}
                         image={paymentIcon}
                         title="Payment Info"
-                    />
+                    />*/}
                     {/* <MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}
                         image={heroIcon}
                         title="Heroes Needed!"
                     /> */}
-                    {/* <MenuItem
-                        activeItemKey={activeItemKey}
-                        onPress={onItemPress}
+                    <MenuItem
+                        onPress={() => {}}
                         image={historyIcon}
                         title="History"
-                    /> */}
+                    />
                     {/*<MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}

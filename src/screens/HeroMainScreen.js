@@ -19,7 +19,7 @@ import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
 import logoBlack from '../assets/icons/logo-black3.png';
-import avatarIcon from '../assets/icons/user.png';
+import avatarIcon from '../assets/mark.png';
 import { dropdownAlert } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
 import {
