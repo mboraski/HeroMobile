@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import reduce from 'lodash.reduce';
-import filter from 'lodash.filter';
 
 import { getInventory } from './contractorSelectors';
 
@@ -40,7 +39,7 @@ export const getDeliveryTypes = createSelector(getCartProducts, products =>
  * Turns product map into 1D array with code and type and removes orders with 0 quantity
  */
 export const getCartOrders = createSelector([getInventory], inventory =>
-    _.reduce(
+    reduce(
         inventory,
         (accum, product) => {
             if (product.quantityTaken > 0) {
@@ -57,7 +56,7 @@ export const getUpdateInventory = createSelector(
     (instantProducts, inventory) => {
         console.log('getUpdateInventory instantProducts: ', instantProducts);
         console.log('getUpdateInventory getInventory: ', inventory);
-        const result = _.reduce(
+        const result = reduce(
             instantProducts,
             (accum, product) => {
                 const takenProduct = inventory[product.productName];
