@@ -1,0 +1,745 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackForm should render correctly 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginBottom": 16,
+        "paddingHorizontal": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    We love feedback. Please help us understand your rating in more detail:
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <TextInputField
+      name="name"
+      placeholder="Name"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      keyboardType="email-address"
+      name="email"
+      placeholder="Email"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      containerStyle={
+        Object {
+          "flex": 1,
+        }
+      }
+      label="MESSAGE"
+      labelStyle={
+        Object {
+          "color": "#999999",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "paddingTop": 16,
+        }
+      }
+      multiline={true}
+      name="message"
+      style={
+        Array [
+          Object {
+            "borderColor": "#999999",
+            "borderWidth": 0.5,
+            "marginBottom": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+  </View>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    disabled={true}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000",
+          "height": 48,
+          "justifyContent": "center",
+          "marginBottom": 16,
+          "marginHorizontal": 15,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#999999",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      SEND
+    </Text>
+  </TouchableOpacity>
+</Component>
+`;
+
+exports[`FeedbackForm should render correctly with error 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginBottom": 16,
+        "paddingHorizontal": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    We love feedback. Please help us understand your rating in more detail:
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <TextInputField
+      name="name"
+      placeholder="Name"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      keyboardType="email-address"
+      name="email"
+      placeholder="Email"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      containerStyle={
+        Object {
+          "flex": 1,
+        }
+      }
+      label="MESSAGE"
+      labelStyle={
+        Object {
+          "color": "#999999",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "paddingTop": 16,
+        }
+      }
+      multiline={true}
+      name="message"
+      style={
+        Array [
+          Object {
+            "borderColor": "#999999",
+            "borderWidth": 0.5,
+            "marginBottom": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+  </View>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    disabled={true}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000",
+          "height": 48,
+          "justifyContent": "center",
+          "marginBottom": 16,
+          "marginHorizontal": 15,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#999999",
+        },
+        Object {
+          "backgroundColor": "rgb(243, 108, 96)",
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      Please fix issues before continuing
+    </Text>
+  </TouchableOpacity>
+</Component>
+`;
+
+exports[`FeedbackForm should render correctly with submitSuccess 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginBottom": 16,
+        "paddingHorizontal": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    We love feedback. Please help us understand your rating in more detail:
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <TextInputField
+      name="name"
+      placeholder="Name"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      keyboardType="email-address"
+      name="email"
+      placeholder="Email"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      containerStyle={
+        Object {
+          "flex": 1,
+        }
+      }
+      label="MESSAGE"
+      labelStyle={
+        Object {
+          "color": "#999999",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "paddingTop": 16,
+        }
+      }
+      multiline={true}
+      name="message"
+      style={
+        Array [
+          Object {
+            "borderColor": "#999999",
+            "borderWidth": 0.5,
+            "marginBottom": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+  </View>
+  <Spinner
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+  <TouchableOpacity
+    activeOpacity={0.2}
+    disabled={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000",
+          "height": 48,
+          "justifyContent": "center",
+          "marginBottom": 16,
+          "marginHorizontal": 15,
+        },
+        undefined,
+        false,
+        false,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      SEND
+    </Text>
+  </TouchableOpacity>
+</Component>
+`;
+
+exports[`FeedbackForm should render correctly with submitting 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginBottom": 16,
+        "paddingHorizontal": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    We love feedback. Please help us understand your rating in more detail:
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <TextInputField
+      name="name"
+      placeholder="Name"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      keyboardType="email-address"
+      name="email"
+      placeholder="Email"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      containerStyle={
+        Object {
+          "flex": 1,
+        }
+      }
+      label="MESSAGE"
+      labelStyle={
+        Object {
+          "color": "#999999",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "paddingTop": 16,
+        }
+      }
+      multiline={true}
+      name="message"
+      style={
+        Array [
+          Object {
+            "borderColor": "#999999",
+            "borderWidth": 0.5,
+            "marginBottom": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+  </View>
+  <Spinner
+    disabled={false}
+    image={1}
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "backgroundColor": "#ffffff",
+        },
+      ]
+    }
+  />
+  <TouchableOpacity
+    activeOpacity={0.2}
+    disabled={true}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000",
+          "height": 48,
+          "justifyContent": "center",
+          "marginBottom": 16,
+          "marginHorizontal": 15,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#999999",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      SEND
+    </Text>
+  </TouchableOpacity>
+</Component>
+`;
+
+exports[`FeedbackForm should render correctly with untouched disabled 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginBottom": 16,
+        "paddingHorizontal": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    We love feedback. Please help us understand your rating in more detail:
+  </Text>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <TextInputField
+      name="name"
+      placeholder="Name"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      keyboardType="email-address"
+      name="email"
+      placeholder="Email"
+      style={
+        Object {
+          "borderColor": "#999999",
+          "borderWidth": 0.5,
+          "marginBottom": 16,
+        }
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+    <TextInputField
+      containerStyle={
+        Object {
+          "flex": 1,
+        }
+      }
+      label="MESSAGE"
+      labelStyle={
+        Object {
+          "color": "#999999",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "paddingTop": 16,
+        }
+      }
+      multiline={true}
+      name="message"
+      style={
+        Array [
+          Object {
+            "borderColor": "#999999",
+            "borderWidth": 0.5,
+            "marginBottom": 16,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+      validate={
+        Array [
+          [Function],
+          [Function],
+        ]
+      }
+    />
+  </View>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    disabled={true}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000",
+          "height": 48,
+          "justifyContent": "center",
+          "marginBottom": 16,
+          "marginHorizontal": 15,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#999999",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      SEND
+    </Text>
+  </TouchableOpacity>
+</Component>
+`;

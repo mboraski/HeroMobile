@@ -4,7 +4,7 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 // Relative Imports
 import CloseButton from '../components/CloseButton';
-import NotificationFeedbackForm from '../containers/NotificationFeedbackForm';
+import NotificationFeedbackFormContainer from '../containers/NotificationFeedbackFormContainer';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 
@@ -36,7 +36,7 @@ class NotificationFeedbackScreen extends Component {
                 behavior="padding"
                 keyboardVerticalOffset={keyboardVerticalOffset}
             >
-                <NotificationFeedbackForm
+                <NotificationFeedbackFormContainer
                     navigation={this.props.navigation}
                     formKey={formKey}
                     description={description}

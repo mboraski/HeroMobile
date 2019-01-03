@@ -1,9 +1,10 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import Text from './Text';
 import { emY } from '../utils/em';
 import Color from '../constants/Color';
 
@@ -30,8 +31,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(DoneButton);
+export default connect(
+    null,
+    mapDispatchToProps
+)(DoneButton);

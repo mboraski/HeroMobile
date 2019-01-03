@@ -1,29 +1,38 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator, Platform } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-elements';
-import _ from 'lodash';
 
 // Relative Imports
-// import loaderGradient from '../assets/loader-gradient.png';
-// import loaderTicks from '../assets/loader-ticks.png';
-import BackButton from '../components/BackButton';
+import MenuButton from '../components/MenuButton';
 import BrandButton from '../components/BrandButton';
-// import Notification from '../components/Notification';
-// import HeroList from '../components/HeroList';
-// import Spinner from '../components/Spinner';
+import NotificationContainer from '../containers/NotificationContainer'; // TODO: fix linter error
+import HeroListContainer from '../containers/HeroListContainer';
 import Text from '../components/Text';
+
 import Color from '../constants/Color';
 import Style from '../constants/Style';
+import { orderStatuses, contractorStatuses } from '../constants/Order';
+
 import { emY } from '../utils/em';
-import orderStatuses from '../constants/Order';
-// import tempAvatar from '../assets/profile.png';
-import { getHero } from '../selectors/authSelectors';
-import { dropdownAlert } from '../actions/uiActions';
+
 import {
-    fishOrdersRequest
+    getOrderId,
+    getStatus,
+    getPending,
+    getFullActualFulfillment,
+    getPartialActualFulfillment,
+    getContractorStatus
+} from '../selectors/orderSelectors';
+
+import { clearCart } from '../actions/cartActions';
+import {
+    unListenToOrderFulfillment,
+    unListenOrderError,
+    unListenOrderStatus,
+    clearOrder
 } from '../actions/orderActions';
+import { dropdownAlert } from '../actions/uiActions';
 
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
@@ -31,168 +40,103 @@ const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 class DeliveryStatusScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Order',
-        headerLeft: <BackButton onPress={() => navigation.goBack()} />,
-        headerRight: <BrandButton />,
+        headerLeft: (
+            <MenuButton navigation={navigation} style={Style.headerLeft} />
+        ),
+        headerRight: (
+            <BrandButton
+                onPress={() => {
+                    /* contact Hero options */
+                }}
+            />
+        ),
         headerStyle: Style.headerBorderless,
         headerTitleStyle: [Style.headerTitle, Style.headerTitleLogo]
     });
 
+    state = {
+        modalVisible: false
+    };
+
     componentDidMount() {
-        this.props.fishOrdersRequest();
+        this.props.dropdownAlert(false, '');
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.header.toggleState !== nextProps.header.toggleState) {
-            if (nextProps.header.isMenuOpen) {
-                this.props.navigation.navigate('DrawerOpen');
-            } else {
-                this.props.navigation.navigate('DrawerClose');
+        if (nextProps.contractorStatus === contractorStatuses.delivered) {
+            this.props.navigation.navigate('feedback');
+        } else if (this.props.status !== nextProps.status) {
+            // TODO: uncomment when users can X out of giving feedback
+            // if (nextProps.status === orderStatuses.completed) {
+            //     this.props.navigation.navigate('map');
+            // }
+            if (nextProps.status === orderStatuses.cancelled) {
+                this.props.navigation.navigate('checkout');
             }
         }
-        if (!this.props.potentialOrders && nextProps.potentialOrders) {
-            this.props.dropdownAlert(true, 'New order request!');
-        } else {
-            this.props.dropdownAlert(false, '');
-        }
     }
 
-    acceptRequest = (order) => {
-        this.props.acceptRequest({
-            orderId: order.orderId,
-            productsSatisfied: this.props.productsSatisfied,
-            hero: this.props.hero
-        });
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
     }
 
-    renderOrderRequests = () => {
-        const {
-            potentialOrders,
-            state
-        } = this.props;
-        let result;
-        if (state === orderStatuses.unaccepted) {
-            result = null;
-        } else {
-            result = _.map(potentialOrders, (order) => (
-                <View style={styles.state}>
-                    <View style={styles.meta}>
-                        <Text style={styles.label}>Order Request:</Text>
-                    </View>
-                    <Button
-                        onPress={this.acceptRequest.bind(this, order)}
-                        title="ACCEPT REQUEST"
-                        containerViewStyle={styles.buttonContainer}
-                        buttonStyle={styles.button}
-                        textStyle={styles.buttonText}
-                    />
-                </View>
-            ));
-        }
-        return result;
-    }
-
-    renderAccepted = () => {
-        const { currentOrder, state } = this.props;
-        if (state === orderStatuses.accepted) {
-            return (
-                <View style={styles.state}>
-                    <View style={styles.meta}>
-                        <Text style={styles.label}>Arrived at Location:</Text>
-                    </View>
-                    <Button
-                        onPress={this.acceptRequest.bind(this, currentOrder)}
-                        title="ARRIVED!"
-                        containerViewStyle={styles.buttonContainer}
-                        buttonStyle={styles.button}
-                        textStyle={styles.buttonText}
-                    />
-                </View>
-            );
-        }
-    }
-
-    renderArrived = () => {
-        const { currentOrder, state } = this.props;
-        if (state === orderStatuses.arrived) {
-            return (
-                <View style={styles.state}>
-                    <View style={styles.meta}>
-                        <Text style={styles.label}>Mark order complete:</Text>
-                    </View>
-                    <Button
-                        onPress={this.acceptRequest.bind(this, currentOrder)}
-                        title="COMPLETE ORDER"
-                        containerViewStyle={styles.buttonContainer}
-                        buttonStyle={styles.button}
-                        textStyle={styles.buttonText}
-                    />
-                </View>
-            );
-        }
-    }
-
-    renderOrderState = () => {
-        const {
-            currentOrder
-        } = this.props;
-        if (currentOrder) {
-            return (
-                <View>
-                    {this.renderAccepted()}
-                    {this.renderArrived()}
-                </View>
-            );
-        }
+    renderHeroList() {
+        return (
+            <View style={styles.heroList}>
+                <HeroListContainer />
+            </View>
+        );
     }
 
     render() {
-        const {
-            pending,
-            potentialOrders,
-            currentOrder
-        } = this.props;
+        const { orderId, status } = this.props;
+        const activity =
+            status !== orderStatuses.completed &&
+            status !== orderStatuses.cancelled;
         return (
             <View style={styles.container}>
-                {!potentialOrders || !currentOrder ?
-                    <View style={styles.container}>
-                        <Text style={styles.searching}>Scanning the sky for beacons...</Text>
-                        <ActivityIndicator
-                            size="large"
-                            color="#F5A623"
-                        />
-                    </View> :
-                    <View style={styles.container}>
-                        {pending ?
-                            <ActivityIndicator
-                                size="large"
-                                color="#F5A623"
-                            /> :
-                            <View style={styles.container}>
-                                {this.renderOrderRequests()}
-                                {this.renderOrderState()}
+                {orderId ? (
+                    <View style={styles.statusContainer}>
+                        {activity && (
+                            <View style={styles.spinner}>
+                                <ActivityIndicator
+                                    animating={activity}
+                                    size="large"
+                                    color="#F5A623"
+                                />
                             </View>
-                        }
+                        )}
+                        <View style={styles.notifications}>
+                            <NotificationContainer />
+                        </View>
+                        {status === orderStatuses.inProgress ||
+                            (status === orderStatuses.satisfied &&
+                                this.renderHeroList())}
                     </View>
-                }
+                ) : (
+                    <View style={styles.container}>
+                        <Text>No current orders</Text>
+                    </View>
+                )}
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        marginTop: 10
-    },
-    button: {
-        backgroundColor: '#000',
-        height: emY(3.75)
-    },
-    buttonText: {
-        fontSize: emY(0.8125)
-    },
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    statusContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    heroList: {
+        position: 'absolute',
+        bottom: 30,
+        width: '100%'
     },
     profile: {
         alignItems: 'center',
@@ -228,6 +172,9 @@ const styles = StyleSheet.create({
         height: SIZE,
         transform: [{ translate: [0, -SIZE * 1] }, { scale: 1 }]
     },
+    notifications: {
+        paddingVertical: 40
+    },
     ticks: {
         position: 'absolute',
         top: '50%',
@@ -243,56 +190,31 @@ const styles = StyleSheet.create({
         marginBottom: emY(3)
     },
     spinner: {
-        marginVertical: 30
-    },
-    meta: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 5,
-        alignItems: 'center'
-    },
-    label: {
-        fontSize: 14,
-        color: Color.GREY_600,
-        marginRight: 11
-    },
-    labelText: {
-        color: Color.GREY_600,
-        fontSize: emY(1.0625),
-        letterSpacing: 0.5
-    },
-    state: {
-        position: 'relative',
-        backgroundColor: '#fff',
-        paddingHorizontal: 23,
-        paddingVertical: 20,
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: emY(0.625) },
-                shadowOpacity: 0.5,
-                shadowRadius: emY(1.5)
-            },
-            android: {
-                elevation: 10
-            }
-        })
-    },
+        marginTop: 30,
+        marginBottom: 20
+    }
 });
 
 const mapStateToProps = state => ({
     header: state.header,
-    potentialOrders: state.orders.potentialOrders,
-    pending: state.orders.pending,
-    currentOrder: state.orders.currentOrder,
-    status: state.orders.status,
-    productsSatisfied: state.orders.productsSatisfied,
-    hero: getHero(state)
+    orderId: getOrderId(state),
+    status: getStatus(state),
+    pending: getPending(state),
+    full: getFullActualFulfillment(state),
+    partial: getPartialActualFulfillment(state),
+    contractorStatus: getContractorStatus(state)
 });
 
 const mapDispatchToProps = {
-    fishOrdersRequest,
+    clearCart,
+    clearOrder,
+    unListenToOrderFulfillment,
+    unListenOrderError,
+    unListenOrderStatus,
     dropdownAlert
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeliveryStatusScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DeliveryStatusScreen);

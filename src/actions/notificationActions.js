@@ -1,13 +1,4 @@
-const ACTIONS = {
-    NEXT_NOTIFICATION: 'next_notification'
-};
+export const NEXT_NOTIFICATION = 'next_notification';
 
-const newNotificaiton = ({ index }) =>
-    (dispatch) =>
-        dispatch({ type: ACTIONS.NEXT_NOTIFICATION, payload: index + 1 });
-
-const ACTION_CREATORS = {
-    newNotificaiton
-};
-
-export default { ...ACTIONS, ...ACTION_CREATORS };
+export const newNotificaiton = ({ index }) => dispatch =>
+    dispatch({ type: NEXT_NOTIFICATION, payload: index + 1 });

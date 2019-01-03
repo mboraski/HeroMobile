@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Image, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 // import { Notifications } from 'expo';
 
@@ -10,133 +10,130 @@ import MenuItem from '../components/MenuItem';
 import Text from '../components/Text';
 import ToggleBackButton from '../components/ToggleBackButton';
 import heroIcon from '../assets/icons/logo-black.png';
-import notificationIcon from '../assets/icons/notification.png';
-import cartIcon from '../assets/icons/cart.png';
-import paymentIcon from '../assets/icons/payment.png';
-import helpIcon from '../assets/icons/info.png';
-import locationIcon from '../assets/icons/location.png';
+// import notificationIcon from '../assets/icons/notification.png';
+// import cartIcon from '../assets/icons/cart.png';
+// import paymentIcon from '../assets/icons/payment.png';
+import historyIcon from '../assets/icons/history.png';
+// import locationIcon from '../assets/icons/location.png';
 import { openCustomerPopup } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
 import { getUserReadable } from '../selectors/authSelectors';
 
-const IMAGE_CONTAINER_SIZE = emY(6.25);
+const IMAGE_CONTAINER_SIZE = emY(2);
 
 const getRoute = (items, routeName) =>
     items.find(item => item.key === routeName);
 
 class MenuContent extends Component {
+    mainPress = () => {
+        this.props.navigation.navigate('main');
+    };
+
+    ordersPress = () => {
+        this.props.navigation.navigate('orders');
+    };
+
+    orderPress = () => {
+        this.props.navigation.navigate('deliveryStatus');
+    };
+
+    checkoutPress = () => {
+        this.props.navigation.navigate('checkout');
+    };
+
+    productsPress = () => {
+        this.props.navigation.navigate('products');
+    };
+
     mapPress = () => {
         this.props.navigation.navigate('map');
     };
 
-    cartPress = () => {
-        this.props.navigation.navigate('checkout');
-    };
-
-    handleHelpPress = () => {
-        this.props.navigation.navigate('DrawerClose');
-        this.props.openCustomerPopup();
-    };
-
-    deliveryStatusPress = () => {
-        this.props.navigation.navigate('deliveryStatus');
-    };
-
-    paymentInfoPress = () => {
+    paymentMethod = () => {
         this.props.navigation.navigate('paymentMethod');
     };
 
     signOut = () => {
-        this.props.navigation.navigate('DrawerClose');
         this.props.signOut();
+        this.props.navigation.closeDrawer();
+        this.props.navigation.navigate('auth');
     };
 
-    // handleLocalNotificationPress = () => {
-    //     Notifications.scheduleLocalNotificationAsync(
-    //         {
-    //             title: 'title',
-    //             body: 'body',
-    //             data: {
-    //                 type: 'feedback',
-    //                 title: 'title',
-    //                 description: 'description',
-    //                 key: 'abc'
-    //             }
-    //         },
-    //         {
-    //             time: new Date().getTime() + 5000
-    //         }
-    //     );
-    // };
-
     render() {
-        const { items, activeItemKey, facebookInfo, userReadable } = this.props;
+        const { items, activeItemKey, userReadable } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.profile}>
-                    {facebookInfo && facebookInfo.photoURL ? (
-                        <Image
-                            source={{ uri: facebookInfo.photoURL }}
-                            style={styles.image}
-                        />
-                    ) : null}
                     {userReadable ? (
                         <Text style={styles.name}>
                             {userReadable.firstName} {userReadable.lastName}
                         </Text>
                     ) : null}
-                    {/* <TouchableOpacity onPress={this.handleViewProfile}>
-                        <Text style={styles.title}>View Profile</Text>
-                    </TouchableOpacity> */}
                 </View>
                 <ScrollView style={styles.menuItems}>
+                    <MenuItem
+                        onPress={this.ordersPress}
+                        image={heroIcon}
+                        title="Orders"
+                    />
+                    <MenuItem
+                        onPress={this.mainPress}
+                        image={heroIcon}
+                        title="Hero Main"
+                    />
+                    {/*<MenuItem
+                        route={getRoute(items, 'order')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.orderPress}
+                        image={notificationIcon}
+                        title="Order"
+                        // badge="0"
+                    />*/}
+                    {/*<MenuItem
+                        route={getRoute(items, 'checkout')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.checkoutPress}
+                        image={cartIcon}
+                        title="Checkout"
+                    />*/}
+                    {/*<MenuItem
+                        route={getRoute(items, 'products')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.productsPress}
+                        image={historyIcon}
+                        title="Products"
+                    />*/}
+                    {/*<MenuItem
+                        route={getRoute(items, 'map')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.mapPress}
+                        image={locationIcon}
+                        title="Map"
+                    />*/}
+                    {/*<MenuItem
+                        route={getRoute(items, 'paymentMethod')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.paymentMethod}
+                        image={paymentIcon}
+                        title="Payment Info"
+                    />*/}
                     {/* <MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}
                         image={heroIcon}
                         title="Heroes Needed!"
                     /> */}
-                    {/* <MenuItem
-                        activeItemKey={activeItemKey}
-                        onPress={onItemPress}
+                    <MenuItem
+                        onPress={() => {}}
                         image={historyIcon}
                         title="History"
-                    /> */}
+                    />
                     {/*<MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}
                         image={favoriteIcon}
                         title="Favorites & Recommended"
                     /> */}
-                    <MenuItem
-                        route={getRoute(items, 'deliveryStatus')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.deliveryStatusPress}
-                        image={notificationIcon}
-                        title="Order"
-                        // badge="0"
-                    />
-                    <MenuItem
-                        route={getRoute(items, 'checkout')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.cartPress}
-                        image={cartIcon}
-                        title="Cart"
-                    />
-                    <MenuItem
-                        route={getRoute(items, 'map')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.mapPress}
-                        image={locationIcon}
-                        title="Map"
-                    />
-                    <MenuItem
-                        route={getRoute(items, 'paymentMethod')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.paymentInfoPress}
-                        image={paymentIcon}
-                        title="Payment Info"
-                    />
                     {/*<MenuItem
                         route={getRoute(items, 'promotionShare')}
                         activeItemKey={activeItemKey}
@@ -174,9 +171,8 @@ const styles = StyleSheet.create({
         borderRightColor: Color.YELLOW_500
     },
     profile: {
-        flex: 1,
         alignItems: 'center',
-        marginTop: emY(3)
+        marginTop: emY(5)
     },
     image: {
         width: IMAGE_CONTAINER_SIZE,
@@ -197,7 +193,7 @@ const styles = StyleSheet.create({
         marginBottom: emY(1)
     },
     menuItems: {
-        marginLeft: emY(1.2)
+        paddingLeft: emY(1.2)
     },
     copyright: {
         height: emY(1),

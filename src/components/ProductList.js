@@ -1,6 +1,7 @@
 // Third Party Imports
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import map from 'lodash.map';
 
 // Relative Imports
 import ProductDetail from './ProductDetail';
@@ -9,17 +10,20 @@ import { emY } from '../utils/em';
 
 class ProductList extends Component {
     renderProducts() {
-        return this.props.products.map(product => {
-            const onPress = () => this.props.callAddToCart(product);
-            const type = this.props.cart.products[product.deliveryType];
-            const quantity =
-                type && type[product.productCode] && type[product.productCode].quantity;
+        const { products, callAddToCart, productImages } = this.props;
+        return map(products, product => {
+            const image = productImages[product.productName] || '';
+            const taken = product.quantityTaken;
+            const consumed = taken >= product.quantityAvailable;
             return (
                 <ProductDetail
-                    key={product.productCode}
+                    key={product.productName}
+                    consumed={consumed}
+                    quantity={taken}
                     product={product}
-                    onPress={onPress}
-                    quantity={quantity}
+                    inCart={taken > 0}
+                    image={image}
+                    onPress={callAddToCart}
                     style={styles.product}
                 />
             );
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     product: {
         width: Dimensions.window.width / 2 - 21,
         marginRight: 8,
-        marginBottom: emY(0.625)
+        marginBottom: emY(0.25)
     }
 });
 

@@ -11,7 +11,8 @@ export default {
     GREY_700: '#4c4c4c', //0.7
     GREY_800: '#323232', //0.8
     YELLOW_500: '#fcc937',
-    YELLOW_600: '#f5a624',
+    YELLOW_600: '#f5a623',
+    ORANGE_500: '#f5a623',
     GREEN_500: '#8AD835',
     BLACK: '#000000',
     WHITE: '#ffffff',

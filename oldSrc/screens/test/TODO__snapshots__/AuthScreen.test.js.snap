@@ -1,0 +1,385 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthScreen can open SignInForm 1`] = `Array []`;
+
+exports[`AuthScreen can open SignInForm 2`] = `
+<ScrollViewMock
+  keyboardDismissMode="on-drag"
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <KeyboardAvoidingView
+    behavior="position"
+    keyboardVerticalOffset={0}
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https://source.unsplash.com/random/800x600",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 192,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "white",
+            "fontSize": 35,
+            "letterSpacing": 5,
+            "textAlign": "center",
+          }
+        }
+      >
+        HELLO
+      </Text>
+    </Image>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 16,
+        }
+      }
+    >
+      <Button
+        buttonStyle={
+          Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderColor": "#999999",
+              "borderRadius": 25,
+              "borderWidth": 0.5,
+              "height": 40,
+              "minWidth": 120,
+            },
+            Object {
+              "backgroundColor": "#999999",
+              "borderColor": "#fff",
+            },
+          ]
+        }
+        onPress={[Function]}
+        textStyle={
+          Array [
+            Object {
+              "color": "#999999",
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#fff",
+            },
+          ]
+        }
+        title="Sign Up"
+      />
+      <Button
+        buttonStyle={
+          Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderColor": "#999999",
+              "borderRadius": 25,
+              "borderWidth": 0.5,
+              "height": 40,
+              "minWidth": 120,
+            },
+            null,
+          ]
+        }
+        onPress={[Function]}
+        textStyle={
+          Array [
+            Object {
+              "color": "#999999",
+              "fontSize": 14,
+            },
+            null,
+          ]
+        }
+        title="Log In"
+      />
+    </View>
+    <Connect(ReduxForm)
+      onAuthSuccess={[Function]}
+    />
+  </KeyboardAvoidingView>
+</ScrollViewMock>
+`;
+
+exports[`AuthScreen can open SignUpForm 1`] = `Array []`;
+
+exports[`AuthScreen can open SignUpForm 2`] = `
+<ScrollViewMock
+  keyboardDismissMode="on-drag"
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <KeyboardAvoidingView
+    behavior="position"
+    keyboardVerticalOffset={0}
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https://source.unsplash.com/random/800x600",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 192,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "white",
+            "fontSize": 35,
+            "letterSpacing": 5,
+            "textAlign": "center",
+          }
+        }
+      >
+        HELLO
+      </Text>
+    </Image>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 16,
+        }
+      }
+    >
+      <Button
+        buttonStyle={
+          Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderColor": "#999999",
+              "borderRadius": 25,
+              "borderWidth": 0.5,
+              "height": 40,
+              "minWidth": 120,
+            },
+            Object {
+              "backgroundColor": "#999999",
+              "borderColor": "#fff",
+            },
+          ]
+        }
+        onPress={[Function]}
+        textStyle={
+          Array [
+            Object {
+              "color": "#999999",
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#fff",
+            },
+          ]
+        }
+        title="Sign Up"
+      />
+      <Button
+        buttonStyle={
+          Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderColor": "#999999",
+              "borderRadius": 25,
+              "borderWidth": 0.5,
+              "height": 40,
+              "minWidth": 120,
+            },
+            null,
+          ]
+        }
+        onPress={[Function]}
+        textStyle={
+          Array [
+            Object {
+              "color": "#999999",
+              "fontSize": 14,
+            },
+            null,
+          ]
+        }
+        title="Log In"
+      />
+    </View>
+    <Connect(ReduxForm)
+      onAuthSuccess={[Function]}
+    />
+  </KeyboardAvoidingView>
+</ScrollViewMock>
+`;
+
+exports[`AuthScreen renders correctly 1`] = `
+<Component
+  keyboardDismissMode="on-drag"
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <KeyboardAvoidingView
+      behavior="position"
+      keyboardVerticalOffset={0}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "flex": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://source.unsplash.com/random/800x600",
+          }
+        }
+        style={
+          Object {
+            "alignItems": "center",
+            "height": 192,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "white",
+              "fontSize": 35,
+              "letterSpacing": 5,
+              "textAlign": "center",
+            }
+          }
+        >
+          HELLO
+        </Text>
+      </Image>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "paddingVertical": 16,
+          }
+        }
+      >
+        <Button
+          buttonStyle={
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderColor": "#999999",
+                "borderRadius": 25,
+                "borderWidth": 0.5,
+                "height": 40,
+                "minWidth": 120,
+              },
+              Object {
+                "backgroundColor": "#999999",
+                "borderColor": "#fff",
+              },
+            ]
+          }
+          onPress={[Function]}
+          textStyle={
+            Array [
+              Object {
+                "color": "#999999",
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#fff",
+              },
+            ]
+          }
+          title="Sign Up"
+        />
+        <Button
+          buttonStyle={
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderColor": "#999999",
+                "borderRadius": 25,
+                "borderWidth": 0.5,
+                "height": 40,
+                "minWidth": 120,
+              },
+              null,
+            ]
+          }
+          onPress={[Function]}
+          textStyle={
+            Array [
+              Object {
+                "color": "#999999",
+                "fontSize": 14,
+              },
+              null,
+            ]
+          }
+          title="Log In"
+        />
+      </View>
+      <Connect(ReduxForm)
+        onAuthSuccess={[Function]}
+      />
+    </KeyboardAvoidingView>
+  </View>
+</Component>
+`;

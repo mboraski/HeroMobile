@@ -10,6 +10,7 @@ import {
     CONFIRM_INVENTORY_REQUEST,
     ADD_TO_INVENTORY,
     REMOVE_FROM_INVENTORY,
+    UPDATE_ORDERS,
     ONLINE,
     OFFLINE
 } from '../actions/contractorActions';
@@ -22,6 +23,7 @@ export const initialState = {
     firstName: '',
     lastName: '',
     pending: false,
+    orders: {},
     error: null
 };
 
@@ -140,6 +142,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 online: false
+            };
+        case UPDATE_ORDERS:
+            return {
+                ...state,
+                orders: action.payload,
+                pending: false
             };
         default:
             return state;

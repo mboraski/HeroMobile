@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuButton renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+  openToggle={[Function]}
+  style={
+    Array [
+      Object {
+        "marginLeft": 20,
+        "marginRight": 0,
+      },
+      Object {},
+      undefined,
+    ]
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "height": 30,
+        "width": 30,
+      }
+    }
+  />
+</TouchableOpacity>
+`;

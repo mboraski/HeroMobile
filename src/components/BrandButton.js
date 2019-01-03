@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../utils/em';
-import brandIcon from '../assets/icons/logo-orange.png';
+import brandIcon from '../assets/icons/logo-black.png';
 
 const SIZE = emY(2);
 
@@ -35,8 +35,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
     return {};
 };
 
-export default connect(null, mapDispatchToProps)(BrandButton);
+export default connect(
+    null,
+    mapDispatchToProps
+)(BrandButton);

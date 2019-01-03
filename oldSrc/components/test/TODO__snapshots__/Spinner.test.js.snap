@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#cccccc",
+        "borderRadius": 72,
+        "borderWidth": 5,
+        "flexDirection": "row",
+        "height": 144,
+        "justifyContent": "center",
+        "width": 144,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#000000",
+          "borderRadius": 64,
+          "flexDirection": "row",
+          "height": 128,
+          "justifyContent": "center",
+          "width": 128,
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Array [
+            Object {
+              "height": 80,
+              "width": 80,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+  </View>
+  <AnimatedComponent
+    style={
+      Array [
+        Object {
+          "height": 144,
+          "overflow": "visible",
+          "position": "absolute",
+          "width": 144,
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotate": "0deg",
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "height": 144,
+            "left": "50%",
+            "position": "absolute",
+            "top": "50%",
+            "transform": Array [
+              Object {
+                "translate": Array [
+                  0,
+                  -144,
+                ],
+              },
+            ],
+            "width": 144,
+          },
+        ]
+      }
+    />
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 168,
+          "left": "50%",
+          "position": "absolute",
+          "top": "50%",
+          "transform": Array [
+            Object {
+              "translate": Array [
+                -84,
+                -84,
+              ],
+            },
+          ],
+          "width": 168,
+        }
+      }
+    />
+  </AnimatedComponent>
+</View>
+`;

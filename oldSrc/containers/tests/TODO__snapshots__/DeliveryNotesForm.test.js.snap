@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeliveryNotesForm renders correctly 1`] = `
+<Connect(Form(DeliveryNotesForm))
+  anyTouched={false}
+  asyncValidating={false}
+  destroyOnUnmount={true}
+  enableReinitialize={false}
+  fields={
+    Object {
+      "notes": Object {
+        "error": null,
+        "touched": false,
+        "value": "notes",
+      },
+    }
+  }
+  forceUnregisterOnUnmount={false}
+  form="DeliveryNotes"
+  getFormState={[Function]}
+  initialValues={
+    Object {
+      "notes": "notes",
+    }
+  }
+  invalid={false}
+  keepDirtyOnReinitialize={false}
+  onSubmit={[Function]}
+  pending={false}
+  persistentSubmitErrors={false}
+  pristine={true}
+  pure={true}
+  setDeliveryNotes={[Function]}
+  shouldAsyncValidate={[Function]}
+  shouldValidate={[Function]}
+  submitting={false}
+  touchOnBlur={true}
+  touchOnChange={false}
+/>
+`;

@@ -3,7 +3,8 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator,
+    Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
@@ -25,13 +26,23 @@ import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
 class SignUpFormContainer extends Component {
-    // componentWillReceiveProps(nextProps) {
-    //     this.onAuthComplete(nextProps);
-    // }
-    //
-    // onAuthComplete = props => {
-    //     props.checkContractorApproval();
-    // };
+    componentWillReceiveProps(nextProps) {
+        this.onAuthComplete(nextProps);
+    }
+
+    onAuthComplete = props => {
+        if (props.user && !this.props.user) {
+            this.props.navigation.navigate('paymentMethod', { signedUp: true });
+        }
+    };
+
+    linkToWebsitePrivacy = () => {
+        Linking.openURL(`https://hasty.app/privacy.html`);
+    };
+
+    linkToWebsiteTerms = () => {
+        Linking.openURL(`https://hasty.app/terms.html`);
+    };
 
     render() {
         const {
@@ -74,7 +85,7 @@ class SignUpFormContainer extends Component {
                     />
                     <InlineLabelTextInputField
                         containerStyle={styles.fieldContainer}
-                        name="number"
+                        name="phoneNumber"
                         label="Phone Number"
                         keyboardType="phone-pad"
                         validate={[required, validPhoneNumber]}
@@ -109,6 +120,22 @@ class SignUpFormContainer extends Component {
                     ) : null}
                 </View>
                 {error && <Text style={styles.signUpError}>{error}</Text>}
+                <Text style={styles.termsAndPrivacy}>
+                    {`By using the app or creating an account you agree to be bound by Hasty's `}
+                    <Text
+                        onPress={this.linkToWebsiteTerms}
+                        style={styles.termsAndPrivacyLink}
+                    >
+                        {'Terms and Conditions'}
+                    </Text>
+                    {' and '}
+                    <Text
+                        onPress={this.linkToWebsitePrivacy}
+                        style={styles.termsAndPrivacyLink}
+                    >
+                        {'Privacy Policy'}
+                    </Text>
+                </Text>
                 <TouchableOpacity
                     onPress={handleSubmit(createUserWithEmailAndPassword)}
                     style={[
@@ -129,6 +156,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 15
+    },
+    termsAndPrivacy: {
+        flex: 1,
+        marginBottom: 10,
+        paddingBottom: 10,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        fontSize: emY(0.8)
+    },
+    termsAndPrivacyLink: {
+        color: Color.BLUE_500
     },
     formInputs: {
         paddingHorizontal: 15,
@@ -198,9 +238,7 @@ const formOptions = {
 
 const mapStateToProps = state => ({ user: getUser(state) });
 
-const mapDispatchToProps = {};
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    {}
 )(reduxForm(formOptions)(SignUpFormContainer));

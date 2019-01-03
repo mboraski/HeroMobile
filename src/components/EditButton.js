@@ -1,9 +1,10 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import Text from './Text';
 import { emY } from '../utils/em';
 
 const SIZE = emY(1.25);
@@ -41,4 +42,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditButton);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EditButton);

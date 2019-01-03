@@ -1,10 +1,11 @@
 import {
     SELECT_CATEGORY,
-    FETCH_PRODUCTS_REQUEST,
-    FETCH_PRODUCTS_SUCCESS,
-    FETCH_PRODUCTS_FAILURE,
+    FETCH_CUSTOMER_BLOCK_REQUEST,
+    FETCH_CUSTOMER_BLOCK_SUCCESS,
+    FETCH_CUSTOMER_BLOCK_ERROR,
     SET_IMAGE
 } from '../actions/productActions';
+import { SIGNOUT_SUCCESS } from '../actions/authActions';
 
 export const initialState = {
     pending: false,
@@ -12,25 +13,27 @@ export const initialState = {
     availableProducts: {
         instant: {}
     },
-    category: 'SXSW',
+    category: 'all',
     productImages: {}
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case FETCH_PRODUCTS_REQUEST:
+        case SIGNOUT_SUCCESS:
+            return initialState;
+        case FETCH_CUSTOMER_BLOCK_REQUEST:
             return {
                 ...state,
                 pending: true
             };
-        case FETCH_PRODUCTS_SUCCESS:
+        case FETCH_CUSTOMER_BLOCK_SUCCESS:
             return {
                 ...state,
                 availableProducts: action.payload,
                 error: null,
                 pending: false
             };
-        case FETCH_PRODUCTS_FAILURE:
+        case FETCH_CUSTOMER_BLOCK_ERROR:
             return {
                 ...state,
                 error: action.payload,
@@ -42,7 +45,7 @@ export default function(state = initialState, action) {
                 category: action.payload
             };
         case SET_IMAGE: {
-            const { productName = '', url = '' } = action.payload;
+            const { productName, url } = action.payload;
             const productImages = Object.assign({}, state.productImages, {
                 [productName]: url
             });

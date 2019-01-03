@@ -1,22 +1,36 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import Text from './Text';
 import { emY } from '../utils/em';
 
 const RADIO_ICON_SIZE = emY(1.4375);
 const RADIO_ICON_PADDING = 5;
 const RADIO_ICON_SIZE_INNER = RADIO_ICON_SIZE - RADIO_ICON_PADDING;
 
-const Radio = ({ input, text, ...rest, onPress = () => input.onChange(!input.value) }) => (
+const Radio = ({
+    input,
+    text,
+    onPress = () => input.onChange(!input.value),
+    ...rest
+}) => (
     <TouchableOpacity {...input} {...rest} onPress={onPress}>
         <View style={styles.container}>
-            <View style={[styles.iconContainer, input.value && styles.iconContainerSelected]}>
+            <View
+                style={[
+                    styles.iconContainer,
+                    input.value && styles.iconContainerSelected
+                ]}
+            >
                 <MaterialIcons
                     name="check"
                     size={RADIO_ICON_SIZE_INNER}
                     color="#fff"
-                    style={[styles.radioIcon, input.value && styles.radioIconSelected]}
+                    style={[
+                        styles.radioIcon,
+                        input.value && styles.radioIconSelected
+                    ]}
                 />
             </View>
             <Text style={styles.radioText}>{text}</Text>
@@ -29,7 +43,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 15,
-        paddingVertical: emY(1.875),
+        paddingVertical: emY(1.875)
     },
     iconContainer: {
         width: RADIO_ICON_SIZE,

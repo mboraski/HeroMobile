@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackFormCloseButton should render correctly 1`] = `""`;
+
+exports[`FeedbackFormCloseButton should render correctly form visible 1`] = `<Connect(CloseButton) />`;

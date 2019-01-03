@@ -6,7 +6,6 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 
 const header = {
-    flexDirection: 'row',
     paddingTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fff',
     height: emY(4.25),
@@ -54,7 +53,7 @@ export default StyleSheet.create({
     header,
     headerLarge: {
         ...header,
-        height: emY(5.25),
+        height: emY(5.25)
     },
     headerBorderless: {
         ...header,
@@ -62,7 +61,8 @@ export default StyleSheet.create({
         borderBottomColor: 'transparent'
     },
     appBar: {
-        flex: 1
+        flex: 1,
+        paddingTop: 10
     },
     headerItem,
     headerTitleContainer: {
@@ -79,14 +79,14 @@ export default StyleSheet.create({
         left: 0,
         bottom: 0,
         top: 0,
-        position: 'absolute',
+        position: 'absolute'
     },
     headerRightContainer: {
         ...headerItem,
         right: 0,
         bottom: 0,
         top: 0,
-        position: 'absolute',
+        position: 'absolute'
     },
     headerTitle: {
         ...headerItem,
@@ -96,7 +96,7 @@ export default StyleSheet.create({
         marginHorizontal: 16,
         fontWeight: '500',
         fontSize: 17,
-        fontFamily: 'Arial',
+        fontFamily: 'Arial'
     },
     headerTitleLogo: {
         fontFamily: 'goodtimes',
@@ -130,6 +130,6 @@ export default StyleSheet.create({
         bottom: 0
     },
     clearText: {
-        color: 'rgba(0, 0, 0, 0)',
+        color: 'rgba(0, 0, 0, 0)'
     }
 });

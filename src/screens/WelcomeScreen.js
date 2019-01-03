@@ -1,18 +1,26 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
-import { AppLoading } from 'expo';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError } from 'redux-form';
 
 import { statusBarOnly } from '../constants/Style';
 import Slides from '../components/Slides';
 import { setFirstTimeOpened } from '../actions/uiActions';
 
 const SLIDE_DATA = [
-    { text: 'Welcome to Hasty', color: '#F5A623' },
-    { text: 'Just sign up and set your location', color: '#F5A623' },
-    { text: 'Now start accelerating your life!', color: '#03A9F4' }
+    {
+        text:
+            'Welcome to Hasty, the FASTEST delivery network ever! Swipe left to continue!',
+        color: '#F5A623'
+    },
+    {
+        text:
+            'Just sign up, set your location, and fill your cart up with products. Swipe left to continue!',
+        color: '#fff'
+    },
+    {
+        text:
+            'Light a beacon and a Hero will arrive with your products shortly!',
+        color: '#F5A623'
+    }
 ];
 
 class WelcomeScreen extends Component {
@@ -20,7 +28,7 @@ class WelcomeScreen extends Component {
 
     onSlidesComplete = () => {
         this.props.setFirstTimeOpened();
-        this.props.navigation.navigate('apiTester');
+        this.props.navigation.navigate('auth');
     };
 
     render() {
@@ -32,4 +40,7 @@ const mapDispatchToProps = {
     setFirstTimeOpened
 };
 
-export default connect(null, mapDispatchToProps)(WelcomeScreen);
+export default connect(
+    null,
+    mapDispatchToProps
+)(WelcomeScreen);

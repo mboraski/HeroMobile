@@ -1,28 +1,18 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, persistCombineReducers } from 'redux-persist';
+import createSecureStore from 'redux-persist-expo-securestore';
 // import logger from 'redux-logger';
-import { AsyncStorage } from 'react-native';
-// import {
-//     createReactNavigationReduxMiddleware,
-//     createReduxBoundAddListener
-// } from 'react-navigation-redux-helpers';
 
 import * as reducers from '../reducers';
 
+const storage = createSecureStore();
 const persistConfig = {
     key: 'root',
-    storage: AsyncStorage,
+    storage,
     debug: __DEV__,
     blacklist: ['form']
 };
-
-// Note: createReactNavigationReduxMiddleware must be run before createReduxBoundAddListener
-// const navMiddleware = createReactNavigationReduxMiddleware(
-//     'root',
-//     state => state.nav
-// );
-// export const reduxBoundAddListener = createReduxBoundAddListener('root');
 
 const middlewares = [thunk];
 
@@ -30,12 +20,20 @@ const middlewares = [thunk];
 //     middlewares.push(logger);
 // }
 
+// // Enable debugging remotely in real device
+// import { NativeModules } from 'react-native'
+//
+// if (__DEV__) {
+//   NativeModules.DevSettings.setIsDebuggingRemotely(true)
+// }
+
 const Reducer = persistCombineReducers(persistConfig, reducers);
-export const store = createStore(
-    Reducer,
-    {},
-    compose(applyMiddleware(...middlewares))
-);
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+/* eslint-enable */
+const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+
+export const store = createStore(Reducer, {}, enhancer);
 export const persistor = persistStore(store);
 
 // clears async storage

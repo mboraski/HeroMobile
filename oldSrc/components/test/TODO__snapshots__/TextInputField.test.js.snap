@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextInputField component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "marginBottom": 8,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "fontSize": 13,
+          "paddingBottom": 12.8,
+          "paddingHorizontal": 25,
+          "paddingTop": 30.4,
+        },
+        undefined,
+        false,
+      ]
+    }
+  >
+    label
+  </Text>
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#F4F4F4",
+          "borderRadius": 7,
+          "fontSize": 16,
+          "height": 50,
+          "marginHorizontal": 15,
+          "paddingHorizontal": 20,
+        },
+        undefined,
+        false,
+      ]
+    }
+    underlineColorAndroid="transparent"
+  />
+</View>
+`;
+
+exports[`TextInputField component renders correctly with error 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "marginBottom": 8,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "fontSize": 13,
+          "paddingBottom": 12.8,
+          "paddingHorizontal": 25,
+          "paddingTop": 30.4,
+        },
+        undefined,
+        Object {
+          "color": "rgb(243, 108, 96)",
+        },
+      ]
+    }
+  >
+    label
+  </Text>
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#F4F4F4",
+          "borderRadius": 7,
+          "fontSize": 16,
+          "height": 50,
+          "marginHorizontal": 15,
+          "paddingHorizontal": 20,
+        },
+        undefined,
+        Object {
+          "borderColor": "rgb(243, 108, 96)",
+          "borderWidth": 0.5,
+          "color": "rgb(243, 108, 96)",
+        },
+      ]
+    }
+    underlineColorAndroid="transparent"
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "rgb(243, 108, 96)",
+        "fontSize": 12.8,
+        "marginBottom": 8,
+        "marginTop": -8,
+        "paddingHorizontal": 25,
+      }
+    }
+  >
+    error
+  </Text>
+</View>
+`;
+
+exports[`TextInputField field renders correctly 1`] = `
+<Field
+  component={[Function]}
+/>
+`;

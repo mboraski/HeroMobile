@@ -1,44 +1,83 @@
 // Third Part Imports
 import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Icon } from 'react-native-elements';
 
 // Relative Imports
+import Text from './Text';
 import Color from '../constants/Color';
-import Style from '../constants/Style';
 import { emY } from '../utils/em';
-import chatIcon from '../assets/icons/chat.png';
+import callIcon from '../assets/icons/call.png';
+import logo from '../assets/icons/HastyOrangeIcon.png';
 
-const IMAGE_SIZE = emY(4.25);
-const CHAT_SIZE = emY(3.375);
-const CHAT_IMAGE_SIZE = emY(1.3125);
+const PROFILE_IMAGE_SIZE = emY(3.75);
+const CHAT_SIZE = emY(2.75);
+const CHAT_IMAGE_SIZE = emY(1.25);
 
 const HeroDetail = props => {
-    const { name, type, delivery_time, image } = props.hero;
+    const {
+        firstName,
+        lastName,
+        deliveryTime,
+        heroStatus,
+        contractorId,
+        contactContractor
+    } = props;
+
+    const callContractor = () => contactContractor(contractorId);
+
+    const profileImage = props.profileImage || logo;
+
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: image }} />
+            <Image style={styles.profileImage} source={profileImage} />
             <View style={styles.content}>
                 <View style={styles.contentPrimary}>
                     <View style={styles.meta}>
-                        <Text style={[styles.metaItem, styles.name]}>{name.toUpperCase()}</Text>
-                        <Text style={[styles.metaItem, styles.type]}>
-                            <MaterialIcons name="check" size={16} style={styles.check} /> Confirmed{' '}
-                            {type}
+                        <Text style={[styles.metaItem, styles.name]}>
+                            {firstName.toUpperCase()} {lastName.toUpperCase()}
+                        </Text>
+                        <Text style={[styles.metaItem, styles.link]}>
+                            <MaterialIcons
+                                name="check"
+                                size={16}
+                                style={styles.check}
+                            />
+                            {'Confirmed for order'}
+                        </Text>
+                        <Text style={[styles.metaItem, styles.deliveryTime]}>
+                            Delivery Time: ~{deliveryTime / 60} min
+                        </Text>
+                        <Text
+                            style={[
+                                styles.metaItem,
+                                styles.metaItemLast,
+                                styles.deliveryTime
+                            ]}
+                        >
+                            Status: {heroStatus}
                         </Text>
                     </View>
-                    <TouchableOpacity style={styles.chatButton}>
-                        <Image source={chatIcon} style={styles.chatImage} />
-                    </TouchableOpacity>
                 </View>
-                <Text style={[styles.metaItem, styles.metaItemLast, styles.deliveryTime]}>
-                    Estimated Delivery Time: {delivery_time} min
-                </Text>
             </View>
+            <TouchableOpacity
+                style={styles.chatButton}
+                onPress={callContractor}
+            >
+                <Image source={callIcon} style={styles.chatImage} />
+            </TouchableOpacity>
         </View>
     );
 };
+
+// <TouchableOpacity
+//     onPress={() => {
+//     }}
+// >
+//     <Text style={[styles.metaItem, styles.link]}>
+//         <MaterialIcons name="check" size={16} style={styles.check} />{'Confirmed Order'}
+//     </Text>
+// </TouchableOpacity>
 
 const styles = StyleSheet.create({
     container: {
@@ -63,17 +102,13 @@ const styles = StyleSheet.create({
     metaItemLast: {
         marginBottom: 0
     },
+    link: {
+        color: Color.DEFAULT
+    },
     name: {},
     type: {},
     deliveryTime: {},
     check: {},
-    image: {
-        width: IMAGE_SIZE,
-        height: IMAGE_SIZE,
-        borderRadius: IMAGE_SIZE / 2,
-        marginTop: emY(1),
-        marginRight: 17
-    },
     chatButton: {
         backgroundColor: Color.GREY_400,
         width: CHAT_SIZE,
@@ -81,11 +116,18 @@ const styles = StyleSheet.create({
         borderRadius: CHAT_SIZE / 2,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: emY(0.625)
+        marginTop: emY(0.7)
     },
     chatImage: {
         width: CHAT_IMAGE_SIZE,
         height: CHAT_IMAGE_SIZE
+    },
+    profileImage: {
+        marginTop: emY(0.7),
+        marginRight: emY(0.7),
+        width: PROFILE_IMAGE_SIZE,
+        height: PROFILE_IMAGE_SIZE,
+        borderRadius: PROFILE_IMAGE_SIZE / 2
     }
 });
 

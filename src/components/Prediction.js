@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
+import Text from './Text';
 import Color from '../constants/Color';
 import addressIcon from '../assets/icons/logo-orange.png';
 import { emY } from '../utils/em';
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     icon: {
         width: ICON_SIZE,
         height: ICON_SIZE,
-        marginRight: 15 
+        marginRight: 15
     },
     text: {
         flex: 1,

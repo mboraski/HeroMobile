@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GeneralShareScreen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 25.6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Instagram
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Twitter
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Facebook
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 25.6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Tumblr
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Pinterest
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Messages
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 25.6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginHorizontal": 22,
+        }
+      }
+    >
+      <Connect(ShareButton)
+        source={1}
+        style={
+          Object {
+            "borderColor": "#000000",
+            "borderWidth": 1,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": 13.28,
+            "marginTop": 12,
+          }
+        }
+      >
+        Mail
+      </Text>
+    </View>
+  </View>
+</View>
+`;

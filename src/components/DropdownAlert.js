@@ -1,13 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Animated,
-    StatusBar,
-    Platform
-} from 'react-native';
+import { StyleSheet, Text, Animated, StatusBar, Platform } from 'react-native';
 
 // Relative Imports
 import Color from '../constants/Color';
@@ -61,7 +54,9 @@ export default class DropdownAlert extends Component {
             }
             this.timeoutId = setTimeout(() => {
                 if (this.state.visible) {
-                    this.closeAnimation.start(this.handleCloseAnimationComplete);
+                    this.closeAnimation.start(
+                        this.handleCloseAnimationComplete
+                    );
                 }
             }, this.props.closeInterval);
         });

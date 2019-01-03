@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+
+import Text from './Text';
 
 const TextButton = ({ title, style, ...rest }) => (
     <TouchableOpacity {...rest} style={[styles.container, style]}>

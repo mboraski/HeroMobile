@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderDetail renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderBottomWidth": 0.5,
+      "borderColor": "#cccccc",
+      "flexDirection": "row",
+      "paddingHorizontal": 13,
+      "paddingVertical": 14,
+    }
+  }
+>
+  <Image
+    resizeMode="contain"
+    style={
+      Object {
+        "alignSelf": "center",
+        "height": 55,
+        "marginRight": 15,
+        "width": 75,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "flex": 1,
+          "fontSize": 20,
+          "marginBottom": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#7f7f7f",
+            "fontSize": 16,
+            "marginBottom": 6,
+            "marginRight": 8,
+          }
+        }
+      >
+        Delivery Type:
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+          }
+        }
+      />
+    </View>
+    <TouchableOpacity
+      activeOpacity={0.2}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#3aa2fc",
+            "fontSize": 14,
+          }
+        }
+      >
+        Change delivery type
+      </Text>
+    </TouchableOpacity>
+  </View>
+  <View
+    style={Object {}}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 20,
+          "marginBottom": 22,
+          "marginRight": 10,
+          "textAlign": "right",
+        }
+      }
+    >
+      $
+      99.99
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Icon
+        color="black"
+        containerStyle={
+          Object {
+            "backgroundColor": "#E4E4E4",
+            "borderRadius": 17.5,
+            "height": 35,
+            "width": 35,
+          }
+        }
+        iconStyle={Object {}}
+        name="remove"
+        raised={false}
+        reverse={false}
+        reverseColor="white"
+        size={12}
+        underlayColor="white"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "alignSelf": "center",
+            "textAlign": "center",
+            "width": 40,
+          }
+        }
+      />
+      <Icon
+        color="black"
+        containerStyle={
+          Object {
+            "backgroundColor": "#E4E4E4",
+            "borderRadius": 17.5,
+            "height": 35,
+            "width": 35,
+          }
+        }
+        iconStyle={Object {}}
+        name="add"
+        raised={false}
+        reverse={false}
+        reverseColor="white"
+        size={12}
+        underlayColor="white"
+      />
+    </View>
+  </View>
+</View>
+`;

@@ -1,16 +1,13 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    Text
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
 import CloseButton from '../components/CloseButton';
 import DoneButton from '../components/DoneButton';
 import ShareButton from '../components/ShareButton';
+import Text from '../components/Text';
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -22,22 +19,30 @@ import pinterestIcon from '../assets/icons/pinterest.png';
 import messageIcon from '../assets/icons/message.png';
 import mailIcon from '../assets/icons/mail.png';
 
-
 class GeneralShareScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.row}>
                     <View style={styles.col}>
-                        <ShareButton style={styles.buton} source={instagramIcon} />
+                        <ShareButton
+                            style={styles.buton}
+                            source={instagramIcon}
+                        />
                         <Text style={styles.title}>Instagram</Text>
                     </View>
                     <View style={styles.col}>
-                        <ShareButton style={styles.buton} source={twitterIcon} />
+                        <ShareButton
+                            style={styles.buton}
+                            source={twitterIcon}
+                        />
                         <Text style={styles.title}>Twitter</Text>
                     </View>
                     <View style={styles.col}>
-                        <ShareButton style={styles.buton} source={facebookIcon} />
+                        <ShareButton
+                            style={styles.buton}
+                            source={facebookIcon}
+                        />
                         <Text style={styles.title}>Facebook</Text>
                     </View>
                 </View>
@@ -47,11 +52,17 @@ class GeneralShareScreen extends Component {
                         <Text style={styles.title}>Tumblr</Text>
                     </View>
                     <View style={styles.col}>
-                        <ShareButton style={styles.buton} source={pinterestIcon} />
+                        <ShareButton
+                            style={styles.buton}
+                            source={pinterestIcon}
+                        />
                         <Text style={styles.title}>Pinterest</Text>
                     </View>
                     <View style={styles.col}>
-                        <ShareButton style={styles.buton} source={messageIcon} />
+                        <ShareButton
+                            style={styles.buton}
+                            source={messageIcon}
+                        />
                         <Text style={styles.title}>Messages</Text>
                     </View>
                 </View>
@@ -92,7 +103,6 @@ const styles = StyleSheet.create({
         color: Color.BLACK,
         marginTop: emY(0.75)
     }
-
 });
 
 GeneralShareScreen.navigationOptions = {
@@ -103,8 +113,7 @@ GeneralShareScreen.navigationOptions = {
     headerTitleStyle: Style.headerTitle
 };
 
-const mapStateToProps = state => ({
-
-});
-
-export default connect(mapStateToProps, {})(GeneralShareScreen);
+export default connect(
+    null,
+    {}
+)(GeneralShareScreen);

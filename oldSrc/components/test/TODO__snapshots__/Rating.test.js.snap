@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rating renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flexDirection": "row",
+      },
+      undefined,
+    ]
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    key="0"
+    onPress={[Function]}
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "marginRight": 10,
+          },
+          Object {
+            "height": 30,
+            "width": 30,
+          },
+          undefined,
+        ]
+      }
+    />
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    key="1"
+    onPress={[Function]}
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "marginRight": 10,
+          },
+          Object {
+            "height": 30,
+            "width": 30,
+          },
+          undefined,
+        ]
+      }
+    />
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    key="2"
+    onPress={[Function]}
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "marginRight": 10,
+          },
+          Object {
+            "height": 30,
+            "width": 30,
+          },
+          undefined,
+        ]
+      }
+    />
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    key="3"
+    onPress={[Function]}
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "marginRight": 10,
+          },
+          Object {
+            "height": 30,
+            "width": 30,
+          },
+          undefined,
+        ]
+      }
+    />
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    key="4"
+    onPress={[Function]}
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "marginRight": 10,
+          },
+          Object {
+            "height": 30,
+            "width": 30,
+          },
+          undefined,
+        ]
+      }
+    />
+  </TouchableOpacity>
+</View>
+`;

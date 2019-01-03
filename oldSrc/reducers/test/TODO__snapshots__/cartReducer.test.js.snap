@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cartReducer handles addToCart action 1`] = `
+Object {
+  "currentSetAddress": "",
+  "currentSetLatLon": Object {
+    "lat": null,
+    "lon": null,
+  },
+  "orderId": "",
+  "products": Object {
+    "1": Object {
+      "1": Object {
+        "deliveryType": "1",
+        "price": 3.49,
+        "productCode": "1",
+        "quantity": 1,
+        "thumbnail_image": "image",
+        "title": "Type 1 code 1",
+      },
+    },
+  },
+  "totalCost": 3.49,
+  "totalQuantity": 1,
+}
+`;
+
+exports[`cartReducer handles addToCart then removeFromCart 1`] = `
+Object {
+  "currentSetAddress": "",
+  "currentSetLatLon": Object {
+    "lat": null,
+    "lon": null,
+  },
+  "orderId": "",
+  "products": Object {
+    "1": Object {
+      "1": Object {
+        "deliveryType": "1",
+        "price": 3.49,
+        "productCode": "1",
+        "quantity": 0,
+        "thumbnail_image": "image",
+        "title": "Type 1 code 1",
+      },
+    },
+  },
+  "totalCost": 0,
+  "totalQuantity": 0,
+}
+`;
+
+exports[`cartReducer handles removeFromCart action 1`] = `
+Object {
+  "currentSetAddress": "",
+  "currentSetLatLon": Object {
+    "lat": null,
+    "lon": null,
+  },
+  "orderId": "",
+  "products": Object {
+    "1": Object {
+      "1": Object {
+        "deliveryType": "1",
+        "price": 3.49,
+        "productCode": "1",
+        "quantity": 1,
+        "thumbnail_image": "image",
+        "title": "Type 1 code 1",
+      },
+    },
+  },
+  "totalCost": 3.49,
+  "totalQuantity": 1,
+}
+`;
+
+exports[`cartReducer handles setCurrentLocation 1`] = `
+Object {
+  "currentSetAddress": "address",
+  "currentSetLatLon": Object {
+    "lat": 0,
+    "lon": 1,
+  },
+  "orderId": "",
+  "products": Object {},
+  "totalCost": 0,
+  "totalQuantity": 0,
+}
+`;

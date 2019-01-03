@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeroList renders correctly 1`] = `
+<ScrollViewMock
+  contentContainerStyle={Object {}}
+/>
+`;

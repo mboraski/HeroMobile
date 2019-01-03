@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Platform } from 'react-native';
+import { TextInput, View, StyleSheet, Platform } from 'react-native';
 import { Field } from 'redux-form';
 
+import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
 
@@ -18,7 +19,13 @@ export const TextInputComponent = ({
 }) => (
     <View style={[styles.formInputGroup, containerStyle]}>
         {label ? (
-            <Text style={[styles.label, labelStyle, touched && invalid && styles.labelInvalid]}>
+            <Text
+                style={[
+                    styles.label,
+                    labelStyle,
+                    touched && invalid && styles.labelInvalid
+                ]}
+            >
                 {label}
             </Text>
         ) : null}
@@ -35,11 +42,15 @@ export const TextInputComponent = ({
             {...restInput}
             {...props}
         />
-        {touched && error ? <Text style={[styles.error, errorStyle]}>{error}</Text> : null}
+        {touched && error ? (
+            <Text style={[styles.error, errorStyle]}>{error}</Text>
+        ) : null}
     </View>
 );
 
-const TextInputField = props => <Field {...props} component={TextInputComponent} />;
+const TextInputField = props => (
+    <Field {...props} component={TextInputComponent} />
+);
 
 export const styles = StyleSheet.create({
     formInputGroup: {
@@ -59,6 +70,7 @@ export const styles = StyleSheet.create({
         borderRadius: 7,
         marginHorizontal: 15,
         fontSize: emY(1),
+        fontFamily: 'Arial',
         height: emY(3.125),
         paddingHorizontal: 20,
         ...Platform.select({
