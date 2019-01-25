@@ -27,6 +27,7 @@ import {
     fetchContractor
 } from '../actions/contractorActions';
 import { getCurrentLocation } from '../actions/mapActions';
+import { fetchProducts } from '../actions/productActions';
 
 import {
     getOnline,
@@ -64,16 +65,19 @@ class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.fetchContractor();
+        this.props.fetchProducts();
     }
 
     signOut = () => {
         // TODO: needs to take user offline first
         // this.props.signOut();
+        // this.props.navigation.navigate('auth');
     };
 
     currentInventory = () => {
+        console.log('current Inventory ran');
         this.props.navigation.navigate('currentInventory');
     };
 
@@ -297,7 +301,8 @@ const mapDispatchToProps = {
     fetchContractor,
     signOut,
     dropdownAlert,
-    getCurrentLocation
+    getCurrentLocation,
+    fetchProducts
 };
 
 export default connect(

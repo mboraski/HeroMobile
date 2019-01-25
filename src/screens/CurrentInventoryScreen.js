@@ -4,6 +4,8 @@ import { StyleSheet, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
+import { getInventory } from '../selectors/contractorSelectors';
+import { getProductImages } from '../selectors/productSelectors';
 import { fetchContractorInventory } from '../actions/contractorActions';
 import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
@@ -22,7 +24,8 @@ class CurrentInventoryScreen extends Component {
     });
 
     componentDidMount() {
-        this.props.fetchContractorInventory();
+        // TODO: implement
+        // this.props.fetchContractorInventory();
     }
 
     render() {
@@ -96,8 +99,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    contractorProducts: state.inventory.inventory,
-    productImages: state.product.productImages
+    contractorProducts: getInventory(state),
+    productImages: getProductImages(state)
 });
 
 const mapDispatchToProps = {

@@ -1,10 +1,13 @@
 import { SubmissionError } from 'redux-form';
 
 import { firebaseAuth, db } from '../../firebase';
-
 import { UPDATE_STRIPE_INFO } from './paymentActions';
-
 import { persistor } from '../store';
+import {
+    sanitizeAndValidateName,
+    sanitizeAndValidateEmail,
+    sanitizeAndValidatePhoneNumber
+} from '../utils/security';
 
 export const AUTH_CHANGED = 'auth_changed';
 export const SIGNUP_REQUEST = 'signup_request';
@@ -23,30 +26,34 @@ export const SET_EXPO_PUSH_TOKEN_REQUEST = 'set_expo_push_token_request';
 export const createUserWithEmailAndPassword = (values, dispatch) =>
     new Promise((resolve, reject) => {
         const { firstName, lastName, email, password, phoneNumber } = values;
+        const safeFirstName = sanitizeAndValidateName(firstName);
+        const safeLastName = sanitizeAndValidateName(lastName);
+        const safeEmail = sanitizeAndValidateEmail(email);
+        const safePhoneNumber = sanitizeAndValidatePhoneNumber(phoneNumber);
         dispatch({
             type: SIGNUP_REQUEST
         });
         return firebaseAuth
-            .createUserWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(safeEmail, password)
             .then(userCredential =>
                 db
                     .collection('users')
                     .doc(`${userCredential.user.uid}`)
                     .set({
-                        firstName,
-                        lastName,
-                        email,
-                        phoneNumber
+                        firstName: safeFirstName,
+                        lastName: safeLastName,
+                        email: safeEmail,
+                        phoneNumber: safePhoneNumber
                     })
             )
             .then(() => {
                 dispatch({
                     type: SIGNUP_SUCCESS,
                     payload: {
-                        firstName,
-                        lastName,
-                        email,
-                        phoneNumber
+                        firstName: safeFirstName,
+                        lastName: safeLastName,
+                        email: safeEmail,
+                        phoneNumber: safePhoneNumber
                     }
                 });
                 return resolve();
@@ -67,11 +74,12 @@ export const createUserWithEmailAndPassword = (values, dispatch) =>
 export const signInWithEmailAndPassword = (values, dispatch) =>
     new Promise((resolve, reject) => {
         const { email, password } = values;
+        const safeEmail = sanitizeAndValidateEmail(email);
         dispatch({
             type: SIGNIN_REQUEST
         });
         return firebaseAuth
-            .signInWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(safeEmail, password)
             .then(() => {
                 dispatch({
                     type: SIGNIN_SUCCESS
@@ -85,7 +93,7 @@ export const signInWithEmailAndPassword = (values, dispatch) =>
                 });
                 return reject(
                     new SubmissionError({
-                        _error: 'Crrrazy error' // TODO: change
+                        _error: 'Invalid username or password'
                     })
                 );
             });
@@ -116,9 +124,12 @@ export const listenToAuthChanges = () => dispatch => {
 };
 
 export const setUserExpoPushToken = token => dispatch => {
-    dispatch({ type: SET_EXPO_PUSH_TOKEN_REQUEST }); // TODO: NOT LISTENED TO
-    const userDoc = db.collection('users').doc(firebaseAuth.currentUser.uid);
-    return userDoc.update({ expoPushToken: token });
+    if (firebaseAuth.currentUser) {
+        const user = firebaseAuth.currentUser;
+        dispatch({ type: SET_EXPO_PUSH_TOKEN_REQUEST }); // TODO: NOT LISTENED TO
+        const userDoc = db.collection('users').doc(user.uid);
+        return userDoc.update({ expoPushToken: token });
+    }
 };
 
 export const getUserReadable = () => dispatch => {

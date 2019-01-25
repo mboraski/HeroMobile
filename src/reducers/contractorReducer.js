@@ -1,3 +1,6 @@
+import reduce from 'lodash.reduce';
+
+import { firebaseAuth } from '../../firebase';
 import {
     FETCH_CONTRACTOR_REQUEST,
     FETCH_CONTRACTOR_SUCCESS,
@@ -12,7 +15,8 @@ import {
     REMOVE_FROM_INVENTORY,
     UPDATE_ORDERS,
     ONLINE,
-    OFFLINE
+    OFFLINE,
+    MERGE_INVENTORIES
 } from '../actions/contractorActions';
 
 export const initialState = {
@@ -25,6 +29,32 @@ export const initialState = {
     pending: false,
     orders: {},
     error: null
+};
+
+// Note right now this just makes the product list the inventory; changing structure.
+// TODO: change this as it will not work for when product list separate from Hero
+const mergeInventories = productList => {
+    const uid = firebaseAuth.currentUser.uid;
+    const instantObj = reduce(
+        productList,
+        (accum, product) => {
+            accum[product.productName] = {
+                categories: product.categories,
+                contractors: {
+                    [uid]: {
+                        quantity: product.quantity
+                    }
+                },
+                imageUrl: product.imageUrl,
+                price: product.price,
+                productName: product.productName
+            };
+            console.log('accum: ', accum);
+            return accum;
+        },
+        {}
+    );
+    return { instant: instantObj };
 };
 
 const addProductToInventory = (product, inventory) => {
@@ -149,6 +179,14 @@ export default function(state = initialState, action) {
                 orders: action.payload,
                 pending: false
             };
+        case MERGE_INVENTORIES: {
+            const productList = action.payload;
+            const newInventory = mergeInventories(productList);
+            return {
+                ...state,
+                inventory: newInventory
+            };
+        }
         default:
             return state;
     }

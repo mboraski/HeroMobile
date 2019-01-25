@@ -16,6 +16,7 @@ export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
 export const UPDATE_ORDERS = 'update_orders';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
+export const MERGE_INVENTORIES = 'merge_inventories';
 
 const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
 const CONSUMER_BLOCK_REF = 'activeProducts/US/TX/Austin';
@@ -170,6 +171,11 @@ export const confirmUpdateInventory = newInventory => dispatch => {
             });
     }
 };
+
+export const mergeInventories = productList => ({
+    type: MERGE_INVENTORIES,
+    payload: productList
+});
 
 export const addToInventory = product => ({
     type: ADD_TO_INVENTORY,

@@ -13,6 +13,7 @@ export const getProductsPending = state => state.product.pending;
 export const getError = state => state.product.error;
 export const getAvailableProducts = state => state.product.availableProducts;
 export const getCategory = state => state.product.category.toUpperCase();
+export const getProducts = state => state.product.products;
 export const getProductImages = state => state.product.productImages;
 
 export const getCategories = createSelector(
