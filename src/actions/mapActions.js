@@ -1,7 +1,11 @@
 import { Location, Permissions } from 'expo';
 
 import { geocode } from './googleMapsActions';
-import { online, OFFLINE, ONLINE } from './contractorActions';
+import {
+    online,
+    OFFLINE,
+    ONLINE_STATUS_CHANGE_REQUEST
+} from './contractorActions';
 
 import { dropdownAlert } from './uiActions';
 
@@ -66,9 +70,9 @@ export const noHeroesAvailable = errObj => dispatch =>
         payload: errObj
     });
 
-export const getCurrentLocation = () => async dispatch => {
+export const getCurrentLocation = inventory => async dispatch => {
     try {
-        dispatch({ type: ONLINE });
+        dispatch({ type: ONLINE_STATUS_CHANGE_REQUEST });
         dispatch({ type: GET_CURRENT_LOCATION_REQUEST });
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== 'granted') {
@@ -112,7 +116,7 @@ export const getCurrentLocation = () => async dispatch => {
                 timestamp: location.timestamp,
                 coords: location.coords
             };
-            online(region, dispatch);
+            online(region, dispatch, inventory);
         }
     } catch (error) {
         dispatch({

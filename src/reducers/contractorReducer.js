@@ -1,6 +1,3 @@
-import reduce from 'lodash.reduce';
-
-import { firebaseAuth } from '../../firebase';
 import {
     FETCH_CONTRACTOR_REQUEST,
     FETCH_CONTRACTOR_SUCCESS,
@@ -14,6 +11,7 @@ import {
     ADD_TO_INVENTORY,
     REMOVE_FROM_INVENTORY,
     UPDATE_ORDERS,
+    ONLINE_STATUS_CHANGE_REQUEST,
     ONLINE,
     OFFLINE,
     MERGE_INVENTORIES
@@ -27,34 +25,9 @@ export const initialState = {
     firstName: '',
     lastName: '',
     pending: false,
+    onlineStatusPending: false,
     orders: {},
     error: null
-};
-
-// Note right now this just makes the product list the inventory; changing structure.
-// TODO: change this as it will not work for when product list separate from Hero
-const mergeInventories = productList => {
-    const uid = firebaseAuth.currentUser.uid;
-    const instantObj = reduce(
-        productList,
-        (accum, product) => {
-            accum[product.productName] = {
-                categories: product.categories,
-                contractors: {
-                    [uid]: {
-                        quantity: product.quantity
-                    }
-                },
-                imageUrl: product.imageUrl,
-                price: product.price,
-                productName: product.productName
-            };
-            console.log('accum: ', accum);
-            return accum;
-        },
-        {}
-    );
-    return { instant: instantObj };
 };
 
 const addProductToInventory = (product, inventory) => {
@@ -163,15 +136,22 @@ export default function(state = initialState, action) {
                 inventory: newInventory
             };
         }
+        case ONLINE_STATUS_CHANGE_REQUEST:
+            return {
+                ...state,
+                onlineStatusPending: true
+            };
         case ONLINE:
             return {
                 ...state,
-                online: true
+                online: true,
+                onlineStatusPending: false
             };
         case OFFLINE:
             return {
                 ...state,
-                online: false
+                online: false,
+                onlineStatusPending: false
             };
         case UPDATE_ORDERS:
             return {
@@ -179,14 +159,11 @@ export default function(state = initialState, action) {
                 orders: action.payload,
                 pending: false
             };
-        case MERGE_INVENTORIES: {
-            const productList = action.payload;
-            const newInventory = mergeInventories(productList);
+        case MERGE_INVENTORIES:
             return {
                 ...state,
-                inventory: newInventory
+                inventory: action.payload
             };
-        }
         default:
             return state;
     }

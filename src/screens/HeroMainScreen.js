@@ -32,8 +32,10 @@ import { fetchProducts } from '../actions/productActions';
 import {
     getOnline,
     getPending,
+    getOnlineStatusPending,
     getFirstName,
-    getLastName
+    getLastName,
+    getInventory
 } from '../selectors/contractorSelectors';
 
 import { getCoords } from '../selectors/mapSelectors';
@@ -100,6 +102,10 @@ class HeroMainScreen extends Component {
         }
     };
 
+    useCurrentLocation = () => {
+        this.props.getCurrentLocation(this.props.inventory);
+    };
+
     render() {
         const {
             online,
@@ -107,7 +113,8 @@ class HeroMainScreen extends Component {
             pending,
             firstName,
             lastName,
-            region
+            region,
+            onlineStatusPending
         } = this.props;
 
         return (
@@ -129,6 +136,13 @@ class HeroMainScreen extends Component {
                                 )}
                             </View>
                         </View>
+                        {onlineStatusPending && (
+                            <ActivityIndicator
+                                animating={onlineStatusPending}
+                                size="large"
+                                color="#f5a623"
+                            />
+                        )}
                         <Text style={styles.name}>
                             {firstName} {lastName}
                         </Text>
@@ -137,7 +151,7 @@ class HeroMainScreen extends Component {
                         <ProfileSwitch
                             online={online}
                             region={region}
-                            goOnline={this.props.getCurrentLocation}
+                            goOnline={this.useCurrentLocation}
                             goOffline={this.props.goOffline}
                         />
                         {/* <View style={styles.statusContainer}>
@@ -291,9 +305,11 @@ const mapStateToProps = state => ({
     // header: state.header,
     online: getOnline(state),
     pending: getPending(state),
+    onlineStatusPending: getOnlineStatusPending(state),
     firstName: getFirstName(state),
     lastName: getLastName(state),
-    region: getCoords(state)
+    region: getCoords(state),
+    inventory: getInventory(state)
 });
 
 const mapDispatchToProps = {
