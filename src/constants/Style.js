@@ -4,6 +4,7 @@ import { emY } from '../utils/em';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
+export const HEADER_ITEM_SIZE = emY(1.5);
 
 const header = {
     paddingTop: STATUSBAR_HEIGHT,

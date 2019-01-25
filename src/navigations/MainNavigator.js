@@ -5,6 +5,8 @@ import { Platform } from 'react-native';
 // Relative Imports
 import apiTester from '../screens/apiTester';
 import HeroMainScreen from '../screens/HeroMainScreen';
+import CurrentInventoryScreen from '../screens/CurrentInventoryScreen';
+import UpdateInventoryScreen from '../screens/UpdateInventoryScreen';
 import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -29,6 +31,8 @@ export default createStackNavigator(
     {
         apiTester: { screen: apiTester },
         main: { screen: HeroMainScreen },
+        currentInventory: { screen: CurrentInventoryScreen },
+        updateInventory: { screen: UpdateInventoryScreen },
         order: { screen: OrderScreen },
         orders: { screen: OrdersScreen },
         welcome: { screen: WelcomeScreen },

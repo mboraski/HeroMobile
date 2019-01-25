@@ -11,8 +11,10 @@ import {
     ADD_TO_INVENTORY,
     REMOVE_FROM_INVENTORY,
     UPDATE_ORDERS,
+    ONLINE_STATUS_CHANGE_REQUEST,
     ONLINE,
-    OFFLINE
+    OFFLINE,
+    MERGE_INVENTORIES
 } from '../actions/contractorActions';
 
 export const initialState = {
@@ -23,6 +25,7 @@ export const initialState = {
     firstName: '',
     lastName: '',
     pending: false,
+    onlineStatusPending: false,
     orders: {},
     error: null
 };
@@ -133,21 +136,33 @@ export default function(state = initialState, action) {
                 inventory: newInventory
             };
         }
+        case ONLINE_STATUS_CHANGE_REQUEST:
+            return {
+                ...state,
+                onlineStatusPending: true
+            };
         case ONLINE:
             return {
                 ...state,
-                online: true
+                online: true,
+                onlineStatusPending: false
             };
         case OFFLINE:
             return {
                 ...state,
-                online: false
+                online: false,
+                onlineStatusPending: false
             };
         case UPDATE_ORDERS:
             return {
                 ...state,
                 orders: action.payload,
                 pending: false
+            };
+        case MERGE_INVENTORIES:
+            return {
+                ...state,
+                inventory: action.payload
             };
         default:
             return state;

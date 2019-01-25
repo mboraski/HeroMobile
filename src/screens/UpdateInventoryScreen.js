@@ -20,11 +20,14 @@ import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
+
 import {
-    getUpdateInventory,
-    getCartOrders,
+    getInventory, // TODO: change this after hero can change inventory
+    getPending,
     getInventoryTotalQuantity
-} from '../selectors/cartSelectors';
+} from '../selectors/contractorSelectors';
+import { getProductImages } from '../selectors/productSelectors';
+
 import {
     confirmUpdateInventory,
     addToInventory,
@@ -45,32 +48,8 @@ export class UpdateInventoryScreeen extends Component {
         opacity: new Animated.Value(1)
     };
 
-    componentDidMount() {
-        if (this.props.itemCountUp) {
-            this.props.dropdownAlert(true, 'More products available!');
-        } else if (this.props.itemCountDown) {
-            this.props.dropdownAlert(
-                true,
-                'Some products are no longer available'
-            );
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (!this.props.itemCountUp && nextProps.itemCountUp) {
-            this.props.dropdownAlert(true, 'More products available!');
-        } else if (!this.props.itemCountDown && nextProps.itemCountDown) {
-            this.props.dropdownAlert(
-                true,
-                'Some products are no longer available'
-            );
-        } else {
-            this.props.dropdownAlert(false, '');
-        }
-    }
-
     confirmUpdate = () => {
-        this.props.confirmUpdateInventory(this.props.cartOrders);
+        // this.props.confirmUpdateInventory(this.props.cartOrders);
     };
 
     handleAddOrder = product => {
@@ -86,7 +65,7 @@ export class UpdateInventoryScreeen extends Component {
         const {
             updateInventory,
             pending,
-            orderImages,
+            productImages,
             inventoryTotalQuantity
         } = this.props;
         return (
@@ -101,7 +80,7 @@ export class UpdateInventoryScreeen extends Component {
                         <View style={styles.container}>
                             <OrderList
                                 orders={updateInventory}
-                                orderImages={orderImages}
+                                orderImages={productImages}
                                 onAddOrder={this.handleAddOrder}
                                 onRemoveOrder={this.handleRemoveOrder}
                             />
@@ -218,13 +197,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    updateInventory: getUpdateInventory(state),
-    itemCountUp: state.cart.itemCountUp,
-    itemCountDown: state.cart.itemCountDown,
-    pending: state.inventory.pending,
-    orderImages: state.product.productImages,
-    inventoryTotalQuantity: getInventoryTotalQuantity(state),
-    cartOrders: getCartOrders(state)
+    updateInventory: getInventory(state),
+    pending: getPending(state),
+    productImages: getProductImages(state),
+    inventoryTotalQuantity: getInventoryTotalQuantity(state)
 });
 
 const mapDispatchToProps = {

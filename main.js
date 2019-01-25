@@ -1,12 +1,6 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import {
-    View,
-    StyleSheet,
-    Image,
-    Platform,
-    ActivityIndicator
-} from 'react-native';
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import Expo, { Font } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -17,26 +11,30 @@ import Color from './src/constants/Color';
 import RootContainer from './src/containers/RootContainer';
 import { store, persistor } from './src/store';
 
+// TODO: Here until a solution can be found.
+console.ignoredYellowBox = ['Setting a timer'];
+
 class App extends Component {
     state = {
-        fontLoaded: false
+        loading: true
     };
 
     async componentDidMount() {
         const fonts = {
-            goodtimes: require('./src/assets/fonts/goodtimes.ttf') // eslint-disable-line global-require
+            goodtimes: require('./src/assets/fonts/goodtimes.ttf'), // eslint-disable-line global-require
+            roboto: require('./src/assets/fonts/roboto.ttf') // eslint-disable-line global-require
         };
 
-        if (Platform.OS === 'android') {
-            fonts.Arial = require('./src/assets/fonts/arial.ttf'); // eslint-disable-line global-require
-        }
-
         await Font.loadAsync(fonts);
-        this.setState({ fontLoaded: true });
+        this.setState({ loading: false });
     }
 
     render() {
-        return this.state.fontLoaded ? (
+        return this.state.loading ? (
+            <View style={styles.overlay}>
+                <ActivityIndicator size="large" color="#f5a623" />
+            </View>
+        ) : (
             <Provider store={store}>
                 <PersistGate
                     persistor={persistor}
@@ -51,10 +49,6 @@ class App extends Component {
                     <RootContainer />
                 </PersistGate>
             </Provider>
-        ) : (
-            <View style={styles.overlay}>
-                <ActivityIndicator size="large" color="#f5a623" />
-            </View>
         );
     }
 }

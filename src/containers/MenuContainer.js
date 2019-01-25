@@ -19,7 +19,7 @@ import { openCustomerPopup } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
 import { getUserReadable } from '../selectors/authSelectors';
 
-const IMAGE_CONTAINER_SIZE = emY(2);
+const IMAGE_CONTAINER_SIZE = 100;
 
 const getRoute = (items, routeName) =>
     items.find(item => item.key === routeName);

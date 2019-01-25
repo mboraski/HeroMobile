@@ -1,6 +1,6 @@
 {
     "name": "HeroMobile",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Hasty Hero Mobile App",
     "license": "UNLICENSED",
     "author": {
@@ -61,7 +61,8 @@
         "redux-persist-expo-securestore": "^0.1.1",
         "redux-thunk": "^2.3.0",
         "reselect": "^3.0.1",
-        "stripe-client": "^1.1.5"
+        "stripe-client": "^1.1.5",
+        "validator": "^10.9.0"
     },
     "devDependencies": {
         "axios-mock-adapter": "^1.15.0",

@@ -1,17 +1,112 @@
 import filter from 'lodash.filter';
 import forEach from 'lodash.foreach';
+import reduce from 'lodash.reduce';
 
 import { noHeroesAvailable } from './mapActions';
 import { updateCart } from './cartActions';
-import { rtdb, fire } from '../../firebase';
+import { mergeInventories } from './contractorActions';
+import { rtdb, db, fire, firebaseAuth } from '../../firebase';
 
 export const SELECT_CATEGORY = 'select_category';
+export const FETCH_PRODUCTS_REQUEST = 'fetch_products_request';
+export const FETCH_PRODUCTS_SUCCESS = 'fetch_products_success';
+export const FETCH_PRODUCTS_ERROR = 'fetch_products_error';
 export const FETCH_CUSTOMER_BLOCK_REQUEST = 'fetch_customer_block_request';
 export const FETCH_CUSTOMER_BLOCK_SUCCESS = 'fetch_customer_block_success';
 export const FETCH_CUSTOMER_BLOCK_ERROR = 'fetch_customer_block_error';
 export const SET_IMAGE = 'set_image';
 
 const CUSTOMER_BLOCK_REF = 'activeProducts/US/TX/Austin';
+
+// Note right now this just makes the product list the inventory; changing structure.
+// TODO: change this as it will not work for when product list separate from Hero
+const createInventory = productList => {
+    const uid = firebaseAuth.currentUser.uid;
+    const instantObj = reduce(
+        productList,
+        (accum, product) => {
+            accum[product.productName] = {
+                categories: product.categories,
+                contractors: {
+                    [uid]: {
+                        quantity: product.quantity
+                    }
+                },
+                quantityAvailable: product.quantity,
+                quantityTaken: product.quantity,
+                imageUrl: product.imageUrl,
+                price: product.price * 100,
+                productName: product.productName
+            };
+            console.log('accum: ', accum);
+            return accum;
+        },
+        {}
+    );
+    return instantObj;
+};
+
+export const fetchProducts = () => async dispatch => {
+    try {
+        dispatch({ type: FETCH_PRODUCTS_REQUEST });
+
+        const querySnapshot = await db.collection('products').get();
+        const productList = {};
+        querySnapshot.forEach(doc => {
+            productList[doc.id] = doc.data();
+        });
+        dispatch(setProductsSuccess(productList));
+        const mergedInventory = createInventory(productList);
+        fetchInventoryImages(mergedInventory, dispatch);
+        dispatch(mergeInventories(mergedInventory));
+    } catch (err) {
+        console.log('err: ', err);
+        dispatch(setProductsError(err));
+    }
+};
+
+export const fetchInventoryImages = (products, dispatch) => async () => {
+    const storageRef = fire.storage();
+    // this.productImage = 'gs://hasty-14d18.appspot.com/productImages/advil-packet.jpg'
+    // console.log('products: ', products);
+    forEach(products, product => {
+        const imageUrl = product.imageUrl || '';
+        if (imageUrl) {
+            const imageRef = storageRef.refFromURL(imageUrl);
+            imageRef
+                .getDownloadURL()
+                .then(url => {
+                    dispatch({
+                        type: SET_IMAGE,
+                        payload: { productName: product.productName, url }
+                    });
+                })
+                .catch(() => {
+                    // TODO: use placeholder image if error, not empty string
+                    dispatch({
+                        type: SET_IMAGE,
+                        payload: { productName: product.productName, url: '' }
+                    });
+                });
+        } else {
+            dispatch({
+                type: SET_IMAGE,
+                payload: { productName: product.productName, url: '' }
+            });
+        }
+    });
+};
+
+// TODO: rename
+export const setProductsSuccess = products => ({
+    type: FETCH_PRODUCTS_SUCCESS,
+    payload: products
+});
+
+export const setProductsError = error => ({
+    type: FETCH_PRODUCTS_ERROR,
+    payload: error
+});
 
 export const fetchCustomerBlock = () => dispatch => {
     dispatch({ type: FETCH_CUSTOMER_BLOCK_REQUEST });

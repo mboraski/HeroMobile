@@ -1,6 +1,7 @@
 import { orderStatuses } from '../constants/Order';
-import { rtdb } from '../../firebase';
+import { rtdb, firebaseAuth } from '../../firebase';
 import * as api from '../api/hasty';
+import { dropdownAlert } from './uiActions';
 import { CLEAR_CART } from './cartActions';
 
 const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
@@ -16,6 +17,15 @@ export const CALL_CONTRACTOR_REQUEST = 'call_contractor_request';
 export const COMPLETE_ORDER_REQUEST = 'complete_order_request';
 export const COMPLETE_ORDER_SUCCESS = 'complete_order_success';
 export const COMPLETE_ORDER_ERROR = 'complete_order_error';
+export const OPEN_CHAT_MODAL = 'open_chat_modal';
+export const CLOSE_CHAT_MODAL = 'close_chat_modal';
+export const OPEN_ORDER_FOUND = 'open_order_found';
+export const SET_NEW_MESSAGE_VALUE = 'set_new_message_value';
+export const SEND_CHAT_MESSAGE_REQUEST = 'send_chat_message_request';
+export const SEND_CHAT_MESSAGE_SUCCESS = 'send_chat_message_success';
+export const SEND_CHAT_MESSAGE_ERROR = 'send_chat_message_error';
+export const SET_ORDER_ID = 'set_order_id';
+export const SET_CHAT_ID = 'set_chat_id';
 
 export const setContractors = contractors => ({
     type: SET_CONTRACTORS,
@@ -142,4 +152,44 @@ export const contactContractor = (
     } catch (err) {
         console.log('call to contractor errored: ');
     }
+};
+
+export const setOrderId = orderId => dispatch =>
+    dispatch({ type: SET_ORDER_ID, payload: orderId });
+
+export const setChatId = chatId => dispatch =>
+    dispatch({ type: SET_CHAT_ID, payload: chatId });
+
+export const openChatModal = contractorId => dispatch =>
+    dispatch({ type: OPEN_CHAT_MODAL, payload: contractorId });
+
+export const closeChatModal = () => dispatch =>
+    dispatch({ type: CLOSE_CHAT_MODAL });
+
+export const sendMessage = (content, orderId, chatId) => async dispatch => {
+    console.log('new message to send: ', content);
+    dispatch({ type: SEND_CHAT_MESSAGE_REQUEST });
+    const timeStamp = Date.now();
+    const message = {
+        timeStamp,
+        content,
+        uid: firebaseAuth.currentUser.uid
+    };
+    try {
+        await rtdb
+            .ref(
+                `${ORDER_REF}/${orderId}/fulfillment/actualFulfillment/full/${chatId}`
+            )
+            .child('chat')
+            .update({ [timeStamp]: message });
+        dispatch({ type: SEND_CHAT_MESSAGE_SUCCESS });
+    } catch (error) {
+        console.log('sendMessage error: ', error);
+        dispatch(dropdownAlert(true, 'Error sending message.'));
+        dispatch({ type: SEND_CHAT_MESSAGE_ERROR });
+    }
+};
+
+export const setNewMessageValue = message => dispatch => {
+    dispatch({ type: SET_NEW_MESSAGE_VALUE, payload: message });
 };

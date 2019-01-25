@@ -14,8 +14,10 @@ export const CONFIRM_INVENTORY_ERROR = 'confirm_inventory_error';
 export const ADD_TO_INVENTORY = 'add_to_inventory';
 export const REMOVE_FROM_INVENTORY = 'remove_from_inventory';
 export const UPDATE_ORDERS = 'update_orders';
+export const ONLINE_STATUS_CHANGE_REQUEST = 'online_status_change_request';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
+export const MERGE_INVENTORIES = 'merge_inventories';
 
 const ORDER_REF = 'activeProducts/US/TX/Austin/orders';
 const CONSUMER_BLOCK_REF = 'activeProducts/US/TX/Austin';
@@ -55,24 +57,49 @@ export const fetchContractor = () => dispatch => {
     }
 };
 
-export const online = (region, dispatch) => {
+export const online = (region, dispatch, inventory) => {
     const user = firebaseAuth.currentUser;
     if (user) {
         const uid = user.uid;
         const contractorRef = rtdb.ref(`contractors/${uid}`);
+        const consumerBlockRef = rtdb.ref(CONSUMER_BLOCK_REF);
         return contractorRef
             .update({
                 online: true,
                 region,
                 status: 'available',
-                method: 'walk'
+                method: 'walking'
             })
             .then(() => {
+                return consumerBlockRef.child('contractorRegion').set({
+                    latitude: region.latitude,
+                    longitude: region.longitude,
+                    mode: 'walking'
+                });
+            })
+            .then(() => {
+                return consumerBlockRef.child(`contractors/${user.uid}`).set({
+                    deliveryTime: 240,
+                    firstName: 'Mark',
+                    lastName: 'Boraski',
+                    phoneNumber: '+15126690628',
+                    photoUrl: 'na',
+                    status: 'available'
+                });
+            })
+            .then(() => {
+                return consumerBlockRef
+                    .child('products/instant')
+                    .set({ ...inventory });
+            })
+            .then(() => {
+                dispatch({ type: ONLINE });
                 dispatch(dropdownAlert(true, 'Successfully Online!'));
             })
             .catch(error => {
                 dispatch({ type: OFFLINE });
-                logContractorError(uid, error);
+                console.log('contractor online error: ', error);
+                // logContractorError(uid, error);
                 dispatch(
                     dropdownAlert(true, 'Error setting Hero online status')
                 );
@@ -81,14 +108,27 @@ export const online = (region, dispatch) => {
 };
 
 export const offline = () => dispatch => {
+    dispatch({ type: ONLINE_STATUS_CHANGE_REQUEST });
     const user = firebaseAuth.currentUser;
     if (user) {
         dispatch({ type: OFFLINE });
         const uid = user.uid;
         const contractorRef = rtdb.ref(`contractors/${uid}`);
+        const consumerBlockRef = rtdb.ref(CONSUMER_BLOCK_REF);
         return contractorRef
             .child('online')
             .set(false)
+            .then(() => {
+                return consumerBlockRef.child('contractorRegion').set(null);
+            })
+            .then(() => {
+                return consumerBlockRef
+                    .child(`contractors/${user.uid}`)
+                    .set(null);
+            })
+            .then(() => {
+                return consumerBlockRef.child('products/instant').set(null);
+            })
             .then(() => {
                 dispatch(dropdownAlert(true, 'Successfully Offline!'));
             })
@@ -170,6 +210,11 @@ export const confirmUpdateInventory = newInventory => dispatch => {
             });
     }
 };
+
+export const mergeInventories = productList => ({
+    type: MERGE_INVENTORIES,
+    payload: productList
+});
 
 export const addToInventory = product => ({
     type: ADD_TO_INVENTORY,
