@@ -6,7 +6,14 @@ import {
     UPDATE_ORDER_STATUS,
     UPDATE_ORDER_FULFILLMENT,
     UPDATE_ORDER_ERROR,
-    UPDATE_ORDERS
+    OPEN_CHAT_MODAL,
+    CLOSE_CHAT_MODAL,
+    SET_NEW_MESSAGE_VALUE,
+    SEND_CHAT_MESSAGE_REQUEST,
+    SEND_CHAT_MESSAGE_SUCCESS,
+    SEND_CHAT_MESSAGE_ERROR,
+    SET_ORDER_ID,
+    SET_CHAT_ID
 } from '../actions/orderActions';
 import { SIGNOUT_SUCCESS } from '../actions/authActions';
 
@@ -18,7 +25,11 @@ const initialState = {
     pending: false,
     status: '',
     order: {},
-    error: null
+    error: null,
+    chatModalVisible: false,
+    chatId: '',
+    newMessageValue: '',
+    chatPending: false
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -35,10 +46,20 @@ const orderReducer = (state = initialState, action) => {
                 ...state,
                 ...initialState
             };
-        case ORDER_CREATION_SUCCESS:
+        case ORDER_CREATION_SUCCESS: // OLD
             return {
                 ...state,
                 orderId: action.payload
+            };
+        case SET_ORDER_ID:
+            return {
+                ...state,
+                orderId: action.payload
+            };
+        case SET_CHAT_ID:
+            return {
+                ...state,
+                chatId: action.payload
             };
         case LISTEN_ORDER_STATUS:
             return {
@@ -61,6 +82,38 @@ const orderReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
                 pending: false
+            };
+        case OPEN_CHAT_MODAL:
+            return {
+                ...state,
+                chatId: action.payload,
+                chatModalVisible: true
+            };
+        case CLOSE_CHAT_MODAL:
+            return {
+                ...state,
+                chatModalVisible: false
+            };
+        case SET_NEW_MESSAGE_VALUE:
+            return {
+                ...state,
+                newMessageValue: action.payload
+            };
+        case SEND_CHAT_MESSAGE_REQUEST:
+            return {
+                ...state,
+                chatPending: true
+            };
+        case SEND_CHAT_MESSAGE_SUCCESS:
+            return {
+                ...state,
+                newMessageValue: '',
+                chatPending: false
+            };
+        case SEND_CHAT_MESSAGE_ERROR:
+            return {
+                ...state,
+                chatPending: false
             };
         default:
             return state;

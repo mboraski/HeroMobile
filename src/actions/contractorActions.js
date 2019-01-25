@@ -82,7 +82,7 @@ export const online = (region, dispatch, inventory) => {
                     deliveryTime: 240,
                     firstName: 'Mark',
                     lastName: 'Boraski',
-                    phoneNumber: '+15126609628',
+                    phoneNumber: '+15126690628',
                     photoUrl: 'na',
                     status: 'available'
                 });

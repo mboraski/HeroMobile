@@ -1,18 +1,34 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet, Linking, Platform, Text } from 'react-native';
+import {
+    ScrollView,
+    StyleSheet,
+    Linking,
+    Platform,
+    Text,
+    Modal,
+    TouchableOpacity,
+    Image
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import { firebaseAuth } from '../../firebase';
 
 // Relative Imports
-import { getOrders } from '../selectors/contractorSelectors';
+import ChatModalContainer from '../containers/ChatModalContainer';
 import { changeOrderStatus } from '../actions/contractorActions';
+import { setOrderId, openChatModal, setChatId } from '../actions/orderActions';
+import { getOrders } from '../selectors/contractorSelectors';
+import { getChatModalVisible } from '../selectors/orderSelectors';
 import { emY } from '../utils/em';
+import messageIcon from '../assets/icons/multi_message.png';
 import Color from '../constants/Color';
 import BackButton from '../components/BackButton';
 import OrderCartInfo from '../components/OrderCartInfo';
 import Style from '../constants/Style';
+
+const CHAT_SIZE = emY(2.8);
+const CHAT_IMAGE_SIZE = emY(1.65);
 
 class OrderScreen extends Component {
     state = {
@@ -35,6 +51,11 @@ class OrderScreen extends Component {
             this.setCart(order);
             this.setStatus(order);
         }
+    }
+
+    componentDidMount() {
+        this.props.setOrderId(this.props.orderId);
+        this.props.setChatId(firebaseAuth.currentUser.uid);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -103,6 +124,10 @@ class OrderScreen extends Component {
         return orders[orderId];
     };
 
+    contactConsumer = () => {
+        this.props.openChatModal(firebaseAuth.currentUser.uid);
+    };
+
     askForDirections = () => {
         const { region, firstName, lastName } = this.state;
         const lat = region.latitude;
@@ -137,6 +162,7 @@ class OrderScreen extends Component {
             notes,
             contractorStatus
         } = this.state;
+        const { modalVisible } = this.props;
 
         return (
             <ScrollView style={styles.container}>
@@ -152,6 +178,19 @@ class OrderScreen extends Component {
                         style={styles.valueLabel}
                     >{`${firstName} ${lastName}`}</Text>
                 </Text>
+                <TouchableOpacity
+                    style={styles.chatButton}
+                    onPress={this.contactConsumer}
+                >
+                    <Image source={messageIcon} style={styles.chatImage} />
+                </TouchableOpacity>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                >
+                    <ChatModalContainer />
+                </Modal>
                 <Text style={styles.titleLabel}>
                     {'Order Status: '}
                     <Text style={styles.valueLabel}>{contractorStatus}</Text>
@@ -197,20 +236,39 @@ const styles = StyleSheet.create({
     valueLabel: {
         fontSize: emY(1),
         color: Color.YELLOW_600
+    },
+    chatButton: {
+        backgroundColor: Color.GREY_400,
+        width: CHAT_SIZE,
+        height: CHAT_SIZE,
+        borderRadius: CHAT_SIZE / 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: emY(0.7)
+    },
+    chatImage: {
+        borderRadius: 0,
+        width: CHAT_IMAGE_SIZE,
+        height: (CHAT_IMAGE_SIZE * 13) / 15
     }
 });
 
 const mapStateToProps = (state, props) => {
+    console.log('chat Modal Visible: ', getChatModalVisible(state));
     const id =
         props.navigation.state.params && props.navigation.state.params.orderId;
     return {
         orderId: id,
-        orders: getOrders(state)
+        orders: getOrders(state),
+        modalVisible: getChatModalVisible(state)
     };
 };
 
 const mapDispatchToProps = {
-    changeOrderStatus
+    changeOrderStatus,
+    openChatModal,
+    setOrderId,
+    setChatId
 };
 
 OrderScreen.navigationOptions = ({ navigation }) => ({
