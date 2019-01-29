@@ -6,10 +6,15 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
+import { orderStatuses } from '../constants/Order';
 
 export default function Order({ firstName, lastName, status, ...props }) {
+    const satisfiedStyle =
+        orderStatuses[status] === 'satisfied'
+            ? { backgroundColor: Color.GREY_100 }
+            : { backgroundColor: Color.GREY_600 };
     return (
-        <TouchableOpacity {...props} style={[styles.container]}>
+        <TouchableOpacity {...props} style={[styles.container, satisfiedStyle]}>
             <Text style={styles.text}>{firstName}</Text>
             <Text style={styles.text}>{lastName}</Text>
             <Text style={styles.text}>{status}</Text>
@@ -22,7 +27,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 12,
         paddingVertical: 15,
-        backgroundColor: Color.GREY_100,
         borderColor: Color.GREY_300,
         borderBottomWidth: StyleSheet.hairlineWidth
     },

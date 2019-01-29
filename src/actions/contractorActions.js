@@ -1,5 +1,6 @@
 import { firebaseAuth, rtdb } from '../../firebase';
 import { dropdownAlert } from './uiActions';
+import { sendMessage } from './orderActions';
 import { logContractorError } from '../api/hasty';
 
 export const FETCH_CONTRACTOR_REQUEST = 'inventory_request';
@@ -161,6 +162,10 @@ export const changeOrderStatus = (status, orderId) => dispatch => {
                 contractor.uid
             }`
         );
+        /* TODO: posts status updates until notification system is worked out */
+        const content = `Status: ${status}`;
+        sendMessage(content, orderId, contractor.uid)(dispatch);
+        /* End */
         return orderRef.update({ status });
     }
 };
