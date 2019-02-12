@@ -11,7 +11,7 @@ import Color from './src/constants/Color';
 import RootContainer from './src/containers/RootContainer';
 import { store, persistor } from './src/store';
 
-// TODO: Here until a solution can be found.
+// TODO: Here until a solution can be found. (Android specific)
 console.ignoredYellowBox = ['Setting a timer'];
 
 class App extends Component {

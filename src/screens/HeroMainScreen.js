@@ -74,8 +74,9 @@ class HeroMainScreen extends Component {
 
     signOut = () => {
         // TODO: needs to take user offline first
-        // this.props.signOut();
-        // this.props.navigation.navigate('auth');
+        this.props.signOut();
+        // TODO: remove
+        this.props.navigation.navigate('auth');
     };
 
     currentInventory = () => {
