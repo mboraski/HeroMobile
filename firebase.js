@@ -1,19 +1,13 @@
 import firebase from 'firebase';
+import { testConfig, prodConfig } from './firebase-configs';
 
 require('firebase/firestore');
 require('firebase/functions');
 
-const config = {
-    apiKey: 'AIzaSyBEIuNlAAKU8byP2NUptaZTPtHobhYqMQA',
-    authDomain: 'hasty-14d18.firebaseapp.com',
-    databaseURL: 'https://hasty-14d18.firebaseio.com',
-    projectId: 'hasty-14d18',
-    storageBucket: 'hasty-14d18.appspot.com',
-    messagingSenderId: '734280961973'
-};
+const getConfig = env => (env === 'prod' ? prodConfig : testConfig);
 
 try {
-    firebase.initializeApp(config);
+    firebase.initializeApp(getConfig(process.env.ENV));
 } catch (err) {
     console.error('Firebase initialization error: ', err);
 }

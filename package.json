@@ -1,6 +1,6 @@
 {
     "name": "HeroMobile",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Hasty Hero Mobile App",
     "license": "UNLICENSED",
     "author": {
@@ -21,7 +21,11 @@
     "scripts": {
         "precommit": "pretty-quick --staged",
         "package": "npm prune --production && npm dedupe",
-        "test": "node_modules/.bin/jest"
+        "test": "node_modules/.bin/jest",
+        "start": "ENV=test expo start --lan --dev",
+        "start-localhost": "ENV=test expo start --localhost --dev",
+        "start-offline": "ENV=test expo start --offline",
+        "publish": "ENV=prod expo publish"
     },
     "jest": {
         "testEnvironment": "node",
