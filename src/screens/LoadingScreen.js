@@ -16,7 +16,7 @@ class LoadingScreen extends Component {
         const { authLoaded, user, navigation } = this.props;
         if (authLoaded) {
             return user && firebaseAuth.currentUser
-                ? navigation.navigate('map')
+                ? navigation.navigate('main')
                 : navigation.navigate('welcome');
         }
     }
@@ -25,7 +25,7 @@ class LoadingScreen extends Component {
         const { authLoaded, user, navigation } = this.props;
         if (!prevProps.authLoaded && authLoaded) {
             return user && firebaseAuth.currentUser
-                ? navigation.navigate('map')
+                ? navigation.navigate('main')
                 : navigation.navigate('welcome');
         }
     }

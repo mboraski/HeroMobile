@@ -44,7 +44,7 @@ class WelcomeScreen extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.user && firebaseAuth.currentUser) {
-            this.props.navigation.navigate('map');
+            this.props.navigation.navigate('main');
         }
     }
 

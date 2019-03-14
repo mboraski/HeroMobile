@@ -86,10 +86,10 @@ class RootContainer extends Component {
 
     componentWillUnMount() {
         this.props.unListenCustomerBlock();
-        this.props.unListenToOrderFulfillment(this.props.orderId);
-        this.props.unListenOrderError(this.props.orderId);
-        this.props.unListenOrderStatus(this.props.orderId);
-        this.props.unListenOrderDelivery(this.props.orderId);
+        this.props.unListenToOrderFulfillment();
+        this.props.unListenOrderError();
+        this.props.unListenOrderStatus();
+        this.props.unListenOrderDelivery();
     }
 
     handleCustomerPopupClose = () => {

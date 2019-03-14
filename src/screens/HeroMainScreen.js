@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
-import logoBlack from '../assets/icons/logo-black3.png';
+import logoOrange from '../assets/icons/logo-orange.png';
 import avatarIcon from '../assets/mark.png';
 import { dropdownAlert } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
@@ -195,7 +195,7 @@ class HeroMainScreen extends Component {
                                     onPress={this.orders}
                                 />
                                 <MainItem
-                                    image={logoBlack}
+                                    image={logoOrange}
                                     title="Sign Out"
                                     onPress={this.signOut}
                                 />

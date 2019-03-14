@@ -18,7 +18,7 @@
             "checkAutomatically": "ON_LOAD",
             "fallbackToCacheTimeout": 10000
         },
-        "icon": "./src/assets/icons/HastyBlackIcon.png",
+        "icon": "./src/assets/icons/HastyAppleStoreIcon.png",
         "splash": {
             "backgroundColor": "#f5a623",
             "resizeMode": "cover",
