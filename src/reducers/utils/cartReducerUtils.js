@@ -1,42 +1,17 @@
 import forEach from 'lodash.foreach';
-import reduce from 'lodash.reduce';
 
 const addProductToCart = (product, instantCartProducts) => {
     const instantCart = Object.assign({}, instantCartProducts);
-    const cartItem = instantCart[product.productName] || {};
+    const cartItem = instantCart[product.id] || {};
     cartItem.quantityTaken += 1;
     return instantCart;
 };
 
 const removeProductFromCart = (product, instantCartProducts) => {
     const instantCart = Object.assign({}, instantCartProducts);
-    const cartItem = instantCart[product.productName] || {};
+    const cartItem = instantCart[product.id] || {};
     cartItem.quantityTaken -= 1;
     return instantCart;
-};
-
-const mutateProductsIntoCart = newProducts => {
-    // for each product, set a new object in the cart object at key of productName
-    const newInstantCart = {};
-    forEach(newProducts.instant, product => {
-        if (product) {
-            const totalQuantity = reduce(
-                product.contractors,
-                (sum, contractor) => sum + contractor.quantity,
-                0
-            );
-            newInstantCart[product.productName] = {
-                categories: product.categories,
-                imageUrl: product.imageUrl,
-                price: product.price,
-                productName: product.productName,
-                quantityAvailable: totalQuantity,
-                quantityTaken: 0,
-                contractors: product.contractors
-            };
-        }
-    });
-    return { instant: newInstantCart };
 };
 
 const mergeCarts = (newCart, oldCart) => {
@@ -44,7 +19,7 @@ const mergeCarts = (newCart, oldCart) => {
     let itemCountUp = false;
     let itemCountDown = false;
     forEach(newCart.instant, item => {
-        const oldItem = oldCart.instant[item.productName];
+        const oldItem = oldCart.instant[item.id];
         if (oldItem) {
             // did the quantity available go up or down
             const upOrDown = oldItem.quantityAvailable - item.quantityAvailable;
@@ -58,37 +33,25 @@ const mergeCarts = (newCart, oldCart) => {
                 itemCountUp = true;
             } else {
                 itemCountDown = true;
-                netCart.instant[oldItem.productName] = {
-                    categories: oldItem.categories,
-                    imageUrl: oldItem.imageUrl,
-                    price: oldItem.price,
-                    productName: oldItem.productName,
+                netCart.instant[item.id] = {
+                    id: item.id,
+                    category: item.category,
+                    subCategories: item.subcategories,
+                    price: item.price,
+                    productName: item.productName,
+                    size: item.size,
+                    brand: item.brand,
+                    contractors: item.contractors,
                     quantityAvailable: item.quantityAvailable,
-                    quantityTaken: newQuantityTaken,
-                    contractors: item.contractors
+                    quantityTaken: newQuantityTaken
                 };
             }
         } else {
             itemCountUp = true;
-            netCart.instant[item.productName] = item;
+            netCart.instant[item.id] = item;
         }
     });
     return { netCart, itemCountUp, itemCountDown };
 };
 
-// const removeProductFromCart = (product, key, cartProducts) => {
-//     let cartItem = cartProducts[key] || null;
-//     if (!cartItem) {
-//         cartItem = product;
-//     } else {
-//         cartItem.quantity = --cartItem.quantity;
-//     }
-//     return cartItem;
-// };
-
-export {
-    addProductToCart,
-    removeProductFromCart,
-    mutateProductsIntoCart,
-    mergeCarts
-};
+export { addProductToCart, removeProductFromCart, mergeCarts };

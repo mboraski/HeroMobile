@@ -8,6 +8,7 @@ import Color from '../constants/Color';
 import Popup, { styles as PopupStyles } from '../components/Popup';
 import { emY } from '../utils/em';
 import checkIcon from '../assets/icons/check.png';
+import logoIcon from '../assets/icons/logo-orange.png';
 
 const SIZE = emY(3.44);
 type Props = {
@@ -38,14 +39,16 @@ class SuccessPopup extends Component {
             showIcon,
             confirmText,
             cancelText,
+            logo,
             ...rest
         } = this.props;
+        const icon = logo ? logoIcon : checkIcon;
         return (
             <Popup {...rest} closeModal={() => this.closeModal(false)}>
                 <Text style={PopupStyles.label}>{title}</Text>
                 {showIcon ? (
                     <Image
-                        source={checkIcon}
+                        source={icon}
                         style={styles.checkIcon}
                         resizeMode="contain"
                     />

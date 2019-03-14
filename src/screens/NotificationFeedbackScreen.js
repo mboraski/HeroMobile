@@ -4,6 +4,7 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 // Relative Imports
 import CloseButton from '../components/CloseButton';
+import TransparentButton from '../components/TransparentButton';
 import NotificationFeedbackFormContainer from '../containers/NotificationFeedbackFormContainer';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -18,6 +19,7 @@ class NotificationFeedbackScreen extends Component {
                 (navigation.state.params && navigation.state.params.title) ||
                 'Feedback',
             headerLeft: <CloseButton onPress={handlePressClose} />,
+            headerRight: <TransparentButton />,
             headerStyle: Style.header,
             headerTitleStyle: Style.headerTitle
         };

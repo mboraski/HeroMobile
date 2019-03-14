@@ -6,7 +6,7 @@ import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { emY } from '../utils/em';
 import leftArrowIcon from '../assets/icons/left-arrow.png';
 
-const SIZE = emY(1.5);
+const SIZE = emY(1.8);
 
 class ToggleBackButton extends Component {
     render() {

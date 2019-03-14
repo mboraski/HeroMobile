@@ -8,17 +8,21 @@ import {
     Platform,
     Animated,
     ActivityIndicator,
-    Dimensions
+    Dimensions,
+    Alert,
+    Image
 } from 'react-native';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
+import map from 'lodash.map';
 import { MaterialIcons } from '@expo/vector-icons';
 
 // Relative Imports
+import DropDown from '../components/DropDown';
+import PaymentDropDownItem from '../components/PaymentDropDownItem';
 import BackButton from '../components/BackButton';
 import TransparentButton from '../components/TransparentButton';
 import OrderList from '../components/OrderList';
-import PaymentMethod from '../components/PaymentMethod';
 import OopsPopup from '../components/OopsPopup';
 import SuccessPopup from '../components/SuccessPopup';
 import Text from '../components/Text';
@@ -31,16 +35,15 @@ import { emY } from '../utils/em';
 
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { dropdownAlert } from '../actions/uiActions';
-import { submitPayment } from '../actions/paymentActions';
-import { reset } from '../actions/navigationActions';
+import { submitPayment, changePaymentMethod } from '../actions/paymentActions';
 
 import {
     getCartOrders,
     getCartCostTotal,
-    getCartTaxTotal,
-    getCartServiceCharge,
-    getServiceFee,
-    getDeliveryFee
+    getCartTax,
+    getCartServiceFee,
+    getCartTotalQuantity,
+    getCartPureTotal
 } from '../selectors/cartSelectors';
 import {
     getCards,
@@ -50,12 +53,19 @@ import {
 } from '../selectors/paymentSelectors';
 import { getAddress, getRegion } from '../selectors/mapSelectors';
 import { getProductImages } from '../selectors/productSelectors';
-import { getNotes } from '../selectors/checkoutSelectors';
-import { getEmail } from '../selectors/authSelectors';
+import {
+    getNotes,
+    getDeliveryFee,
+    getDiscount
+} from '../selectors/checkoutSelectors';
+import {
+    getEmail,
+    getFirstName,
+    getLastName
+} from '../selectors/authSelectors';
 import { getOrderId } from '../selectors/orderSelectors';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
-const WINDOW_WIDTH = Dimensions.get('window').width;
 
 const REMOVE_ORDER_MESSAGE =
     'Are you sure you want to remove this product from your cart?';
@@ -63,11 +73,12 @@ const CHANGE_LOCATION_TITLE =
     'Are you sure you want to change your delivery location?';
 const CHANGE_LOCATION_MESSAGE =
     'The available products/services at your new location may be different.';
-const MAP_HEIGHT = emY(8.25);
+const MAP_HEIGHT = emY(12);
+const beaconEdgeLength = emY(6);
 
 class CheckoutScreen extends Component {
     static navigationOptions = ({ navigation, pending }) => ({
-        title: 'Checkout',
+        title: 'Hasty',
         headerLeft: (
             <BackButton
                 onPress={!pending ? () => navigation.pop() : () => {}}
@@ -83,8 +94,34 @@ class CheckoutScreen extends Component {
         translateY: new Animated.Value(0),
         opacity: new Animated.Value(1),
         removeOrderPopupVisible: false,
-        changeLocationPopupVisible: false
+        changeLocationPopupVisible: false,
+        dropdownHeader: (
+            <PaymentDropDownItem
+                isHeaderItem
+                onPress={this.goToPaymentMethodScreen}
+                type={''}
+                brand={'Card Missing'}
+                last4={''}
+            />
+        )
     };
+
+    componentWillMount() {
+        const { paymentMethod } = this.props;
+        if (paymentMethod && paymentMethod.card) {
+            this.setState({
+                dropdownHeader: (
+                    <PaymentDropDownItem
+                        isHeaderItem
+                        onPress={() => this.dropDownRef.toggle()}
+                        type={paymentMethod.card.brand}
+                        brand={paymentMethod.card.brand}
+                        last4={paymentMethod.card.last4}
+                    />
+                )
+            });
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.orderId && nextProps.orderId) {
@@ -98,7 +135,25 @@ class CheckoutScreen extends Component {
                 'Some products are no longer available'
             );
         }
+        if (nextProps.paymentMethod && nextProps.paymentMethod.card) {
+            const paymentMethod = nextProps.paymentMethod;
+            this.setState({
+                dropdownHeader: (
+                    <PaymentDropDownItem
+                        isHeaderItem
+                        onPress={() => this.dropDownRef.toggle()}
+                        type={paymentMethod.card.brand}
+                        brand={paymentMethod.card.brand}
+                        last4={paymentMethod.card.last4}
+                    />
+                )
+            });
+        }
     }
+
+    goToPaymentMethodScreen = () => {
+        this.props.navigation.navigate('paymentMethod');
+    };
 
     handleRemoveOrder = order => {
         if (order.quantityTaken === 1) {
@@ -114,11 +169,11 @@ class CheckoutScreen extends Component {
     removeOrderConfirmed = confirmed => {
         if (confirmed) {
             this.props.removeFromCart(this.state.orderToRemove);
-            this.setState({
-                removeOrderPopupVisible: false,
-                orderToRemove: null
-            });
         }
+        this.setState({
+            removeOrderPopupVisible: false,
+            orderToRemove: null
+        });
     };
 
     changeLocation = () => {
@@ -127,31 +182,46 @@ class CheckoutScreen extends Component {
 
     changeLocationConfirmed = confirmed => {
         if (confirmed) {
-            this.props.navigation.dispatch(reset('map'));
+            this.props.navigation.navigate('map');
         }
         this.setState({ changeLocationPopupVisible: false });
+    };
+
+    confirmPurchase = () => {
+        Alert.alert('Confirm Purchase?', 'Woo-hoo! Send me a Hero!', [
+            { text: 'Cancel' },
+            { text: 'Confirm', onPress: () => this.lightAbeacon() }
+        ]);
     };
 
     lightAbeacon = () => {
         const {
             stripeCustomerId,
             paymentMethod,
+            firstName,
+            lastName,
             totalCost,
+            serviceFee,
             notes,
             cart,
-            email
+            email,
+            region
         } = this.props;
         if (paymentMethod) {
             const source = paymentMethod.id;
             const description = `Charge for ${email}`;
-            this.props.submitPayment(
+            this.props.submitPayment({
                 stripeCustomerId,
-                source,
                 description,
+                serviceFee,
                 totalCost,
+                source,
                 notes,
-                cart
-            );
+                cart,
+                firstName,
+                lastName,
+                region
+            });
         } else {
             this.props.dropdownAlert(true, 'Go to Menu to add payment method');
         }
@@ -161,27 +231,47 @@ class CheckoutScreen extends Component {
         this.props.navigation.navigate('deliveryNotes');
     };
 
+    renderDropdownCards = () => {
+        const { paymentMethod, cards } = this.props;
+        return map(cards, (card, index) => {
+            if (paymentMethod.id !== card.id) {
+                return (
+                    <PaymentDropDownItem
+                        id={card.id}
+                        onPress={this.props.changePaymentMethod}
+                        isHeaderItem={false}
+                        key={index}
+                        type={card.card.brand}
+                        brand={card.card.brand}
+                        last4={card.card.last4}
+                    />
+                );
+            }
+        });
+    };
+
     render() {
         const {
             cart,
             productImages,
             tax,
-            serviceCharge,
             serviceFee,
             deliveryFee,
+            discount,
+            pureCartTotal,
             totalCost,
             notes,
             address,
             region,
-            paymentMethod,
-            pending
+            pending,
+            cartQuantity
         } = this.props;
         const {
             removeOrderPopupVisible,
             changeLocationPopupVisible
         } = this.state;
-        const serviceChargeFormatted = serviceCharge
-            ? (serviceCharge / 100).toFixed(2)
+        const pureCartTotalFormatted = pureCartTotal
+            ? (pureCartTotal / 100).toFixed(2)
             : 0;
         const serviceFeeFormatted = serviceFee
             ? (serviceFee / 100).toFixed(2)
@@ -190,9 +280,15 @@ class CheckoutScreen extends Component {
             ? (deliveryFee / 100).toFixed(2)
             : 0;
         const taxFormatted = tax ? (tax / 100).toFixed(2) : 0;
-        // TODO: fix this as the price is rounded ceil on server
-        const totalCostFormatted = totalCost ? (totalCost / 100).toFixed(2) : 0;
-        const card = paymentMethod.card || {};
+        let totalCostFormatted = 0;
+        if (cartQuantity > 0) {
+            totalCostFormatted = totalCost ? (totalCost / 100).toFixed(2) : 0;
+        }
+        const placeholderNotes = `(Help your hero find you. What color shirt are you wearing? What can help identify you and your location?)`;
+        const discountStyles = discount
+            ? [styles.cost, styles.costDiscount]
+            : styles.cost;
+        const dropdownCards = this.renderDropdownCards();
 
         return (
             <View style={styles.container}>
@@ -203,115 +299,132 @@ class CheckoutScreen extends Component {
                     />
                 ) : (
                     <ScrollView style={styles.scrollContainer}>
-                        <View style={styles.container}>
-                            <TouchableOpacity
-                                style={styles.checkout}
-                                onPress={this.lightAbeacon}
-                            >
-                                <Text style={styles.imageTitle}>
-                                    {'LIGHT A BEACON!'}
-                                </Text>
-                                <Text style={styles.imageSubText}>
-                                    {'This confirms purchase'}
-                                </Text>
-                                <Text style={styles.imageSubText}>
-                                    {`Total: $${totalCostFormatted}`}
-                                </Text>
-                                <View style={styles.checkoutIconContainer}>
-                                    <MaterialIcons
-                                        name="keyboard-arrow-right"
-                                        color="#fff"
-                                        size={50}
-                                        style={styles.checkoutIcon}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <View style={styles.itemHeader}>
-                                <Text style={styles.itemHeaderLabel}>
-                                    DELIVERY NOTES
-                                </Text>
-                                <Text style={styles.itemHeaderLabelNotes}>
-                                    (Help your hero find you. What color shirt
-                                    are you wearing? What can help identify you
-                                    and your location?)
-                                </Text>
-                            </View>
-                            <View style={styles.itemBody}>
-                                <Text style={styles.itemBodyLabel}>
-                                    {notes}
-                                </Text>
-                                <TouchableOpacity
-                                    style={styles.itemButton}
-                                    onPress={this.openDeliveryNotes}
-                                >
-                                    <Text style={styles.itemButtonText}>
-                                        Change
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.itemHeader}>
-                                <Text stye={styles.itemHeaderLabel}>
-                                    PAYMENT METHOD
-                                </Text>
-                            </View>
-                            <View style={styles.dropdownContainer}>
-                                <PaymentMethod
-                                    type={card.brand}
-                                    text={card.last4}
+                        <TouchableOpacity
+                            style={styles.checkout}
+                            onPress={this.confirmPurchase}
+                        >
+                            <Text style={styles.imageTitle}>
+                                {'LIGHT A BEACON!'}
+                            </Text>
+                            <Text style={styles.imageSubText}>
+                                {'This notifies Heroes of your order request'}
+                            </Text>
+                            <Text style={styles.imageSubText}>
+                                {`Total: $${totalCostFormatted}`}
+                            </Text>
+                            <View style={styles.checkoutIconContainer}>
+                                <MaterialIcons
+                                    name="keyboard-arrow-right"
+                                    color="#fff"
+                                    size={emY(2.8)}
+                                    style={styles.checkoutIcon}
                                 />
                             </View>
-                            <View style={styles.itemHeader}>
-                                <Text stye={styles.itemHeaderLabel}>
-                                    DELIVERY LOCATION
+                        </TouchableOpacity>
+                        <View style={styles.itemHeader}>
+                            <Text style={styles.itemHeaderLabel}>
+                                DELIVERY NOTES
+                            </Text>
+                        </View>
+                        <View style={styles.itemBody}>
+                            <Text style={styles.itemBodyLabel}>
+                                {notes ? `${notes}` : `${placeholderNotes}`}
+                            </Text>
+                            <TouchableOpacity
+                                style={styles.itemButton}
+                                onPress={this.openDeliveryNotes}
+                            >
+                                <Text style={styles.itemButtonText}>
+                                    Change
                                 </Text>
-                            </View>
-                            <View style={styles.itemBody}>
-                                <Text style={styles.itemBodyLabel}>
-                                    {address}
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.itemHeader}>
+                            <Text style={styles.itemHeaderLabel}>
+                                PAYMENT METHOD
+                            </Text>
+                        </View>
+                        <DropDown
+                            header={this.state.dropdownHeader}
+                            dropDownRef={ref => (this.dropDownRef = ref)}
+                        >
+                            {dropdownCards}
+                        </DropDown>
+                        <View style={styles.itemHeader}>
+                            <Text style={styles.itemHeaderLabel}>
+                                DELIVERY LOCATION
+                            </Text>
+                        </View>
+                        <View style={styles.itemBody}>
+                            <Text style={styles.itemBodyLabel}>{address}</Text>
+                            <TouchableOpacity
+                                style={styles.itemButton}
+                                onPress={this.changeLocation}
+                            >
+                                <Text style={styles.itemButtonText}>
+                                    Change
                                 </Text>
-                                <TouchableOpacity
-                                    style={styles.itemButton}
-                                    onPress={this.changeLocation}
-                                >
-                                    <Text style={styles.itemButtonText}>
-                                        Change
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            <MapView region={region} style={styles.map}>
-                                <MapView.Marker
-                                    image={beaconIcon}
-                                    coordinate={region}
-                                    title="You"
-                                    description="Your Delivery Location"
-                                    anchor={{ x: 0.2, y: 1 }}
-                                    centerOffset={{ x: 12, y: -25 }}
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <MapView
+                                region={region}
+                                style={styles.map}
+                                pitchEnabled={false}
+                                rotateEnabled={false}
+                                scrollEnabled={false}
+                            />
+                            <View
+                                pointerEvents="none"
+                                style={styles.beaconWrapper}
+                            >
+                                <Image
+                                    source={beaconIcon}
                                     style={styles.beaconMarker}
                                 />
-                            </MapView>
-                            <View style={styles.itemHeader}>
-                                <Text stye={styles.itemHeaderLabel}>
-                                    PRODUCT SUMMARY
-                                </Text>
                             </View>
-                            <OrderList
-                                orders={cart}
-                                orderImages={productImages}
-                                onAddOrder={this.props.addToCart}
-                                onRemoveOrder={this.handleRemoveOrder}
-                            />
                         </View>
+                        <View style={styles.itemHeader}>
+                            <Text style={styles.itemHeaderLabel}>
+                                PRODUCT SUMMARY
+                            </Text>
+                        </View>
+                        <OrderList
+                            orders={cart}
+                            orderImages={productImages}
+                            onAddOrder={this.props.addToCart}
+                            onRemoveOrder={this.handleRemoveOrder}
+                        />
                         <View style={styles.cart}>
-                            {!!serviceCharge && (
-                                <View style={styles.meta}>
-                                    <Text style={styles.label}>
-                                        Service Charge:
-                                    </Text>
-                                    <Text style={styles.cost}>
-                                        ${serviceChargeFormatted}
-                                    </Text>
-                                </View>
-                            )}
+                            {!!pureCartTotalFormatted &&
+                                cartQuantity > 0 && (
+                                    <View style={styles.meta}>
+                                        <Text style={styles.label}>
+                                            Subtotal:
+                                        </Text>
+                                        <Text style={styles.cost}>
+                                            ${pureCartTotalFormatted}
+                                        </Text>
+                                    </View>
+                                )}
+                            {!!deliveryFee &&
+                                cartQuantity > 0 && (
+                                    <View style={styles.meta}>
+                                        <Text style={styles.label}>
+                                            Delivery:
+                                        </Text>
+                                        <Text style={styles.cost}>
+                                            <Text>{!!discount && 'FREE '}</Text>
+                                            <Text style={discountStyles}>
+                                                {`$${deliveryFeeFormatted}`}
+                                            </Text>
+                                        </Text>
+                                    </View>
+                                )}
+                            <View style={styles.meta}>
+                                <Text style={styles.label}>Tax:</Text>
+                                <Text style={styles.cost}>${taxFormatted}</Text>
+                            </View>
                             {!!serviceFee && (
                                 <View style={styles.meta}>
                                     <Text style={styles.label}>
@@ -322,36 +435,22 @@ class CheckoutScreen extends Component {
                                     </Text>
                                 </View>
                             )}
-                            {!!deliveryFee && (
-                                <View style={styles.meta}>
-                                    <Text style={styles.label}>
-                                        Delivery Fee:
-                                    </Text>
-                                    <Text style={styles.cost}>
-                                        ${deliveryFeeFormatted}
-                                    </Text>
-                                </View>
-                            )}
-                            <View style={styles.meta}>
-                                <Text style={styles.label}>Tax:</Text>
-                                <Text style={styles.cost}>${taxFormatted}</Text>
-                            </View>
-                            <View style={styles.meta}>
-                                <Text style={styles.label}>Order Total:</Text>
-                                <Text style={styles.cost}>
+                            <View style={styles.metaTotal}>
+                                <Text style={styles.labelTotal}>Total:</Text>
+                                <Text style={styles.costTotal}>
                                     ${totalCostFormatted}
                                 </Text>
                             </View>
                         </View>
                         <TouchableOpacity
                             style={styles.checkout}
-                            onPress={this.lightAbeacon}
+                            onPress={this.confirmPurchase}
                         >
                             <Text style={styles.imageTitle}>
                                 {'LIGHT A BEACON!'}
                             </Text>
                             <Text style={styles.imageSubText}>
-                                {'This confirms purchase'}
+                                {'This notifies Heroes of your order request'}
                             </Text>
                             <View style={styles.checkoutIconContainer}>
                                 <MaterialIcons
@@ -387,35 +486,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-    checkout: {
-        height: WINDOW_HEIGHT / 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#f5a623'
-    },
-    checkoutIconContainer: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        width: 50,
-        justifyContent: 'center'
-    },
-    checkoutIcon: {
-        backgroundColor: 'transparent'
-    },
     scrollContainer: {
         flex: 1,
         backgroundColor: '#fff',
         paddingBottom: emY(13.81)
     },
-    map: {
-        height: MAP_HEIGHT,
-        shadowColor: 'transparent'
-    },
-    beaconMarker: {
-        maxWidth: 42,
-        maxHeight: 55
+    checkout: {
+        height: WINDOW_HEIGHT / 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Color.DEFAULT
     },
     imageTitle: {
         color: 'white',
@@ -429,28 +509,38 @@ const styles = StyleSheet.create({
         fontSize: emY(1),
         textAlign: 'center'
     },
+    checkoutIconContainer: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        alignSelf: 'flex-end',
+        justifyContent: 'center'
+    },
+    checkoutIcon: {
+        backgroundColor: 'transparent'
+    },
     itemHeader: {
-        paddingHorizontal: 20,
-        paddingVertical: emY(0.8)
+        paddingHorizontal: 10,
+        marginTop: emY(1.2)
     },
     itemHeaderLabel: {
-        fontSize: emY(0.83),
-        color: Color.GREY_600
-    },
-    itemHeaderLabelNotes: {
-        fontSize: emY(0.8),
-        color: Color.GREY_500
+        fontSize: emY(1),
+        color: '#000',
+        paddingBottom: emY(0.5),
+        textDecorationLine: 'underline'
     },
     itemBody: {
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         paddingVertical: emY(0.8),
         backgroundColor: Color.GREY_100
     },
     itemBodyLabel: {
-        width: WINDOW_WIDTH - 160,
-        fontSize: emY(1.08),
+        flex: 1,
+        fontSize: emY(1),
         color: Color.GREY_800
     },
     itemButton: {
@@ -459,17 +549,34 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     itemButtonText: {
-        fontSize: emY(1.08),
+        fontSize: emY(1),
         color: Color.BLUE_500
     },
+    map: {
+        height: MAP_HEIGHT,
+        shadowColor: 'transparent',
+        marginBottom: 5
+    },
+    beaconWrapper: {
+        left: '50%',
+        marginLeft: -(beaconEdgeLength / 2),
+        marginTop: -(beaconEdgeLength / 2),
+        position: 'absolute',
+        top: '50%'
+    },
+    beaconMarker: {
+        width: beaconEdgeLength,
+        height: beaconEdgeLength
+    },
     dropdownContainer: {
-        marginBottom: emY(1.08)
+        marginBottom: emY(1)
     },
     cart: {
         position: 'relative',
         backgroundColor: '#fff',
-        paddingHorizontal: 23,
+        paddingHorizontal: 20,
         paddingVertical: 20,
+        marginTop: 10,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -488,13 +595,36 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         alignItems: 'center'
     },
+    metaTotal: {
+        borderTopColor: Color.GREY_600,
+        borderTopWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 5,
+        alignItems: 'center'
+    },
     label: {
-        fontSize: 14,
+        fontSize: 12,
         color: Color.GREY_600,
         marginRight: 11
     },
     cost: {
-        fontSize: 14
+        fontSize: 12,
+        color: Color.GREY_600
+    },
+    costDiscount: {
+        textDecorationLine: 'line-through'
+    },
+    labelTotal: {
+        fontSize: 14,
+        color: '#000',
+        marginRight: 11,
+        marginTop: 10
+    },
+    costTotal: {
+        fontSize: 14,
+        color: '#000',
+        marginTop: 10
     },
     buttonContainer: {
         marginTop: 10
@@ -511,11 +641,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
     email: getEmail(state),
     cart: getCartOrders(state),
+    pureCartTotal: getCartPureTotal(state),
     totalCost: getCartCostTotal(state),
-    tax: getCartTaxTotal(state),
-    serviceFee: getServiceFee(state),
+    tax: getCartTax(state),
+    serviceFee: getCartServiceFee(state),
     deliveryFee: getDeliveryFee(state),
-    serviceCharge: getCartServiceCharge(state),
+    discount: getDiscount(state),
     notes: getNotes(state),
     address: getAddress(state),
     region: getRegion(state),
@@ -524,14 +655,18 @@ const mapStateToProps = state => ({
     pending: getPending(state),
     stripeCustomerId: getStripeCustomerId(state),
     orderId: getOrderId(state),
-    productImages: getProductImages(state)
+    productImages: getProductImages(state),
+    firstName: getFirstName(state),
+    lastName: getLastName(state),
+    cartQuantity: getCartTotalQuantity(state)
 });
 
 const mapDispatchToProps = {
     addToCart,
     removeFromCart,
     dropdownAlert,
-    submitPayment
+    submitPayment,
+    changePaymentMethod
 };
 
 export default connect(

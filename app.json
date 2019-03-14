@@ -16,13 +16,13 @@
         "updates": {
             "enabled": true,
             "checkAutomatically": "ON_LOAD",
-            "fallbackToCacheTimeout": 90000
+            "fallbackToCacheTimeout": 10000
         },
         "icon": "./src/assets/icons/HastyBlackIcon.png",
         "splash": {
             "backgroundColor": "#f5a623",
             "resizeMode": "cover",
-            "image": "./src/assets/splash.png"
+            "image": "./src/assets/splash-screen.png"
         },
         "packagerOpts": {
             "assetExts": ["ttf", "mp4"]

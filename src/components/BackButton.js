@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { closeToggle } from '../actions/navigationActions';
-import { emY } from '../utils/em';
 import leftArrowIcon from '../assets/icons/left-arrow.png';
-
-const SIZE = emY(1.25);
+import { HEADER_ITEM_SIZE } from '../constants/Style';
 
 class BackButton extends Component {
     onBackPress = () => {
@@ -38,8 +36,8 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     image: {
-        width: SIZE,
-        height: SIZE
+        width: HEADER_ITEM_SIZE,
+        height: HEADER_ITEM_SIZE
     }
 });
 

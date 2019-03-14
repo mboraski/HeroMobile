@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import { connect } from 'react-redux';
-// import { Notifications } from 'expo';
+import { firebaseAuth } from '../../firebase';
 
 // Relative Imports
 import { emY } from '../utils/em';
@@ -9,15 +9,21 @@ import Color from '../constants/Color';
 import MenuItem from '../components/MenuItem';
 import Text from '../components/Text';
 import ToggleBackButton from '../components/ToggleBackButton';
-import heroIcon from '../assets/icons/logo-black.png';
-// import notificationIcon from '../assets/icons/notification.png';
-// import cartIcon from '../assets/icons/cart.png';
-// import paymentIcon from '../assets/icons/payment.png';
+
+import heroIcon from '../assets/icons/logo-orange.png';
+import notificationIcon from '../assets/icons/notification.png';
+import cartIcon from '../assets/icons/cart.png';
+import infoIcon from '../assets/icons/info.png';
+import paymentIcon from '../assets/icons/payment.png';
 import historyIcon from '../assets/icons/history.png';
-// import locationIcon from '../assets/icons/location.png';
+import locationIcon from '../assets/icons/location.png';
+// import profileImagePlaceholder from '../assets/profileImagePlaceholder';
+
 import { openCustomerPopup } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
+
 import { getUserReadable } from '../selectors/authSelectors';
+import { getOrderId } from '../selectors/orderSelectors';
 
 const IMAGE_CONTAINER_SIZE = 100;
 
@@ -25,109 +31,130 @@ const getRoute = (items, routeName) =>
     items.find(item => item.key === routeName);
 
 class MenuContent extends Component {
-    mainPress = () => {
-        this.props.navigation.navigate('main');
-    };
-
-    ordersPress = () => {
-        this.props.navigation.navigate('orders');
-    };
-
     orderPress = () => {
-        this.props.navigation.navigate('deliveryStatus');
+        if (firebaseAuth.currentUser) {
+            this.props.navigation.navigate('deliveryStatus');
+        }
     };
 
     checkoutPress = () => {
-        this.props.navigation.navigate('checkout');
+        if (firebaseAuth.currentUser && !this.props.orderId) {
+            this.props.navigation.navigate('checkout');
+        }
     };
 
     productsPress = () => {
-        this.props.navigation.navigate('products');
+        if (firebaseAuth.currentUser) {
+            this.props.navigation.navigate('products');
+        }
     };
 
     mapPress = () => {
-        this.props.navigation.navigate('map');
+        if (firebaseAuth.currentUser) {
+            this.props.navigation.navigate('map');
+        }
     };
 
     paymentMethod = () => {
-        this.props.navigation.navigate('paymentMethod');
+        if (firebaseAuth.currentUser) {
+            this.props.navigation.navigate('paymentMethod');
+        }
+    };
+
+    feedbackPress = () => {
+        if (firebaseAuth.currentUser) {
+            this.props.navigation.navigate('openFeedback');
+        }
     };
 
     signOut = () => {
-        this.props.signOut();
-        this.props.navigation.closeDrawer();
-        this.props.navigation.navigate('auth');
+        if (firebaseAuth.currentUser) {
+            this.props.signOut();
+            this.props.navigation.closeDrawer();
+            this.props.navigation.navigate('welcome');
+        }
     };
 
     render() {
         const { items, activeItemKey, userReadable } = this.props;
         return (
             <View style={styles.container}>
-                <View style={styles.profile}>
-                    {userReadable ? (
+                {!!userReadable && (
+                    <View style={styles.profile}>
+                        {!!userReadable.photoUrl && (
+                            <Image
+                                source={{ uri: userReadable.photoUrl }}
+                                style={styles.image}
+                            />
+                        )}
                         <Text style={styles.name}>
                             {userReadable.firstName} {userReadable.lastName}
                         </Text>
-                    ) : null}
-                </View>
+                    </View>
+                )}
                 <ScrollView style={styles.menuItems}>
-                    <MenuItem
-                        onPress={this.ordersPress}
+                    {/*<MenuItem
+                        route={getRoute(items, 'map')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.mapPress}
                         image={heroIcon}
-                        title="Orders"
-                    />
+                        title="Become a Hero!"
+                    /> */}
                     <MenuItem
-                        onPress={this.mainPress}
-                        image={heroIcon}
-                        title="Hero Main"
-                    />
-                    {/*<MenuItem
-                        route={getRoute(items, 'order')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.orderPress}
-                        image={notificationIcon}
-                        title="Order"
-                        // badge="0"
-                    />*/}
-                    {/*<MenuItem
-                        route={getRoute(items, 'checkout')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.checkoutPress}
-                        image={cartIcon}
-                        title="Checkout"
-                    />*/}
-                    {/*<MenuItem
-                        route={getRoute(items, 'products')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.productsPress}
-                        image={historyIcon}
-                        title="Products"
-                    />*/}
-                    {/*<MenuItem
                         route={getRoute(items, 'map')}
                         activeItemKey={activeItemKey}
                         onPress={this.mapPress}
                         image={locationIcon}
                         title="Map"
-                    />*/}
-                    {/*<MenuItem
+                    />
+                    <MenuItem
+                        route={getRoute(items, 'products')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.productsPress}
+                        image={historyIcon}
+                        title="Products"
+                    />
+                    <MenuItem
+                        route={getRoute(items, 'checkout')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.checkoutPress}
+                        image={cartIcon}
+                        title="Cart / Checkout"
+                    />
+                    <MenuItem
+                        route={getRoute(items, 'order')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.orderPress}
+                        image={notificationIcon}
+                        title="Order Details"
+                    />
+                    <MenuItem
                         route={getRoute(items, 'paymentMethod')}
                         activeItemKey={activeItemKey}
                         onPress={this.paymentMethod}
                         image={paymentIcon}
-                        title="Payment Info"
-                    />*/}
+                        title="Payment Methods"
+                    />
+                    <MenuItem
+                        route={getRoute(items, 'openFeedback')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.feedbackPress}
+                        image={infoIcon}
+                        title="Help & Feedback"
+                    />
+                    {/*}<MenuItem
+                        route={getRoute(items, 'Feedback')}
+                        activeItemKey={activeItemKey}
+                        onPress={this.paymentMethod}
+                        image={paymentIcon}
+                        title="Customer Support"
+                    /> */}
                     {/* <MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}
-                        image={heroIcon}
-                        title="Heroes Needed!"
-                    /> */}
-                    <MenuItem
-                        onPress={() => {}}
                         image={historyIcon}
                         title="History"
-                    />
+                    /> */}
                     {/*<MenuItem
                         activeItemKey={activeItemKey}
                         onPress={onItemPress}
@@ -152,7 +179,6 @@ class MenuContent extends Component {
                         image={heroIcon}
                         title="Sign Out"
                     />
-                    <Text style={styles.copyright}>@2018 Hasty</Text>
                 </ScrollView>
                 <ToggleBackButton
                     navigation={this.props.navigation}
@@ -193,15 +219,8 @@ const styles = StyleSheet.create({
         marginBottom: emY(1)
     },
     menuItems: {
+        marginTop: emY(1),
         paddingLeft: emY(1.2)
-    },
-    copyright: {
-        height: emY(1),
-        marginTop: emY(4.56),
-        marginBottom: emY(0.9),
-        fontSize: emY(0.831),
-        color: Color.GREY_700,
-        textAlign: 'center'
     },
     backButton: {
         position: 'absolute',
@@ -211,9 +230,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    userReadable: getUserReadable(state)
+    userReadable: getUserReadable(state),
+    orderId: getOrderId(state)
 });
-const mapDispatchToProps = { openCustomerPopup, signOut };
+const mapDispatchToProps = {
+    openCustomerPopup,
+    signOut
+};
 
 export default connect(
     mapStateToProps,

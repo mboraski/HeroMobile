@@ -12,6 +12,7 @@ export const getChatModalVisible = state => state.order.chatModalVisible;
 export const getChatId = state => state.order.chatId;
 export const getNewMessageValue = state => state.order.newMessageValue;
 export const getChatPending = state => state.order.chatPending;
+export const getNotificationCount = state => state.order.notificationCount;
 
 export const getFullActualFulfillment = createSelector(
     [getOrder],

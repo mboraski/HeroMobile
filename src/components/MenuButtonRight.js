@@ -8,13 +8,20 @@ import { openToggle } from '../actions/navigationActions';
 import { emY } from '../utils/em';
 import mapIcon from '../assets/icons/menu-2.png';
 
-const SIZE = emY(1.4375);
+const SIZE = emY(1.8);
 
 class MenuButton2 extends Component {
     render() {
         return (
-            <TouchableOpacity onPress={() => this.props.openToggle()} style={styles.container}>
-                <Image source={mapIcon} style={styles.image} resizeMode="contain" />
+            <TouchableOpacity
+                onPress={() => this.props.openToggle()}
+                style={styles.container}
+            >
+                <Image
+                    source={mapIcon}
+                    style={styles.image}
+                    resizeMode="contain"
+                />
             </TouchableOpacity>
         );
     }
@@ -22,7 +29,7 @@ class MenuButton2 extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
+        marginHorizontal: 20
     },
     image: {
         width: SIZE,
@@ -34,4 +41,7 @@ const mapDispatchToProps = dispatch => ({
     openToggle: () => dispatch(openToggle())
 });
 
-export default connect(null, mapDispatchToProps)(MenuButton2);
+export default connect(
+    null,
+    mapDispatchToProps
+)(MenuButton2);

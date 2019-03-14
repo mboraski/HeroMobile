@@ -1,9 +1,9 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 // import moment from 'moment';
-import { Permissions, Notifications } from 'expo';
+import { Permissions, Notifications, Updates } from 'expo';
 
 // Relative Imports
 import MenuNavigator from '../navigations/MenuNavigator';
@@ -15,43 +15,33 @@ import {
     setUserExpoPushToken
 } from '../actions/authActions';
 import { closeCustomerPopup, dropdownAlert } from '../actions/uiActions';
-import { unListenCustomerBlock } from '../actions/productActions';
+import {
+    unListenCustomerBlock,
+    fetchProducts
+} from '../actions/productActions';
 import {
     unListenOrderStatus,
     unListenToOrderFulfillment,
+    unListenOrderDelivery,
     unListenOrderError,
     listenToOrderStatus,
     listenToOrderFulfillment,
-    listenToOrderError
+    listenToOrderError,
+    checkOpenOrders
 } from '../actions/orderActions';
-
 import { getOrderId } from '../selectors/orderSelectors';
 
 class RootContainer extends Component {
     componentWillMount() {
         this.props.listenToAuthChanges();
-
-        // if (
-        //     this.props.user || firebaseAuth.currentUser &&
-        //     moment().isAfter(moment(this.props.authExpirationDate))
-        // ) {
-        //     console.log('current moment: ', moment().toDate());
-        //     this.props.signOut();
-        // }
     }
 
     async componentDidMount() {
-        if (this.props.orderId) {
-            this.props.listenToOrderStatus(this.props.orderId);
-            this.props.listenToOrderError(this.props.orderId);
-            this.props.listenToOrderFulfillment(this.props.orderId);
-        }
-
+        /* Push Notification Permissions Start */
         const { status: existingStatus } = await Permissions.getAsync(
             Permissions.NOTIFICATIONS
         );
         let finalStatus = existingStatus;
-
         // only ask if permissions have not already been determined, because
         // iOS won't necessarily prompt the user a second time.
         if (existingStatus !== 'granted') {
@@ -62,11 +52,9 @@ class RootContainer extends Component {
             );
             finalStatus = status;
         }
-
         // Temp since iOS does not ask twice.
         // const token = await Notifications.getExpoPushTokenAsync();
         // this.props.setUserExpoPushToken(token);
-
         if (finalStatus === 'granted') {
             const token = await Notifications.getExpoPushTokenAsync();
             this.props.setUserExpoPushToken(token);
@@ -74,13 +62,25 @@ class RootContainer extends Component {
             //     this.handleNotification
             // );
         }
+        /* Push Notification Permissions End */
+        if (!__DEV__) {
+            const update = await Updates.checkForUpdateAsync();
+            if (update.isAvailable) {
+                Alert.alert('This app is out of date.', 'Update?', [
+                    { text: 'Cancel' },
+                    { text: 'Confirm', onPress: () => Updates.reload() }
+                ]);
+            }
+        }
+
+        this.props.fetchProducts();
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.props.orderId && nextProps.orderId) {
+        if (nextProps.orderId) {
+            this.props.listenToOrderFulfillment(nextProps.orderId);
             this.props.listenToOrderStatus(nextProps.orderId);
             this.props.listenToOrderError(nextProps.orderId);
-            this.props.listenToOrderFulfillment(nextProps.orderId);
         }
     }
 
@@ -89,6 +89,7 @@ class RootContainer extends Component {
         this.props.unListenToOrderFulfillment(this.props.orderId);
         this.props.unListenOrderError(this.props.orderId);
         this.props.unListenOrderStatus(this.props.orderId);
+        this.props.unListenOrderDelivery(this.props.orderId);
     }
 
     handleCustomerPopupClose = () => {
@@ -105,11 +106,7 @@ class RootContainer extends Component {
             dropdownAlertVisible,
             dropdownAlertText
         } = this.props;
-        // const navigation = addNavigationHelpers({
-        //     dispatch,
-        //     state: nav
-        //     // addListener: reduxBoundAddListener
-        // });
+
         return (
             <View style={styles.container}>
                 <MenuNavigator />
@@ -130,11 +127,12 @@ class RootContainer extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1 }
+    container: {
+        flex: 1
+    }
 });
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
     authExpirationDate: state.auth.expirationDate,
     customerPopupVisible: state.ui.customerPopupVisible,
     dropdownAlertVisible: state.ui.dropdownAlertVisible,
@@ -153,9 +151,12 @@ const mapDispatchToProps = {
     unListenOrderStatus,
     unListenToOrderFulfillment,
     unListenOrderError,
+    unListenOrderDelivery,
     listenToOrderStatus,
     listenToOrderFulfillment,
-    listenToOrderError
+    listenToOrderError,
+    checkOpenOrders,
+    fetchProducts
 };
 
 export default connect(

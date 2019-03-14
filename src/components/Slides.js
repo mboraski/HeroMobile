@@ -1,72 +1,115 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, ScrollView, Image, StyleSheet, Animated } from 'react-native';
 
 import Text from './Text';
+import Color from '../constants/Color';
 import Dimensions from '../constants/Dimensions';
-import Style from '../constants/Style';
+import { emY } from '../utils/em';
+import onboardingScreenSetLocation from '../assets/onboardingScreenSetLocation.png';
+import onboardingScreenCheckout from '../assets/onboardingScreenCheckout.png';
+import onboardingScreenLightBeacon from '../assets/onboardingScreenLightBeacon.png';
+import onboardingScreenNotificationsCommunications from '../assets/onboardingScreenNotificationsCommunications.png';
+import onboardingScreenGift from '../assets/onboardingScreenGift.png';
+
+const WINDOW_WIDTH = Dimensions.window.width;
+const slideImages = {
+    0: onboardingScreenSetLocation,
+    1: onboardingScreenCheckout,
+    2: onboardingScreenLightBeacon,
+    3: onboardingScreenNotificationsCommunications,
+    4: onboardingScreenGift
+};
 
 class Slides extends Component {
-    renderLastSlide(index) {
-        if (index === this.props.data.length - 1) {
-            return (
-                <Button
-                    title="Onwards!"
-                    raised
-                    buttonStyle={styles.buttonStyle}
-                    onPress={this.props.onComplete}
-                    fontFamily={'goodtimes'}
-                    accessibilityLabel="Leave tutorial screens and go to app"
-                />
-            );
-        }
-    }
+    scrollX = new Animated.Value(0); // this will be the scroll location of our ScrollView
 
     renderSlides() {
         return this.props.data.map((slide, index) => (
-            <View
-                key={slide.text}
-                style={[styles.slideStyle, { backgroundColor: slide.color }]}
-            >
-                <Text
-                    style={[
-                        Style.headerTitle,
-                        Style.headerTitleLogo,
-                        styles.textStyle
-                    ]}
-                >
-                    {slide.text}
-                </Text>
-                {this.renderLastSlide(index)}
+            <View style={styles.slideStyle} key={slide.text}>
+                <Image
+                    source={slideImages[index]}
+                    style={styles.image}
+                    resizeMode="contain"
+                />
+                <Text style={[styles.textTitleStyle]}>{slide.textTitle}</Text>
+                <Text style={[styles.textStyle]}>{slide.text}</Text>
             </View>
         ));
     }
 
+    renderDots() {
+        const position = Animated.divide(this.scrollX, WINDOW_WIDTH);
+
+        return this.props.data.map((slide, i) => {
+            const opacity = position.interpolate({
+                inputRange: [i - 1, i, i + 1],
+                outputRange: [0.3, 1, 0.3],
+                extrapolate: 'clamp'
+            });
+            return <Animated.View key={i} style={[{ opacity }, styles.dots]} />;
+        });
+    }
+
     render() {
         return (
-            <ScrollView horizontal style={{ flex: 1 }} pagingEnabled>
-                {this.renderSlides()}
-            </ScrollView>
+            <View>
+                <ScrollView
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={Animated.event([
+                        { nativeEvent: { contentOffset: { x: this.scrollX } } }
+                    ])}
+                    scrollEventThrottle={16}
+                >
+                    {this.renderSlides()}
+                </ScrollView>
+                <View style={styles.dotsWrapper}>{this.renderDots()}</View>
+            </View>
         );
     }
 }
 
-const styles = {
+const styles = StyleSheet.create({
     slideStyle: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        width: Dimensions.window.width
+        width: WINDOW_WIDTH,
+        paddingHorizontal: 20
+    },
+    slideScrollView: {
+        flex: 1
+    },
+    textTitleStyle: {
+        fontSize: emY(1.8),
+        color: Color.DEFAULT,
+        textAlign: 'center',
+        marginTop: emY(0.4),
+        marginBottom: emY(0.2)
     },
     textStyle: {
-        fontSize: 30,
-        color: 'black',
+        fontSize: emY(1.6),
+        color: Color.GREY_700,
         textAlign: 'center'
     },
-    buttonStyle: {
-        backgroundColor: '#000',
-        marginTop: 15
+    image: {
+        width: emY(15),
+        height: emY(15)
+    },
+    dotsWrapper: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        marginTop: emY(1),
+        marginBottom: emY(0.8)
+    },
+    dots: {
+        height: emY(0.6),
+        width: emY(0.6),
+        backgroundColor: Color.GREY_700,
+        margin: emY(0.5),
+        borderRadius: emY(0.3)
     }
-};
+});
 
 export default Slides;

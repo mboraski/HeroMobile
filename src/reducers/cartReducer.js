@@ -1,7 +1,6 @@
 import {
     addProductToCart,
     removeProductFromCart,
-    mutateProductsIntoCart,
     mergeCarts
 } from './utils/cartReducerUtils';
 import {
@@ -22,11 +21,7 @@ const initialState = {
         instant: {}
     },
     itemCountUp: false,
-    itemCountDown: false,
-    serviceFee: 0,
-    deliveryFee: 200,
-    serviceRate: 0.1,
-    localSalesTaxRate: 0.0625
+    itemCountDown: false
 };
 
 export default (state = initialState, action) => {
@@ -65,8 +60,7 @@ export default (state = initialState, action) => {
             };
         }
         case UPDATE_CART: {
-            const translate = mutateProductsIntoCart(action.payload);
-            const merge = mergeCarts(translate, state.products);
+            const merge = mergeCarts(action.payload, state.products);
             return {
                 ...state,
                 products: merge.netCart,

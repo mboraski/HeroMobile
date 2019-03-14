@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
         borderRadius: 7,
         marginHorizontal: 15,
         fontSize: emY(1),
-        fontFamily: 'Arial',
+        fontFamily: 'roboto',
         height: emY(3.125),
         paddingHorizontal: 20,
         ...Platform.select({

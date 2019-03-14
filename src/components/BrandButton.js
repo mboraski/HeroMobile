@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import { emY } from '../utils/em';
-import brandIcon from '../assets/icons/logo-black.png';
+import brandIcon from '../assets/icons/logo-orange.png';
 
 const SIZE = emY(2);
 

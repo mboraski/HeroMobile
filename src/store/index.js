@@ -8,6 +8,7 @@ import * as reducers from '../reducers';
 
 const storage = createSecureStore();
 const persistConfig = {
+    timeout: 10000,
     key: 'root',
     storage,
     debug: __DEV__,

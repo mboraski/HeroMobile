@@ -140,10 +140,12 @@ export const getUserReadable = () => dispatch => {
             .get()
             .then(snap => {
                 const userData = snap.data();
-                dispatch({
-                    type: USER_READABLE_SUCCESS,
-                    payload: userData
-                });
+                if (userData) {
+                    dispatch({
+                        type: USER_READABLE_SUCCESS,
+                        payload: userData
+                    });
+                }
                 if (
                     userData &&
                     userData.stripeInfo &&

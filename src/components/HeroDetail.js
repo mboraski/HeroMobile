@@ -7,12 +7,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Text from './Text';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
-import callIcon from '../assets/icons/call.png';
+import messageIcon from '../assets/icons/multi_message.png';
 import logo from '../assets/icons/HastyOrangeIcon.png';
+import mark from '../assets/mark.png';
 
 const PROFILE_IMAGE_SIZE = emY(3.75);
-const CHAT_SIZE = emY(2.75);
-const CHAT_IMAGE_SIZE = emY(1.25);
+const CHAT_SIZE = emY(2.8);
+const CHAT_IMAGE_SIZE = emY(1.65);
 
 const HeroDetail = props => {
     const {
@@ -21,12 +22,13 @@ const HeroDetail = props => {
         deliveryTime,
         heroStatus,
         contractorId,
-        contactContractor
+        contactContractor,
+        notificationCount
     } = props;
 
     const callContractor = () => contactContractor(contractorId);
 
-    const profileImage = props.profileImage || logo;
+    const profileImage = props.profileImage || mark || logo;
 
     return (
         <View style={styles.container}>
@@ -64,7 +66,14 @@ const HeroDetail = props => {
                 style={styles.chatButton}
                 onPress={callContractor}
             >
-                <Image source={callIcon} style={styles.chatImage} />
+                <Image source={messageIcon} style={styles.chatImage} />
+                {notificationCount > 0 && (
+                    <View style={styles.notificationIcon}>
+                        <Text style={styles.notificationNumber}>
+                            {notificationCount}
+                        </Text>
+                    </View>
+                )}
             </TouchableOpacity>
         </View>
     );
@@ -119,8 +128,9 @@ const styles = StyleSheet.create({
         marginTop: emY(0.7)
     },
     chatImage: {
+        borderRadius: 0,
         width: CHAT_IMAGE_SIZE,
-        height: CHAT_IMAGE_SIZE
+        height: (CHAT_IMAGE_SIZE * 13) / 15
     },
     profileImage: {
         marginTop: emY(0.7),
@@ -128,6 +138,20 @@ const styles = StyleSheet.create({
         width: PROFILE_IMAGE_SIZE,
         height: PROFILE_IMAGE_SIZE,
         borderRadius: PROFILE_IMAGE_SIZE / 2
+    },
+    notificationIcon: {
+        position: 'absolute',
+        top: -3,
+        right: -3,
+        width: CHAT_IMAGE_SIZE / 1.5,
+        height: CHAT_IMAGE_SIZE / 1.5,
+        backgroundColor: 'red',
+        borderRadius: CHAT_IMAGE_SIZE / 3
+    },
+    notificationNumber: {
+        fontSize: emY(0.9),
+        color: '#fff',
+        textAlign: 'center'
     }
 });
 

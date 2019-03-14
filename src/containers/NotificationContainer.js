@@ -14,19 +14,22 @@ import {
 
 class NotificationContainer extends Component {
     state = {
-        topValue: new Animated.Value(emY(11)),
+        topValue: new Animated.Value(0),
         opacity: new Animated.Value(1),
-        nextNotification: 'Searching the skies for a hero...',
+        nextTopValue: new Animated.Value(emY(11)),
+        nextOpacity: new Animated.Value(0),
+        nextNotification: 'Searching the skies for a Hero...',
         currNotification: 'Searching the skies for a hero...'
     };
 
     componentDidMount() {
         const newNotificaiton = this.getNotification();
         this.setState({ currNotification: newNotificaiton });
-        this.setState({ nextNotification: newNotificaiton });
     }
 
     componentWillReceiveProps(nextProps) {
+        const newNotificaiton = this.getNotification();
+        this.setState({ nextNotification: newNotificaiton });
         if (
             this.props.status !== nextProps.status ||
             this.props.contractorStatus !== nextProps.contractorStatuses
@@ -38,15 +41,20 @@ class NotificationContainer extends Component {
     getNotification = () => {
         if (
             this.props.status === orderStatuses.satisfied &&
+            this.props.contractorStatus === contractorStatuses.en_route
+        ) {
+            return 'Hero is en route to you!';
+        } else if (
+            this.props.status === orderStatuses.satisfied &&
             this.props.contractorStatus === contractorStatuses.arrived
         ) {
             return 'Hero has arrived!';
         } else {
             switch (this.props.status) {
                 case orderStatuses.open:
-                    return 'Searching the skies for a Hero...';
+                    return 'Contacting Heroes...';
                 case orderStatuses.inProgress:
-                    return 'Contacting Heroes';
+                    return 'Contacting Heroes...';
                 case orderStatuses.satisfied:
                     return 'A Hero has answered your call!';
                 case orderStatuses.completed:
@@ -54,35 +62,31 @@ class NotificationContainer extends Component {
                 case orderStatuses.cancelled:
                     return 'No Heroes could answer your call.';
                 default:
-                    break;
+                    return 'Searching the skies for a Hero...';
             }
         }
     };
 
     receiveNotification = () => {
-        this.setState({ currNotification: this.state.currNotification });
         Animated.parallel([
-            Animated.timing(this.state.topValue, {
+            Animated.timing(this.state.opacity, {
                 toValue: 0,
                 duration: 500
             }),
-            Animated.timing(this.state.opacity, {
+            Animated.timing(this.state.nextTopValue, {
                 toValue: 0,
+                duration: 500
+            }),
+            Animated.timing(this.state.nextOpacity, {
+                toValue: 1,
                 duration: 500
             })
         ]).start(() => {
             const newNotificaiton = this.getNotification();
-            this.setState({ nextNotification: newNotificaiton });
-            Animated.parallel([
-                Animated.timing(this.state.topValue, {
-                    toValue: emY(11),
-                    duration: 0
-                }),
-                Animated.timing(this.state.opacity, {
-                    toValue: 1,
-                    duration: 0
-                })
-            ]).start();
+            this.setState({ currNotification: newNotificaiton });
+            this.setState({ opacity: new Animated.Value(1) });
+            this.setState({ nextOpacity: new Animated.Value(0) });
+            this.setState({ nextTopValue: new Animated.Value(emY(11)) });
         });
     };
 
@@ -93,15 +97,24 @@ class NotificationContainer extends Component {
                 <Animated.View
                     style={[
                         styles.alert,
-                        { opacity: this.state.opacity, top: 0 }
+                        {
+                            opacity: this.state.opacity,
+                            top: this.state.topValue
+                        }
+                    ]}
+                >
+                    <Text style={styles.alertText}>{currNotification}</Text>
+                </Animated.View>
+                <Animated.View
+                    style={[
+                        styles.alert,
+                        {
+                            opacity: this.state.nextOpacity,
+                            top: this.state.nextTopValue
+                        }
                     ]}
                 >
                     <Text style={styles.alertText}>{nextNotification}</Text>
-                </Animated.View>
-                <Animated.View
-                    style={[styles.alert, { top: this.state.topValue }]}
-                >
-                    <Text style={styles.alertText}>{currNotification}</Text>
                 </Animated.View>
             </View>
         );

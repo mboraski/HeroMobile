@@ -17,5 +17,7 @@ export default {
     BLACK: '#000000',
     WHITE: '#ffffff',
     RED_500: 'rgb(243, 108, 96)',
-    CLEAR: 'rgba(0, 0, 0, 0)'
+    CLEAR: 'rgba(0, 0, 0, 0)',
+    FACEBOOK_BLUE: '#4267B2',
+    GOOGLE_BLUE: '#4285F4'
 };

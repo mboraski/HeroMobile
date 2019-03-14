@@ -15,6 +15,6 @@ export default class AppTextInput extends Component {
 
 const styles = StyleSheet.create({
     textInput: {
-        fontFamily: 'Arial'
+        fontFamily: 'roboto'
     }
 });

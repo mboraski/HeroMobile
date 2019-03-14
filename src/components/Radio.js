@@ -12,8 +12,7 @@ const RADIO_ICON_SIZE_INNER = RADIO_ICON_SIZE - RADIO_ICON_PADDING;
 const Radio = ({
     input,
     text,
-    onPress = () => input.onChange(!input.value),
-    ...rest
+    onPress = () => input.onChange(!input.value)
 }) => (
     <TouchableOpacity {...input} {...rest} onPress={onPress}>
         <View style={styles.container}>

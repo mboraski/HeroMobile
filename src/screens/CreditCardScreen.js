@@ -6,26 +6,25 @@ import { connect } from 'react-redux';
 import BackButton from '../components/BackButton';
 import RemoteSubmitTextButton from '../components/RemoteSubmitTextButton';
 import { getUser } from '../selectors/authSelectors';
+import { getCards } from '../selectors/paymentSelectors';
 import { default as CreditCardFormContainer } from '../containers/CreditCardFormContainer';
 import Style from '../constants/Style';
 
 class CreditCardScreen extends Component {
-    handleSubmitSuccess = () => {
-        this.props.navigation.pop();
-    };
+    componentDidUpdate(prevProps) {
+        if (prevProps.cards.length < this.props.cards.length) {
+            this.props.navigation.navigate('map');
+        }
+    }
 
     render() {
-        return (
-            <CreditCardFormContainer
-                navigation={this.props.navigation}
-                onSubmitSuccess={this.handleSubmitSuccess}
-            />
-        );
+        return <CreditCardFormContainer navigation={this.props.navigation} />;
     }
 }
 
 const mapStateToProps = state => ({
-    user: getUser(state)
+    user: getUser(state),
+    cards: getCards(state)
 });
 
 const mapDispatchToProps = {};

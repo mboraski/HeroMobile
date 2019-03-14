@@ -102,7 +102,7 @@ class OopsPopup extends Component {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.closeModal(true)}
+                            onPress={() => this.closeModal(false)}
                             style={[
                                 styles.button,
                                 { backgroundColor: Color.WHITE }

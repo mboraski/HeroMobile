@@ -19,6 +19,7 @@ import {
     deleteCard,
     createStripeCustomerWithCard
 } from '../actions/paymentActions';
+import { dropdownAlert } from '../actions/uiActions';
 
 import { getStripeCustomerId, getPending } from '../selectors/paymentSelectors';
 import { getEmail } from '../selectors/authSelectors';
@@ -33,12 +34,12 @@ import { emY } from '../utils/em';
 import formatCardNumber from '../formatting/formatCardNumber';
 import formatCardExpiry from '../formatting/formatCardExpiry';
 import required from '../validation/required';
-import { STRIPE_CLIENT_KEY } from '../constants/Stripe';
+import { STRIPE_CLIENT_KEY } from '../keys/Stripe';
 
 const stripe = stripeClient(STRIPE_CLIENT_KEY);
 const keyboardVerticalOffset = emY(1);
 
-class CreditCardFormContainer extends Component {
+export class CreditCardFormContainer extends Component {
     deleteCardConfirm = () => {
         Alert.alert('Confirm', 'Are you sure you want to delete this card?', [
             { text: 'Cancel', style: 'cancel' },
@@ -72,44 +73,44 @@ class CreditCardFormContainer extends Component {
                 <DismissKeyboardView style={styles.container}>
                     {error ? <Text style={styles.error}>{error}</Text> : null}
                     <View style={styles.form}>
-                        <View style={styles.formInputs}>
-                            <CardNumberInputField
-                                name="number"
-                                label="CARD NUMBER"
-                                containerStyle={styles.numberContainer}
-                                normalize={formatCardNumber}
-                                keyboardType="number-pad"
-                                validate={required}
-                                placeholder={
-                                    card ? `**** **** **** + ${card.last4}` : ''
-                                }
-                            />
-                            <TextInputField
-                                name="exp"
-                                label="EXP. DATE"
-                                containerStyle={styles.expiryContainer}
-                                style={styles.expiry}
-                                normalize={formatCardExpiry}
-                                keyboardType="number-pad"
-                                validate={required}
-                            />
-                        </View>
+                        <CardNumberInputField
+                            name="number"
+                            label="CARD NUMBER"
+                            normalize={formatCardNumber}
+                            keyboardType="number-pad"
+                            validate={required}
+                            placeholder={
+                                card ? `**** **** **** + ${card.last4}` : ''
+                            }
+                        />
                         <TextInputField
                             name="name"
                             label="CARDHOLDER NAME"
                             validate={required}
                         />
-                        <TextInputField
-                            name="cvc"
-                            label="CVC"
-                            secureTextEntry
-                            containerStyle={styles.cvcContainer}
-                            keyboardType="number-pad"
-                            validate={required}
-                            placeholder={card ? '***' : ''}
-                        />
+                        <View style={styles.formInputs}>
+                            <TextInputField
+                                name="exp"
+                                label="EXP. DATE"
+                                containerStyle={styles.expiryContainer}
+                                style={styles.smallInputText}
+                                normalize={formatCardExpiry}
+                                keyboardType="number-pad"
+                                validate={required}
+                            />
+                            <TextInputField
+                                name="cvc"
+                                label="CVC"
+                                secureTextEntry
+                                containerStyle={styles.cvcContainer}
+                                style={styles.smallInputText}
+                                keyboardType="number-pad"
+                                validate={required}
+                                placeholder={card ? '***' : ''}
+                            />
+                        </View>
                     </View>
-                    {card ? (
+                    {card && (
                         <Button
                             title="Delete Card"
                             onPress={this.deleteCardConfirm}
@@ -117,17 +118,13 @@ class CreditCardFormContainer extends Component {
                             buttonStyle={styles.button}
                             textStyle={styles.buttonText}
                         />
-                    ) : null}
-                    {submitting || pending ? (
-                        <View style={styles.overlay}>
-                            <ActivityIndicator
-                                animating={pending}
-                                size="large"
-                                color="#f5a623"
-                            />
-                        </View>
-                    ) : null}
+                    )}
                 </DismissKeyboardView>
+                {(submitting || pending) && (
+                    <View style={styles.overlay}>
+                        <ActivityIndicator size="large" color={Color.DEFAULT} />
+                    </View>
+                )}
             </KeyboardAvoidingView>
         );
     }
@@ -142,7 +139,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     formInputs: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     overlay: {
         position: 'absolute',
@@ -160,11 +158,11 @@ const styles = StyleSheet.create({
     expiryContainer: {
         width: 140
     },
-    expiry: {
+    smallInputText: {
         textAlign: 'center'
     },
     cvcContainer: {
-        width: 120
+        width: 110
     },
     buttonContainer: {
         marginLeft: 0,
@@ -199,7 +197,6 @@ const formOptions = {
     form: 'CreditCard',
     async onSubmit(values, dispatch, props) {
         try {
-            const stripeCustomerId = props.stripeCustomerId;
             const email = props.email;
             const exp = values.exp.split('/');
             const information = {
@@ -229,8 +226,12 @@ const formOptions = {
                 }
                 throw new SubmissionError(error);
             }
-            if (stripeCustomerId) {
-                addCard({ stripeCustomerId, tokenId: newCard.id, dispatch });
+            if (props.stripeCustomerId) {
+                addCard({
+                    stripeCustomerId: props.stripeCustomerId,
+                    token: newCard,
+                    dispatch
+                });
             } else {
                 createStripeCustomerWithCard({
                     email,
@@ -239,7 +240,7 @@ const formOptions = {
                 });
             }
         } catch (error) {
-            console.log('Credit Card Submit Error');
+            dispatch(dropdownAlert(true, 'Error submitting credit card.'));
         }
     }
 };

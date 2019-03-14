@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         height: SIZE,
-        fontFamily: 'Arial'
+        fontFamily: 'roboto'
     },
     imageContainer: {
         alignItems: 'center',

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 // Relative Imports
 import BackButton from '../components/BackButton';
+import TransparentButton from '../components/TransparentButton';
 import InlineLabelTextInputField from '../components/InlineLabelTextInputField';
 import Text from '../components/Text';
 import AuthActions from '../actions/authActions';
@@ -115,6 +116,7 @@ const mapDispatchToProps = dispatch => {
 ProfileScreen.navigationOptions = {
     title: 'Profile Details',
     headerLeft: <BackButton />,
+    headerRight: <TransparentButton />,
     headerStyle: Style.header,
     headerTitleStyle: Style.headerTitle
 };

@@ -45,6 +45,7 @@
         "firebase": "^5.5.0",
         "lodash.debounce": "^4.0.8",
         "lodash.filter": "^4.6.0",
+        "lodash.find": "^4.6.0",
         "lodash.foreach": "^4.5.0",
         "lodash.isnull": "^3.0.0",
         "lodash.map": "^4.6.0",
@@ -65,6 +66,7 @@
         "redux-persist-expo-securestore": "^0.1.1",
         "redux-thunk": "^2.3.0",
         "reselect": "^3.0.1",
+        "sentry-expo": "^1.10.0",
         "stripe-client": "^1.1.5",
         "validator": "^10.9.0"
     },

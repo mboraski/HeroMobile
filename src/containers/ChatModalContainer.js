@@ -1,5 +1,5 @@
 // Third Party Imports
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Constants } from 'expo';
 import {
     ScrollView,
@@ -35,26 +35,41 @@ import {
 import {
     closeChatModal,
     sendMessage,
-    setNewMessageValue
+    setNewMessageValue,
+    clearChatNotificationCount
 } from '../actions/orderActions';
 
 const WINDOW_WIDTH = Dimensions.window.width;
 const PROFILE_IMAGE_SIZE = emY(2);
 
 class ChatModalContainer extends Component {
+    scroll = createRef();
+
     componentDidMount() {
-        this.scroll.scrollToEnd();
+        setTimeout(() => {
+            this.scroll.current.scrollToEnd();
+        }, 50);
+    }
+
+    componentDidUpdate(prevProps) {
+        // scroll to bottom when a new message is added
+        if (
+            Object.keys(prevProps.messageList).length !==
+            Object.keys(this.props.messageList).length
+        ) {
+            setTimeout(() => {
+                this.scroll.current.scrollToEnd();
+            }, 50);
+        }
     }
 
     setNewMessageValue = newValue => {
-        console.log('setNewMessageValue ran');
         this.props.setNewMessageValue(newValue);
     };
 
-    scroll = null;
-
     closeModal = () => {
         this.props.closeChatModal();
+        this.props.clearChatNotificationCount();
     };
 
     sendMessage = () => {
@@ -68,14 +83,16 @@ class ChatModalContainer extends Component {
     renderMessageList = () => {
         const { messageList } = this.props;
         const profileImage = this.props.profileImage || logo;
-        console.log('messageList: ', messageList);
+        const timeStamps = Object.keys(messageList);
+        timeStamps.sort();
         if (messageList) {
-            return map(messageList, (message, i) => {
+            return map(timeStamps, (timeStamp, i) => {
+                const message = messageList[timeStamp];
                 if (message.uid === firebaseAuth.currentUser.uid) {
                     return (
                         <View key={i} style={styles.messageRowConsumer}>
-                            <View style={styles.message}>
-                                <Text style={styles.messageText}>
+                            <View style={[styles.message, styles.userMessage]}>
+                                <Text style={styles.userMessageText}>
                                     {message.content}
                                 </Text>
                             </View>
@@ -88,8 +105,8 @@ class ChatModalContainer extends Component {
                                 style={styles.profileImage}
                                 source={profileImage}
                             />
-                            <View style={styles.message}>
-                                <Text style={styles.messageText}>
+                            <View style={[styles.message, styles.heroMessage]}>
+                                <Text style={styles.heroMessageText}>
                                     {message.content}
                                 </Text>
                             </View>
@@ -98,7 +115,7 @@ class ChatModalContainer extends Component {
                 }
             });
         } else {
-            return <Text style={styles.messageText}>No messages...</Text>;
+            return <Text style={styles.heroMessageText}>No messages...</Text>;
         }
     };
 
@@ -111,9 +128,7 @@ class ChatModalContainer extends Component {
                     style={styles.closeModalButton}
                 />
                 <ScrollView
-                    ref={scroll => {
-                        this.scroll = scroll;
-                    }}
+                    ref={this.scroll}
                     contentContainerStyle={styles.scrollableContent}
                     keyboardDismissMode="none"
                 >
@@ -142,6 +157,7 @@ class ChatModalContainer extends Component {
                         buttonStyle={[styles.buttonSend]}
                         textStyle={[styles.buttonSendText]}
                         onPress={this.sendMessage}
+                        disabled={!newMessageValue.length}
                     />
                 )}
             </KeyboardAvoidingView>
@@ -152,13 +168,10 @@ class ChatModalContainer extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Color.WHITE,
         marginTop: Constants.statusBarHeight
     },
     scrollableContent: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
         padding: 10
     },
     messageRowContractor: {
@@ -173,14 +186,23 @@ const styles = StyleSheet.create({
     },
     message: {
         maxWidth: WINDOW_WIDTH - PROFILE_IMAGE_SIZE * 3.5,
-        backgroundColor: Color.GREY_200,
         borderRadius: 10,
         paddingVertical: 6,
         paddingHorizontal: 8,
         marginVertical: 10
     },
-    messageText: {
-        color: '#000',
+    userMessage: {
+        backgroundColor: Color.ORANGE_500
+    },
+    heroMessage: {
+        backgroundColor: Color.GREY_200
+    },
+    heroMessageText: {
+        color: Color.BLACK,
+        fontSize: emY(1.1)
+    },
+    userMessageText: {
+        color: Color.WHITE,
         fontSize: emY(1.1)
     },
     closeModalButton: {
@@ -214,7 +236,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     buttonSendText: {
-        color: '#fff',
+        color: Color.WHITE,
         fontSize: emY(1)
     }
 });
@@ -230,7 +252,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     closeChatModal,
     sendMessage,
-    setNewMessageValue
+    setNewMessageValue,
+    clearChatNotificationCount
 };
 
 export default connect(

@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    ActivityIndicator
+} from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { signInWithEmailAndPassword } from '../actions/authActions';
+import { getUser } from '../selectors/authSelectors';
+
 import Color from '../constants/Color';
 import InlineLabelTextInputField from '../components/InlineLabelTextInputField';
-import LogoSpinner from '../components/LogoSpinner';
 import SuccessState from '../components/SuccessState';
 import Text from '../components/Text';
-import { getUser } from '../selectors/authSelectors';
+
 import required from '../validation/required';
 import validEmail from '../validation/validEmail';
 import validPassword from '../validation/validPassword';
+
 import { emY } from '../utils/em';
 import { formatError } from '../utils/errors';
 
@@ -23,7 +30,7 @@ class SignInFormContainer extends Component {
 
     onAuthComplete = props => {
         if (props.user && !this.props.user) {
-            this.props.navigation.navigate('main');
+            this.props.navigation.navigate('map');
         }
     };
 
@@ -42,10 +49,7 @@ class SignInFormContainer extends Component {
         } = this.props;
         const disabled =
             pending || submitting || asyncValidating || invalid || pristine;
-        const submitText =
-            anyTouched && invalid
-                ? 'Please fix issues before continuing'
-                : 'Continue';
+        const submitText = 'Log In';
         return (
             <View style={styles.container}>
                 <View style={styles.formInputs}>
@@ -66,9 +70,7 @@ class SignInFormContainer extends Component {
                         validate={[required, validPassword]}
                     />
                     {submitting ? (
-                        <LogoSpinner
-                            style={[StyleSheet.absoluteFill, styles.spinner]}
-                        />
+                        <ActivityIndicator size="large" color={Color.DEFAULT} />
                     ) : null}
                     {submitSucceeded ? (
                         <SuccessState
@@ -92,11 +94,6 @@ class SignInFormContainer extends Component {
                 >
                     <Text style={styles.buttonText}>{submitText}</Text>
                 </TouchableOpacity>
-                {/* <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                    onChangeText={(promoCode) => this.setState({ promoCode })}
-                    value={this.state.promoCode}
-                /> */}
             </View>
         );
     }
@@ -108,10 +105,10 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        paddingHorizontal: 20,
         marginBottom: 15
     },
     formInputs: {
-        paddingHorizontal: 15,
         marginBottom: emY(2.0),
         marginTop: emY(1.7)
     },
@@ -123,8 +120,8 @@ const styles = StyleSheet.create({
         marginRight: 0
     },
     button: {
-        backgroundColor: '#000',
-        marginHorizontal: 25,
+        borderRadius: 5,
+        backgroundColor: Color.DEFAULT,
         justifyContent: 'center',
         height: emY(3)
     },
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
         color: Color.RED_500,
         textAlign: 'center',
         fontSize: emY(0.9),
-        paddingHorizontal: 15,
         paddingBottom: emY(1.5)
     }
 });
