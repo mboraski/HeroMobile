@@ -2,6 +2,7 @@ import { firebaseAuth, rtdb } from '../../firebase';
 import { dropdownAlert } from './uiActions';
 import { sendMessage } from './orderActions';
 import { logContractorError } from '../api/hasty';
+import { updateCart } from './cartActions';
 
 export const FETCH_CONTRACTOR_REQUEST = 'inventory_request';
 export const FETCH_CONTRACTOR_SUCCESS = 'inventory_success';
@@ -38,12 +39,14 @@ export const fetchContractor = () => dispatch => {
                         type: FETCH_CONTRACTOR_SUCCESS,
                         payload: heroData
                     });
+                    dispatch(updateCart({ instant: heroData.inventory }));
                     dispatch({ type: ONLINE });
                 } else {
                     dispatch({
                         type: FETCH_CONTRACTOR_SUCCESS,
                         payload: heroData
                     });
+                    dispatch(updateCart({ instant: heroData.inventory }));
                     dispatch({ type: OFFLINE });
                 }
             })
@@ -201,12 +204,16 @@ export const fetchContractorInventory = dispatch => {
 export const confirmUpdateInventory = newInventory => dispatch => {
     const user = firebaseAuth.currentUser;
     if (user) {
+        console.log(
+            'contractorActions; confirmUpdateInventory; newInventory: ',
+            newInventory
+        );
         dispatch({ type: CONFIRM_INVENTORY_REQUEST });
         const uid = user ? user.uid : null;
         const inventoryRef = rtdb.ref(`contractors/${uid}`);
         inventoryRef
             .child('inventory')
-            .set(newInventory)
+            .set({ ...newInventory })
             .then(() => {
                 dispatch(dropdownAlert(true, 'Successfully updated inventory'));
                 dispatch({

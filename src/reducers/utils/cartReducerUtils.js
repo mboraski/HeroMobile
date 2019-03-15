@@ -10,10 +10,13 @@ const addProductToCart = (product, instantCartProducts) => {
 const removeProductFromCart = (product, instantCartProducts) => {
     const instantCart = Object.assign({}, instantCartProducts);
     const cartItem = instantCart[product.id] || {};
-    cartItem.quantityTaken -= 1;
+    if (cartItem.quantityTaken > 0) {
+        cartItem.quantityTaken -= 1;
+    }
     return instantCart;
 };
 
+// TODO: this needs refactor
 const mergeCarts = (newCart, oldCart) => {
     const netCart = { instant: {} };
     let itemCountUp = false;
@@ -24,8 +27,8 @@ const mergeCarts = (newCart, oldCart) => {
             // did the quantity available go up or down
             const upOrDown = oldItem.quantityAvailable - item.quantityAvailable;
             let newQuantityTaken = 0;
-            if (item.quantityAvailable < oldItem.quantityTaken) {
-                newQuantityTaken = item.quantityAvailable;
+            if (item.quantityTaken > oldItem.quantityTaken) {
+                newQuantityTaken = item.quantityTaken;
             } else {
                 newQuantityTaken = oldItem.quantityTaken;
             }
@@ -36,12 +39,12 @@ const mergeCarts = (newCart, oldCart) => {
                 netCart.instant[item.id] = {
                     id: item.id,
                     category: item.category,
-                    subCategories: item.subcategories,
+                    subCategories: item.subcategories || {},
                     price: item.price,
                     productName: item.productName,
-                    size: item.size,
-                    brand: item.brand,
-                    contractors: item.contractors,
+                    size: item.size || '',
+                    brand: item.brand || '',
+                    contractors: item.contractors || {},
                     quantityAvailable: item.quantityAvailable,
                     quantityTaken: newQuantityTaken
                 };

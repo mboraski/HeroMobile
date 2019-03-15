@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import reduce from 'lodash.reduce';
-import filter from 'lodash.filter';
 
 import {
     getSalesTaxRate,
@@ -36,7 +35,31 @@ export const getDeliveryTypes = createSelector(getCartProducts, products =>
  */
 export const getCartOrders = createSelector(
     [getCartInstantProducts],
-    products => filter(products, product => product.quantityTaken > 0)
+    products =>
+        reduce(
+            products,
+            (accum, product) => {
+                if (product.quantityTaken > 0) {
+                    accum[product.id] = product;
+                }
+                return accum;
+            },
+            {}
+        )
+);
+
+export const getHeroAvailables = createSelector([getCartOrders], products =>
+    reduce(
+        products,
+        (accum, product) => {
+            accum[product.id] = {
+                id: product.id,
+                quantityAvailable: product.quantityTaken
+            };
+            return accum;
+        },
+        {}
+    )
 );
 
 export const getCartPureTotal = createSelector([getCartOrders], orders =>

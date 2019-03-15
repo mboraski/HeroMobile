@@ -11,7 +11,13 @@ import Color from '../constants/Color';
 
 class OrderList extends Component {
     renderOrders() {
-        const { orders, orderImages, onAddOrder, onRemoveOrder } = this.props;
+        const {
+            orders,
+            orderImages,
+            onAddOrder,
+            onRemoveOrder,
+            displayOnly
+        } = this.props;
         let prevDeliveryType;
         return map(orders, order => {
             // TODO: this is a bandaid
@@ -27,6 +33,7 @@ class OrderList extends Component {
                             <Text style={styles.valueLabel}>{'Instant'}</Text>
                         </View>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}
@@ -39,6 +46,7 @@ class OrderList extends Component {
                 renderMark = (
                     <View key={`instant-${order.id}`}>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}
