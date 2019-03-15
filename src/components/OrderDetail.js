@@ -14,7 +14,7 @@ const ICON_SIZE = emY(0.75);
 const OrderDetail = props => {
     const { onAddOrder, onRemoveOrder, order, image } = props;
     const { productName, price, quantityTaken } = order;
-    const formattedPrice = `${Number.parseFloat(price / 100).toFixed(2)}`;
+    const formattedPrice = `${Number.parseFloat(price).toFixed(2)}`;
     return (
         <View style={styles.container}>
             <Image

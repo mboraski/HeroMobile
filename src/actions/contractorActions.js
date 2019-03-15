@@ -33,7 +33,6 @@ export const fetchContractor = () => dispatch => {
             .once('value')
             .then(snapshot => {
                 const heroData = snapshot.val();
-                console.log('hero data: ', heroData);
                 if (heroData && heroData.online) {
                     dispatch({
                         type: FETCH_CONTRACTOR_SUCCESS,
@@ -49,7 +48,10 @@ export const fetchContractor = () => dispatch => {
                 }
             })
             .catch(error => {
-                console.log('fetch contractor error: ', error);
+                console.warn(
+                    'contractorActions; fetchContractor; error: ',
+                    error
+                );
                 dispatch({ type: FETCH_CONTRACTOR_ERROR, payload: error });
                 dispatch(
                     dropdownAlert(true, 'Error retrieving Hero online status')
@@ -69,9 +71,11 @@ export const online = (region, dispatch, inventory) => {
                 online: true,
                 region,
                 status: 'available',
-                method: 'walking'
+                method: 'walking' // Add inventory
             })
             .then(() => {
+                // TODO: this is a temporary way to handle the contractor location
+                // This should be removed when location is fluid
                 return consumerBlockRef.child('contractorRegion').set({
                     latitude: region.latitude,
                     longitude: region.longitude,
@@ -81,10 +85,10 @@ export const online = (region, dispatch, inventory) => {
             .then(() => {
                 return consumerBlockRef.child(`contractors/${user.uid}`).set({
                     deliveryTime: 240,
-                    firstName: 'Mark',
-                    lastName: 'Boraski',
-                    phoneNumber: '+15126690628',
-                    photoUrl: 'na',
+                    firstName: 'Mark', // Don't set here, have set with contractor record
+                    lastName: 'Boraski', // same
+                    phoneNumber: '+15126690628', // same
+                    photoUrl: 'na', // same
                     status: 'available'
                 });
             })
@@ -99,8 +103,7 @@ export const online = (region, dispatch, inventory) => {
             })
             .catch(error => {
                 dispatch({ type: OFFLINE });
-                console.log('contractor online error: ', error);
-                // logContractorError(uid, error);
+                console.warn('contractor online error: ', error);
                 dispatch(
                     dropdownAlert(true, 'Error setting Hero online status')
                 );
@@ -200,8 +203,9 @@ export const confirmUpdateInventory = newInventory => dispatch => {
     if (user) {
         dispatch({ type: CONFIRM_INVENTORY_REQUEST });
         const uid = user ? user.uid : null;
-        const inventoryRef = rtdb.ref(`contractors/${uid}/inventory`);
+        const inventoryRef = rtdb.ref(`contractors/${uid}`);
         inventoryRef
+            .child('inventory')
             .set(newInventory)
             .then(() => {
                 dispatch(dropdownAlert(true, 'Successfully updated inventory'));

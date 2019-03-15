@@ -67,9 +67,8 @@ class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.props.fetchContractor();
-        this.props.fetchProducts();
     }
 
     signOut = () => {

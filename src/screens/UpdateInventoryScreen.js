@@ -21,19 +21,16 @@ import Dimensions from '../constants/Dimensions';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
 
-import {
-    getInventory, // TODO: change this after hero can change inventory
-    getPending,
-    getInventoryTotalQuantity
-} from '../selectors/contractorSelectors';
+import { getPending } from '../selectors/contractorSelectors';
 import { getProductImages } from '../selectors/productSelectors';
-
 import {
-    confirmUpdateInventory,
-    addToInventory,
-    removeFromInventory
-} from '../actions/contractorActions';
+    getCartInstantProducts,
+    getCartTotalQuantity
+} from '../selectors/cartSelectors';
+
+import { confirmUpdateInventory } from '../actions/contractorActions';
 import { dropdownAlert } from '../actions/uiActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 export class UpdateInventoryScreeen extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -49,25 +46,20 @@ export class UpdateInventoryScreeen extends Component {
     };
 
     confirmUpdate = () => {
-        // this.props.confirmUpdateInventory(this.props.cartOrders);
+        this.props.confirmUpdateInventory(this.props.cart);
     };
 
     handleAddOrder = product => {
         console.log('handleAddOrder: ', product);
-        this.props.addToInventory(product);
+        this.props.addToCart(product);
     };
 
     handleRemoveOrder = product => {
-        this.props.removeFromInventory(product);
+        this.props.removeFromCart(product);
     };
 
     render() {
-        const {
-            updateInventory,
-            pending,
-            productImages,
-            inventoryTotalQuantity
-        } = this.props;
+        const { cart, pending, productImages, cartTotalQuantity } = this.props;
         return (
             <View style={styles.container}>
                 {pending ? (
@@ -79,7 +71,7 @@ export class UpdateInventoryScreeen extends Component {
                     <ScrollView style={styles.scrollContainer}>
                         <View style={styles.container}>
                             <OrderList
-                                orders={updateInventory}
+                                orders={cart}
                                 orderImages={productImages}
                                 onAddOrder={this.handleAddOrder}
                                 onRemoveOrder={this.handleRemoveOrder}
@@ -91,7 +83,7 @@ export class UpdateInventoryScreeen extends Component {
                                     Total Quantity:
                                 </Text>
                                 <Text style={styles.cost}>
-                                    {inventoryTotalQuantity}
+                                    {cartTotalQuantity}
                                 </Text>
                             </View>
                             <Button
@@ -197,15 +189,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    updateInventory: getInventory(state),
+    cart: getCartInstantProducts(state),
     pending: getPending(state),
     productImages: getProductImages(state),
-    inventoryTotalQuantity: getInventoryTotalQuantity(state)
+    cartTotalQuantity: getCartTotalQuantity(state)
 });
 
 const mapDispatchToProps = {
-    addToInventory,
-    removeFromInventory,
+    addToCart,
+    removeFromCart,
     confirmUpdateInventory,
     dropdownAlert
 };
