@@ -34,10 +34,9 @@ import {
     getPending,
     getOnlineStatusPending,
     getFirstName,
-    getLastName,
-    getInventory
+    getLastName
 } from '../selectors/contractorSelectors';
-
+import { getHeroAvailables } from '../selectors/cartSelectors';
 import { getCoords } from '../selectors/mapSelectors';
 
 // import CustomerPopup from '../components/CommunicationPopup';
@@ -103,7 +102,7 @@ class HeroMainScreen extends Component {
     };
 
     useCurrentLocation = () => {
-        this.props.getCurrentLocation(this.props.inventory);
+        this.props.getCurrentLocation(this.props.heroAvailables);
     };
 
     render() {
@@ -309,7 +308,7 @@ const mapStateToProps = state => ({
     firstName: getFirstName(state),
     lastName: getLastName(state),
     region: getCoords(state),
-    inventory: getInventory(state)
+    heroAvailables: getHeroAvailables(state)
 });
 
 const mapDispatchToProps = {
