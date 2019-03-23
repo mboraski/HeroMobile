@@ -36,6 +36,7 @@ export const InlineLabelTextInput = ({
                         touched && invalid && styles.textInputInvalid
                     ]}
                     onChangeText={onChange}
+                    underlineColorAndroid={'#fff'}
                     {...restInput}
                     {...props}
                 />

@@ -1,6 +1,12 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { StyleSheet, Modal, View, TouchableOpacity, Platform } from 'react-native';
+import {
+    StyleSheet,
+    Modal,
+    View,
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 
 // Relative Imports
 import Color from '../constants/Color';
@@ -18,7 +24,7 @@ class Popup extends Component {
         const { openModal, closeModal, children } = this.props;
         return (
             <Modal
-                animationType="slide"
+                animationType="fade"
                 visible={openModal}
                 onRequestClose={() => {}}
                 style={StyleSheet.absoluteFill}

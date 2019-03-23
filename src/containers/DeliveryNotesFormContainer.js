@@ -14,7 +14,7 @@ import { emY } from '../utils/em';
 
 const maxLength500 = maxLength(500);
 
-export class DeliveryNotesFormContainer extends Component {
+class DeliveryNotesFormContainer extends Component {
     render() {
         const {
             submit,

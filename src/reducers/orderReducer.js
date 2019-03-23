@@ -8,12 +8,15 @@ import {
     UPDATE_ORDER_ERROR,
     OPEN_CHAT_MODAL,
     CLOSE_CHAT_MODAL,
+    OPEN_ORDER_FOUND,
+    SET_ORDER_ID,
+    SET_CHAT_ID,
     SET_NEW_MESSAGE_VALUE,
     SEND_CHAT_MESSAGE_REQUEST,
     SEND_CHAT_MESSAGE_SUCCESS,
     SEND_CHAT_MESSAGE_ERROR,
-    SET_ORDER_ID,
-    SET_CHAT_ID
+    INCREASE_CHAT_NOTIFICATION_COUNT,
+    CLEAR_CHAT_NOTIFICATION_COUNT
 } from '../actions/orderActions';
 import { SIGNOUT_SUCCESS } from '../actions/authActions';
 
@@ -29,7 +32,8 @@ const initialState = {
     chatModalVisible: false,
     chatId: '',
     newMessageValue: '',
-    chatPending: false
+    chatPending: false,
+    notificationCount: 0
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -46,7 +50,12 @@ const orderReducer = (state = initialState, action) => {
                 ...state,
                 ...initialState
             };
-        case ORDER_CREATION_SUCCESS: // OLD
+        case ORDER_CREATION_SUCCESS: // Old?
+            return {
+                ...state,
+                orderId: action.payload
+            };
+        case OPEN_ORDER_FOUND:
             return {
                 ...state,
                 orderId: action.payload
@@ -92,6 +101,7 @@ const orderReducer = (state = initialState, action) => {
         case CLOSE_CHAT_MODAL:
             return {
                 ...state,
+                chatId: '',
                 chatModalVisible: false
             };
         case SET_NEW_MESSAGE_VALUE:
@@ -114,6 +124,16 @@ const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chatPending: false
+            };
+        case INCREASE_CHAT_NOTIFICATION_COUNT:
+            return {
+                ...state,
+                notificationCount: state.notificationCount + 1
+            };
+        case CLEAR_CHAT_NOTIFICATION_COUNT:
+            return {
+                ...state,
+                notificationCount: 0
             };
         default:
             return state;

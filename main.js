@@ -1,46 +1,72 @@
 // Third Party Imports
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import Expo, { Font } from 'expo';
+import { StyleSheet, Image } from 'react-native';
+import Expo, { Font, Asset, AppLoading } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
+// import Sentry from 'sentry-expo';
+import { FontAwesome } from '@expo/vector-icons';
 
 // Relative Imports
-import splashImage from './src/assets/splash.png';
+import cachableImages from './src/utils/cachableImages';
+import splashScreen from './src/assets/splash-screen.png';
 import Color from './src/constants/Color';
 import RootContainer from './src/containers/RootContainer';
 import { store, persistor } from './src/store';
+// import { SENTRY_PUBLIC_DSN } from './src/keys/Sentry';
+
+// To test dev logging, change to "true."
+// Sentry.enableInExpoDevelopment = false;
+// Sentry.config(SENTRY_PUBLIC_DSN).install();
 
 // TODO: Here until a solution can be found. (Android specific)
 console.ignoredYellowBox = ['Setting a timer'];
 
+const cacheImages = images =>
+    images.map(image => Asset.fromModule(image).downloadAsync());
+
+const cacheFonts = fonts => fonts.map(font => Font.loadAsync(font));
+
 class App extends Component {
     state = {
-        loading: true
+        ready: false
     };
 
-    async componentDidMount() {
-        const fonts = {
+    loadAssetsAsync = async () => {
+        const brandFonts = {
             goodtimes: require('./src/assets/fonts/goodtimes.ttf'), // eslint-disable-line global-require
             roboto: require('./src/assets/fonts/roboto.ttf') // eslint-disable-line global-require
         };
 
-        await Font.loadAsync(fonts);
-        this.setState({ loading: false });
-    }
+        const fonts = [brandFonts, FontAwesome.font];
+        const fontAssets = cacheFonts(fonts);
+
+        const imageAssets = cacheImages(cachableImages);
+
+        return await Promise.all([...fontAssets, ...imageAssets]);
+    };
+
+    handleFinishLoading = () => this.setState({ ready: true });
+
+    handleLoadingError = error => {
+        // Sentry.logError
+        console.warn(error);
+    };
 
     render() {
-        return this.state.loading ? (
-            <View style={styles.overlay}>
-                <ActivityIndicator size="large" color="#f5a623" />
-            </View>
+        return !this.state.ready ? (
+            <AppLoading
+                startAsync={this.loadAssetsAsync}
+                onFinish={this.handleFinishLoading}
+                onError={this.handleLoadingError}
+            />
         ) : (
             <Provider store={store}>
                 <PersistGate
                     persistor={persistor}
                     loading={
                         <Image
-                            source={splashImage}
+                            source={splashScreen}
                             style={[StyleSheet.absoluteFill, styles.splash]}
                             resizeMode="contain"
                         />
@@ -56,16 +82,6 @@ class App extends Component {
 const styles = StyleSheet.create({
     splash: {
         backgroundColor: Color.DEFAULT
-    },
-    overlay: {
-        position: 'absolute',
-        zIndex: 100,
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
-        justifyContent: 'center',
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0
     }
 });
 

@@ -3,11 +3,10 @@ import { createStackNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
 
 // Relative Imports
-import apiTester from '../screens/apiTester';
+import LoadingScreen from '../screens/LoadingScreen';
 import HeroMainScreen from '../screens/HeroMainScreen';
 import CurrentInventoryScreen from '../screens/CurrentInventoryScreen';
 import UpdateInventoryScreen from '../screens/UpdateInventoryScreen';
-import SearchForHeroScreen from '../screens/SearchForHeroScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthScreen from '../screens/AuthScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -29,7 +28,7 @@ const getHeaderMode = () => (Platform.OS === 'ios' ? 'float' : 'screen');
 
 export default createStackNavigator(
     {
-        apiTester: { screen: apiTester },
+        loading: { screen: LoadingScreen },
         main: { screen: HeroMainScreen },
         currentInventory: { screen: CurrentInventoryScreen },
         updateInventory: { screen: UpdateInventoryScreen },
@@ -40,7 +39,6 @@ export default createStackNavigator(
         profile: { screen: ProfileScreen },
         map: { screen: MapScreen },
         products: { screen: ProductsScreen },
-        searchForHero: { screen: SearchForHeroScreen },
         deliveryNotes: { screen: DeliveryNotesScreen },
         deliveryStatus: { screen: DeliveryStatusScreen },
         cart: { screen: CartScreen },
@@ -52,7 +50,7 @@ export default createStackNavigator(
         notificationFeedback: { screen: NotificationFeedbackScreen }
     },
     {
-        initialRouteName: 'auth',
+        initialRouteName: 'loading',
         navigationOptions: {
             tabBarVisible: false
         },

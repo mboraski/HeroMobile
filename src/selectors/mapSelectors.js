@@ -6,3 +6,5 @@ export const getAddress = state => state.map.address;
 export const getError = state => state.map.error;
 export const getCoords = state => state.map.coords;
 export const getTimestamp = state => state.map.timestamp;
+export const getLocationFeedbackPopupVisible = state =>
+    state.map.locationFeedbackPopupVisible;

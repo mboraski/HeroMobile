@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
 // import contact from '../assets/icons/contact.png';
-import logoBlack from '../assets/icons/logo-black3.png';
+import logoOrange from '../assets/icons/logo-orange.png';
 import avatarIcon from '../assets/mark.png';
 import { dropdownAlert } from '../actions/uiActions';
 import { signOut } from '../actions/authActions';
@@ -34,10 +34,9 @@ import {
     getPending,
     getOnlineStatusPending,
     getFirstName,
-    getLastName,
-    getInventory
+    getLastName
 } from '../selectors/contractorSelectors';
-
+import { getHeroAvailables } from '../selectors/cartSelectors';
 import { getCoords } from '../selectors/mapSelectors';
 
 // import CustomerPopup from '../components/CommunicationPopup';
@@ -67,9 +66,8 @@ class HeroMainScreen extends Component {
         contactPopupVisible: false
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.props.fetchContractor();
-        this.props.fetchProducts();
     }
 
     signOut = () => {
@@ -80,7 +78,6 @@ class HeroMainScreen extends Component {
     };
 
     currentInventory = () => {
-        console.log('current Inventory ran');
         this.props.navigation.navigate('currentInventory');
     };
 
@@ -104,7 +101,7 @@ class HeroMainScreen extends Component {
     };
 
     useCurrentLocation = () => {
-        this.props.getCurrentLocation(this.props.inventory);
+        this.props.getCurrentLocation(this.props.heroAvailables);
     };
 
     render() {
@@ -195,7 +192,7 @@ class HeroMainScreen extends Component {
                                     onPress={this.orders}
                                 />
                                 <MainItem
-                                    image={logoBlack}
+                                    image={logoOrange}
                                     title="Sign Out"
                                     onPress={this.signOut}
                                 />
@@ -310,7 +307,7 @@ const mapStateToProps = state => ({
     firstName: getFirstName(state),
     lastName: getLastName(state),
     region: getCoords(state),
-    inventory: getInventory(state)
+    heroAvailables: getHeroAvailables(state)
 });
 
 const mapDispatchToProps = {

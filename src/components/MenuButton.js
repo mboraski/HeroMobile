@@ -5,11 +5,10 @@ import { withNavigation } from 'react-navigation';
 
 // Relative Imports
 import Style from '../constants/Style';
-import { emY } from '../utils/em';
 // eslint-disable-next-line import/no-unresolved
 import mapIcon from '../assets/icons/menu.png';
 
-const SIZE = emY(1.5);
+import { HEADER_ITEM_SIZE } from '../constants/Style';
 
 class MenuButton extends Component {
     render() {
@@ -29,8 +28,8 @@ class MenuButton extends Component {
 const styles = StyleSheet.create({
     container: {},
     image: {
-        width: SIZE,
-        height: SIZE
+        width: HEADER_ITEM_SIZE,
+        height: HEADER_ITEM_SIZE
     }
 });
 

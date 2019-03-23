@@ -3,6 +3,8 @@ import { StyleSheet, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import Color from '../constants/Color';
+import { HEADER_ITEM_SIZE } from '../constants/Style';
+
 import { emY } from '../utils/em';
 
 const SIZE = emY(1);
@@ -25,8 +27,9 @@ class LocationButton extends Component {
 
 const styles = StyleSheet.create({
     iconContainer: {
+        margin: 0,
+        marginRight: 20 - (HEADER_ITEM_SIZE - SIZE),
         backgroundColor: Color.GREY_100,
-        marginRight: 12,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -40,6 +43,7 @@ const styles = StyleSheet.create({
         })
     },
     icon: {
+        margin: 0,
         color: Color.GREY_700,
         transform: [
             {

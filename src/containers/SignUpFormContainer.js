@@ -18,6 +18,7 @@ import SuccessState from '../components/SuccessState';
 import Text from '../components/Text';
 
 import required from '../validation/required';
+import validName from '../validation/validName';
 import validEmail from '../validation/validEmail';
 import validPhoneNumber from '../validation/validPhoneNumber';
 import validPassword from '../validation/validPassword';
@@ -57,7 +58,7 @@ class SignUpFormContainer extends Component {
         } = this.props;
         const disabled =
             pending || submitting || asyncValidating || invalid || pristine;
-        const submitText = 'Create Account';
+        const submitText = 'Sign Up';
         return (
             <View style={styles.container}>
                 <View style={styles.formInputs}>
@@ -66,14 +67,14 @@ class SignUpFormContainer extends Component {
                         containerStyle={styles.fieldContainer}
                         name="firstName"
                         label="First Name"
-                        validate={[required]}
+                        validate={[required, validName]}
                     />
                     <InlineLabelTextInputField
                         autoCapitalize={'words'}
                         containerStyle={styles.fieldContainer}
                         name="lastName"
                         label="Last Name"
-                        validate={[required]}
+                        validate={[required, validName]}
                     />
                     <InlineLabelTextInputField
                         autoCapitalize={'none'}
@@ -121,19 +122,22 @@ class SignUpFormContainer extends Component {
                 </View>
                 {error && <Text style={styles.signUpError}>{error}</Text>}
                 <Text style={styles.termsAndPrivacy}>
-                    {`By using the app or creating an account you agree to be bound by Hasty's `}
+                    {`By tapping Sign Up you agree to Hasty's `}
                     <Text
                         onPress={this.linkToWebsiteTerms}
                         style={styles.termsAndPrivacyLink}
                     >
                         {'Terms and Conditions'}
                     </Text>
-                    {' and '}
+                    <Text>{' and '}</Text>
                     <Text
                         onPress={this.linkToWebsitePrivacy}
                         style={styles.termsAndPrivacyLink}
                     >
-                        {'Privacy Policy'}
+                        <Text>{'Privacy Policy'}</Text>
+                    </Text>
+                    <Text>
+                        {' and you confirm you are 13 years of age or older.'}
                     </Text>
                 </Text>
                 <TouchableOpacity
@@ -155,35 +159,31 @@ class SignUpFormContainer extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingHorizontal: 20,
         marginBottom: 15
     },
     termsAndPrivacy: {
         flex: 1,
-        marginBottom: 10,
+        marginBottom: 5,
         paddingBottom: 10,
         paddingHorizontal: 10,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        fontSize: emY(0.8)
+        fontSize: emY(0.9)
     },
     termsAndPrivacyLink: {
         color: Color.BLUE_500
     },
     formInputs: {
-        paddingHorizontal: 15,
         paddingBottom: emY(1.5)
     },
     fieldContainer: {
         backgroundColor: '#fff'
     },
-    buttonContainer: {
-        marginLeft: 0,
-        marginRight: 0
-    },
     button: {
-        backgroundColor: '#000',
-        marginHorizontal: 25,
+        borderRadius: 5,
+        backgroundColor: Color.DEFAULT,
         justifyContent: 'center',
         height: emY(3)
     },
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         textAlign: 'center',
-        fontSize: emY(0.9)
+        fontSize: emY(1)
     },
     buttonMargin: {
         marginBottom: 10
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
         color: Color.RED_500,
         textAlign: 'center',
         fontSize: emY(0.9),
-        paddingHorizontal: 15,
         paddingBottom: emY(1.5)
     }
 });

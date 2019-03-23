@@ -1,88 +1,70 @@
 // Third Party Imports
-import React, { Component } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 // Relative Imports
 import Text from './Text';
+import CardImage from '../components/CardImage';
 import Color from '../constants/Color';
 import { emY } from '../utils/em';
-import mastercard from '../assets/icons/master-card.png';
-import visa from '../assets/icons/visa.png';
-// import arrowIcon from '../assets/icons/disclosureIndicator.png';
-import { selectCard as onPress } from '../actions/paymentActions';
 
-const SIZE = emY(2);
+export default function PaymentDropDownItem({
+    type,
+    brand,
+    last4,
+    style,
+    isHeaderItem,
+    id = '',
+    onPress = () => {}
+}) {
+    const selectCard = () => onPress(id);
 
-type Props = {
-    isHeaderItem: boolean
-};
-
-class PaymentDropDownItem extends Component {
-    props: Props;
-
-    onSelectCard = () => {
-        onPress(this.props.card);
-    };
-
-    render() {
-        const { isHeaderItem, card } = this.props;
-        const { last4, brand } = card;
-        // const arrowIconMark = isHeaderItem ?
-        //     (<Image source={arrowIcon} style={styles.arrowIcon} />) :
-        //     null;
-        let paymentIcon = null;
-        if (brand === 'Visa') {
-            paymentIcon = visa;
-        } else if (brand === 'MasterCard') {
-            paymentIcon = mastercard;
-        }
-        const color = isHeaderItem ? Color.YELLOW_600 : 'transparent';
-        return (
-            <TouchableOpacity
-                onPress={this.onSelectCard}
-                style={[styles.container, { borderColor: color }]}
-                disabled={isHeaderItem}
-            >
-                <Image
-                    source={paymentIcon}
-                    style={styles.paymentImage}
-                    resizeMode="contain"
-                />
-                <Text style={styles.paymentNumber}>{last4}</Text>
-                {/* {arrowIconMark} */}
-            </TouchableOpacity>
-        );
-    }
+    const nonHeaderBorder = isHeaderItem
+        ? styles.headerBorder
+        : styles.nonHeaderBorder;
+    return (
+        <TouchableOpacity
+            onPress={selectCard}
+            style={[styles.container, nonHeaderBorder, style]}
+        >
+            {type ? (
+                <CardImage type={type.toLowerCase()} style={styles.card} />
+            ) : null}
+            <Text style={styles.cardTypeText}>{brand}</Text>
+            {last4 && <Text style={styles.cardNumbers}>**** {last4}</Text>}
+        </TouchableOpacity>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
+        height: emY(3),
         flexDirection: 'row',
-        paddingHorizontal: 16,
-        paddingVertical: emY(0.89),
-        backgroundColor: Color.GREY_100,
-        borderColor: Color.YELLOW_600,
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        borderTopWidth: 1,
-        borderBottomWidth: 1
+        alignItems: 'center',
+        paddingHorizontal: 5,
+        backgroundColor: Color.GREY_100
     },
-    paymentImage: {
-        width: emY(2.88),
-        height: emY(1.38)
+    headerBorder: {
+        borderColor: Color.DEFAULT,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth: StyleSheet.hairlineWidth
     },
-    paymentNumber: {
-        fontSize: emY(1.08),
-        marginLeft: 10
+    nonHeaderBorder: {
+        borderColor: Color.GREY_300,
+        borderBottomWidth: StyleSheet.hairlineWidth
+    },
+    card: {
+        marginRight: 10
+    },
+    cardTypeText: {
+        flex: 1,
+        fontSize: emY(1.1)
+    },
+    cardNumbers: {
+        flex: 1,
+        fontSize: emY(1.1),
+        textAlign: 'right',
+        marginRight: 25,
+        color: Color.GREY_800
     }
 });
-
-const mapDispatchToProps = {
-    onPress
-};
-
-export default connect(
-    null,
-    mapDispatchToProps
-)(PaymentDropDownItem);

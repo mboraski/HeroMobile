@@ -18,9 +18,9 @@ class EditButton extends Component {
         const { style, ...props } = this.props;
         return (
             <TouchableOpacity
-                {...props}
                 style={[styles.container, style]}
                 onPress={this.toggleEditMode}
+                {...props}
             >
                 <Text />
             </TouchableOpacity>

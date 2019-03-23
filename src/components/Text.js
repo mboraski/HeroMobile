@@ -7,6 +7,6 @@ export default ({ style, ...rest }) => (
 
 const styles = StyleSheet.create({
     text: {
-        fontFamily: 'Arial'
+        fontFamily: 'roboto'
     }
 });

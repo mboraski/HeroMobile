@@ -10,20 +10,12 @@ import Color from '../constants/Color';
 const SIZE = emY(1.44);
 const BADGE_SIZE = emY(1.69);
 
-type Props = {
-    image: any,
-    title: string,
-    badge: string
-};
-
 class MenuItem extends Component {
     onPress = () => {
         const { route, activeItemKey, onPress } = this.props;
         const focused = route && activeItemKey === route.key;
         onPress({ route, focused });
     };
-
-    props: Props;
 
     render() {
         const { image, title, badge, ...props } = this.props;

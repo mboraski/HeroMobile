@@ -19,7 +19,7 @@ import { emY } from '../utils/em';
 
 const minLength3 = minLength(3);
 
-export class FeedbackFormContainer extends Component {
+class FeedbackFormContainer extends Component {
     render() {
         const {
             submit,
@@ -40,9 +40,8 @@ export class FeedbackFormContainer extends Component {
         return (
             <DismissKeyboardView style={styles.container}>
                 <Text style={styles.title}>
-                    We love feedback. Please help us understand your rating in
-                    more detail. Submitting nothing is also fine, but we will be
-                    sad.
+                    We love feedback. Please help us understand your experience
+                    in more detail.
                 </Text>
                 <View style={styles.formInputs}>
                     <TextInputField

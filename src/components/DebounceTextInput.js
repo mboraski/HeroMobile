@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: emY(0.625),
         flex: 1,
-        fontFamily: 'Arial'
+        fontFamily: 'roboto'
     }
 });
 

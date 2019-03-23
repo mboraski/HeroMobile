@@ -46,6 +46,9 @@ Debugging:
     // run RND on expo port
     $ unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001'
 
+    // Sentry error logging can be found here:
+    https://sentry.io/hasty/hero-mobile/
+
 Performance:
 
 https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-chrome-performance-tab

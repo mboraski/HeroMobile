@@ -10,13 +10,14 @@ import Color from '../constants/Color';
 import { emY } from '../utils/em';
 import icon from '../assets/icons/keyboard-arrow-right.png';
 
-export default function PaymentMethod({ type, text, style, ...props }) {
+export default function PaymentMethod({ type, brand, last4, style, ...props }) {
     return (
         <TouchableOpacity {...props} style={[styles.container, style]}>
             {type ? (
                 <CardImage type={type.toLowerCase()} style={styles.card} />
             ) : null}
-            <Text style={styles.text}>{text}</Text>
+            <Text style={styles.text}>{brand}</Text>
+            <Text style={styles.cardNumbers}>**** {last4}</Text>
             <Image source={icon} />
         </TouchableOpacity>
     );
@@ -25,17 +26,27 @@ export default function PaymentMethod({ type, text, style, ...props }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        paddingHorizontal: 12,
-        paddingVertical: 15,
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginBottom: 10,
         backgroundColor: Color.GREY_100,
         borderColor: Color.GREY_300,
+        borderTopWidth: StyleSheet.hairlineWidth,
         borderBottomWidth: StyleSheet.hairlineWidth
     },
     card: {
         marginRight: 10
     },
-    text: {
+    cardTypeText: {
         flex: 1,
-        fontSize: emY(1)
+        fontSize: emY(1.1)
+    },
+    cardNumbers: {
+        flex: 1,
+        fontSize: emY(1.1),
+        textAlign: 'right',
+        marginRight: 15,
+        color: Color.GREY_800
     }
 });

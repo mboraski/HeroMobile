@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Animated } from 'react-native';
 import { connect } from 'react-redux';
+import { Constants } from 'expo';
 
 import { placesAutocomplete } from '../actions/googleMapsActions';
 import { getCurrentLocation } from '../actions/mapActions';
@@ -18,10 +19,8 @@ import { getPending } from '../selectors/mapSelectors';
 import { getProductsPending } from '../selectors/productSelectors';
 
 import Style from '../constants/Style';
-import { emY } from '../utils/em';
 
 const OPACITY_DURATION = 300;
-const APPBAR_HEIGHT = emY(5.25);
 const REVERSE_CONFIG = {
     inputRange: [0, 1],
     outputRange: [1, 0]
@@ -94,37 +93,25 @@ class MapHeaderContainer extends Component {
         const { pending } = this.props;
         const { opacity, searchRendered, inputText } = this.state;
         return (
-            <View style={styles.wrapper}>
-                <Animated.View
-                    style={[Style.header, styles.header, { opacity }]}
-                >
-                    <View style={Style.appBar}>
-                        <View style={Style.headerLeftContainer}>
-                            <MenuButton
-                                style={Style.headerLeft}
-                                disabled={pending}
-                            />
-                        </View>
-                        <View style={Style.headerTitleContainer}>
-                            <Text
-                                style={[
-                                    Style.headerTitle,
-                                    Style.headerTitleLogo
-                                ]}
-                            >
-                                Hasty
-                            </Text>
-                        </View>
-                        <View style={Style.headerRightContainer}>
-                            <LocationButton
-                                style={Style.headerRight}
-                                onPress={this.handleLocationPress}
-                                disabled={pending}
-                            />
-                        </View>
+            <View style={[styles.wrapper]}>
+                <Animated.View style={[Style.header, { opacity }]}>
+                    <View style={styles.headerRow}>
+                        <MenuButton
+                            style={Style.headerLeft}
+                            disabled={pending}
+                        />
+                        <Text
+                            style={[Style.headerTitle, Style.headerTitleLogo]}
+                        >
+                            Hasty
+                        </Text>
+                        <LocationButton
+                            onPress={this.handleLocationPress}
+                            disabled={pending}
+                        />
                     </View>
                 </Animated.View>
-                {searchRendered ? (
+                {!!searchRendered && (
                     <Animated.View
                         style={[
                             Style.header,
@@ -155,7 +142,7 @@ class MapHeaderContainer extends Component {
                             </View>
                         </View>
                     </Animated.View>
-                ) : null}
+                )}
             </View>
         );
     }
@@ -163,19 +150,21 @@ class MapHeaderContainer extends Component {
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: 'transparent',
-        height: APPBAR_HEIGHT
+        backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight
     },
     header: {
         position: 'absolute',
-        top: 0,
+        top: Constants.statusBarHeight,
         left: 0,
         right: 0,
-        bottom: 0,
-        height: APPBAR_HEIGHT
+        bottom: 0
     },
-    title: {
-        flex: 1
+    headerRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 });
 

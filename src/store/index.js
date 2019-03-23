@@ -8,6 +8,7 @@ import * as reducers from '../reducers';
 
 const storage = createSecureStore();
 const persistConfig = {
+    timeout: 10000,
     key: 'root',
     storage,
     debug: __DEV__,
@@ -37,6 +38,6 @@ export const store = createStore(Reducer, {}, enhancer);
 export const persistor = persistStore(store);
 
 // clears async storage
-persistor.purge();
+// persistor.purge();
 
 export default { persistor, store };

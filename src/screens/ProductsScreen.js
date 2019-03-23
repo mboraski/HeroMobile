@@ -5,22 +5,29 @@ import {
     ScrollView,
     StyleSheet,
     View,
-    ImageBackground,
     TouchableOpacity,
     Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import map from 'lodash.map';
 
 // Relative Imports
+import RequestPopup from '../components/RequestPopup';
 import ProductList from '../components/ProductList';
 import Text from '../components/Text';
 
 import Color from '../constants/Color';
+import Marketing from '../constants/Marketing';
 import { addToCart } from '../actions/cartActions';
 import { selectCategory } from '../actions/productActions';
 import { dropdownAlert } from '../actions/uiActions';
+import {
+    sendProductRequest,
+    openRequestPopup,
+    closeRequestPopup
+} from '../actions/feedbackActions';
 
 import {
     getCartTotalQuantity,
@@ -33,15 +40,17 @@ import {
     getProductsPending,
     getProductsByCategory,
     getCategories,
-    getNumberOfProducts,
     getProductImages,
     getHeader
 } from '../selectors/productSelectors';
+import {
+    getRequestPopupVisible,
+    getRequestProduct
+} from '../selectors/feedbackSelectors';
 
-import AuthScreenBackground from '../assets/AuthScreenBackground.jpg';
 import { emY } from '../utils/em';
 
-import HomeHeaderContainer from '../containers/HomeHeaderContainer';
+import ProductsHeaderContainer from '../containers/ProductsHeaderContainer';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -58,14 +67,30 @@ class ProductsScreen extends Component {
         }
     }
 
-    callAddToCart = product => {
+    handleAddToCart = product => {
         this.props.addToCart(product);
+    };
+
+    handleRequestProduct = product => {
+        this.props.openRequestPopup(product);
     };
 
     formatCategory = category => (category ? category.toUpperCase() : '');
 
     goToCheckout = () => {
         this.props.navigation.navigate('checkout');
+    };
+
+    closeRequestPopup = agree => {
+        const { product } = this.props;
+        const timestamp = Date.now();
+        if (agree) {
+            this.props.sendProductRequest(product.id, timestamp);
+            // If boosted, add to cart
+            // this.props.addToCart(product);
+            this.props.dropdownAlert(true, 'Thanks for the feedback!');
+        }
+        this.props.closeRequestPopup();
     };
 
     renderCategories = () => {
@@ -104,45 +129,16 @@ class ProductsScreen extends Component {
             cartQuantity,
             productPending,
             productsShown,
-            category,
-            numberOfProducts,
-            productImages
+            productImages,
+            requestPopupVisible,
+            product
         } = this.props;
+        const requestMessage = Marketing.requestProductMessage;
+        const cartFill =
+            cartQuantity > 0 ? { backgroundColor: Color.GREEN_500 } : {};
+
         return (
             <View style={styles.container}>
-                {cartQuantity > 0 ? (
-                    <TouchableOpacity
-                        style={styles.checkout}
-                        onPress={this.goToCheckout}
-                    >
-                        <Text style={styles.imageTitle}>Go to Checkout</Text>
-                        <View style={styles.checkoutIconContainer}>
-                            <MaterialIcons
-                                name="keyboard-arrow-right"
-                                color="#fff"
-                                size={50}
-                                style={styles.checkoutIcon}
-                            />
-                        </View>
-                    </TouchableOpacity>
-                ) : (
-                    <ImageBackground
-                        source={AuthScreenBackground}
-                        style={styles.image}
-                    >
-                        <View
-                            style={[StyleSheet.absoluteFill, styles.imageTint]}
-                        />
-                        <View>
-                            <Text style={styles.imageTitle}>
-                                {this.formatCategory(category)}
-                            </Text>
-                            <Text style={styles.imageMeta}>
-                                {numberOfProducts} items
-                            </Text>
-                        </View>
-                    </ImageBackground>
-                )}
                 {productPending ? (
                     <View style={styles.overlay}>
                         <ActivityIndicator
@@ -163,7 +159,8 @@ class ProductsScreen extends Component {
                             <ProductList
                                 products={productsShown}
                                 productImages={productImages}
-                                callAddToCart={this.callAddToCart}
+                                handleAddToCart={this.handleAddToCart}
+                                handleRequestProduct={this.handleRequestProduct}
                             />
                         ) : (
                             <View style={styles.container}>
@@ -172,8 +169,27 @@ class ProductsScreen extends Component {
                                 </Text>
                             </View>
                         )}
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                large
+                                title="Go to Checkout"
+                                onPress={this.goToCheckout}
+                                buttonStyle={[styles.button, cartFill]}
+                                textStyle={styles.buttonText}
+                            />
+                        </View>
                     </View>
                 )}
+                <RequestPopup
+                    openModal={requestPopupVisible}
+                    closeModal={this.closeRequestPopup}
+                    title={'Request to stock product'}
+                    message={requestMessage}
+                    confirmText={'Request Product'}
+                    productImages={productImages}
+                    product={product}
+                    showIcon
+                />
             </View>
         );
     }
@@ -186,42 +202,23 @@ const styles = StyleSheet.create({
         maxWidth: WINDOW_WIDTH,
         maxHeight: WINDOW_HEIGHT
     },
-    image: {
-        height: WINDOW_HEIGHT / 5,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    imageTint: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    },
-    imageTitle: {
-        color: 'white',
-        backgroundColor: 'transparent',
-        fontSize: emY(1.875),
-        textAlign: 'center'
-    },
-    imageMeta: {
-        color: 'white',
-        backgroundColor: 'transparent',
-        fontSize: emY(1),
-        textAlign: 'center'
-    },
-    checkout: {
-        height: WINDOW_HEIGHT / 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Color.GREEN_500
-    },
-    checkoutIconContainer: {
+    buttonContainer: {
         position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        width: 50,
-        justifyContent: 'center'
+        bottom: emY(1.25),
+        left: 0,
+        right: 0
     },
-    checkoutIcon: {
-        backgroundColor: 'transparent'
+    button: {
+        backgroundColor: Color.DEFAULT,
+        borderRadius: 5,
+        justifyContent: 'center',
+        height: emY(3.9),
+        padding: 0
+    },
+    buttonText: {
+        color: Color.WHITE,
+        fontSize: emY(1.5),
+        textAlign: 'center'
     },
     filtersContent: {
         maxHeight: emY(2.5),
@@ -233,23 +230,25 @@ const styles = StyleSheet.create({
     filterButton: {
         minWidth: 120,
         height: emY(2),
-        borderColor: Color.GREY_400,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 25,
-        marginRight: 6,
+        borderColor: Color.DEFAULT,
+        borderBottomWidth: StyleSheet.hairlineWidth,
         justifyContent: 'center'
     },
     filterButtonSelected: {
-        borderColor: Color.GREY_300,
-        backgroundColor: Color.GREY_300
+        borderColor: Color.DEFAULT,
+        borderRightWidth: StyleSheet.hairlineWidth,
+        borderLeftWidth: StyleSheet.hairlineWidth,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth: 0,
+        backgroundColor: Color.WHITE
     },
     filterButtonText: {
-        color: Color.GREY_400,
+        color: Color.DEFAULT,
         fontSize: emY(1.125),
         textAlign: 'center'
     },
     filterButtonTextSelected: {
-        color: '#fff'
+        color: Color.GREY_600
     },
     overlay: {
         position: 'absolute',
@@ -264,7 +263,7 @@ const styles = StyleSheet.create({
 });
 
 ProductsScreen.navigationOptions = {
-    header: <HomeHeaderContainer />
+    header: <ProductsHeaderContainer />
 };
 
 const mapStateToProps = state => ({
@@ -276,18 +275,21 @@ const mapStateToProps = state => ({
     productsShown: getProductsByCategory(state),
     category: getCategory(state),
     categories: getCategories(state),
-    numberOfProducts: getNumberOfProducts(state),
     productImages: getProductImages(state),
-    header: getHeader(state)
+    header: getHeader(state),
+    requestPopupVisible: getRequestPopupVisible(state),
+    product: getRequestProduct(state)
 });
 
 // TODO: Change formatting of mapDispatchToProps?
-const mapDispatchToProps = dispatch => ({
-    selectFilter: category => dispatch(selectCategory(category)),
-    addToCart: productInfo => dispatch(addToCart(productInfo)),
-    dropdownAlert: (visible, message) =>
-        dispatch(dropdownAlert(visible, message))
-});
+const mapDispatchToProps = {
+    selectFilter: selectCategory,
+    addToCart,
+    sendProductRequest,
+    dropdownAlert,
+    openRequestPopup,
+    closeRequestPopup
+};
 
 export default connect(
     mapStateToProps,

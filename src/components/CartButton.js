@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 
 // eslint-disable-next-line import/no-unresolved
 import cartIcon from '../assets/icons/cart.png';
-import { emY } from '../utils/em';
 
-const SIZE = emY(2.1875);
+import { HEADER_ITEM_SIZE } from '../constants/Style';
 
 class CartButton extends Component {
     onPress = () => {
-        this.props.navigation.navigate('cart');
+        this.props.navigation.navigate('checkout');
     };
 
     render() {
@@ -28,16 +27,12 @@ class CartButton extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginRight: 20
+        marginRight: 20 - HEADER_ITEM_SIZE * 0.3
     },
     image: {
-        width: SIZE,
-        height: SIZE
+        width: HEADER_ITEM_SIZE * 1.3,
+        height: HEADER_ITEM_SIZE * 1.3
     }
 });
 
-const mapDispatchToProps = function (dispatch) {
-    return {};
-};
-
-export default connect(null, mapDispatchToProps)(CartButton);
+export default withNavigation(CartButton);

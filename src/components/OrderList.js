@@ -11,15 +11,21 @@ import Color from '../constants/Color';
 
 class OrderList extends Component {
     renderOrders() {
-        const { orders, orderImages, onAddOrder, onRemoveOrder } = this.props;
+        const {
+            orders,
+            orderImages,
+            onAddOrder,
+            onRemoveOrder,
+            displayOnly
+        } = this.props;
         let prevDeliveryType;
         return map(orders, order => {
             // TODO: this is a bandaid
-            const image = orderImages ? orderImages[order.productName] : '';
+            const image = orderImages ? orderImages[order.id] : '';
             let renderMark;
             if (prevDeliveryType !== 'instant') {
                 renderMark = (
-                    <View key={`instant-${order.productName}`}>
+                    <View key={`instant-${order.id}`}>
                         <View style={styles.headerItem}>
                             <Text style={styles.typeLabel}>
                                 Delivery Type:{' '}
@@ -27,6 +33,7 @@ class OrderList extends Component {
                             <Text style={styles.valueLabel}>{'Instant'}</Text>
                         </View>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}
@@ -37,8 +44,9 @@ class OrderList extends Component {
                 prevDeliveryType = 'instant';
             } else {
                 renderMark = (
-                    <View key={`instant-${order.productName}`}>
+                    <View key={`instant-${order.id}`}>
                         <OrderDetail
+                            displayOnly={displayOnly}
                             order={order}
                             image={image}
                             onAddOrder={() => onAddOrder(order)}

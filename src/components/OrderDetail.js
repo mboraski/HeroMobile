@@ -12,9 +12,9 @@ const ICON_CONTAINER_SIZE = emY(2.1875);
 const ICON_SIZE = emY(0.75);
 
 const OrderDetail = props => {
-    const { onAddOrder, onRemoveOrder, order, image } = props;
+    const { onAddOrder, onRemoveOrder, order, image, displayOnly } = props;
     const { productName, price, quantityTaken } = order;
-    const formattedPrice = `${Number.parseFloat(price / 100).toFixed(2)}`;
+    const formattedPrice = `${Number.parseFloat(price).toFixed(2)}`;
     return (
         <View style={styles.container}>
             <Image
@@ -22,29 +22,42 @@ const OrderDetail = props => {
                 source={{ uri: image }}
                 resizeMode="contain"
             />
-            <View style={styles.content}>
-                <Text style={styles.title}>{productName}</Text>
-                <View style={styles.quantityContainer}>
-                    <Icon
-                        name="remove"
-                        size={ICON_SIZE}
-                        containerStyle={styles.iconContainer}
-                        iconStyle={styles.icon}
-                        onPress={onRemoveOrder}
-                    />
-                    <Text style={styles.quantity}>{quantityTaken}</Text>
-                    <Icon
-                        name="add"
-                        size={ICON_SIZE}
-                        containerStyle={styles.iconContainer}
-                        iconStyle={styles.icon}
-                        onPress={onAddOrder}
-                    />
+            {displayOnly ? (
+                <View style={styles.productInfo}>
+                    <Text style={styles.quantityInfo}>{quantityTaken}</Text>
+                    <Text style={styles.productNameInfo} numberOfLines={2}>
+                        {productName}
+                    </Text>
                 </View>
-            </View>
-            <View style={styles.actions}>
-                <Text style={styles.price}>${formattedPrice}</Text>
-            </View>
+            ) : (
+                <View style={styles.content}>
+                    <Text style={styles.title} numberOfLines={1}>
+                        {productName}
+                    </Text>
+                    <View style={styles.quantityContainer}>
+                        <Icon
+                            name="remove"
+                            size={ICON_SIZE}
+                            containerStyle={styles.iconContainer}
+                            iconStyle={styles.icon}
+                            onPress={onRemoveOrder}
+                        />
+                        <Text style={styles.quantity}>{quantityTaken}</Text>
+                        <Icon
+                            name="add"
+                            size={ICON_SIZE}
+                            containerStyle={styles.iconContainer}
+                            iconStyle={styles.icon}
+                            onPress={onAddOrder}
+                        />
+                    </View>
+                </View>
+            )}
+            {!displayOnly && (
+                <View style={styles.actions}>
+                    <Text style={styles.price}>${formattedPrice}</Text>
+                </View>
+            )}
         </View>
     );
 };
@@ -55,21 +68,35 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: emY(0.8125),
         paddingVertical: emY(0.875),
-        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderTopWidth: StyleSheet.hairlineWidth,
         borderColor: Color.GREY_300
     },
     content: { flex: 1 },
-    actions: {},
     image: {
-        width: 75,
+        width: 60,
         height: emY(3.4375),
-        marginRight: 15,
+        marginRight: 5,
         alignSelf: 'center'
     },
     title: {
         fontSize: emY(0.75),
         flex: 1,
         marginBottom: emY(0.5)
+    },
+    productInfo: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        overflow: 'hidden'
+    },
+    productNameInfo: {
+        fontSize: emY(0.9),
+        width: '100%',
+        overflow: 'hidden'
+    },
+    quantityInfo: {
+        width: 30
     },
     price: {
         fontSize: emY(0.75),
@@ -106,7 +133,7 @@ const styles = StyleSheet.create({
     quantity: {
         alignSelf: 'center',
         textAlign: 'center',
-        width: 40
+        width: 30
     }
 });
 

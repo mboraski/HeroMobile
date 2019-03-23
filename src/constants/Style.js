@@ -1,31 +1,31 @@
-import { StyleSheet, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { Constants } from 'expo';
 
 import { emY } from '../utils/em';
+import Color from './Color';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 export const HEADER_ITEM_SIZE = emY(1.5);
 
 const header = {
-    paddingTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fff',
-    height: emY(4.25),
+    height: emY(3),
     shadowRadius: 0,
     shadowOffset: {
         height: 0
     },
     shadowColor: 'transparent',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(0, 0, 0, .3)',
+    borderBottomColor: Color.GREY_600,
     ...Platform.select({
         android: {
-            paddingTop: StatusBar.currentHeight,
             elevation: 0
         }
     })
 };
 
 const headerItem = {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
 };
@@ -35,18 +35,32 @@ export const statusBarOnly = Platform.select({
         headerLeft: null,
         headerRight: null,
         headerStyle: {
-            height: 0
+            height: 0,
+            borderBottomWidth: 0,
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            shadowRadius: 0,
+            shadowOffset: {
+                height: 0
+            }
         },
-        paddingTop: StatusBar.currentHeight,
+        paddingTop: Constants.statusBarHeight,
         elevation: 0
     },
     ios: {
         headerLeft: null,
         headerRight: null,
         headerStyle: {
-            height: 0
+            height: 0,
+            borderBottomWidth: 0,
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            shadowRadius: 0,
+            shadowOffset: {
+                height: 0
+            }
         },
-        paddingTop: STATUSBAR_HEIGHT
+        paddingTop: Constants.statusBarHeight
     }
 });
 
@@ -96,13 +110,13 @@ export default StyleSheet.create({
         color: 'rgba(0, 0, 0, .9)',
         marginHorizontal: 16,
         fontWeight: '500',
-        fontSize: 17,
-        fontFamily: 'Arial'
+        fontSize: emY(1.2),
+        fontFamily: 'roboto'
     },
     headerTitleLogo: {
         fontFamily: 'goodtimes',
         fontWeight: 'normal',
-        fontSize: 21
+        fontSize: HEADER_ITEM_SIZE
     },
     headerLeft: {
         marginRight: 0,

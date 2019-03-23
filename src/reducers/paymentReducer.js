@@ -7,6 +7,7 @@ import {
     DELETE_CARD_SUCCESS,
     DELETE_CARD_FAIL,
     SELECTED_CARD,
+    CHANGE_PAYMENT_METHOD,
     SUBMIT_PAYMENT_REQUEST,
     SUBMIT_PAYMENT_SUCCESS,
     SUBMIT_PAYMENT_FAILURE,
@@ -18,7 +19,8 @@ import { SIGNOUT_SUCCESS } from '../actions/authActions';
 
 const initialState = {
     cards: [],
-    defaultSource: {},
+    defaultSource: '',
+    paymentSource: '',
     pending: false,
     selectedCard: {},
     error: null,
@@ -104,6 +106,11 @@ export default function(state = initialState, action) {
                     ? action.payload.paymentInfo.data[0]
                     : {},
                 pending: false
+            };
+        case CHANGE_PAYMENT_METHOD:
+            return {
+                ...state,
+                paymentSource: action.payload
             };
         case UPDATE_STRIPE_INFO:
             return {

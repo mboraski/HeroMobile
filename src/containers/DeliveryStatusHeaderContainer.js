@@ -109,13 +109,7 @@ class DeliveryStatusHeaderContainer extends Component {
                                 Current Order
                             </Text>
                         </View>
-                        <View style={Style.headerRightContainer}>
-                            {/* <LocationButton
-                                style={Style.headerRight}
-                                onPress={this.handleLocationPress}
-                                disabled={pending}
-                            /> */}
-                        </View>
+                        <View style={Style.headerRightContainer} />
                     </View>
                 </Animated.View>
                 {searchRendered ? (

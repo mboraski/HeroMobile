@@ -1,13 +1,14 @@
 // 3rd Party Libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Modal } from 'react-native';
 import { connect } from 'react-redux';
 
 // Relative Imports
-import MenuButton from '../components/MenuButton';
-import BrandButton from '../components/BrandButton';
 import NotificationContainer from '../containers/NotificationContainer'; // TODO: fix linter error
 import HeroListContainer from '../containers/HeroListContainer';
+import ChatModalContainer from '../containers/ChatModalContainer';
+import MenuButton from '../components/MenuButton';
+import TransparentButton from '../components/TransparentButton';
 import Text from '../components/Text';
 
 import Color from '../constants/Color';
@@ -22,55 +23,56 @@ import {
     getPending,
     getFullActualFulfillment,
     getPartialActualFulfillment,
-    getContractorStatus
+    getContractorStatus,
+    getChatModalVisible
 } from '../selectors/orderSelectors';
 
-import { clearCart } from '../actions/cartActions';
-import {
-    unListenToOrderFulfillment,
-    unListenOrderError,
-    unListenOrderStatus,
-    clearOrder
-} from '../actions/orderActions';
 import { dropdownAlert } from '../actions/uiActions';
 
 const SIZE = emY(7);
 const IMAGE_CONTAINER_SIZE = SIZE + emY(1.25);
 
 class DeliveryStatusScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        title: 'Order',
-        headerLeft: (
-            <MenuButton navigation={navigation} style={Style.headerLeft} />
-        ),
-        headerRight: (
-            <BrandButton
-                onPress={() => {
-                    /* contact Hero options */
-                }}
-            />
-        ),
-        headerStyle: Style.headerBorderless,
-        headerTitleStyle: [Style.headerTitle, Style.headerTitleLogo]
-    });
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return {
+            title: 'Order',
+            headerLeft:
+                params && params.pending === false ? (
+                    <MenuButton
+                        navigation={navigation}
+                        style={Style.headerLeft}
+                    />
+                ) : (
+                    <TransparentButton />
+                ),
+            headerRight: <TransparentButton />,
+            headerStyle: Style.headerBorderless,
+            headerTitleStyle: [Style.headerTitle, Style.headerTitleLogo]
+        };
+    };
 
     state = {
         modalVisible: false
     };
 
     componentDidMount() {
+        this.props.navigation.setParams({ pending: this.props.pending });
         this.props.dropdownAlert(false, '');
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.contractorStatus === contractorStatuses.delivered) {
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.contractorStatus === contractorStatuses.delivered &&
+            prevProps.contractorStatus !== contractorStatuses.delivered
+        ) {
             this.props.navigation.navigate('feedback');
-        } else if (this.props.status !== nextProps.status) {
+        } else if (this.props.status !== prevProps.status) {
             // TODO: uncomment when users can X out of giving feedback
-            // if (nextProps.status === orderStatuses.completed) {
+            // if (prevProps.status === orderStatuses.completed) {
             //     this.props.navigation.navigate('map');
             // }
-            if (nextProps.status === orderStatuses.cancelled) {
+            if (prevProps.status === orderStatuses.cancelled) {
                 this.props.navigation.navigate('checkout');
             }
         }
@@ -89,12 +91,19 @@ class DeliveryStatusScreen extends Component {
     }
 
     render() {
-        const { orderId, status } = this.props;
+        const { orderId, status, modalVisible } = this.props;
         const activity =
             status !== orderStatuses.completed &&
             status !== orderStatuses.cancelled;
         return (
             <View style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                >
+                    <ChatModalContainer />
+                </Modal>
                 {orderId ? (
                     <View style={styles.statusContainer}>
                         {activity && (
@@ -114,8 +123,12 @@ class DeliveryStatusScreen extends Component {
                                 this.renderHeroList())}
                     </View>
                 ) : (
-                    <View style={styles.container}>
-                        <Text>No current orders</Text>
+                    <View style={styles.noOrderWrapper}>
+                        <Text style={styles.noOrderText}>
+                            There are no current orders. Please click the menu
+                            icon to go to the map screen. Then set a location to
+                            begin the order process.
+                        </Text>
                     </View>
                 )}
             </View>
@@ -132,6 +145,16 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start'
+    },
+    noOrderWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20
+    },
+    noOrderText: {
+        textAlign: 'center',
+        fontSize: emY(1.5)
     },
     heroList: {
         position: 'absolute',
@@ -202,15 +225,11 @@ const mapStateToProps = state => ({
     pending: getPending(state),
     full: getFullActualFulfillment(state),
     partial: getPartialActualFulfillment(state),
-    contractorStatus: getContractorStatus(state)
+    contractorStatus: getContractorStatus(state),
+    modalVisible: getChatModalVisible(state)
 });
 
 const mapDispatchToProps = {
-    clearCart,
-    clearOrder,
-    unListenToOrderFulfillment,
-    unListenOrderError,
-    unListenOrderStatus,
     dropdownAlert
 };
 

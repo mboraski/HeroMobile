@@ -27,7 +27,7 @@ const REVERSE_CONFIG = {
     outputRange: [1, 0]
 };
 
-class MapHeaderContainer extends Component {
+class CheckoutHeaderContainer extends Component {
     state = {
         opacity: new Animated.Value(1),
         inputText: '',
@@ -108,8 +108,8 @@ class MapHeaderContainer extends Component {
                         <View style={Style.headerTitleContainer}>
                             <Text
                                 style={[
-                                    Style.headerTitle,
-                                    Style.headerTitleLogo
+                                    Style.headerTitleLogo,
+                                    Style.headerTitle
                                 ]}
                             >
                                 Hasty
@@ -124,7 +124,7 @@ class MapHeaderContainer extends Component {
                         </View>
                     </View>
                 </Animated.View>
-                {searchRendered ? (
+                {searchRendered && (
                     <Animated.View
                         style={[
                             Style.header,
@@ -155,7 +155,7 @@ class MapHeaderContainer extends Component {
                             </View>
                         </View>
                     </Animated.View>
-                ) : null}
+                )}
             </View>
         );
     }
@@ -193,4 +193,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MapHeaderContainer);
+)(CheckoutHeaderContainer);

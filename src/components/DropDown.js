@@ -5,18 +5,20 @@ import { StyleSheet, View, TouchableOpacity, Animated } from 'react-native';
 // Relative Imports
 import { emY } from '../utils/em';
 import arrowIcon from '../assets/icons/disclosureIndicator.png';
+import Color from '../constants/Color';
 
 class DropDown extends Component {
     state = {
         expanded: true,
         animation: new Animated.Value(),
         maxHeight: 0,
-        minHeight: emY(3.3),
+        minHeight: emY(3) + 2 * StyleSheet.hairlineWidth,
         spinValue: new Animated.Value(0)
     };
 
     componentDidMount() {
         const { minHeight } = this.state;
+        this.props.dropDownRef(this);
         this.state.animation.setValue(0);
         Animated.spring(this.state.animation, {
             toValue: minHeight
@@ -29,6 +31,10 @@ class DropDown extends Component {
         this.setState({
             expanded: false
         });
+    }
+
+    componentWillUnmount() {
+        this.props.dropDownRef(undefined);
     }
 
     setMaxHeight = event => {
@@ -67,21 +73,19 @@ class DropDown extends Component {
     };
 
     render() {
-        const { header } = this.props;
+        const { header, children } = this.props;
         const { animation } = this.state;
         const spin = this.state.spinValue.interpolate({
             inputRange: [0, 1],
-            outputRange: ['0deg', '-90deg']
+            outputRange: ['-180deg', '0deg']
         });
         return (
-            <View style={styles.container}>
-                <Animated.View
-                    style={[styles.container, { height: animation }]}
-                >
-                    <View onLayout={this.setMinHeight}>
-                        <TouchableOpacity onPress={this.toggle}>
-                            {header}
-                            <View style={styles.arrowContainer}>
+            <Animated.View style={[styles.container, { height: animation }]}>
+                <View onLayout={this.setMinHeight}>
+                    <TouchableOpacity onPress={this.toggle}>
+                        {header}
+                        {children && (
+                            <View style={styles.arrowIconContainer}>
                                 <Animated.Image
                                     source={arrowIcon}
                                     style={[
@@ -92,29 +96,33 @@ class DropDown extends Component {
                                     ]}
                                 />
                             </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View onLayout={this.setMaxHeight}>
-                        {this.props.children}
-                    </View>
-                </Animated.View>
-            </View>
+                        )}
+                    </TouchableOpacity>
+                </View>
+                <View onLayout={this.setMaxHeight}>{children && children}</View>
+            </Animated.View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        overflow: 'hidden',
-        backgroundColor: 'white'
+        backgroundColor: Color.GREY_100,
+        overflow: 'hidden'
     },
-    arrowContainer: {
+    cardContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    arrowIconContainer: {
         position: 'absolute',
-        right: 16,
         top: 0,
+        right: 0,
         bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        paddingRight: 10,
+        paddingLeft: 10
     },
     arrowIcon: {
         width: emY(0.9),

@@ -15,3 +15,13 @@ export const getPhoneNumber = createSelector(
     [getUserReadable],
     userReadable => userReadable.phoneNumber || 'unavailable'
 );
+
+export const getFirstName = createSelector(
+    [getUserReadable],
+    userReadable => userReadable.firstName || 'unavailable'
+);
+
+export const getLastName = createSelector(
+    [getUserReadable],
+    userReadable => userReadable.lastName || 'unavailable'
+);

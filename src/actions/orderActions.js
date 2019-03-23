@@ -26,6 +26,9 @@ export const SEND_CHAT_MESSAGE_SUCCESS = 'send_chat_message_success';
 export const SEND_CHAT_MESSAGE_ERROR = 'send_chat_message_error';
 export const SET_ORDER_ID = 'set_order_id';
 export const SET_CHAT_ID = 'set_chat_id';
+export const INCREASE_CHAT_NOTIFICATION_COUNT =
+    'increase_chat_notification_count';
+export const CLEAR_CHAT_NOTIFICATION_COUNT = 'clear_chat_notification_count';
 
 export const setContractors = contractors => ({
     type: SET_CONTRACTORS,
@@ -107,16 +110,46 @@ export const listenToOrderStatus = orderId => dispatch => {
 export const unListenOrderStatus = orderId =>
     rtdb.ref(`${ORDER_REF}/${orderId}/fulfillment/status`).off();
 
-export const listenToOrderFulfillment = orderId => dispatch => {
+export const listenToOrderFulfillment = orderId => (dispatch, getState) => {
     return rtdb
         .ref(`${ORDER_REF}/${orderId}/fulfillment/actualFulfillment`)
         .on('value', snapshot => {
             const fulfillment = snapshot.val();
             if (fulfillment) {
+                // Calculate previous chat length before dispatching UPDATE_ORDER_FULFILLMENT
+                const orderState = getState().order;
+                const { order } = orderState;
+                let heroId;
+                let prevChatLength = 0;
+                if (order.full) {
+                    heroId = Object.keys(order.full)[0];
+                    if (order.full[heroId].chat) {
+                        prevChatLength = Object.keys(order.full[heroId].chat)
+                            .length;
+                    }
+                }
+
                 dispatch({
                     type: UPDATE_ORDER_FULFILLMENT,
                     payload: fulfillment
                 });
+
+                // make sure fullfillment has a chat object
+                if (
+                    heroId &&
+                    fulfillment.full &&
+                    fulfillment.full[heroId] &&
+                    fulfillment.full[heroId].chat
+                ) {
+                    // calculate length of new chat
+                    const newChatLength = Object.keys(
+                        fulfillment.full[heroId].chat
+                    ).length;
+                    // if new chat has a longer length, increase chat notification count
+                    if (prevChatLength < newChatLength) {
+                        dispatch({ type: INCREASE_CHAT_NOTIFICATION_COUNT });
+                    }
+                }
             }
         });
 };
@@ -148,9 +181,8 @@ export const contactContractor = (
             contractorId,
             phoneNumber
         });
-        console.log('call to contractor success: ');
     } catch (err) {
-        console.log('call to contractor errored: ');
+        console.warn(error);
     }
 };
 
@@ -167,7 +199,6 @@ export const closeChatModal = () => dispatch =>
     dispatch({ type: CLOSE_CHAT_MODAL });
 
 export const sendMessage = (content, orderId, chatId) => async dispatch => {
-    console.log('new message to send: ', content);
     dispatch({ type: SEND_CHAT_MESSAGE_REQUEST });
     const timeStamp = Date.now();
     const message = {
@@ -184,7 +215,6 @@ export const sendMessage = (content, orderId, chatId) => async dispatch => {
             .update({ [timeStamp]: message });
         dispatch({ type: SEND_CHAT_MESSAGE_SUCCESS });
     } catch (error) {
-        console.log('sendMessage error: ', error);
         dispatch(dropdownAlert(true, 'Error sending message.'));
         dispatch({ type: SEND_CHAT_MESSAGE_ERROR });
     }
@@ -192,4 +222,8 @@ export const sendMessage = (content, orderId, chatId) => async dispatch => {
 
 export const setNewMessageValue = message => dispatch => {
     dispatch({ type: SET_NEW_MESSAGE_VALUE, payload: message });
+};
+
+export const clearChatNotificationCount = () => dispatch => {
+    dispatch({ type: CLEAR_CHAT_NOTIFICATION_COUNT });
 };

@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements';
 // Relative Imports
 import FeedbackFormCloseButtonContainer from '../containers/FeedbackFormCloseButtonContainer';
 import FeedbackFormContainer from '../containers/FeedbackFormContainer';
+import TransparentButton from '../components/TransparentButton';
 
 import Rating from '../components/Rating';
 import Text from '../components/Text';
@@ -157,7 +158,8 @@ FeedbackScreen.navigationOptions = () => {
         title: 'Feedback',
         headerStyle: Style.header,
         headerTitleStyle: Style.headerTitle,
-        headerLeft: <FeedbackFormCloseButtonContainer />
+        headerLeft: <FeedbackFormCloseButtonContainer />,
+        headerRight: <TransparentButton />
     };
 };
 

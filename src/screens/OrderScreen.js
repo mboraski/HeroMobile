@@ -102,7 +102,6 @@ class OrderScreen extends Component {
 
     changeOrderStatusEnRoute = () => {
         const { orderId } = this.props;
-        console.log('orderId: ', orderId);
 
         return this.props.changeOrderStatus('en_route', orderId);
     };
@@ -254,7 +253,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-    console.log('chat Modal Visible: ', getChatModalVisible(state));
     const id =
         props.navigation.state.params && props.navigation.state.params.orderId;
     return {
