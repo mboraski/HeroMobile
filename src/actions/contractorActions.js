@@ -187,15 +187,12 @@ export const fetchContractorInventory = dispatch => {
             .then(snapshot => {
                 const inventory = snapshot.val();
                 if (inventory) {
-                    console.log('inventory: ', inventory);
                     dispatch({ type: INVENTORY_SUCCESS, payload: inventory });
                 } else {
-                    console.log('empty inventory');
                     dispatch({ type: INVENTORY_SUCCESS, payload: {} });
                 }
             })
             .catch(error => {
-                console.log('inventory error: ', error);
                 dispatch({ type: INVENTORY_ERROR, payload: error });
             });
     }
@@ -204,10 +201,6 @@ export const fetchContractorInventory = dispatch => {
 export const confirmUpdateInventory = newInventory => dispatch => {
     const user = firebaseAuth.currentUser;
     if (user) {
-        console.log(
-            'contractorActions; confirmUpdateInventory; newInventory: ',
-            newInventory
-        );
         dispatch({ type: CONFIRM_INVENTORY_REQUEST });
         const uid = user ? user.uid : null;
         const inventoryRef = rtdb.ref(`contractors/${uid}`);

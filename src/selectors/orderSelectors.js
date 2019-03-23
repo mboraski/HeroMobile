@@ -52,7 +52,6 @@ export const getMessageList = createSelector(
             ? specificOrder.fulfillment.actualFulfillment.full
             : {};
         const specificChat = specificContractors[chatId] || {};
-        console.log('chat: ', specificChat.chat);
         return specificChat.chat || {};
     }
 );

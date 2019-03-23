@@ -78,7 +78,6 @@ class HeroMainScreen extends Component {
     };
 
     currentInventory = () => {
-        console.log('current Inventory ran');
         this.props.navigation.navigate('currentInventory');
     };
 

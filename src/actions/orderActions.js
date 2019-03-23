@@ -181,9 +181,8 @@ export const contactContractor = (
             contractorId,
             phoneNumber
         });
-        console.log('call to contractor success: ');
     } catch (err) {
-        console.log('call to contractor errored: ');
+        console.warn(error);
     }
 };
 

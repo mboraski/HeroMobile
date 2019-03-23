@@ -61,14 +61,6 @@ class OrderScreen extends Component {
     componentWillReceiveProps(nextProps) {
         const newOrders = nextProps.orders || this.props.orders;
         const newOrderId = nextProps.orderId || this.props.orderId;
-        console.log(
-            'OrderScreen; componentWillReceiveProps; newOrders: ',
-            newOrders
-        );
-        console.log(
-            'OrderScreen; componentWillReceiveProps; newOrderId: ',
-            newOrderId
-        );
         const order = this.specifyOrder(newOrders, newOrderId);
         if (order) {
             this.setCustomerInfo(order);
@@ -110,7 +102,6 @@ class OrderScreen extends Component {
 
     changeOrderStatusEnRoute = () => {
         const { orderId } = this.props;
-        console.log('orderId: ', orderId);
 
         return this.props.changeOrderStatus('en_route', orderId);
     };
@@ -262,7 +253,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-    console.log('chat Modal Visible: ', getChatModalVisible(state));
     const id =
         props.navigation.state.params && props.navigation.state.params.orderId;
     return {

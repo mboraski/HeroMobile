@@ -31,9 +31,7 @@ export const initialState = {
 };
 
 const addProductToInventory = (product, inventory) => {
-    console.log('addProductToInventory inventory: ', inventory);
     const instantInventory = Object.assign({}, inventory);
-    console.log('addProductToInventory instantInventory: ', instantInventory);
     if (!instantInventory[product.productName]) {
         instantInventory[product.productName] = product;
     }
@@ -94,28 +92,24 @@ export default function(state = initialState, action) {
                 pending: false
             };
         case CONFIRM_INVENTORY_SUCCESS:
-            // console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
                 inventory: action.payload || {},
                 pending: false
             };
         case CONFIRM_INVENTORY_ERROR:
-            // console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
                 error: action.payload,
                 pending: false
             };
         case CONFIRM_INVENTORY_REQUEST:
-            // console.log('inventory success of reducer ran payload: ', action.payload);
             return {
                 ...state,
                 pending: true
             };
         case ADD_TO_INVENTORY: {
             const product = action.payload;
-            console.log('state: ', state);
             const newInventory = addProductToInventory(
                 product,
                 state.inventory
