@@ -9,6 +9,8 @@ import {
     OPEN_CHAT_MODAL,
     CLOSE_CHAT_MODAL,
     OPEN_ORDER_FOUND,
+    SET_ORDER_ID,
+    SET_CHAT_ID,
     SET_NEW_MESSAGE_VALUE,
     SEND_CHAT_MESSAGE_REQUEST,
     SEND_CHAT_MESSAGE_SUCCESS,
@@ -48,7 +50,7 @@ const orderReducer = (state = initialState, action) => {
                 ...state,
                 ...initialState
             };
-        case ORDER_CREATION_SUCCESS:
+        case ORDER_CREATION_SUCCESS: // Old?
             return {
                 ...state,
                 orderId: action.payload
@@ -57,6 +59,16 @@ const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderId: action.payload
+            };
+        case SET_ORDER_ID:
+            return {
+                ...state,
+                orderId: action.payload
+            };
+        case SET_CHAT_ID:
+            return {
+                ...state,
+                chatId: action.payload
             };
         case LISTEN_ORDER_STATUS:
             return {

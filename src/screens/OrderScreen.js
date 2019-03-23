@@ -61,6 +61,14 @@ class OrderScreen extends Component {
     componentWillReceiveProps(nextProps) {
         const newOrders = nextProps.orders || this.props.orders;
         const newOrderId = nextProps.orderId || this.props.orderId;
+        console.log(
+            'OrderScreen; componentWillReceiveProps; newOrders: ',
+            newOrders
+        );
+        console.log(
+            'OrderScreen; componentWillReceiveProps; newOrderId: ',
+            newOrderId
+        );
         const order = this.specifyOrder(newOrders, newOrderId);
         if (order) {
             this.setCustomerInfo(order);

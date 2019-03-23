@@ -31,6 +31,14 @@ const getRoute = (items, routeName) =>
     items.find(item => item.key === routeName);
 
 class MenuContent extends Component {
+    mainPress = () => {
+        this.props.navigation.navigate('main');
+    };
+
+    ordersPress = () => {
+        this.props.navigation.navigate('orders');
+    };
+
     orderPress = () => {
         if (firebaseAuth.currentUser) {
             this.props.navigation.navigate('deliveryStatus');
@@ -93,20 +101,23 @@ class MenuContent extends Component {
                     </View>
                 )}
                 <ScrollView style={styles.menuItems}>
-                    {/*<MenuItem
-                        route={getRoute(items, 'map')}
-                        activeItemKey={activeItemKey}
-                        onPress={this.mapPress}
-                        image={heroIcon}
-                        title="Become a Hero!"
-                    /> */}
                     <MenuItem
+                        onPress={this.ordersPress}
+                        image={heroIcon}
+                        title="Orders"
+                    />
+                    <MenuItem
+                        onPress={this.mainPress}
+                        image={heroIcon}
+                        title="Hero Main"
+                    />
+                    {/*}<MenuItem
                         route={getRoute(items, 'map')}
                         activeItemKey={activeItemKey}
                         onPress={this.mapPress}
                         image={locationIcon}
                         title="Map"
-                    />
+                    />*/}
                     <MenuItem
                         route={getRoute(items, 'products')}
                         activeItemKey={activeItemKey}

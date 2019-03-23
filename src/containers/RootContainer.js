@@ -34,6 +34,7 @@ import { getOrderId } from '../selectors/orderSelectors';
 class RootContainer extends Component {
     componentWillMount() {
         this.props.listenToAuthChanges();
+        this.props.fetchProducts();
     }
 
     async componentDidMount() {
@@ -76,11 +77,11 @@ class RootContainer extends Component {
         this.props.fetchProducts();
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.orderId) {
-            this.props.listenToOrderFulfillment(nextProps.orderId);
-            this.props.listenToOrderStatus(nextProps.orderId);
-            this.props.listenToOrderError(nextProps.orderId);
+    componentDidUpdate(prevProps) {
+        if (this.props.orderId !== prevProps.orderId) {
+            this.props.listenToOrderFulfillment(this.props.orderId);
+            this.props.listenToOrderStatus(this.props.orderId);
+            this.props.listenToOrderError(this.props.orderId);
         }
     }
 

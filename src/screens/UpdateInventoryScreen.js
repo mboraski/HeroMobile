@@ -25,8 +25,8 @@ import { getPending } from '../selectors/contractorSelectors';
 import { getProductImages } from '../selectors/productSelectors';
 import {
     getCartInstantProducts,
-    getCartTotalQuantity,
-    getHeroAvailables
+    getCartOrders,
+    getCartTotalQuantity
 } from '../selectors/cartSelectors';
 
 import { confirmUpdateInventory } from '../actions/contractorActions';
@@ -47,7 +47,7 @@ export class UpdateInventoryScreeen extends Component {
     };
 
     confirmUpdate = () => {
-        this.props.confirmUpdateInventory(this.props.heroAvailables);
+        this.props.confirmUpdateInventory(this.props.cartOrders);
     };
 
     handleAddOrder = product => {
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     cart: getCartInstantProducts(state),
-    heroAvailables: getHeroAvailables(state),
+    cartOrders: getCartOrders(state),
     pending: getPending(state),
     productImages: getProductImages(state),
     cartTotalQuantity: getCartTotalQuantity(state)

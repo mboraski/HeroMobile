@@ -30,7 +30,7 @@ class SignInFormContainer extends Component {
 
     onAuthComplete = props => {
         if (props.user && !this.props.user) {
-            this.props.navigation.navigate('map');
+            this.props.navigation.navigate('main');
         }
     };
 
