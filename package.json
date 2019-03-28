@@ -22,10 +22,12 @@
         "precommit": "pretty-quick --staged",
         "package": "npm prune --production && npm dedupe",
         "test": "node_modules/.bin/jest",
-        "start": "ENV=test expo start --lan --dev",
-        "start-localhost": "ENV=test expo start --localhost --dev",
-        "start-offline": "ENV=test expo start --offline",
-        "publish": "ENV=prod expo publish"
+        "start": "expo start --lan --dev",
+        "start-localhost": "expo start --localhost --dev",
+        "start-offline": "expo start --offline",
+        "publish": "expo publish --release-channel",
+        "publish-prod-v1": "expo publish --release-channel prod-v1",
+        "build-prod-v1": "expo build --release-channel prod-v1"
     },
     "jest": {
         "testEnvironment": "node",
@@ -89,6 +91,7 @@
         "jest-serializer-enzyme": "^1.0.0",
         "prettier": "1.14.2",
         "pretty-quick": "^1.6.0",
+        "react-dom": "^16.8.5",
         "react-test-renderer": "^16.3.2",
         "redux-mock-store": "^1.5.1",
         "sinon": "^5.0.7"

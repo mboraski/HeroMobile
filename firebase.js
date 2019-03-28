@@ -1,13 +1,14 @@
 import firebase from 'firebase';
+import { Constants } from 'expo';
 import { testConfig, prodConfig } from './firebase-configs';
 
 require('firebase/firestore');
 require('firebase/functions');
 
-const getConfig = env => (env === 'prod' ? prodConfig : testConfig);
+const getConfig = env => (env === 'prod-v1' ? prodConfig : testConfig);
 
 try {
-    firebase.initializeApp(getConfig(process.env.ENV));
+    firebase.initializeApp(getConfig(Constants.manifest.releaseChannel));
 } catch (err) {
     console.error('Firebase initialization error: ', err);
 }
