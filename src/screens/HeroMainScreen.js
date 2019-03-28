@@ -10,14 +10,8 @@ import {
 import { connect } from 'react-redux';
 
 // Relative Imports
-// import loaderGradient from '../assets/loader-gradient.png';
-// import loaderTicks from '../assets/loader-ticks.png';
-// import races from '../assets/icons/races.png';
-// import distance from '../assets/icons/distance.png';
-// import earned from '../assets/icons/earned.png';
 import inventory from '../assets/icons/inventory.png';
 import history from '../assets/icons/history2.png';
-// import contact from '../assets/icons/contact.png';
 import logoOrange from '../assets/icons/logo-orange.png';
 import avatarIcon from '../assets/mark.png';
 import { dropdownAlert } from '../actions/uiActions';
@@ -27,7 +21,6 @@ import {
     fetchContractor
 } from '../actions/contractorActions';
 import { getCurrentLocation } from '../actions/mapActions';
-import { fetchProducts } from '../actions/productActions';
 
 import {
     getOnline,
@@ -38,14 +31,9 @@ import {
 } from '../selectors/contractorSelectors';
 import { getHeroAvailables } from '../selectors/cartSelectors';
 import { getCoords } from '../selectors/mapSelectors';
-
-// import CustomerPopup from '../components/CommunicationPopup';
-// import MenuButton from '../components/MenuButton';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';
-// import Status from '../components/HeroMain/Status';
 import MainItem from '../components/HeroMain/MainItem';
 import Text from '../components/Text';
-
 import Color from '../constants/Color';
 import Style from '../constants/Style';
 import { emY } from '../utils/em';
@@ -300,7 +288,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    // header: state.header,
     online: getOnline(state),
     pending: getPending(state),
     onlineStatusPending: getOnlineStatusPending(state),
@@ -315,8 +302,7 @@ const mapDispatchToProps = {
     fetchContractor,
     signOut,
     dropdownAlert,
-    getCurrentLocation,
-    fetchProducts
+    getCurrentLocation
 };
 
 export default connect(

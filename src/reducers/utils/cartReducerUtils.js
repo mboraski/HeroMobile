@@ -1,4 +1,4 @@
-import forEach from 'lodash.foreach';
+import reduce from 'lodash.reduce';
 
 const addProductToCart = (product, instantCartProducts) => {
     const instantCart = Object.assign({}, instantCartProducts);
@@ -18,42 +18,47 @@ const removeProductFromCart = (product, instantCartProducts) => {
 
 // TODO: this needs refactor
 const mergeCarts = (newCart, oldCart) => {
-    const netCart = { instant: {} };
     let itemCountUp = false;
     let itemCountDown = false;
-    forEach(newCart.instant, item => {
-        const oldItem = oldCart.instant[item.id];
-        if (oldItem) {
-            // did the quantity available go up or down
-            const upOrDown = oldItem.quantityAvailable - item.quantityAvailable;
-            let newQuantityTaken = 0;
-            if (item.quantityTaken > oldItem.quantityTaken) {
-                newQuantityTaken = item.quantityTaken;
+    const netCart = reduce(
+        newCart.instant,
+        (cart, item) => {
+            const oldItem = cart.instant[item.id];
+            if (oldItem) {
+                // did the quantity available go up or down
+                const upOrDown =
+                    oldItem.quantityAvailable - item.quantityAvailable;
+                let newQuantityTaken = 0;
+                if (item.quantityTaken > oldItem.quantityTaken) {
+                    newQuantityTaken = item.quantityTaken;
+                } else {
+                    newQuantityTaken = oldItem.quantityTaken;
+                }
+                if (upOrDown < 0) {
+                    itemCountUp = true;
+                } else {
+                    itemCountDown = true;
+                    cart.instant[item.id] = {
+                        id: item.id,
+                        category: item.category,
+                        subCategories: item.subcategories || {},
+                        price: item.price,
+                        productName: item.productName,
+                        size: item.size || '',
+                        brand: item.brand || '',
+                        contractors: item.contractors || {},
+                        quantityAvailable: item.quantityAvailable,
+                        quantityTaken: newQuantityTaken
+                    };
+                }
             } else {
-                newQuantityTaken = oldItem.quantityTaken;
-            }
-            if (upOrDown < 0) {
                 itemCountUp = true;
-            } else {
-                itemCountDown = true;
-                netCart.instant[item.id] = {
-                    id: item.id,
-                    category: item.category,
-                    subCategories: item.subcategories || {},
-                    price: item.price,
-                    productName: item.productName,
-                    size: item.size || '',
-                    brand: item.brand || '',
-                    contractors: item.contractors || {},
-                    quantityAvailable: item.quantityAvailable,
-                    quantityTaken: newQuantityTaken
-                };
+                cart.instant[item.id] = item;
             }
-        } else {
-            itemCountUp = true;
-            netCart.instant[item.id] = item;
-        }
-    });
+            return cart;
+        },
+        oldCart
+    );
     return { netCart, itemCountUp, itemCountDown };
 };
 

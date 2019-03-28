@@ -1,3 +1,4 @@
+import { Constants } from 'expo';
 import { Image } from 'react-native';
 import filter from 'lodash.filter';
 import forEach from 'lodash.foreach';
@@ -31,7 +32,9 @@ const TEST_STORAGE_REF = 'gs://hasty-test.appspot.com/product_images';
 const PROD_STORAGE_REF = 'gs://hasty-14d18.appspot.com/product_images';
 const PRODUCTS_REF = 'products';
 const STORAGE_REF =
-    process.env.ENV === 'prod' ? PROD_STORAGE_REF : TEST_STORAGE_REF;
+    Constants.manifest.releaseChannel === 'prod-v1'
+        ? PROD_STORAGE_REF
+        : TEST_STORAGE_REF;
 
 export const fetchCustomerBlock = dispatch => {
     dispatch({ type: FETCH_CUSTOMER_BLOCK_REQUEST });
