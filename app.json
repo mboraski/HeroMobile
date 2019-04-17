@@ -5,7 +5,7 @@
         "slug": "hero-mobile",
         "privacy": "unlisted",
         "sdkVersion": "30.0.0",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "orientation": "portrait",
         "primaryColor": "#f5a623",
         "assetBundlePatterns": [

@@ -34,7 +34,7 @@ const PRODUCTS_REF = 'products';
 const STORAGE_REF =
     Constants.manifest.releaseChannel === 'prod-v1'
         ? PROD_STORAGE_REF
-        : TEST_STORAGE_REF;
+        : PROD_STORAGE_REF;
 
 export const fetchCustomerBlock = dispatch => {
     dispatch({ type: FETCH_CUSTOMER_BLOCK_REQUEST });
