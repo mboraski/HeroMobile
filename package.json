@@ -25,8 +25,9 @@
         "start": "expo start --lan --dev",
         "start-localhost": "expo start --localhost --dev",
         "start-offline": "expo start --offline",
-        "publish": "expo publish --release-channel",
+        "publish-test-v1": "expo publish --release-channel test-v1",
         "publish-prod-v1": "expo publish --release-channel prod-v1",
+        "build-test-v1": "expo build --release-channel test-v1",
         "build-prod-v1": "expo build --release-channel prod-v1"
     },
     "jest": {
