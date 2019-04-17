@@ -25,10 +25,9 @@ import { getCurrentLocation } from '../actions/mapActions';
 import {
     getOnline,
     getPending,
-    getOnlineStatusPending,
-    getFirstName,
-    getLastName
+    getOnlineStatusPending
 } from '../selectors/contractorSelectors';
+import { getFirstName, getLastName } from '../selectors/authSelectors';
 import { getHeroAvailables } from '../selectors/cartSelectors';
 import { getCoords } from '../selectors/mapSelectors';
 import ProfileSwitch from '../components/HeroMain/ProfileSwitch';

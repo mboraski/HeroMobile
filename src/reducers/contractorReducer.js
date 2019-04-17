@@ -22,8 +22,6 @@ export const initialState = {
     method: 'walk',
     online: false,
     status: '',
-    firstName: '',
-    lastName: '',
     pending: false,
     onlineStatusPending: false,
     orders: {},
@@ -64,8 +62,6 @@ export default function(state = initialState, action) {
                 method: action.payload.method,
                 online: action.payload.online,
                 status: action.payload.status,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
                 pending: false
             };
         case FETCH_CONTRACTOR_ERROR:

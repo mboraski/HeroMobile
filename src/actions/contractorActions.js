@@ -88,7 +88,7 @@ export const online = (region, dispatch, inventory) => {
             .then(() => {
                 return consumerBlockRef.child(`contractors/${user.uid}`).set({
                     deliveryTime: 240,
-                    firstName: 'Mark', // Don't set here, have set with contractor record
+                    firstName: 'Mark', // Don't set here, have set with user record
                     lastName: 'Boraski', // same
                     phoneNumber: '+15126690628', // same
                     photoUrl: 'na', // same

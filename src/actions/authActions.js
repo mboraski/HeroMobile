@@ -102,9 +102,9 @@ export const signInWithEmailAndPassword = (values, dispatch) =>
 export const signOut = () => async dispatch => {
     try {
         dispatch({ type: SIGNOUT_REQUEST });
+        persistor.purge();
         const result = await firebaseAuth.signOut();
         dispatch({ type: SIGNOUT_SUCCESS });
-        persistor.purge();
         return result;
     } catch (error) {
         dispatch({ type: SIGNOUT_FAIL, error });
@@ -116,6 +116,7 @@ export const listenToAuthChanges = () => dispatch => {
     firebaseAuth.onAuthStateChanged(user => {
         dispatch({ type: AUTH_CHANGED, payload: user });
         if (user) {
+            getUserReadable()(dispatch);
             dispatch({ type: SIGNIN_SUCCESS });
         } else {
             dispatch({ type: SIGNOUT_SUCCESS });
